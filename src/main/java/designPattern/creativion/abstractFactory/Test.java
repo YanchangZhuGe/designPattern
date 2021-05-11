@@ -20,5 +20,6 @@ public class Test {
         whiteCat.eat();
         IDog whiteDog = whiteAnimalFactory.createDog();
         whiteDog.eat();
+
     }
 }
