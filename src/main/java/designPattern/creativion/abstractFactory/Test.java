@@ -9,6 +9,7 @@ package designPattern.creativion.abstractFactory;
 
 public class Test {
     public static void main(String[] args) {
+
         IAnimalFactory blackAnimalFactory = new BlackAnimalFactory();
         ICat blackCat = blackAnimalFactory.createCat();
         blackCat.eat();
