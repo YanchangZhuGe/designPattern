@@ -1,7 +1,7 @@
 package designPattern.creativion.singleton;
 
 /**
- * 描述:
+ * 描述: 懒汉模式，单例实例在第一次使用的时候进行创建，这个类是线程不安全的
  *
  * @author WuYanchang
  * @date 2021/5/10 17:36
