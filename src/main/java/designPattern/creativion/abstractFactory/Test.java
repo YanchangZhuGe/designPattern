@@ -13,6 +13,7 @@ public class Test {
         IAnimalFactory blackAnimalFactory = new BlackAnimalFactory();
         ICat blackCat = blackAnimalFactory.createCat();
         blackCat.eat();
+
         IDog blackDog = blackAnimalFactory.createDog();
         blackDog.eat();
         IAnimalFactory whiteAnimalFactory = new WhiteAnimalFactory();
