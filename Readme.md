@@ -1,4 +1,8 @@
-设计模式 
+设计模式
+
+四人帮
+Erich Gamma、Richard Helm、Ralph Johnson、John Vlissides
+Design Patterns - Elements of Reusable Object-Oriented Software（中文译名：设计模式 - 可复用的面向对象软件元素）
 
 项目地址 https://github.com/YanchangZhuGe/designPattern.git
 
