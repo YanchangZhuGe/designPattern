@@ -1,7 +1,8 @@
 package designPattern.creativion.abstractFactory;
 
 /**
- * 描述:AbstractFactory抽象工厂
+ * 描述: AbstractFactory抽象工厂
+ * 超级工厂, 专门用于生产其他工厂
  *
  * @author WuYanchang
  * @date 2021/5/11 15:40
