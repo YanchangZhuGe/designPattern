@@ -11,5 +11,8 @@ public class Test {
     public static void main(String[] args) {
         CircleCreate circleCreate = new CircleCreate();
         circleCreate.getShape().draw();
+
+        LineCreate lineCreate = new LineCreate();
+        lineCreate.getShape().draw();
     }
 }
