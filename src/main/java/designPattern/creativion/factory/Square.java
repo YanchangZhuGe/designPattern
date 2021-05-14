@@ -1,7 +1,7 @@
 package designPattern.creativion.factory;
 
 /**
- * 描述:
+ * 描述: 产品-正方形
  *
  * @author WuYanchang
  * @date 2021/5/14 16:21

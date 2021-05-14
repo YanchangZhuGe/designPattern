@@ -1,13 +1,13 @@
 package designPattern.creativion.factory;
 
 /**
- * 描述:
+ * 描述: 测试空格
  *
  * @author WuYanchang
  * @date 2021/5/14 17:00
  */
 
-public class TestNull implements Shape{
+public class TestNull implements Shape {
 
     @Override
     public void draw() {

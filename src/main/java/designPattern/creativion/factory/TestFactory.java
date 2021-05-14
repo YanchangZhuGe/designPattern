@@ -8,6 +8,7 @@ package designPattern.creativion.factory;
  */
 
 public class TestFactory {
+
     public static void main(String[] args) {
         //实例化-工厂类
         ShapeFactory shapeFactory = new ShapeFactory();
@@ -31,5 +32,6 @@ public class TestFactory {
          */
         Shape shape = shapeFactory.getShape("    ");
         shape.draw();
+
     }
 }
