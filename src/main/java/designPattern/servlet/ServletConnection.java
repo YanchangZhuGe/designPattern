@@ -5,13 +5,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * 描述:
+ * 描述: 测试servlet接口
  *
  * @author WuYanchang
  * @date 2021/5/14 14:38
  */
 
-public class servletConnection {
+public class ServletConnection {
     public static void main(String[] args) {
         HttpURLConnection servletConnection = null;
         URL uploadServlet = null;
