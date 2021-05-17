@@ -3,7 +3,7 @@ package designPattern.creativion.abstractFactory;
 import designPattern.creativion.factory.Shape;
 
 /**
- * 描述:
+ * 描述: 测试
  *
  * @author WuYanchang
  * @date 2021/5/17 9:59

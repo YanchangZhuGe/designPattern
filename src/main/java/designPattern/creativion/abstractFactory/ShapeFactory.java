@@ -4,13 +4,13 @@ import designPattern.creativion.factory.*;
 import org.springframework.util.StringUtils;
 
 /**
- * 描述:
+ * 描述: 生产形状类
  *
  * @author WuYanchang
  * @date 2021/5/17 9:56
  */
 
-public class ShapeFactory implements AbstractFactory{
+public class ShapeFactory implements AbstractFactory {
 
     @Override
     public Color getColor(String color) {
