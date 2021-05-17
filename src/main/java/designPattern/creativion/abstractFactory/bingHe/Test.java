@@ -1,4 +1,4 @@
-package designPattern.creativion.abstractFactory;
+package designPattern.creativion.abstractFactory.bingHe;
 
 /**
  * 描述:测试类

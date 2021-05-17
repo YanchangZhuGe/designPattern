@@ -1,4 +1,4 @@
-package designPattern.creativion.abstractFactory;
+package designPattern.creativion.abstractFactory.bingHe;
 
 /**
  * 描述:指定工厂生产的产品
@@ -6,6 +6,6 @@ package designPattern.creativion.abstractFactory;
  * @author WuYanchang
  * @date 2021/5/11 15:43
  */
-public interface IDog {
+public interface ICat {
     void eat();
 }
