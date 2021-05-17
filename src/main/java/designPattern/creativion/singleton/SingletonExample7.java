@@ -28,4 +28,8 @@ public class SingletonExample7 {
             return singleton;
         }
     }
+
+    public void showMessage() {
+        System.out.println("SingletonExample7 Hello World!");
+    }
 }

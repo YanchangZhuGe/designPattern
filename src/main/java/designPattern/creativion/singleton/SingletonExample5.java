@@ -26,4 +26,8 @@ public class SingletonExample5 {
         }
         return instance;
     }
+
+    public void showMessage() {
+        System.out.println("SingletonExample5 Hello World!");
+    }
 }
