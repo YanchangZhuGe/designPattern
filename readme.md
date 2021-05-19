@@ -54,3 +54,5 @@ LSP 是继承复用的基石，只有当派生类可以替换掉基类，且软�
 合成复用原则是指：尽量使用合成/聚合的方式，而不是使用继承。
 
 ![alt 属性文本](https://zhugeyanchang.gitee.io/contents/out/img/designPattern/design-patterns.jpg "可选标题")
+
+[保姆级Git入门教程，万字详解](https://mp.weixin.qq.com/s/Z766Egape2QicYndsQjZ4g)
