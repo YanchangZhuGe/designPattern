@@ -1,7 +1,7 @@
 package designPattern.creativion.prototype;
 
 /**
- * 描述:
+ * 描述: 圆
  *
  * @author WuYanchang
  * @date 2021/5/24 17:44

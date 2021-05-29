@@ -3,7 +3,7 @@ package designPattern.creativion.prototype;
 import java.util.Hashtable;
 
 /**
- * 描述:
+ * 描述: 形状
  *
  * @author WuYanchang
  * @date 2021/5/24 17:44
