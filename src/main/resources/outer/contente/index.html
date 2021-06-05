@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 黑洞标题栏 -->
+		<link rel="icon" sizes="any" mask="" href="img/tag-head/index_head_black_hole.svg">
+		<title>诸葛延昌</title>
+		<script type="text/javascript" src="js/import.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/import.css" />
+	</head>
+	<body>
+		<div id='app'>
+			<el-container>
+				<el-header>
+					<el-row  type="flex" justify="space-around" align="top" >
+						<el-col :span="16">
+							<el-input autofocus max="100" placeholder="请输入内容" v-model="searchText"
+								@keyup.enter.native="toSearch()" class="input-with-select " clearable>
+								<template slot="prepend">https://</template>
+								<el-select v-model="colNum" slot="append" filterable placeholder="请选择">
+									<el-option v-for="item in colNumList" :key="item.value" :label="item.label"
+										:value="item.value">
+									</el-option>
+								</el-select>
+							</el-input>
+						</el-col>
+						<el-col :span="8" :offset="0">
+							<el-button :type="getButtonType('baidu')" @click="toSearch('baidu')">百度 </el-button>
+							<el-button :type="getButtonType('baiduBeta')" @click="toSearch('baiduBeta')"> 开发者
+							</el-button>
+							<el-button :type="getButtonType('zhihu')" @click="toSearch('zhihu')">知乎 </el-button>
+							<el-button :type="getButtonType('wechat')" @click="toSearch('wechat')">微信 </el-button>
+							<el-button :type="getButtonType('goobe')" @click="toSearch('goobe')">大本营 </el-button>
+							<el-button :type="getButtonType('google')" @click="toSearch('google')">谷歌 </el-button>
+							<el-button :type="getButtonType('bing')" @click="toSearch('bing')">必应 </el-button>
+						</el-col>
+					</el-row>
+				</el-header>
+				<el-container>
+					<!-- 左侧导航栏 -->
+					<el-aside width="10%">
+						<el-menu default-active="0" class="el-menu-vertical-demo" @open="handleOpen"
+							@close="handleClose" :unique-opened="true">
+							<el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
+								<template slot="title">
+									<i :class="item.iconClass"></i>
+									<span>{{ item.authName }}</span>
+								</template>
+								<el-menu-item :index="subItem.id + ''" v-for="subItem in item.children"
+									:key="subItem.id">
+									<span slot="title">{{ subItem.authName }}</span>
+								</el-menu-item>
+							</el-submenu>
+						</el-menu>
+					</el-aside>
+					<el-container>
+						<el-main>
+							<el-row :index="items.id + ''" v-for="items in contentList" :key="items.id">
+								<el-col :span="colSpan" :index="item.id + ''" v-for="item in items.data" :key="item.id">
+									{{item.description}}
+								</el-col>
+							</el-row>
+
+							<el-input v-model="create" placeholder="请输入内容"></el-input>
+							<el-input v-model="value" placeholder="请输入内容"></el-input>
+							<el-button type="success" icon="el-icon-search" @click='setValue()'>本地引用</el-button>
+						</el-main>
+						<el-footer>Footer</el-footer>
+					</el-container>
+				</el-container>
+			</el-container>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el: '#app',
+				data: function() {
+					return {
+						colNum: 5,
+						colSpan: '',
+						colNumList: [],
+						searchText: '',
+						buttonValue: 'baidu',
+						urlList: {},
+						contentList: [],
+						menuList: [],
+						create: '默认值',
+						value: '默认值',
+					}
+				},
+				created() {
+					this.create = '初始化';
+					this.setDefault();
+					this.getAllData();
+				},
+				methods: {
+					setDefault() {
+						this.colSpan = Math.floor(24 / this.colNum);
+						this.colNumList = getNumList(1, 24)
+					},
+					getAllData() {
+						const jsonDir = "./json/";
+						this.getUrlList(jsonDir + "url.json");
+						this.getContentList(jsonDir + "content.json");
+						this.getMenuList(jsonDir + "menu.json");
+					},
+					getUrlList(value) {
+						$.getJSON(value).then(res => {
+							this.urlList = res.urlList;
+						})
+					},
+					getContentList(value) {
+						$.getJSON(value).then(res => {
+							this.contentList = chunkArr(res.data.url1.data, this.colNum);
+						})
+					},
+					getMenuList(value) {
+						$.getJSON(value).then(res => {
+							this.menuList = res.data;
+						})
+					},
+					handleOpen(key, keyPath) {
+						console.log(key, keyPath);
+					},
+					handleClose(key, keyPath) {
+						console.log(key, keyPath);
+					},
+					// 搜索跳转功能
+					toSearch(value) {
+						var url = null;
+						if (isNull(value)) {
+							// 回车键-传值为空-用默认
+							url = this.urlList[this.buttonValue] + this.searchText;
+						} else {
+							url = this.urlList[value] + this.searchText;
+							// 更新默认搜索按钮
+							this.buttonValue = value;
+						}
+						window.open(url)
+					},
+					// 封装按钮类型
+					getButtonType(value) {
+						return this.buttonValue == value ? "info" : "primary";
+					},
+					setValue() {
+						this.value = '新值';
+					},
+				},
+			})
+		</script>
+	</body>
+</html>
