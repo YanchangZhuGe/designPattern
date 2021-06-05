@@ -1,0 +1,73 @@
+{
+	"description": "首页功能按钮",
+	"data": {
+		"url1": {
+			"name": "常用网站",
+			"data": [{
+				"id": "csdn1",
+				"name": "网站1",
+				"description": "这是学习网站1",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn2",
+				"name": "网站2",
+				"description": "这是学习网站2",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn3",
+				"name": "网站3",
+				"description": "这是学习网站3",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn4",
+				"name": "网站4",
+				"description": "这是学习网站4",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn5",
+				"name": "网站5",
+				"description": "这是学习网站5",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn6",
+				"name": "网站6",
+				"description": "这是学习网站6",
+				"url": "http://www.baidu.com"
+			}]
+		},
+		"url2": {
+			"name": "常用网站",
+			"data": [{
+				"id": "csdn1",
+				"name": "网站1",
+				"description": "这是学习网站",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn2",
+				"name": "网站2",
+				"description": "这是学习网站",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn3",
+				"name": "网站3",
+				"description": "这是学习网站",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn4",
+				"name": "网站4",
+				"description": "这是学习网站",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn5",
+				"name": "网站5",
+				"description": "这是学习网站",
+				"url": "http://www.baidu.com"
+			}, {
+				"id": "csdn6",
+				"name": "网站6",
+				"description": "这是学习网站",
+				"url": "http://www.baidu.com"
+			}]
+		}
+	}
+}

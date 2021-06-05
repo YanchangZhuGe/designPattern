@@ -1,0 +1,12 @@
+/* https://unpkg.com/browse/element-ui@2.13.1/ */
+/*  element-ui 样式库 */ 
+/* @import url("element-ui/element-ui@2.13.1.css"); */
+/* @import url("https://unpkg.com/element-ui/lib/theme-chalk/index.css"); */
+@import url("../plugins/element-ui@2.15.2/lib/theme-chalk/index.css");
+
+
+/* 布局样式 */
+@import url("element-ui/el-container.css");
+/* 自定义布局 */
+@import url("index.css");
+
