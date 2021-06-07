@@ -1,4 +1,5 @@
 // 工具函数
+
 // 空值判断
 function isNull(value) {
 	if (value == undefined || value == null || value == "" ||
