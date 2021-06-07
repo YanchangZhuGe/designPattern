@@ -12,12 +12,13 @@
 		<div id='app'>
 			<el-container>
 				<el-header>
-					<el-row  type="flex" justify="space-around" align="top" >
+					<el-row type="flex" justify="space-around" align="top">
 						<el-col :span="16">
 							<el-input autofocus max="100" placeholder="请输入内容" v-model="searchText"
 								@keyup.enter.native="toSearch()" class="input-with-select " clearable>
 								<template slot="prepend">https://</template>
-								<el-select v-model="colNum" slot="append" filterable placeholder="请选择" @change="getColNumList()">
+								<el-select v-model="colNum" slot="append" filterable placeholder="请选择"
+									@change="getColNumList()">
 									<el-option v-for="item in colNumList" :key="item.value" :label="item.label"
 										:value="item.value">
 									</el-option>
@@ -54,16 +55,18 @@
 						</el-menu>
 					</el-aside>
 					<el-container>
+						<!-- 内容区 -->
 						<el-main>
-							<el-row :index="items.id + ''" v-for="items in contentList" :key="items.id">
-								<el-col :span="colSpan" :index="item.id + ''" v-for="item in items.data" :key="item.id">
-									{{item.description}}
+							<el-row :index="items.id + ''" v-for="items in contentList" :key="items.id"
+								:gutter="24-colNum">
+								<el-col :span="colSpan" :offset="getColOffset(items.length)" :index="item.id + ''"
+									v-for="item in items.data" :key="item.id">
+									<el-card shadow="hover" class="box-card grid-content" style="min-height: 200px;"
+										align="middle" onclick="">
+										{{item.id}}
+									</el-card>
 								</el-col>
 							</el-row>
-
-							<el-input v-model="create" placeholder="请输入内容"></el-input>
-							<el-input v-model="value" placeholder="请输入内容"></el-input>
-							<el-button type="success" icon="el-icon-search" @click='setValue()'>本地引用</el-button>
 						</el-main>
 						<el-footer>Footer</el-footer>
 					</el-container>
@@ -75,16 +78,16 @@
 				el: '#app',
 				data: function() {
 					return {
+						jsonDir:'./json/',
 						colNum: 5,
 						colSpan: '',
 						colNumList: [],
+						colOffset: '',
 						searchText: '',
 						buttonValue: 'baidu',
 						urlList: {},
 						contentList: [],
 						menuList: [],
-						create: '默认值',
-						value: '默认值',
 					}
 				},
 				created() {
@@ -95,13 +98,13 @@
 				methods: {
 					setDefault() {
 						this.colSpan = Math.floor(24 / this.colNum);
-						this.colNumList = getNumList(1, 24)
+						this.colNumList = getNumList(1, 24);
+						this.colOffset = Math.floor((24 - this.colNum * this.colSpan) / this.colNum);
 					},
 					getAllData() {
-						const jsonDir = "./json/";
-						this.getUrlList(jsonDir + "url.json");
-						this.getContentList(jsonDir + "content.json");
-						this.getMenuList(jsonDir + "menu.json");
+						this.getUrlList(this.jsonDir + "url.json");
+						this.getContentList(this.jsonDir + "content.json");
+						this.getMenuList(this.jsonDir + "menu.json");
 					},
 					getUrlList(value) {
 						$.getJSON(value).then(res => {
@@ -124,6 +127,7 @@
 					handleClose(key, keyPath) {
 						console.log(key, keyPath);
 					},
+					// 
 					// 搜索跳转功能
 					toSearch(value) {
 						var url = null;
@@ -137,20 +141,21 @@
 						}
 						window.open(url)
 					},
+					// 动态间隔
+					getColOffset(val){
+						return  Math.floor((24 - val * this.colSpan) / val);
+					},
 					// 动态列数
-					getColNumList(){
-						const jsonDir = "./json/";
+					getColNumList() {
 						this.colSpan = Math.floor(24 / this.colNum);
-						this.getContentList(jsonDir + "content.json");
+						this.colOffset = Math.floor((24 - this.colNum * this.colSpan) / this.colNum);
+						this.getContentList(this.jsonDir + "content.json");
 						console.log(this.contentList);
 						console.log(this.colSpan);
 					},
 					// 封装按钮类型
 					getButtonType(value) {
 						return this.buttonValue == value ? "info" : "primary";
-					},
-					setValue() {
-						this.value = '新值';
 					},
 				},
 			})
