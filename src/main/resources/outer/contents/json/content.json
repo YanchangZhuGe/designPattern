@@ -7,6 +7,7 @@
 				"id": "id1",
 				"name": "网站1",
 				"description": "这是学习网站1",
+				"imgUrl": "img/tag-head/index_head_black_hole.svg",
 				"url": "http://www.baidu.com"
 			}, {
 				"id": "id2",

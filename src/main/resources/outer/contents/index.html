@@ -11,7 +11,8 @@
 	<body>
 		<div id='app'>
 			<el-container>
-				<el-header>
+				<!-- 头部搜索框 -->
+				<el-header style="position: relative;">
 					<el-row type="flex" justify="space-around" align="top">
 						<el-col :span="16">
 							<el-input autofocus max="100" placeholder="请输入内容" v-model="searchText"
@@ -57,13 +58,17 @@
 					<el-container>
 						<!-- 内容区 -->
 						<el-main>
-							<el-row :index="items.id + ''" v-for="items in contentList" :key="items.id"
-								:gutter="24-colNum">
+							<el-row :index="items.id + ''" v-for="items in contentList" :key="items.id" :gutter="12">
 								<el-col :span="colSpan" :offset="getColOffset(items.length)" :index="item.id + ''"
 									v-for="item in items.data" :key="item.id">
-									<el-card shadow="hover" class="box-card grid-content" style="min-height: 200px;"
+									<el-card shadow="hover" class="box-card grid-content" body-style="height: 50px;"
 										align="middle" onclick="">
-										{{item.id}}
+										<img :src="item.imgUrl"
+											style="width: 50px; height: 50px; float: left; margin-top: 5px;border-width: 0px;">
+										<span>
+											<a>{{item.name}}</a></br>
+											<a style="text-align: left; font-size: 12px;">{{item.description}}</a>
+										</span>
 									</el-card>
 								</el-col>
 							</el-row>
@@ -72,14 +77,15 @@
 					</el-container>
 				</el-container>
 			</el-container>
+
 		</div>
 		<script type="text/javascript">
 			new Vue({
 				el: '#app',
 				data: function() {
 					return {
-						jsonDir:'./json/',
-						colNum: 5,
+						jsonDir: './json/',
+						colNum: 8,
 						colSpan: '',
 						colNumList: [],
 						colOffset: '',
@@ -142,8 +148,8 @@
 						window.open(url)
 					},
 					// 动态间隔
-					getColOffset(val){
-						return  Math.floor((24 - val * this.colSpan) / val);
+					getColOffset(val) {
+						return Math.floor((24 - val * this.colSpan) / val);
 					},
 					// 动态列数
 					getColNumList() {
@@ -151,6 +157,7 @@
 						this.colOffset = Math.floor((24 - this.colNum * this.colSpan) / this.colNum);
 						this.getContentList(this.jsonDir + "content.json");
 						console.log(this.contentList);
+						console.log("colOffset" + this.colOffset);
 						console.log(this.colSpan);
 					},
 					// 封装按钮类型
