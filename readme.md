@@ -1,5 +1,7 @@
 **设计模式**
 
+检查等级- ctrl+alt+shift+h 
+
 _四人帮_
 Erich Gamma、Richard Helm、Ralph Johnson、John Vlissides
 Design Patterns - Elements of Reusable Object-Oriented Software（中文译名：设计模式 - 可复用的面向对象软件元素）
