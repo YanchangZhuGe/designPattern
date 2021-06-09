@@ -61,13 +61,16 @@
 							<el-row :index="items.id + ''" v-for="items in contentList" :key="items.id" :gutter="12">
 								<el-col :span="colSpan" :offset="getColOffset(items.length)" :index="item.id + ''"
 									v-for="item in items.data" :key="item.id">
-									<el-card shadow="hover" class="box-card grid-content" body-style="height: 50px;"
-										align="middle" onclick="">
+									<el-card shadow="hover" class="box-card grid-content"
+										body-style="height: 50px; cursor: pointer;" align="middle"
+										@click.native="openUrl(item.url)" @mouseover.native="mouseoverFunction(item.id)"
+										@mouseout.native="mouseoutFunction(item.id)">
 										<img :src="item.imgUrl"
 											style="width: 50px; height: 50px; float: left; margin-top: 5px;border-width: 0px;">
 										<span>
-											<a>{{item.name}}</a></br>
-											<a style="text-align: left; font-size: 12px;">{{item.description}}</a>
+											<a class="fontRed">{{item.name}}</a></br>
+											<a class="fontRed"
+												style="text-align: left; font-size: 12px;">{{item.description}}</a>
 										</span>
 									</el-card>
 								</el-col>
@@ -145,11 +148,25 @@
 							// 更新默认搜索按钮
 							this.buttonValue = value;
 						}
-						window.open(url)
+						window.open(url);
 					},
 					// 动态间隔
 					getColOffset(val) {
 						return Math.floor((24 - val * this.colSpan) / val);
+					},
+					// 打开页签
+					openUrl(url) {
+						window.open(url);
+					},
+					// 鼠标覆盖特效
+					mouseoverFunction(id) {
+						$("[index='" + id + "'] .fontRed").css("color", "red");
+						$("[index='" + id + "'] .el-card__body").css("background-color", "#d5ddef");
+					},
+					// 鼠标移开
+					mouseoutFunction(id) {
+						$("[index='" + id + "'] .fontRed").css("color", "black");
+						$("[index='" + id + "'] .el-card__body").css("background-color", "white");
 					},
 					// 动态列数
 					getColNumList() {
