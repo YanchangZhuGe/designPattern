@@ -9,10 +9,10 @@
 		<link rel="stylesheet" type="text/css" href="css/import.css" />
 	</head>
 	<body>
-		<div id='app'>
-			<el-container>
+		<div id='app' style="background-color: #909399;">
+			<el-container height=100%>
 				<!-- 头部搜索框 -->
-				<el-header style="position: relative;">
+				<el-header height=10%>
 					<el-row type="flex" justify="space-around" align="top">
 						<el-col :span="16">
 							<el-input autofocus max="100" placeholder="请输入内容" v-model="searchText"
@@ -57,7 +57,7 @@
 					</el-aside>
 					<el-container>
 						<!-- 内容区 -->
-						<el-main>
+						<el-main height=70%>
 							<el-row :index="items.id + ''" v-for="items in contentList" :key="items.id" :gutter="12">
 								<el-col :span="colSpan" :offset="getColOffset(items.length)" :index="item.id + ''"
 									v-for="item in items.data" :key="item.id">
@@ -69,14 +69,14 @@
 											style="width: 50px; height: 50px; float: left; margin-top: 5px;border-width: 0px;">
 										<span>
 											<a class="fontRed">{{item.name}}</a></br>
-											<a class="fontRed"
-												style="text-align: left; font-size: 12px;">{{item.description}}</a>
+											<a class="fontBlack"
+												style="text-align: left; font-size: 12px;color: gray;">{{item.description}}</a>
 										</span>
 									</el-card>
 								</el-col>
 							</el-row>
 						</el-main>
-						<el-footer>Footer</el-footer>
+						<el-footer height=20%>Footer</el-footer>
 					</el-container>
 				</el-container>
 			</el-container>
@@ -161,11 +161,13 @@
 					// 鼠标覆盖特效
 					mouseoverFunction(id) {
 						$("[index='" + id + "'] .fontRed").css("color", "red");
+						$("[index='" + id + "'] .fontBlack").css("color", "black");
 						$("[index='" + id + "'] .el-card__body").css("background-color", "#d5ddef");
 					},
 					// 鼠标移开
 					mouseoutFunction(id) {
 						$("[index='" + id + "'] .fontRed").css("color", "black");
+						$("[index='" + id + "'] .fontBlack").css("color", "gray");
 						$("[index='" + id + "'] .el-card__body").css("background-color", "white");
 					},
 					// 动态列数
