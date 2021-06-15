@@ -1,4 +1,4 @@
-package designPattern.servlet;
+package designPattern.other;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
