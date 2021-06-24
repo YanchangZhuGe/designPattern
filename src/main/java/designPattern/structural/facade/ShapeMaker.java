@@ -1,7 +1,7 @@
 package designPattern.structural.facade;
 
 /**
- * 描述:
+ * 描述:创建实现接口的实体类。
  *
  * @author WuYanchang
  * @date 2021/6/24 20:44
@@ -18,13 +18,15 @@ public class ShapeMaker {
         square = new Square();
     }
 
-    public void drawCircle(){
+    public void drawCircle() {
         circle.draw();
     }
-    public void drawRectangle(){
+
+    public void drawRectangle() {
         rectangle.draw();
     }
-    public void drawSquare(){
+
+    public void drawSquare() {
         square.draw();
     }
 }
