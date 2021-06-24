@@ -28,7 +28,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `过滤器模式` filter
 
-`组合模式`
+`组合模式` composite
 
 `装饰器模式`
 
