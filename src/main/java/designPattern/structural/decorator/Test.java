@@ -1,7 +1,7 @@
 package designPattern.structural.decorator;
 
 /**
- * 描述:
+ * 描述:使用 RedShapeDecorator 来装饰 Shape 对象。
  *
  * @author WuYanchang
  * @date 2021/6/24 20:39
