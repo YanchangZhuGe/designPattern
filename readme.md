@@ -30,7 +30,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `组合模式` composite
 
-`装饰器模式`
+`装饰器模式` decorator
 
 `外观模式`
 
