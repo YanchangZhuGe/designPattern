@@ -34,7 +34,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `外观模式` facade
 
-`享元模式`
+`享元模式` flyweight
 
 `代理模式`
 
