@@ -32,7 +32,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `装饰器模式` decorator
 
-`外观模式`
+`外观模式` facade
 
 `享元模式`
 
