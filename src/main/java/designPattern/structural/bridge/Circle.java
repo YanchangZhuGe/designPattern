@@ -1,7 +1,7 @@
 package designPattern.structural.bridge;
 
 /**
- * 描述:
+ * 描述:创建实现了 Shape 抽象类的实体类。
  *
  * @author WuYanchang
  * @date 2021/6/24 15:51
@@ -18,6 +18,6 @@ public class Circle extends Shape {
     }
 
     public void draw() {
-        drawAPI.drawCircle(radius,x,y);
+        drawAPI.drawCircle(radius, x, y);
     }
 }
