@@ -36,7 +36,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `享元模式` flyweight
 
-`代理模式`
+`代理模式` proxy
 
 **三、行为型模式**，共十一种：
 
