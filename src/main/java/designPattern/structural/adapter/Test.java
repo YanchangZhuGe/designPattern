@@ -1,4 +1,4 @@
-package designPattern.structural;
+package designPattern.structural.adapter;
 
 /**
  * 描述:
