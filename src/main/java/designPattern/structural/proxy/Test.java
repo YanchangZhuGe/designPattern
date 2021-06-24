@@ -1,7 +1,7 @@
 package designPattern.structural.proxy;
 
 /**
- * 描述:
+ * 描述:当被请求时，使用 ProxyImage 来获取 RealImage 类的对象。
  *
  * @author WuYanchang
  * @date 2021/6/24 20:51
