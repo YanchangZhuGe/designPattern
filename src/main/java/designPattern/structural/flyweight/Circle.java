@@ -1,7 +1,7 @@
 package designPattern.structural.flyweight;
 
 /**
- * 描述:
+ * 描述:创建实现接口的实体类。
  *
  * @author WuYanchang
  * @date 2021/6/24 20:47
@@ -13,7 +13,7 @@ public class Circle implements Shape {
     private int y;
     private int radius;
 
-    public Circle(String color){
+    public Circle(String color) {
         this.color = color;
     }
 
@@ -32,7 +32,7 @@ public class Circle implements Shape {
     @Override
     public void draw() {
         System.out.println("Circle: Draw() [Color : " + color
-                +", x : " + x +", y :" + y +", radius :" + radius);
+                + ", x : " + x + ", y :" + y + ", radius :" + radius);
     }
 
 }

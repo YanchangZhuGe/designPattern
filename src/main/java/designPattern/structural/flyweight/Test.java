@@ -1,7 +1,7 @@
 package designPattern.structural.flyweight;
 
 /**
- * 描述:
+ * 描述:使用该工厂，通过传递颜色信息来获取实体类的对象。
  *
  * @author WuYanchang
  * @date 2021/6/24 20:48
@@ -9,25 +9,29 @@ package designPattern.structural.flyweight;
 
 public class Test {
     private static final String colors[] =
-            { "Red", "Green", "Blue", "White", "Black" };
+            {"Red", "Green", "Blue", "White", "Black"};
+
     public static void main(String[] args) {
 
-        for(int i=0; i < 20; ++i) {
+        for (int i = 0; i < 20; ++i) {
             Circle circle =
-                    (Circle)ShapeFactory.getCircle(getRandomColor());
+                    (Circle) ShapeFactory.getCircle(getRandomColor());
             circle.setX(getRandomX());
             circle.setY(getRandomY());
             circle.setRadius(100);
             circle.draw();
         }
     }
+
     private static String getRandomColor() {
-        return colors[(int)(Math.random()*colors.length)];
+        return colors[(int) (Math.random() * colors.length)];
     }
+
     private static int getRandomX() {
-        return (int)(Math.random()*100 );
+        return (int) (Math.random() * 100);
     }
+
     private static int getRandomY() {
-        return (int)(Math.random()*100);
+        return (int) (Math.random() * 100);
     }
 }
