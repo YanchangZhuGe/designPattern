@@ -1,7 +1,7 @@
 package designPattern.behavior.nullObject;
 
 /**
- * 描述:
+ * 描述:创建 CustomerFactory 类。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:18
@@ -11,9 +11,9 @@ public class CustomerFactory {
 
     public static final String[] names = {"Rob", "Joe", "Julie"};
 
-    public static AbstractCustomer getCustomer(String name){
+    public static AbstractCustomer getCustomer(String name) {
         for (int i = 0; i < names.length; i++) {
-            if (names[i].equalsIgnoreCase(name)){
+            if (names[i].equalsIgnoreCase(name)) {
                 return new RealCustomer(name);
             }
         }

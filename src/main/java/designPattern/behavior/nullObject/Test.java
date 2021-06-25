@@ -1,7 +1,7 @@
 package designPattern.behavior.nullObject;
 
 /**
- * 描述:
+ * 描述:使用 CustomerFactory，基于客户传递的名字，来获取 RealCustomer 或 NullCustomer 对象。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:18
