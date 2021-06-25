@@ -64,6 +64,10 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `访问者模式` visitor
 
+**四、扩展**，(extend) ：
+
+`MVC 模式` mvc
+
 **设计模式的六大原则**
 1、_开闭原则_（Open Close Principle）
 
