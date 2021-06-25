@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 描述:
+ * 描述:创建 Subject 类。
  *
  * @author WuYanchang
  * @date 2021/6/25 10:14
@@ -25,11 +25,11 @@ public class Subject {
         notifyAllObservers();
     }
 
-    public void attach(Observer observer){
+    public void attach(Observer observer) {
         observers.add(observer);
     }
 
-    public void notifyAllObservers(){
+    public void notifyAllObservers() {
         for (Observer observer : observers) {
             observer.update();
         }

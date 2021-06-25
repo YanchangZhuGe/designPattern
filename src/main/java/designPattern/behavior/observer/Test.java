@@ -1,7 +1,7 @@
 package designPattern.behavior.observer;
 
 /**
- * 描述:
+ * 描述:观察者模式
  *
  * @author WuYanchang
  * @date 2021/6/25 10:16
