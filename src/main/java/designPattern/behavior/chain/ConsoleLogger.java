@@ -1,7 +1,7 @@
 package designPattern.behavior.chain;
 
 /**
- * 描述:
+ * 描述:创建扩展了该记录器类的实体类。
  *
  * @author WuYanchang
  * @date 2021/6/25 9:21
@@ -9,7 +9,7 @@ package designPattern.behavior.chain;
 
 public class ConsoleLogger extends AbstractLogger {
 
-    public ConsoleLogger(int level){
+    public ConsoleLogger(int level) {
         this.level = level;
     }
 
