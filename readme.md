@@ -40,7 +40,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 **三、行为型模式**，(behavior) 共十二种：
 
-`责任链模式`
+`责任链模式` chain
 
 `命令模式`
 
