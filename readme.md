@@ -62,7 +62,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `模板模式` template
 
-`访问者模式`
+`访问者模式` visitor
 
 **设计模式的六大原则**
 1、_开闭原则_（Open Close Principle）
