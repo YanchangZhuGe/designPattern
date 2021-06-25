@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 描述:
+ * 描述:创建 CareTaker 类。
  *
  * @author WuYanchang
  * @date 2021/6/25 9:45
@@ -13,11 +13,11 @@ import java.util.List;
 public class CareTaker {
     private List<Memento> mementoList = new ArrayList<Memento>();
 
-    public void add(Memento state){
+    public void add(Memento state) {
         mementoList.add(state);
     }
 
-    public Memento get(int index){
+    public Memento get(int index) {
         return mementoList.get(index);
     }
 }

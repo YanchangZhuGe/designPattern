@@ -1,7 +1,7 @@
 package designPattern.behavior.memento;
 
 /**
- * 描述:
+ * 描述:使用 CareTaker 和 Originator 对象
  *
  * @author WuYanchang
  * @date 2021/6/25 9:45

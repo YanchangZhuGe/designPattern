@@ -1,7 +1,7 @@
 package designPattern.behavior.memento;
 
 /**
- * 描述:
+ * 描述:创建 Memento 类。
  *
  * @author WuYanchang
  * @date 2021/6/25 9:45
@@ -10,11 +10,11 @@ package designPattern.behavior.memento;
 public class Memento {
     private String state;
 
-    public Memento(String state){
+    public Memento(String state) {
         this.state = state;
     }
 
-    public String getState(){
+    public String getState() {
         return state;
     }
 }
