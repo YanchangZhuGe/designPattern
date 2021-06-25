@@ -1,7 +1,7 @@
 package designPattern.behavior.command;
 
 /**
- * 描述:
+ * 描述:使用 Broker 类来接受并执行命令。
  *
  * @author WuYanchang
  * @date 2021/6/25 9:27
