@@ -46,7 +46,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `解释器模式` interpreter
 
-`迭代子模式`
+`迭代器模式` iterator
 
 `中介者模式`
 
