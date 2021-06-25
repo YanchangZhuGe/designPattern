@@ -56,7 +56,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `状态模式` state
 
-`空对象模式`
+`空对象模式` nullObject
 
 `策略模式`
 
