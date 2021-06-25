@@ -1,7 +1,7 @@
 package designPattern.behavior.mediator;
 
 /**
- * 描述:
+ * 描述:创建 user 类。
  *
  * @author WuYanchang
  * @date 2021/6/25 9:42
@@ -18,11 +18,11 @@ public class User {
         this.name = name;
     }
 
-    public User(String name){
-        this.name  = name;
+    public User(String name) {
+        this.name = name;
     }
 
-    public void sendMessage(String message){
-        ChatRoom.showMessage(this,message);
+    public void sendMessage(String message) {
+        ChatRoom.showMessage(this, message);
     }
 }
