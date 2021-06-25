@@ -52,7 +52,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `备忘录模式` memento
 
-`观察者模式`
+`观察者模式` observer
 
 `状态模式`
 
