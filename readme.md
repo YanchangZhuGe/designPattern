@@ -54,7 +54,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `观察者模式` observer
 
-`状态模式`
+`状态模式` state
 
 `空对象模式`
 
