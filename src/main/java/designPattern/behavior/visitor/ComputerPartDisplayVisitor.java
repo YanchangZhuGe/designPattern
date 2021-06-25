@@ -1,13 +1,13 @@
 package designPattern.behavior.visitor;
 
 /**
- * 描述:
+ * 描述:创建实现了上述类的实体访问者。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:36
  */
 
-public class ComputerPartDisplayVisitor  implements ComputerPartVisitor {
+public class ComputerPartDisplayVisitor implements ComputerPartVisitor {
 
     @Override
     public void visit(Computer computer) {
