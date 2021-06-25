@@ -1,7 +1,7 @@
 package designPattern.behavior.strategy;
 
 /**
- * 描述:
+ * 描述:使用 Context 来查看当它改变策略 Strategy 时的行为变化。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:26
