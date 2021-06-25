@@ -42,7 +42,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `责任链模式` chain
 
-`命令模式`
+`命令模式` command
 
 `解释器模式`
 
