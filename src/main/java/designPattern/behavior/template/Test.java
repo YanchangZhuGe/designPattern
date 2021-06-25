@@ -1,7 +1,7 @@
 package designPattern.behavior.template;
 
 /**
- * 描述:
+ * 描述:使用 Game 的模板方法 play() 来演示游戏的定义方式。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:32

@@ -1,13 +1,13 @@
 package designPattern.behavior.template;
 
 /**
- * 描述:
+ * 描述:创建扩展了上述类的实体类。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:31
  */
 
-public class Football  extends Game {
+public class Football extends Game {
 
     @Override
     void endPlay() {
