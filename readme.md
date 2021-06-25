@@ -50,7 +50,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `中介者模式` mediator
 
-`备忘录模式`
+`备忘录模式` memento
 
 `观察者模式`
 
