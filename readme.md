@@ -60,7 +60,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `策略模式` strategy
 
-`模板方法模式`
+`模板模式` template
 
 `访问者模式`
 
