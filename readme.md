@@ -48,7 +48,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `迭代器模式` iterator
 
-`中介者模式`
+`中介者模式` mediator
 
 `备忘录模式`
 
