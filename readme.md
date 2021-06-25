@@ -58,7 +58,7 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `空对象模式` nullObject
 
-`策略模式`
+`策略模式` strategy
 
 `模板方法模式`
 
