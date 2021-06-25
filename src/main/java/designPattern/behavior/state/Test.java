@@ -1,7 +1,7 @@
 package designPattern.behavior.state;
 
 /**
- * 描述:
+ * 描述:使用 Context 来查看当状态 State 改变时的行为变化。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:12

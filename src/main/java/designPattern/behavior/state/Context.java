@@ -1,24 +1,25 @@
 package designPattern.behavior.state;
 
 /**
- * 描述:
+ * 描述:创建 Context 类。
  *
  * @author WuYanchang
  * @date 2021/6/25 15:11
  */
 
-public class Context {private State state;
+public class Context {
+    private State state;
 
-        public Context(){
-            state = null;
-        }
+    public Context() {
+        state = null;
+    }
 
-        public void setState(State state){
-            this.state = state;
-        }
+    public void setState(State state) {
+        this.state = state;
+    }
 
-        public State getState(){
-            return state;
-        }
+    public State getState() {
+        return state;
+    }
 
 }
