@@ -1,13 +1,13 @@
 package designPattern.behavior.interpreter;
 
 /**
- * 描述:
+ * 描述:创建实现了上述接口的实体类。
  *
  * @author WuYanchang
  * @date 2021/6/25 9:37
  */
 
-public class AndExpression  implements Expression {
+public class AndExpression implements Expression {
 
     private Expression expr1 = null;
     private Expression expr2 = null;
