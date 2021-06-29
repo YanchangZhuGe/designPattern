@@ -1,7 +1,7 @@
 package designPattern.extend.serviceLocator;
 
 /**
- * 描述:
+ * 描述:创建实体服务。
  *
  * @author WuYanchang
  * @date 2021/6/29 15:23
@@ -9,7 +9,7 @@ package designPattern.extend.serviceLocator;
 
 public class Service1 implements Service {
     @Override
-    public void execute(){
+    public void execute() {
         System.out.println("Executing Service1");
     }
 

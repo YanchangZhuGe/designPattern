@@ -1,7 +1,7 @@
 package designPattern.extend.serviceLocator;
 
 /**
- * 描述:
+ * 描述:使用 ServiceLocator 来演示服务定位器设计模式。
  *
  * @author WuYanchang
  * @date 2021/6/29 15:24
