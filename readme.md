@@ -78,7 +78,9 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `拦截过滤器模式` interceptingFilter
 
-`服务定位器模式` serviceLocator 
+`服务定位器模式` serviceLocator
+
+`传输对象模式` transferObject
 
 **设计模式的六大原则**
 1、_开闭原则_（Open Close Principle）
