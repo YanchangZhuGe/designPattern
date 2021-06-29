@@ -1,7 +1,7 @@
 package designPattern.extend.compositeEntity;
 
 /**
- * 描述:
+ * 描述:使用 Client 来演示组合实体设计模式的用法
  *
  * @author WuYanchang
  * @date 2021/6/29 15:09
