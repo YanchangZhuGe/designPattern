@@ -15,5 +15,7 @@ public class TestMain {
 //        SingletonExample1 singletonExample1 = new SingletonExample1();
         Date fx_date_d = new Date( );
         System.out.println(fx_date_d);
+
+
     }
 }
