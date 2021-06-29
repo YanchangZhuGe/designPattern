@@ -1,7 +1,7 @@
 package designPattern.extend.interceptingFilter;
 
 /**
- * 描述:
+ * 描述:使用 Client 来演示拦截过滤器设计模式。
  *
  * @author WuYanchang
  * @date 2021/6/29 15:20

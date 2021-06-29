@@ -1,14 +1,14 @@
 package designPattern.extend.interceptingFilter;
 
 /**
- * 描述:
+ * 描述:创建 Target。
  *
  * @author WuYanchang
  * @date 2021/6/29 15:19
  */
 
 public class Target {
-    public void execute(String request){
+    public void execute(String request) {
         System.out.println("Executing request: " + request);
     }
 }
