@@ -1,7 +1,7 @@
 package designPattern.extend.dataObject;
 
 /**
- * 描述:
+ * 描述:创建数值对象。
  *
  * @author WuYanchang
  * @date 2021/6/29 15:12
@@ -11,7 +11,7 @@ public class Student {
     private String name;
     private int rollNo;
 
-    Student(String name, int rollNo){
+    Student(String name, int rollNo) {
         this.name = name;
         this.rollNo = rollNo;
     }
