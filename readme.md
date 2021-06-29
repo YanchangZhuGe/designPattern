@@ -76,7 +76,9 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `前端控制器模式` frontController 
 
-`拦截过滤器模式` interceptingFilter 
+`拦截过滤器模式` interceptingFilter
+
+`服务定位器模式` serviceLocator 
 
 **设计模式的六大原则**
 1、_开闭原则_（Open Close Principle）
