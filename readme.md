@@ -72,6 +72,8 @@ Design Patterns - Elements of Reusable Object-Oriented Software（中文译名�
 
 `组合实体模式` compositeEntity
 
+`数据访问对象模式` dataObject
+
 **设计模式的六大原则**
 1、_开闭原则_（Open Close Principle）
 
