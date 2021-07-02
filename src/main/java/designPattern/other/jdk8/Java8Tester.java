@@ -1,4 +1,4 @@
-package designPattern.other;
+package designPattern.other.jdk8;
 
 import java.util.ArrayList;
 import java.util.Collections;
