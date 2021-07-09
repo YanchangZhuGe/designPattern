@@ -1,6 +1,9 @@
 package designPattern.other.jdk8;
 
+import java.text.SimpleDateFormat;
 import java.time.*;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 描述:
@@ -66,5 +69,37 @@ class ZonedDateTime1 {
 
         ZoneId currentZone = ZoneId.systemDefault();
         System.out.println("当期时区: " + currentZone);
+    }
+
+}
+
+class a {
+    public static void main(String[] args)  throws Exception {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cd= Calendar.getInstance();//获取一个Calendar对象
+        Calendar cd1= Calendar.getInstance();//获取一个Calendar对象
+
+        String start = "2021-07-07";
+        Date parse = null;
+        Date now = new Date();
+        now.setHours(0);
+        now.setMinutes(0);
+        now.setSeconds(0);
+        cd1.setTime(now);//设置calendar日期
+        Integer sum = new Integer(0);
+        String shms = "1 +1 +0 ";
+        String[] split = shms.trim().split("\\+");
+        for (String s : split) {
+            String trim = s.trim();
+            sum += Integer.valueOf(trim);
+            cd.setTime(sdf.parse(start));//设置calendar日期
+            cd.add(Calendar.YEAR,sum);//增加n年
+
+            long l = (cd.getTimeInMillis() - cd1.getTimeInMillis()) / (24*3600*1000);
+            System.out.println(l);
+
+
+        }
     }
 }
