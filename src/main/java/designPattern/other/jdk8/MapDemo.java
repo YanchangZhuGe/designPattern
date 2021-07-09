@@ -1,7 +1,9 @@
 package designPattern.other.jdk8;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 描述:
@@ -42,6 +44,26 @@ public class MapDemo {
         System.out.println(map.get("ITCAST002"));
 
         System.out.println(map);
+
+        //创建Map对象
+        Map<String, String> map1 = new HashMap<String, String>();
+        //添加映射关系
+        map1.put("ITCAST001", "张三");
+        map1.put("ITCAST002", "李四");
+        map1.put("ITCAST005", "李四");
+
+        //Set<K> keySet() : 以Set的形式获返回所有的key
+        Set<String> keys = map1.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println("-----------");
+
+        //Collection<V> values() :
+        Collection<String> values = map1.values();
+        for (String value : values) {
+            System.out.println(value);
+        }
     }
 
 }
