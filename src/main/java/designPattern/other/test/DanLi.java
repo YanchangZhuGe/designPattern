@@ -12,8 +12,21 @@ import org.springframework.util.StringUtils;
 
  class DanLi {
 
-
+    /**
+     * Class String is special cased within the Serialization Stream Protocol.
+     *
+     * A String instance is written into an ObjectOutputStream according to
+     * <a href="{@docRoot}/../platform/serialization/spec/output.html">
+     * Object Serialization Specification, Section 6.2, "Stream Elements"</a>
+     */
     //编写用来解题的方法
+    /**
+     * Class String is special cased within the Serialization Stream Protocol.
+     *
+     * A String instance is written into an ObjectOutputStream according to
+     * <a href="D:/Program Files/Java/jdk1.8.0_281/docs/api/../platform/serialization/spec/output.html">
+     * Object Serialization Specification, Section 6.2, "Stream Elements"</a>
+     */
     public static String compress(String s){
         String result = "";
         if (StringUtils.isEmpty(s)){
