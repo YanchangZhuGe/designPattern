@@ -14,6 +14,9 @@ public class TestMain {
 
 //        SingletonExample1 singletonExample1 = new SingletonExample1();
         Date fx_date_d = new Date( );
+
+        int i = (int) (Math.random() * 5) +2;
+        System.out.println(i);
         System.out.println(fx_date_d);
 
 
