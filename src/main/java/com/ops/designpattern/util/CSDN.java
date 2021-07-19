@@ -108,11 +108,11 @@ public class CSDN {
     /**
      * 打开默认浏览器访问页面
      */
-    public void openDefaultBrowser() throws IOException, InterruptedException {
+    public void openDefaultBrowser(String url) throws IOException, InterruptedException {
         //启用系统默认浏览器来打开网址。
         int i = getI();
         try {
-            URI uri = new URI("https://blog.csdn.net/qq_34462698/article/details/102909067");
+            URI uri = new URI(url);
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -172,7 +172,16 @@ public class CSDN {
         return i;
     }
 
-
+    public static void main(String[] args) {
+        CSDN c = new CSDN();
+        try {
+            c.openDefaultBrowser("https://blog.csdn.net/qq_34462698/article/details/108601560");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     //取到内容 但阅读数不变
 //    public static void main(String[] args) {
