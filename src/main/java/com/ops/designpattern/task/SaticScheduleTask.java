@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class SaticScheduleTask {
     CSDN csdn = new CSDN();
 
-//    @Scheduled(cron = "5 * * * * ?")
+    @Scheduled(cron = "5 * * * * ?")
     private void open() {
 
         System.err.println("打开: " + LocalDateTime.now());
@@ -24,12 +24,22 @@ public class SaticScheduleTask {
         }
     }
 
-//        @Scheduled(cron = "45 * * * * ?")
+    @Scheduled(cron = "45 * * * * ?")
     private void close() {
 
         System.err.println("关闭: " + LocalDateTime.now());
         try {
             csdn.closeIEBrowser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //    @Scheduled(cron = "0/5 * * * * ?")
+    public void soutLog() {
+        System.out.println(LocalDateTime.now());
+        try {
+            csdn.saveLog("cwshi");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,14 +1,15 @@
 package com.ops.designpattern.util;
 
+import com.alibaba.fastjson.JSONArray;
+
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 描述:
@@ -18,85 +19,37 @@ import java.net.URL;
  */
 
 public class CSDN {
-    private String[] url = {"https://blog.csdn.net/qq_34462698/article/details/116998715",
-            "https://blog.csdn.net/qq_34462698/article/details/118786141",
-            "https://blog.csdn.net/qq_34462698/article/details/118702237",
-            "https://blog.csdn.net/qq_34462698/article/details/118610560",
-            "https://blog.csdn.net/qq_34462698/article/details/118385548",
-            "https://blog.csdn.net/qq_34462698/article/details/118380917",
-            "https://blog.csdn.net/qq_34462698/article/details/118001111",
-            "https://blog.csdn.net/qq_34462698/article/details/115326129",
-            "https://blog.csdn.net/qq_34462698/article/details/117697413",
-            "https://blog.csdn.net/qq_34462698/article/details/117927083",
-            "https://blog.csdn.net/qq_34462698/article/details/117807038",
-            "https://blog.csdn.net/qq_34462698/article/details/117790170",
-            "https://blog.csdn.net/qq_34462698/article/details/115380647",
-            "https://blog.csdn.net/qq_34462698/article/details/117287184",
-            "https://blog.csdn.net/qq_34462698/article/details/117287720",
-            "https://blog.csdn.net/qq_34462698/article/details/117287360",
-            "https://blog.csdn.net/qq_34462698/article/details/117023633",
-            "https://blog.csdn.net/qq_34462698/article/details/116942493",
-            "https://blog.csdn.net/qq_34462698/article/details/115373466",
-            "https://blog.csdn.net/qq_34462698/article/details/114627023",
-            "https://blog.csdn.net/qq_34462698/article/details/114605352",
-            "https://blog.csdn.net/qq_34462698/article/details/114551323",
-            "https://blog.csdn.net/qq_34462698/article/details/114549461",
-            "https://blog.csdn.net/qq_34462698/article/details/114501771",
-            "https://blog.csdn.net/qq_34462698/article/details/114380346",
-            "https://blog.csdn.net/qq_34462698/article/details/114371034",
-            "https://blog.csdn.net/qq_34462698/article/details/114341518",
-            "https://blog.csdn.net/qq_34462698/article/details/113768189",
-            "https://blog.csdn.net/qq_34462698/article/details/113732430",
-            "https://blog.csdn.net/qq_34462698/article/details/113614668",
-            "https://blog.csdn.net/qq_34462698/article/details/113130100",
-            "https://blog.csdn.net/qq_34462698/article/details/113116090",
-            "https://blog.csdn.net/qq_34462698/article/details/113126160",
-            "https://blog.csdn.net/qq_34462698/article/details/113125318",
-            "https://blog.csdn.net/qq_34462698/article/details/113124796",
-            "https://blog.csdn.net/qq_34462698/article/details/112763607",
-            "https://blog.csdn.net/qq_34462698/article/details/112505565",
-            "https://blog.csdn.net/qq_34462698/article/details/112363527",
-            "https://blog.csdn.net/qq_34462698/article/details/112171009",
-            "https://blog.csdn.net/qq_34462698/article/details/111830547",
-            "https://blog.csdn.net/qq_34462698/article/details/111273921",
-            "https://blog.csdn.net/qq_34462698/article/details/111246277",
-            "https://blog.csdn.net/qq_34462698/article/details/111151486",
-            "https://blog.csdn.net/qq_34462698/article/details/111149908",
-            "https://blog.csdn.net/qq_34462698/article/details/111034347",
-            "https://blog.csdn.net/qq_34462698/article/details/111031606",
-            "https://blog.csdn.net/qq_34462698/article/details/111025878",
-            "https://blog.csdn.net/qq_34462698/article/details/111020556",
-            "https://blog.csdn.net/qq_34462698/article/details/111013760",
-            "https://blog.csdn.net/qq_34462698/article/details/111010152",
-            "https://blog.csdn.net/qq_34462698/article/details/110943514",
-            "https://blog.csdn.net/qq_34462698/article/details/110917215",
-            "https://blog.csdn.net/qq_34462698/article/details/110911337",
-            "https://blog.csdn.net/qq_34462698/article/details/110905121",
-            "https://blog.csdn.net/qq_34462698/article/details/110877575",
-            "https://blog.csdn.net/qq_34462698/article/details/110045614",
-            "https://blog.csdn.net/qq_34462698/article/details/108614556",
-            "https://blog.csdn.net/qq_34462698/article/details/108601700",
-            "https://blog.csdn.net/qq_34462698/article/details/108601577",
-            "https://blog.csdn.net/qq_34462698/article/details/108601560",
-            "https://blog.csdn.net/qq_34462698/article/details/108397521",
-            "https://blog.csdn.net/qq_34462698/article/details/108397242",
-            "https://blog.csdn.net/qq_34462698/article/details/108397203",
-            "https://blog.csdn.net/qq_34462698/article/details/108387574",
-            "https://blog.csdn.net/qq_34462698/article/details/102909067"};
+    private String urlHead = "https://blog.csdn.net/qq_34462698/article/details/";
+
+    private String[] url = {
+            "116998715", "118786141", "118702237", "118610560", "118385548", "118380917", "118001111", "115326129",
+            "117697413", "117927083", "117807038", "117790170", "115380647", "117287184", "117287720", "117287360",
+            "117023633", "116942493", "115373466", "114627023", "114605352", "114551323", "114549461", "114501771",
+            "114380346", "114371034", "114341518", "113768189", "113732430", "113614668", "113130100", "113116090",
+            "113126160", "113125318", "113124796", "112763607", "112505565", "112363527", "112171009", "111830547",
+            "111273921", "111246277", "111151486", "111149908", "111034347", "111031606", "111025878", "111020556",
+            "111013760", "111010152", "110943514", "110917215", "110911337", "110905121", "110877575", "110045614",
+            "108614556", "108601700", "108601577", "108601560", "108397521", "108397242", "108397203", "108387574",
+            "102909067"};
 
     /**
      * 打开IE浏览器访问页面
      */
     public void openIEBrowser() throws IOException {
+        JSONArray urlList = new JSONArray();
+
         //启用cmd运行IE的方式来打开网址。
         int num = (int) (Math.random() * 5) + 1;
         for (int j = 0; j < num; j++) {
             int i = getI();
+            String urlString = urlHead + url[i];
+            urlList.add(url[i]);
 
-            String str = "cmd /c start iexplore " + url[i];
-
+            String str = "cmd /c start iexplore " + urlString;
             Runtime.getRuntime().exec(str);
         }
+
+        saveLog(urlList.toString());
     }
 
     public void closeIEBrowser() throws IOException {
@@ -202,7 +155,7 @@ public class CSDN {
 //    }
 
 
-//    public static void main(String[] args) throws IOException {
+    //    public static void main(String[] args) throws IOException {
 //        //获取url
 //        URL url = new URL("https://blog.csdn.net/qq_34462698/article/details/102909067");
 //        //下载资源
@@ -214,4 +167,36 @@ public class CSDN {
 //        }
 //        br.close();
 //    }
+    public void saveLog(String text) throws IOException {
+
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = sdf.format(new Date());
+
+        StringBuffer path = new StringBuffer();
+        path.append("C:" + File.separator);
+        path.append("Users" + File.separator);
+        path.append("admin" + File.separator);
+        path.append("Desktop" + File.separator);
+        path.append("java" + File.separator);
+        path.append(fileName + ".txt");
+
+        File file = new File(path.toString());
+//        File file = new File("D:" + File.separator + fileName + ".txt");
+        //如果文件不存在，则自动生成文件；
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        }
+
+        String nextLine = System.getProperty("line.separator");
+        String outS = sd.format(new Date()) + ": " + text;
+        byte[] bytes = outS.getBytes("UTF-8");//因为中文可能会乱码，这里使用了转码，转成UTF-8
+
+        OutputStream outPutStream = new FileOutputStream(file, true);
+        outPutStream.write(nextLine.getBytes());
+        outPutStream.write(bytes);
+        outPutStream.write(nextLine.getBytes());
+        outPutStream.close();//一定要关闭输出流；
+    }
 }
