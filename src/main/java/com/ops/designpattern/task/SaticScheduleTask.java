@@ -3,6 +3,7 @@ package com.ops.designpattern.task;
 import com.ops.designpattern.util.CSDN;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
