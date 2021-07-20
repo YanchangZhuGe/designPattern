@@ -23,7 +23,7 @@ public class SaticScheduleTask {
         }
     }
 
-    //    @Scheduled(cron = "45 * * * * ?")
+//        @Scheduled(cron = "45 * * * * ?")
     private void close() {
 
         System.err.println("关闭: " + LocalDateTime.now());
