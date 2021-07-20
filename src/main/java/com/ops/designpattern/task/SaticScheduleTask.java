@@ -3,7 +3,6 @@ package com.ops.designpattern.task;
 import com.ops.designpattern.util.CSDN;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 public class SaticScheduleTask {
     CSDN csdn = new CSDN();
 
-    @Scheduled(cron = "5 * * * * ?")
+//    @Scheduled(cron = "5 * * * * ?")
     private void open() {
 
         System.err.println("打开: " + LocalDateTime.now());
@@ -24,7 +23,7 @@ public class SaticScheduleTask {
         }
     }
 
-    @Scheduled(cron = "45 * * * * ?")
+    //    @Scheduled(cron = "45 * * * * ?")
     private void close() {
 
         System.err.println("关闭: " + LocalDateTime.now());
