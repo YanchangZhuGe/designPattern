@@ -172,17 +172,8 @@ public class CSDN {
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fileName = sdf.format(new Date());
-
-        StringBuffer path = new StringBuffer();
-        path.append("C:" + File.separator);
-        path.append("Users" + File.separator);
-        path.append("admin" + File.separator);
-        path.append("Desktop" + File.separator);
-        path.append("java" + File.separator);
-        path.append(fileName + ".txt");
-
-        File file = new File(path.toString());
-//        File file = new File("D:" + File.separator + fileName + ".txt");
+        String path = Comment.getPath(true) + fileName + ".txt";
+        File file = new File(path);
         //如果文件不存在，则自动生成文件；
         if (!file.exists()) {
             file.getParentFile().mkdirs();
