@@ -23,18 +23,6 @@ import java.util.List;
  */
 
 public class CSDN {
-    private String urlHead = "https://blog.csdn.net/qq_34462698/article/details/";
-
-    private String[] url = {
-            "116998715", "118786141", "118702237", "118610560", "118385548", "118380917", "118001111", "115326129",
-            "117697413", "117927083", "117807038", "117790170", "115380647", "117287184", "117287720", "117287360",
-            "117023633", "116942493", "115373466", "114627023", "114605352", "114551323", "114549461", "114501771",
-            "114380346", "114371034", "114341518", "113768189", "113732430", "113614668", "113130100", "113116090",
-            "113126160", "113125318", "113124796", "112763607", "112505565", "112363527", "112171009", "111830547",
-            "111273921", "111246277", "111151486", "111149908", "111034347", "111031606", "111025878", "111020556",
-            "111013760", "111010152", "110943514", "110917215", "110911337", "110905121", "110877575", "110045614",
-            "108614556", "108601700", "108601577", "108601560", "108397521", "108397242", "108397203", "108387574",
-            "102909067"};
 
     /**
      * 打开IE浏览器访问页面
@@ -46,8 +34,8 @@ public class CSDN {
         int num = (int) (Math.random() * 5) + 1;
         for (int j = 0; j < num; j++) {
             int i = getI();
-            String urlString = urlHead + url[i];
-            urlList.add(url[i]);
+            String urlString = Comment.getArticleList().get(i).getUrl();
+            urlList.add(urlString);
 
             String str = "cmd /c start iexplore " + urlString;
             Runtime.getRuntime().exec(str);
@@ -119,7 +107,7 @@ public class CSDN {
      */
     public int getI() {
         int i = 0;
-        int length = url.length;
+        int length = Comment.getArticleList().size();
         int num = (int) (Math.random() * 100);
         if (num < length) {
             i = num;
@@ -182,16 +170,5 @@ public class CSDN {
         outPutStream.write(bytes);
         outPutStream.write(nextLine.getBytes());
         outPutStream.close();//一定要关闭输出流；
-    }
-
-    public static void main(String[] args) {
-        String path = Comment.getPath();
-        String json = Comment.getFile(path + "all.json");
-        JSONObject jobj = JSON.parseObject(json);
-        JSONObject data = (JSONObject) jobj.get("data");
-        JSONArray list = (JSONArray) data.get("list");
-        List<ArticleVO> articleVOS = list.toJavaList(ArticleVO.class);
-        Integer articleId = articleVOS.get(0).getArticleId();
-        System.out.println("11111");
     }
 }

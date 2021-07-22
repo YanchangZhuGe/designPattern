@@ -1,6 +1,9 @@
 package com.ops.designpattern.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ops.designpattern.util.vo.ArticleVO;
 import com.ops.designpattern.util.vo.ParseJsonField;
 import com.ops.designpattern.util.vo.ParseObj;
 
@@ -8,6 +11,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 描述:
@@ -60,6 +64,17 @@ public class Comment {
 //        ParseObj parseObj = new ParseObj();
 //        readJson(JsonData, parseObj, "Main");
 //        tryUpdate(Obj, parseObj);
+    }
+
+    public static List<ArticleVO> getArticleList() {
+        String path = Comment.getPath();
+        String json = Comment.getFile(path + "all.json");
+        JSONObject jobj = JSON.parseObject(json);
+        JSONObject data = (JSONObject) jobj.get("data");
+        JSONArray list = (JSONArray) data.get("list");
+        List<ArticleVO> articleVOS = list.toJavaList(ArticleVO.class);
+        Integer articleId = articleVOS.get(0).getArticleId();
+        return articleVOS;
     }
 
     public static <T> void readJson(JSONObject jsonObject, T toObj, String type) {
