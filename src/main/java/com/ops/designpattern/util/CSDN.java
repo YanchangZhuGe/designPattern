@@ -45,7 +45,7 @@ public class CSDN {
             for (int j = 0; j < 6; j++) {
                 int i = getI();
                 String title = Comment.getArticleList().get(i).getTitle();
-                String urlString = "https://www.baidu.com/s?wd=" + title + "诸葛延昌的博客-CSDN";
+                String urlString = "http://www.baidu.com/s?wd=" + title + "诸葛延昌的博客-CSDN&usm=3&rsv_idx=2&rsv_page=1";
                 urlString = urlString.replace(" ", "");
                 urlList.add(urlString);
 
