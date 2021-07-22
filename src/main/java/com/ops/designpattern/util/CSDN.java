@@ -3,6 +3,7 @@ package com.ops.designpattern.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ops.designpattern.util.enums.OpenTypeEnum;
 import com.ops.designpattern.util.vo.ArticleVO;
 
 import java.awt.*;
@@ -27,26 +28,50 @@ public class CSDN {
     /**
      * 打开IE浏览器访问页面
      */
-    public void openIEBrowser() throws IOException {
+    public void openIEBrowser(String type) throws IOException {
         JSONArray urlList = new JSONArray();
 
         //启用cmd运行IE的方式来打开网址。
-        int num = (int) (Math.random() * 5) + 1;
-        for (int j = 0; j < num; j++) {
-            int i = getI();
-            String urlString = Comment.getArticleList().get(i).getUrl();
-            urlList.add(urlString);
+        if (OpenTypeEnum.ARTICLE.getType().equals(type)) {
+            int num = (int) (Math.random() * 5) + 1;
+            for (int j = 0; j < num; j++) {
+                int i = getI();
+                String urlString = Comment.getArticleList().get(i).getUrl();
+                urlList.add(urlString);
 
-            String str = "cmd /c start iexplore " + urlString;
-            Runtime.getRuntime().exec(str);
+                openBrowser(urlString);
+            }
+        } else if (OpenTypeEnum.TITLE.getType().equals(type)) {
+            for (int j = 0; j < 6; j++) {
+                int i = getI();
+                String title = Comment.getArticleList().get(i).getTitle();
+                String urlString = "https://www.baidu.com/s?wd=" + title + "诸葛延昌的博客-CSDN";
+                urlString = urlString.replace(" ", "");
+                urlList.add(urlString);
+
+                openBrowser(urlString);
+            }
+        } else {
+            urlList.add("空白页面");
         }
 
-        saveLog(urlList.toString());
+        saveLog(type + ": " + urlList.toString());
+    }
+
+    public void openBrowser(String url) {
+//  String str = "cmd /c start iexplore " + url;
+        String str = "cmd /c start chrome " + url;
+        try {
+            Runtime.getRuntime().exec(str);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void closeIEBrowser() throws IOException {
 //        Runtime.getRuntime().exec("taskkill /F /IM iexplorer.exe");
-        Runtime.getRuntime().exec("cmd /c taskkill /f /im iexplore.exe");
+//        Runtime.getRuntime().exec("cmd /c taskkill /f /im iexplore.exe");
+        Runtime.getRuntime().exec("cmd /c taskkill /f /im chrome.exe");
     }
 
 

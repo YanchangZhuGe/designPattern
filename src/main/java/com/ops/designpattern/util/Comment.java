@@ -33,7 +33,7 @@ public class Comment {
         path.append("Desktop" + File.separator);
         path.append("java" + File.separator);
 
-        if (true) {
+        if (false) {
             return localPath;
         } else {
             return path.toString();
