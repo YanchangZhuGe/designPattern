@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ops.designpattern.util.vo.ParseJsonField;
 import com.ops.designpattern.util.vo.ParseObj;
 
-import java.io.File;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 
 public class Comment {
 
-    public static String getPath(boolean locall) {
+    public static String getPath() {
 
         String localPath = "D:" + File.separator + "demo" + File.separator;
 
@@ -29,14 +29,32 @@ public class Comment {
         path.append("Desktop" + File.separator);
         path.append("java" + File.separator);
 
-        if (locall) {
+        if (true) {
             return localPath;
         } else {
             return path.toString();
         }
     }
 
-    public static void getJson(String path) {
+    public static String getFile(String path) {
+        String jsonStr = "";
+        try {
+            File jsonFile = new File(path);
+            FileReader fileReader = new FileReader(jsonFile);
+            Reader reader = new InputStreamReader(new FileInputStream(jsonFile), "utf-8");
+            int ch = 0;
+            StringBuffer sb = new StringBuffer();
+            while ((ch = reader.read()) != -1) {
+                sb.append((char) ch);
+            }
+            fileReader.close();
+            reader.close();
+            jsonStr = sb.toString();
+            return jsonStr;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
 //        JSONObject JsonData= data.getJSONObject(JsonStr);
 //        ParseObj parseObj = new ParseObj();
