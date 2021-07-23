@@ -22,6 +22,9 @@ import java.util.List;
 
 public class Comment {
 
+    /**
+     * 获取路径
+     */
     public static String getPath() {
 
         String localPath = "D:" + File.separator + "demo" + File.separator;
@@ -40,6 +43,9 @@ public class Comment {
         }
     }
 
+    /**
+     * 读取文件
+     */
     public static String getFile(String path) {
         String jsonStr = "";
         try {
@@ -66,6 +72,9 @@ public class Comment {
 //        tryUpdate(Obj, parseObj);
     }
 
+    /**
+     * 解析jaon文件
+     */
     public static List<ArticleVO> getArticleList() {
         String path = Comment.getPath();
         String json = Comment.getFile(path + "all.json");
@@ -77,6 +86,9 @@ public class Comment {
         return articleVOS;
     }
 
+    /**
+     * 读取
+     */
     public static <T> void readJson(JSONObject jsonObject, T toObj, String type) {
         //读取辅助类所有字段名
         Field[] f2 = toObj.getClass().getDeclaredFields();

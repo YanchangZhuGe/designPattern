@@ -58,6 +58,9 @@ public class CSDN {
         saveLog(type + ": " + urlList.toString());
     }
 
+    /**
+     * 打开浏览器
+     */
     public void openBrowser(String url) {
 //  String str = "cmd /c start iexplore " + url;
         String str = "cmd /c start chrome " + url;
@@ -68,6 +71,9 @@ public class CSDN {
         }
     }
 
+    /**
+     * 关闭浏览器
+     */
     public void closeIEBrowser() throws IOException {
 //        Runtime.getRuntime().exec("taskkill /F /IM iexplorer.exe");
 //        Runtime.getRuntime().exec("cmd /c taskkill /f /im iexplore.exe");
@@ -100,6 +106,9 @@ public class CSDN {
 
     }
 
+    /**
+     * 仿浏览器
+     */
     public void openHttp() throws IOException {
         HttpURLConnection conn = null;
         String url = "http://www.baidu.com";
@@ -173,6 +182,10 @@ public class CSDN {
 //        }
 //        br.close();
 //    }
+
+    /**
+     * 保存日志
+     */
     public void saveLog(String text) throws IOException {
 
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
