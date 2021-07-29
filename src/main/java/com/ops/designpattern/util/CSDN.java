@@ -5,6 +5,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ops.designpattern.util.enums.OpenTypeEnum;
 import com.ops.designpattern.util.vo.ArticleVO;
+import org.apache.http.Consts;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.util.StringUtils;
 
 import java.awt.*;
 import java.io.*;
@@ -155,13 +162,15 @@ public class CSDN {
 //    public static void main(String[] args) {
 //        CSDN c = new CSDN();
 //        String body = "";
+//        String url = "https://blog.csdn.net/community/home-api/v1/get-business-list?page=1&size=200&businessType=blog&orderby=&noMore=false&username=qq_34462698";
+//
 //        HttpClient httpClient = HttpClientBuilder.create().build();
-//        HttpGet httpGet = new HttpGet("https://blog.csdn.net/qq_34462698/article/details/108601560");
+//        HttpGet httpGet = new HttpGet(url);
 //        try{
 //            HttpResponse httpResponse = httpClient.execute(httpGet);
-//            //HttpEntity httpEntity = httpResponse.getEntity();
-//            //body = EntityUtits.toString(httpEntity, Consts.UTF_8);
-//            System.out.println(httpClient);
+//            HttpEntity httpEntity = httpResponse.getEntity();
+////            body = EntityUtits.toString(httpEntity, Consts.UTF_8);
+//            System.out.println(httpResponse);
 //            //释放连接
 //            httpGet.releaseConnection();
 //        } catch (IOException e) {
@@ -209,4 +218,43 @@ public class CSDN {
         outPutStream.write(nextLine.getBytes());
         outPutStream.close();//一定要关闭输出流；
     }
+
+    public void getNewArticle() throws IOException {
+        String url = "https://blog.csdn.net/community/home-api/v1/get-business-list?page=1&size=200&businessType=blog&orderby=&noMore=false&username=qq_34462698";
+        //下载资源
+        URL url1 = new URL(url);
+        InputStream is = url1.openStream();
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+        StringBuffer allString = new StringBuffer();
+        String msg = null;
+        while (null != (msg = br.readLine())) {
+            allString.append(msg);
+        }
+        br.close();
+
+        if (StringUtils.hasText(allString.toString())) {
+            String path = Comment.getPath() + "all.json";
+            File file = new File(path);
+            //如果文件不存在，则自动生成文件；
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
+            byte[] bytes = allString.toString().getBytes("UTF-8");//因为中文可能会乱码，这里使用了转码，转成UTF-8
+            OutputStream outPutStream = new FileOutputStream(file);
+            outPutStream.write(bytes);
+            outPutStream.close();//一定要关闭输出流；
+        }
+
+    }
+
+    public static void main(String[] args) {
+        CSDN csdn = new CSDN();
+        try {
+            csdn.getNewArticle();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
