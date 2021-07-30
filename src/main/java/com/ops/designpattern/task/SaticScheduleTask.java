@@ -39,6 +39,7 @@ public class SaticScheduleTask {
     @Scheduled(cron = "5 * * * * ?")
     private void open5() {
 
+        System.err.println("打开: " + LocalDateTime.now());
         try {
             csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
         } catch (IOException e) {
@@ -60,6 +61,7 @@ public class SaticScheduleTask {
     @Scheduled(cron = "15 * * * * ?")
     private void open15() {
 
+        System.err.println("打开: " + LocalDateTime.now());
         try {
             csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
         } catch (IOException e) {
@@ -81,6 +83,7 @@ public class SaticScheduleTask {
     @Scheduled(cron = "25 * * * * ?")
     private void open25() {
 
+        System.err.println("打开: " + LocalDateTime.now());
         try {
             csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
         } catch (IOException e) {
@@ -102,6 +105,7 @@ public class SaticScheduleTask {
     @Scheduled(cron = "35 * * * * ?")
     private void open35() {
 
+        System.err.println("打开: " + LocalDateTime.now());
         try {
             csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
         } catch (IOException e) {
