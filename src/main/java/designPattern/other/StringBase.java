@@ -23,3 +23,32 @@ public class StringBase {
         b = "no";
     }
 }
+
+class sushu {
+    public static void main(String[] args) {
+
+        for (int i = 100000; i < 1000000000; i++) {
+            if (i % 2 == 0) {
+                for (int j = 1; j < i; j++) {
+                    if (isPrimeNormal(j)) {
+                        int k = i - j;
+                        if (isPrimeNormal(k)) {
+                            System.out.println(i + " = " + j + " + " + k + " ;");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static boolean isPrimeNormal(int num) {
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
