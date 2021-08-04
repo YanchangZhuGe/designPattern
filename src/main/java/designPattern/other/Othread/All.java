@@ -1,5 +1,7 @@
 package designPattern.other.Othread;
 
+import java.lang.reflect.Method;
+
 /**
  * 描述:
  *
@@ -14,7 +16,11 @@ public class All {
         b.out();
 
 
-        Class<? extends A> aClass = a.getClass();
+        Class<? extends B> aClass = b.getClass();
+        for (Method method : aClass.getMethods()) {
+            String name = method.getName();
+            System.out.println("method-" + name);
+        }
 
 
         System.out.println(aClass.toString());
@@ -24,6 +30,10 @@ public class All {
 class A implements C {
     A() {
         System.out.println("A.created");
+    }
+
+    public void aaaout() {
+        System.out.println("A.aaaout");
     }
 
     @Override
@@ -43,6 +53,10 @@ class B {
 
     B(C c) {
         System.out.println("A->B->C");
+    }
+
+    public void bbbout() {
+        System.out.println("B.bbbout");
     }
 
     public void out() {
