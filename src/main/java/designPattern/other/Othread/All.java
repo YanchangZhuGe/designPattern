@@ -12,6 +12,12 @@ public class All {
         A a = new A();
         B b = new B(a);
         b.out();
+
+
+        Class<? extends A> aClass = a.getClass();
+
+
+        System.out.println(aClass.toString());
     }
 }
 
