@@ -12,3 +12,19 @@ public class test {
         System.out.println("test");
     }
 }
+
+class Persion {
+    private Integer age;
+    private String name;
+
+    private void children() {
+        System.out.println("have 1 ");
+    }
+
+    public void weight() {
+        System.out.println("182");
+
+    }
+
+
+}
