@@ -100,8 +100,7 @@ LSP 是继承复用的基石，只有当派生类可以替换掉基类，且软�
 
 4、_接口隔离原则_（Interface Segregation Principle）
 
-这个原则的意思是：使用多个隔离的接口，比使用单个接口要好。它还有另外一个意思是：降低类之间的耦合度。
-由此可见，其实设计模式就是从大型软件架构出发、便于升级和维护的软件设计思想，它强调降低依赖，降低耦合。
+这个原则的意思是：使用多个隔离的接口，比使用单个接口要好。它还有另外一个意思是：降低类之间的耦合度。 由此可见，其实设计模式就是从大型软件架构出发、便于升级和维护的软件设计思想，它强调降低依赖，降低耦合。
 
 5、_迪米特法则_，又称最少知道原则（Demeter Principle）
 
@@ -110,6 +109,8 @@ LSP 是继承复用的基石，只有当派生类可以替换掉基类，且软�
 6、_合成复用原则_（Composite Reuse Principle）
 
 合成复用原则是指：尽量使用合成/聚合的方式，而不是使用继承。
+
+创建时间 https://api.github.com/repos/YanchangZhuGe/designPattern
 
 ![alt 属性文本](https://zhugeyanchang.gitee.io/contents/out/img/designPattern/design-patterns.jpg "可选标题")
 
