@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class SaticScheduleTask {
     CSDN csdn = new CSDN();
 
-    @Scheduled(cron = "45 * * * * ?")
+    @Scheduled(cron = "02 * * * * ?")
     private void open() {
 
         System.err.println("打开: " + LocalDateTime.now());
@@ -25,7 +25,7 @@ public class SaticScheduleTask {
         }
     }
 
-    @Scheduled(cron = "55 * * * * ?")
+    @Scheduled(cron = "20 * * * * ?")
     private void close() {
 
         System.err.println("关闭: " + LocalDateTime.now());
@@ -36,85 +36,41 @@ public class SaticScheduleTask {
         }
     }
 
-    @Scheduled(cron = "5 * * * * ?")
-    private void open5() {
-
-        System.err.println("打开: " + LocalDateTime.now());
-        try {
-            csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Scheduled(cron = "12 * * * * ?")
-    private void close12() {
-
-        System.err.println("关闭: " + LocalDateTime.now());
-        try {
-            csdn.closeIEBrowser();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Scheduled(cron = "15 * * * * ?")
-    private void open15() {
-
-        System.err.println("打开: " + LocalDateTime.now());
-        try {
-            csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Scheduled(cron = "22 * * * * ?")
-    private void close22() {
+    private void open2() {
+
+        System.err.println("打开: " + LocalDateTime.now());
+        try {
+            csdn.openIEBrowser(OpenTypeEnum.ARTICLE.getType());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Scheduled(cron = "40 * * * * ?")
+    private void close2() {
 
         System.err.println("关闭: " + LocalDateTime.now());
         try {
             csdn.closeIEBrowser();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Scheduled(cron = "25 * * * * ?")
-    private void open25() {
-
-        System.err.println("打开: " + LocalDateTime.now());
-        try {
-            csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Scheduled(cron = "32 * * * * ?")
-    private void close32() {
-
-        System.err.println("关闭: " + LocalDateTime.now());
-        try {
-            csdn.closeIEBrowser();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Scheduled(cron = "35 * * * * ?")
-    private void open35() {
-
-        System.err.println("打开: " + LocalDateTime.now());
-        try {
-            csdn.openIEBrowser(OpenTypeEnum.TITLE.getType());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Scheduled(cron = "42 * * * * ?")
-    private void close42() {
+    private void open3() {
+
+        System.err.println("打开: " + LocalDateTime.now());
+        try {
+            csdn.openIEBrowser(OpenTypeEnum.ARTICLE.getType());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Scheduled(cron = "59 * * * * ?")
+    private void close3() {
 
         System.err.println("关闭: " + LocalDateTime.now());
         try {
