@@ -1,131 +1,113 @@
 {
-	"data": [{
-			"id": "1",
-			"authName": "菜单一",
-			"iconClass":"el-icon-location",
-			"path": "users",
-			"children": [{
-				"id": "1-1",
-				"authName": "选项一",
-                "oconClass": "",
-				"path": "users",
-				"children": [{
-					"id": "1-1-1",
-					"authName": "按钮一",
-                    "oconClass": "",
-					"path": "users",
-					"children": [
-
-					],
-					"order": null
-				}],
-				"order": null
-			}],
-			"order": 1
-		},
-		{
-			"id": "2",
-			"authName": "菜单二",
-            "oconClass": "",
-			"path": "rights",
-			"children": [{
-					"id": "2-1",
-					"authName": "选项一",
-                    "oconClass": "",
-					"path": "roles",
-					"children": [
-
-					],
-					"order": null
-				},
-				{
-					"id": "2-2",
-					"authName": "选项二",
-                    "oconClass": "",
-					"path": "rights",
-					"children": [
-
-					],
-					"order": null
-				}
-			],
-			"order": 2
-		},
-		{
-			"id": "3",
-			"authName": "菜单三",
-            "oconClass": "",
-			"path": "goods",
-			"children": [{
-					"id": "3-1",
-					"authName": "选项一",
-                    "oconClass": "",
-					"path": "goods",
-					"children": [
-
-					],
-					"order": 1
-				},
-				{
-					"id": "3-2",
-					"authName": "选项二",
-                    "oconClass": "",
-					"path": "params",
-					"children": [
-
-					],
-					"order": 2
-				},
-				{
-					"id": "3-3",
-					"authName": "选项三",
-                    "oconClass": "",
-					"path": "categories",
-					"children": [
-
-					],
-					"order": 3
-				}
-			],
-			"order": 3
-		},
-		{
-			"id": "4",
-			"authName": "菜单四",
-            "oconClass": "",
-			"path": "orders",
-			"children": [{
-				"id": "4-1",
-				"authName": "选项一",
-                "oconClass": "",
-				"path": "orders",
-				"children": [
-
-				],
-				"order": null
-			}],
-			"order": 4
-		},
-		{
-			"id": "5",
-			"authName": "菜单五",
-            "oconClass": "",
-			"path": "reports",
-			"children": [{
-				"id": "5-1",
-				"authName": "选项一",
-                "oconClass": "",
-				"path": "reports",
-				"children": [
-
-				],
-				"order": null
-			}],
-			"order": 5
-		}
-	],
-	"meta": {
-		"msg": "获取菜单列表成功",
-		"status": 200
-	}
+  "data": [
+    {
+      "id": "1",
+      "authName": "常用网站",
+      "iconClass": "el-icon-location",
+      "path": "users",
+      "children": [
+        {
+          "id": "1-1",
+          "authName": "选项一",
+          "path": "users",
+          "children": [
+            {
+              "id": "1-1-1",
+              "authName": "按钮一",
+              "path": "users",
+              "children": [],
+              "order": null
+            }
+          ],
+          "order": null
+        }
+      ],
+      "order": 1
+    },
+    {
+      "id": "2",
+      "authName": "技术类",
+      "path": "rights",
+      "children": [
+        {
+          "id": "2-1",
+          "authName": "选项一",
+          "path": "roles",
+          "children": [],
+          "order": null
+        },
+        {
+          "id": "2-2",
+          "authName": "选项二",
+          "path": "rights",
+          "children": [],
+          "order": null
+        }
+      ],
+      "order": 2
+    },
+    {
+      "id": "3",
+      "authName": "菜单三",
+      "path": "goods",
+      "children": [
+        {
+          "id": "3-1",
+          "authName": "选项一",
+          "path": "goods",
+          "children": [],
+          "order": 1
+        },
+        {
+          "id": "3-2",
+          "authName": "选项二",
+          "path": "params",
+          "children": [],
+          "order": 2
+        },
+        {
+          "id": "3-3",
+          "authName": "选项三",
+          "path": "categories",
+          "children": [],
+          "order": 3
+        }
+      ],
+      "order": 3
+    },
+    {
+      "id": "4",
+      "authName": "菜单四",
+      "path": "orders",
+      "children": [
+        {
+          "id": "4-1",
+          "authName": "选项一",
+          "path": "orders",
+          "children": [],
+          "order": null
+        }
+      ],
+      "order": 4
+    },
+    {
+      "id": "5",
+      "authName": "菜单五",
+      "path": "reports",
+      "children": [
+        {
+          "id": "5-1",
+          "authName": "选项一",
+          "path": "reports",
+          "children": [],
+          "order": null
+        }
+      ],
+      "order": 5
+    }
+  ],
+  "meta": {
+    "msg": "获取菜单列表成功",
+    "status": 200
+  }
 }
