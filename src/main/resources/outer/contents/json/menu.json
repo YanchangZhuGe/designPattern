@@ -1,20 +1,26 @@
 {
   "data": [
     {
-      "id": "1",
-      "authName": "常用网站",
-      "iconClass": "el-icon-location",
-      "path": "users",
+      "id": "0",
+      "authName": "权威官网",
+      "iconClass": "el-icon-folder",
       "children": [
         {
-          "id": "1-1",
+          "id": "0-0",
           "authName": "选项一",
-          "path": "users",
+          "iconClass": "el-icon-folder",
           "children": [
             {
-              "id": "1-1-1",
+              "id": "0-0-0",
               "authName": "按钮一",
-              "path": "users",
+              "iconClass": "el-icon-tickets",
+              "children": [],
+              "order": null
+            },
+            {
+              "id": "0-0-5",
+              "authName": "按钮二",
+              "iconClass": "el-icon-tickets",
               "children": [],
               "order": null
             }
@@ -22,92 +28,92 @@
           "order": null
         }
       ],
-      "order": 1
-    },
-    {
-      "id": "2",
-      "authName": "技术类",
-      "path": "rights",
-      "children": [
-        {
-          "id": "2-1",
-          "authName": "选项一",
-          "path": "roles",
-          "children": [],
-          "order": null
-        },
-        {
-          "id": "2-2",
-          "authName": "选项二",
-          "path": "rights",
-          "children": [],
-          "order": null
-        }
-      ],
-      "order": 2
-    },
-    {
-      "id": "3",
-      "authName": "菜单三",
-      "path": "goods",
-      "children": [
-        {
-          "id": "3-1",
-          "authName": "选项一",
-          "path": "goods",
-          "children": [],
-          "order": 1
-        },
-        {
-          "id": "3-2",
-          "authName": "选项二",
-          "path": "params",
-          "children": [],
-          "order": 2
-        },
-        {
-          "id": "3-3",
-          "authName": "选项三",
-          "path": "categories",
-          "children": [],
-          "order": 3
-        }
-      ],
-      "order": 3
-    },
-    {
-      "id": "4",
-      "authName": "菜单四",
-      "path": "orders",
-      "children": [
-        {
-          "id": "4-1",
-          "authName": "选项一",
-          "path": "orders",
-          "children": [],
-          "order": null
-        }
-      ],
-      "order": 4
+      "order": null
     },
     {
       "id": "5",
-      "authName": "菜单五",
-      "path": "reports",
+      "authName": "知识技术",
+      "iconClass": "el-icon-folder",
       "children": [
         {
-          "id": "5-1",
+          "id": "5-0",
           "authName": "选项一",
-          "path": "reports",
+          "iconClass": "el-icon-tickets",
+          "children": [],
+          "order": null
+        },
+        {
+          "id": "5-5",
+          "authName": "选项二",
+          "iconClass": "el-icon-tickets",
           "children": [],
           "order": null
         }
       ],
-      "order": 5
+      "order": null
+    },
+    {
+      "id": "10",
+      "authName": "时代新闻",
+      "iconClass": "el-icon-folder",
+      "children": [
+        {
+          "id": "10-0",
+          "authName": "选项一",
+          "iconClass": "el-icon-tickets",
+          "children": [],
+          "order": null
+        },
+        {
+          "id": "10-5",
+          "authName": "选项二",
+          "iconClass": "el-icon-tickets",
+          "children": [],
+          "order": null
+        },
+        {
+          "id": "10-10",
+          "authName": "选项三",
+          "iconClass": "el-icon-tickets",
+          "children": [],
+          "order": null
+        }
+      ],
+      "order": null
+    },
+    {
+      "id": "15",
+      "authName": "影音娱乐",
+      "iconClass": "el-icon-folder",
+      "children": [
+        {
+          "id": "15-0",
+          "authName": "选项一",
+          "iconClass": "el-icon-tickets",
+          "children": [],
+          "order": null
+        }
+      ],
+      "order": null
+    },
+    {
+      "id": "20",
+      "authName": "竞技休闲",
+      "iconClass": "el-icon-folder",
+      "children": [
+        {
+          "id": "20-0",
+          "authName": "选项一",
+          "iconClass": "el-icon-tickets",
+          "children": [],
+          "order": null
+        }
+      ],
+      "order": null
     }
   ],
   "meta": {
     "msg": "获取菜单列表成功",
-    "status": 200
+    "status": 500
   }
 }

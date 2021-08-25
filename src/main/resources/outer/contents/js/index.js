@@ -1,14 +1,3 @@
-// 工具函数
-
-// 空值判断
-function isNull(value) {
-	if (value == undefined || value == null || value == "" ||
-		value == "undefined" || value == "null") {
-		return true;
-	} else {
-		return false;
-	}
-}
 
 // 根据指定个数分割数组
 function chunkArr(arr, size) {

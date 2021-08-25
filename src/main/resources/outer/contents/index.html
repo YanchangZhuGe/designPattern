@@ -6,13 +6,15 @@
     <link rel="icon" sizes="any" mask="" href="img/tag-head/index_head_black_hole.svg">
     <title>诸葛延昌</title>
     <script type="text/javascript" src="js/import.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
     <link rel="stylesheet" type="text/css" href="css/import.css"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
 </head>
 <body>
-<div id='app' style="background-color: #909399;">
-    <el-container height=100%>
+<div id='app' style="height:100%; overflow:auto;">
+    <el-container>
         <!-- 头部搜索框 -->
-        <el-header height=10%>
+        <el-header height=50px>
             <el-row type="flex" justify="space-around" align="top">
                 <el-col :span="16">
                     <el-input autofocus max="100" placeholder="请输入内容" v-model="searchText"
@@ -38,12 +40,12 @@
                 </el-col>
             </el-row>
         </el-header>
-        <!-- 中部内容区 -->
-        <el-container>
+        <!-- 中部内容区 容器 -->
+        <el-container style="height: 800px; border: 1px solid #eee">
             <!-- 左侧导航栏 -->
-            <el-aside width="10%">
-                <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect"
-                         @open="handleOpen" @close="handleClose" :unique-opened="true">
+            <el-aside width="300px" style="background-color: rgb(238, 241, 246);text-align: left">
+                <el-menu default-active=defaultActive class="el-menu-vertical-demo" :unique-opened="true"
+                         @open="handleOpen" @close="handleClose" @select="handleSelect">
                     <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
                         <template slot="title">
                             <i :class="item.iconClass"></i>
@@ -51,35 +53,35 @@
                         </template>
                         <el-menu-item :index="subItem.id + ''" v-for="subItem in item.children"
                                       :key="subItem.id" @click="clickTitle()">
+                            <i :class="subItem.iconClass"></i>
                             <span slot="title">{{ subItem.authName }}</span>
                         </el-menu-item>
                     </el-submenu>
                 </el-menu>
             </el-aside>
             <!-- 内容区 -->
-            <el-container>
-                <el-main height=70%>
-                    <el-row :index="items.id + ''" v-for="items in contentList" :key="items.id" :gutter="12">
-                        <el-col :span="colSpan" :offset="getColOffset(items.length)" :index="item.id + ''"
-                                v-for="item in items.data" :key="item.id">
-                            <el-card shadow="hover" class="box-card grid-content"
-                                     body-style="height: 50px; cursor: pointer;" align="middle"
-                                     @click.native="openUrl(item.url)" @mouseover.native="mouseoverFunction(item.id)"
-                                     @mouseout.native="mouseoutFunction(item.id)">
-                                <img :src="item.imgUrl"
-                                     style="width: 50px; height: 50px; float: left; margin-top: 5px;border-width: 0px;">
-                                <span>
-											<a class="fontRed">{{item.name}}</a></br>
-                                    <a class="fontBlack"
-                                       style="text-align: left; font-size: 12px;color: gray;">{{item.description}}</a>
-										</span>
-                            </el-card>
-                        </el-col>
-                    </el-row>
-                </el-main>
-                <el-footer height=20%>Footer</el-footer>
-            </el-container>
+            <el-main height=70%>
+                <el-row :index="items.id + ''" v-for="items in contentList" :key="items.id" :gutter="12">
+                    <el-col :span="colSpan" :offset="getColOffset(items.length)" :index="item.id + ''"
+                            v-for="item in items.data" :key="item.id">
+                        <el-card shadow="hover" class="box-card grid-content"
+                                 body-style="height: 50px; cursor: pointer;" align="middle"
+                                 @click.native="openUrl(item.url)" @mouseover.native="mouseoverFunction(item.id)"
+                                 @mouseout.native="mouseoutFunction(item.id)">
+                            <img :src="item.imgUrl"
+                                 style="width: 50px; height: 50px; float: left; margin-top: 5px;border-width: 0px;">
+                            <span>
+		                        <a class="fontRed">{{item.name}}</a></br>
+                                <a class="fontBlack"
+                                   style="text-align: left; font-size: 12px;color: gray;">{{item.description}}</a>
+							</span>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-main>
         </el-container>
+        <!-- 底部 -->
+        <el-footer><a href="addUrl.html">编辑网址</a></el-footer>
     </el-container>
 </div>
 <script type="text/javascript">
@@ -98,6 +100,7 @@
                 contentList: [],
                 contentListAll: [],
                 menuList: [],
+                defaultActive: ["1", "2"],
             }
         },
         created() {
@@ -137,7 +140,6 @@
                     var slipArr = this.contentListAll.filter(e => e.navigationID.startsWith(navigationID));
                     this.contentList = chunkArr(slipArr, this.colNum);
                 }
-                console.log(this.contentList)
             },
             getMenuList(value) {
                 $.getJSON(value).then(res => {
@@ -191,9 +193,6 @@
                 this.colSpan = Math.floor(24 / this.colNum);
                 this.colOffset = Math.floor((24 - this.colNum * this.colSpan) / this.colNum);
                 this.getContentList();
-                console.log(this.contentList);
-                console.log("colOffset" + this.colOffset);
-                console.log(this.colSpan);
             },
             // 封装按钮类型
             getButtonType(value) {
