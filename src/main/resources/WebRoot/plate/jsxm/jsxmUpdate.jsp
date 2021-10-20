@@ -1,0 +1,327 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" import="com.bgd.platform.util.service.*" %>
+<%@ taglib prefix="fns" uri="/WEB-INF/tlds/fns.tld" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;IE=11;IE=9;IE=8;">
+    <meta charset="UTF-8">
+    <title>建设项目主界面</title>
+    <style type="text/css">
+        .label-color {
+            color: red;
+            font-size: 100%;
+        }
+
+        .x-grid-item-jyfwm {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+<%--<%
+    /*获取登录用户*/
+	String userCode = (String) request.getSession().getAttribute("USERCODE");
+    String userName = (String) request.getSession().getAttribute("USERNAME");
+    String ADCODE = (String) request.getSession().getAttribute("ADCODE");
+    String nowDate = SpringContextUtil.getDbDateDay();
+%> --%>
+
+<div id="contentPanel" style="width: 100%;height:100%;">
+</div>
+<!-- 重要：引入统一extjs -->
+<script type="text/javascript" src="/js/commonUtil.js"></script>
+<script type="text/javascript" src="/js/debt/Map.js"></script>
+<script type="text/javascript" src="/js/debt/xmInfo.js"></script>
+<script type="text/javascript" src="xmjbxx.js"></script>
+<script type="text/javascript">
+    var ywcsbl = false;//控制业务处室必录开关
+    var userName = '${sessionScope.USERNAME}';  //获取用户名称
+    var userCode = '${sessionScope.USERCODE}';  //获取用户编码
+    var AD_CODE = '${sessionScope.ADCODE}'.replace(/00$/, "");
+    var nowDate = '${sessionScope.nowDate}';
+    var userName = '${sessionScope.USERNAME}';
+    var userCode = '${sessionScope.USERCODE}';
+    var nowDate = '${fns:getDbDateDay()}';  //当前日期
+    var AD_CODE = '${sessionScope.ADCODE}'.replace(/00$/, "");
+    var button_name = '';//当前操作按钮名称
+    /* var wf_id = getQueryParam("wf_id");// 当前流程id
+     var node_code = getQueryParam("node_code");// 当前节点id
+     var is_jy = getQueryParam("is_jy");// 是否校验防伪码，如果是1就校验，其他则不校验
+     var node_type = getQueryParam("node_type");// 当前节点类型
+     var WF_STATUS = getQueryParam("WF_STATUS");//当前状态
+     var is_view = getQueryParam("is_view");//当前状态
+     var is_cl = getQueryParam("is_cl");//是否存量项目；1存量项目  0新增项目
+     var is_zbx = getQueryParam("is_zbx");//当前状态
+     var is_wzxt = getQueryParam("is_wzxt");//是否是外债系统*/
+    var wf_id = "${fns:getParamValue('wf_id')}";//当前节点名称
+    var node_code = "${fns:getParamValue('node_code')}";// 当前节点id
+    var is_jy = "${fns:getParamValue('is_jy')}";// 是否校验防伪码，如果是1就校验，其他则不校验
+    var node_type = "${fns:getParamValue('node_type')}";// 当前节点类型
+    var WF_STATUS = "${fns:getParamValue('WF_STATUS')}";
+    var is_view = "${fns:getParamValue('is_view')}";//当前状态
+    var is_cl = "${fns:getParamValue('is_cl')}";//是否存量项目；1存量项目  0新增项目
+    var is_zbx = "${fns:getParamValue('is_zbx')}";//当前状态
+    var is_wzxt = "${fns:getParamValue('is_wzxt')}";//是否是外债系统
+    var IS_XMBCXX = '${fns:getSysParam("IS_XMBCXX")}';  //获取系统参数 项目补充信息是否显示
+    /*
+        var isHiddenXZ = getQueryParam("isHiddenXZ");//是否隐藏新增项目按钮
+    */
+    var isHiddenXZ = "${fns:getParamValue('isHiddenXZ')}";//是否隐藏新增项目按钮
+    var FR_DEPLOYMENT_MODE = '${fns:getSysParam("FR_DEPLOYMENT_MODE")}';//帆软报表是否集成部署
+    isHiddenXZ = (isHiddenXZ == null || isHiddenXZ == '') ? false : true;
+    if (is_wzxt == null || is_wzxt == '' || is_wzxt.toUpperCase() == 'null') {
+        is_wzxt = '0';
+    }
+    var xmxzCondition = " and 1=1 and code!='0102' ";
+    if ("1" == is_zbx) {
+        xmxzCondition = " and GUID LIKE '01%'";
+    }
+    if (WF_STATUS == null || WF_STATUS == '' || WF_STATUS.toLowerCase() == 'null') {
+        WF_STATUS = '001';
+    }
+    var v_child = '0';
+    var XM_ID = '';//债务ID
+    //全局变量
+    var OPERATE = '';
+    var json_zwlb = '';
+    var title = '';
+    var connNdjh = '';//项目是否已经申报年度计划
+    var connZwxx = '';//项目是否被债务信息引用
+    var option = '1';//表示tab页签
+    var loadOption = {};
+    var is_tdcb = false; // 项目类型是否为土地储备
+
+    var IS_SHOW_SPEC_UPLOAD_BTN = ''; //系统参数：导出按钮显示
+    $.ajax({
+        type: 'post',
+        url: 'getParamValueAll.action',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            IS_SHOW_SPEC_UPLOAD_BTN = data[0].IS_SHOW_SPEC_UPLOAD_BTN;
+        }
+    });
+    //
+    var XmDataJson;
+    /**
+     * 通用配置json
+     */
+    var jsxm_json_common = {
+        jsFileUrl: 'jsxmlrUpdate.js'
+    };
+    /**
+     * 页面初始化
+     */
+    $(document).ready(function () {
+        //显示提示，并form表单提示位置为表单项下方
+        Ext.QuickTips.init();
+        Ext.form.Field.prototype.msgTarget = 'side';
+        initContent();
+    });
+
+    /**
+     * 初始化页面主要内容区域
+     */
+    function initContent() {
+        Ext.create('Ext.panel.Panel', {
+            layout: 'border',
+            defaults: {
+                split: true,                  //是否有分割线
+                collapsible: false           //是否可以折叠
+            },
+            height: '100%',
+            renderTo: 'contentPanel',
+            border: false,
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    itemId: 'contentPanel_toolbar',
+                    items: jsxm_json_common.items[jsxm_json_common.defautItems]
+                }
+            ],
+            items: jsxm_json_common.items_content()
+        });
+    }
+
+    /**
+     * 初始化右侧panel，放置1个表格
+     */
+    function initContentRightPanel() {
+        return Ext.create('Ext.form.Panel', {
+            height: '100%',
+            flex: 5,
+            region: 'center',
+            layout: {
+                type: 'vbox',
+                align: 'stretch',
+                flex: 1
+            },
+            border: false,
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    layout: {
+                        type: 'column'
+                    },
+                    border: true,
+                    bodyStyle: 'padding:0 0 0 0',//'border-width:0 0 0 0;',
+                    defaults: {
+                        margin: '1 1 2 5',
+                        width: 250,
+                        labelWidth: 80,//控件默认标签宽度
+                        labelAlign: 'left'//控件默认标签对齐方式
+                    },
+                    items: [
+                        {
+                            xtype: 'treecombobox',
+                            fieldLabel: '项目性质',
+                            itemId: 'XMXZ_SEARCH',
+                            displayField: 'name',
+                            valueField: 'code',
+                            rootVisible: true,
+                            lines: false,
+                            selectModel: 'all',
+                            store: DebtEleTreeStoreDB("DEBT_ZJYT", {condition: xmxzCondition}),
+                            listeners: {
+                                select: function (btn, newValue, oldValue) {
+                                    //刷新当前表格
+                                    loadOption = {};
+                                    getHbfxDataList();
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'treecombobox',
+                            fieldLabel: '项目类型',
+                            itemId: 'XMLX_SEARCH',
+                            displayField: 'name',
+                            valueField: 'code',
+                            rootVisible: true,
+                            lines: false,
+                            selectModel: 'all',
+                            typeAhead: false,//不可编辑
+                            editable: false,
+                            store: DebtEleTreeStoreDB("DEBT_ZWXMLX"),
+                            listeners: {
+                                select: function (btn) {
+                                    //刷新当前表格
+                                    loadOption = {};
+                                    getHbfxDataList();
+                                }
+                            }
+                        },
+                        {
+                            xtype: "combobox",
+                            itemId: "JSXZ_SEARCH",
+                            store: DebtEleStoreDB("DEBT_XMJSXZ"),
+                            fieldLabel: '建设性质',
+                            displayField: 'name',
+                            valueField: 'id',
+                            editable: false,
+                            listeners: {
+                                select: function (btn) {
+                                    //刷新当前表格
+                                    loadOption = {};
+                                    getHbfxDataList();
+                                }
+                            }
+                        },
+                        {
+                            xtype: "combobox",
+                            itemId: "LXND_SEARCH",   //项目立项年度
+                            store: DebtEleStoreDB('DEBT_YEAR', {condition: " and code >= '2000' and code <= '2020' "}),
+                            fieldLabel: is_view == '1' ? '申报年度' : '立项年度',
+                            displayField: 'name',
+                            valueField: 'id',
+                            value: new Date().getFullYear(),
+                            editable: false,
+                            allowBlank: true,
+                            listeners: {
+                                select: function (btn) {
+                                    //刷新当前表格
+                                    loadOption = {};
+                                    getHbfxDataList();
+                                }
+                            }
+                        },
+                        {
+                            xtype: "textfield",
+                            fieldLabel: '模糊查询',
+                            itemId: "XM_SEARCH",
+                            width: 507,    //762
+                            labelWidth: 80,
+                            emptyText: '项目单位/编码/名称...',
+                            enableKeyEvents: true,
+                            listeners: {
+                                'keydown': function (self, e, eOpts) {
+                                    var key = e.getKey();
+                                    if (key == Ext.EventObject.ENTER) {
+                                        loadOption = {};
+
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            items: jsxm_json_common.items_content_rightPanel_items ? jsxm_json_common.items_content_rightPanel_items() :
+                [is_view == "1" ? initContentTabGrid() : initContentGrid()]
+        });
+    }
+
+    /**
+     * 树点击节点时触发，刷新content主表格，明细表置为空
+     */
+    function reloadGrid(param) {
+        if (AD_CODE == null || AD_CODE == '') {
+            Ext.Msg.alert('提示', '请选择区划！');
+            return;
+        }
+        if (jsxm_json_common.reloadGrid) {
+            jsxm_json_common.reloadGrid(param);
+        } else {
+            loadOption[option + "#" + AD_CODE + "#" + AG_CODE] = 1;
+            var grid = DSYGrid.getGrid("contentGrid");
+            if (is_view == '1' && option != '1') {
+                grid = DSYGrid.getGrid("contentGrid" + option);
+            }
+            var store = grid.getStore();
+            var XMXZ_ID = Ext.ComponentQuery.query('treecombobox#XMXZ_SEARCH')[0].getValue();
+            var XMLX_ID = Ext.ComponentQuery.query('treecombobox#XMLX_SEARCH')[0].getValue();
+            var JSXZ_ID = Ext.ComponentQuery.query('combobox#JSXZ_SEARCH')[0].getValue();
+            var mhcx = Ext.ComponentQuery.query('textfield#XM_SEARCH')[0].getValue();
+            var lxnd = Ext.ComponentQuery.query('textfield#LXND_SEARCH')[0].getValue();
+            //初始化表格Store参数
+            store.getProxy().extraParams = {
+                AD_CODE: AD_CODE,
+                AG_ID: AG_ID,
+                AG_CODE: AG_CODE,
+                XMXZ_ID: XMXZ_ID,
+                XMLX_ID: XMLX_ID,
+                JSXZ_ID: JSXZ_ID,
+                mhcx: mhcx,
+                lxnd: lxnd,
+                is_zbx: is_zbx,
+                is_cl: is_cl,
+                is_wzxt: is_wzxt,
+                userCode: userCode,
+                wf_id: wf_id,
+                node_code: node_code,
+                WF_STATUS: WF_STATUS,
+                node_type: node_type,
+                option: option,
+                is_view: is_view
+            };
+            //刷新
+            store.loadPage(1);
+        }
+    }
+</script>
+<script type="text/javascript" src="jsxmUpdate.js"></script>
+<script type="text/javascript" src="/js/debt/xmsySzysGrid.js"></script>
+</body>
+</html>
