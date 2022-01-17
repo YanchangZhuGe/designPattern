@@ -81,7 +81,10 @@
             </el-main>
         </el-container>
         <!-- 底部 -->
-        <el-footer><a href="addUrl.html">编辑网址</a></el-footer>
+        <el-footer>
+            <a target="_blank" href="addUrl.html">编辑网址</a>
+            <a href='' @click="getContentListAll('ForceRefresh')">强制刷新</a>
+        </el-footer>
     </el-container>
 </div>
 <script type="text/javascript">
@@ -115,8 +118,8 @@
                 this.colOffset = Math.floor((24 - this.colNum * this.colSpan) / this.colNum);
             },
             getAllData() {
+                this.getContentListAll();
                 this.getUrlList(this.jsonDir + "url.json");
-                this.getContentListAll(this.jsonDir + "content.json");
                 this.getMenuList(this.jsonDir + "menu.json");
             },
             getUrlList(value) {
@@ -124,12 +127,14 @@
                     this.urlList = res.urlList;
                 })
             },
-            getContentListAll(value) {
-                $.getJSON(value).then(res => {
-                    this.contentListAll = res.data;//chunkArr(res.data, this.colNum);
-                }).then(() => {
-                    this.getContentList();
-                });
+            getContentListAll(refresh) {
+                this.contentListAll = getContentList(this.jsonDir + "content.json", refresh);
+                this.getContentList();
+                // $.getJSON(value).then(res => {
+                //     this.contentListAll = res.data;//chunkArr(res.data, this.colNum);
+                // }).then(() => {
+                //     this.getContentList();
+                // });
             },
             // 获取链接块 切割数组
             getContentList(navigationID) {
@@ -137,7 +142,7 @@
                     this.contentList = chunkArr(this.contentListAll, this.colNum);
                 } else {
                     this.contentList = [];
-                    var slipArr = this.contentListAll.filter(e => e.navigationID.startsWith(navigationID));
+                    let slipArr = this.contentListAll.filter(e => e.navigationID.startsWith(navigationID));
                     this.contentList = chunkArr(slipArr, this.colNum);
                 }
             },
@@ -157,7 +162,7 @@
             },
             // 搜索跳转功能
             toSearch(value) {
-                var url = null;
+                let url = null;
                 if (isNull(value)) {
                     // 回车键-传值为空-用默认
                     url = this.urlList[this.buttonValue] + this.searchText;
