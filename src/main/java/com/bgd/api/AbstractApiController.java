@@ -6,6 +6,7 @@ import com.bgd.api.common.security.check.ApiCheckService;
 import com.bgd.api.common.utils.EnumUtil;
 import com.bgd.api.common.utils.ExceptionUtil;
 import com.bgd.api.common.utils.JSONUtil;
+import com.bgd.api.common.utils.MessageUtil;
 import com.bgd.platform.util.common.HttpTool;
 import com.bgd.platform.util.security.AccessControl;
 import net.sf.json.JSON;

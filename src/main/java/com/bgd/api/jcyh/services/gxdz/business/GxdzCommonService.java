@@ -75,7 +75,7 @@ public class GxdzCommonService {
         }
         if (StringUtils.hasText(ZQZH_ID))
         {
-            sqlWhere.append(" AND ZJSZ.ACC_NAME = ? ");
+            sqlWhere.append(" AND ZJSZ.ACC_NO = ? ");
             paramList.add(ZQZH_ID);
         }
         if (StringUtils.hasText(START_DATE_ACTUAL) && StringUtils.hasText(END_DATE_ACTUAL))

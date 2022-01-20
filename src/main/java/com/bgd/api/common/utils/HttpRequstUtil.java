@@ -1,16 +1,27 @@
 package com.bgd.api.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.bgd.debt.common.util.DebtException;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 /**
  * 描述: Http请求工具类
@@ -56,15 +67,35 @@ public class HttpRequstUtil {
         httpPost.addHeader("X-Aa-Token", token);
         httpPost.setEntity(outEntity);
         httpPost.setConfig(requestConfig);
+
         System.out.println("http请求信息>>>" + httpPost.toString());
+        try
+        {
+            result = executeRequest(httpPost);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String executeRequest(HttpUriRequest httpRequest) throws IOException, DebtException
+    {
+        String result = "";
 
         //执行一个http请求，传递HttpGet或HttpPost参数
         CloseableHttpClient httpclient = null;
-        httpclient = HttpClients.createDefault();
-
+        if ("https".equals(httpRequest.getURI().getScheme()))
+        {
+            httpclient = createSSLInsecureClient();
+        }
+        else
+        {
+            httpclient = HttpClients.createDefault();
+        }
         try
         {
-            CloseableHttpResponse response = httpclient.execute(httpPost);
+            CloseableHttpResponse response = httpclient.execute(httpRequest);
 
             //判断接口是否调用成功
             int statusCode = response.getStatusLine().getStatusCode();
@@ -95,5 +126,33 @@ public class HttpRequstUtil {
             }
         }
         return result;
+    }
+
+    /**
+     * 创建 SSL连接
+     */
+    private static CloseableHttpClient createSSLInsecureClient()
+    {
+        try
+        {
+            SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(new TrustStrategy() {
+                @Override
+                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException
+                {
+                    return true;
+                }
+            }).build();
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session)
+                {
+                    return true;
+                }
+            });
+            return HttpClients.custom().setSSLSocketFactory(sslsf).build();
+        } catch (GeneralSecurityException ex)
+        {
+            throw new RuntimeException(ex);
+        }
     }
 }
