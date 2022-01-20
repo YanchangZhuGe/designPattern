@@ -7,8 +7,8 @@ import com.bgd.api.common.security.check.ApiCheckService;
 import com.bgd.api.common.utils.JSONUtil;
 import com.bgd.api.common.utils.MessageUtil;
 import com.bgd.api.common.utils.QueryDBUtil;
-import com.bgd.platform.util.common.StringTool;
-import com.bgd.platform.util.dao.BgdDataSource;
+import com.bgd.oth.BgdDataSource;
+import com.bgd.oth.StringTool;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.MapUtils;
 

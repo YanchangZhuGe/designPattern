@@ -5,8 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bgd.api.common.propety.GxdzApiService;
 import com.bgd.api.common.utils.HttpRequstUtil;
-import com.bgd.platform.util.dao.BgdDataSource;
-import com.bgd.platform.util.service.SpringContextUtil;
+import com.bgd.oth.BgdDataSource;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.util.StringUtils;
@@ -241,7 +240,7 @@ public class GxdzCommonService {
     {
         // 默认提前一天
         Integer proDayInt = 1;
-        String ELE_AD_CODE = (String) SpringContextUtil.getSysParamMap().get("ELE_AD_CODE");
+        String ELE_AD_CODE = null;// (String) SpringContextUtil.getSysParamMap().get("ELE_AD_CODE");
         String proDay = (String) jobParam.get("proDay");
         String year = (String) jobParam.get("year");
         // 定义传参
