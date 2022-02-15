@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;IE=11;IE=9;IE=8;">
+    <meta charset="UTF-8">
+    <title>存量债务还本付息主界面</title>
+    <style type="text/css">
+
+        .x-grid-back-green {
+            background: #00ff00;
+        }
+    </style>
+
+</head>
+<body>
+<div id="contentPanel" style="width: 100%;height:100%;">
+</div>
+<!-- 重要：引入统一extjs -->
+<script type="text/javascript" src="/js/commonUtil.js"></script>
+<script type="text/javascript" src="/js/debt/ZWDetailInfoDialog.js"></script>
+<script type="text/javascript" src="/js/debt/Map.js"></script>
+<script type="text/javascript">
+    var reportUrl = '';
+    var wf_id = getQueryParam("wf_id");//当前流程id
+    var node_code = getQueryParam("node_code");//当前节点id
+    var node_type = getQueryParam("node_type");
+    var is_end = getQueryParam("is_end");
+    var button_name = '';//当前操作按钮名称
+    var WF_STATUS = getQueryParam("WF_STATUS");//当前状态
+    if (WF_STATUS == null || WF_STATUS == '' || WF_STATUS.toLowerCase() == 'null') {
+        WF_STATUS = '001';
+    }
+    var v_child = '0';
+    if (node_type == "typing" || node_type == "reviewed") {
+        v_child = '1';
+    }
+    /**
+     * 系统参数:提前还款时是否自动计算付息计划
+     */
+    var IS_AUTO_PAYMENT_PLAN = '';
+    var IS_CZB_VERSION = 0;
+    //债务还本付息方式
+    var ZW_HBFX_MODE;//0：还本付息一起偿还；1：还本付息分别偿还
+    var IS_SHOW_SPEC_UPLOAD_BTN = ''; //系统参数：是否必须校验限额
+    $.ajax({
+        type: 'post',
+        url:'getParamValueAll.action',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            IS_AUTO_PAYMENT_PLAN = data[0].IS_AUTO_PAYMENT_PLAN;
+            IS_CZB_VERSION = data[0].IS_CZB_VERSION;
+            ZW_HBFX_MODE = data[0].ZW_HBFX_MODE;
+            IS_SHOW_SPEC_UPLOAD_BTN=data[0].IS_SHOW_SPEC_UPLOAD_BTN;
+        }
+    });
+    //全局变量
+    var TITLE = '';
+    var isModify = '0';//0代表新增，1代表修改
+    var IS_WF = "1";
+    var condition = 'and 1=1';
+    var store_DEBT_ZJLY = null;
+    var HbfxlxStore = null;
+    var HzcsStore = DebtEleTreeStoreDB('DEBT_HZCS');
+    var zwlb_id = getQueryParam("zwlb_id");
+    var isHuanBen = '0';//0是还本录入，1是罚息录入
+    var currentDate = new Date();
+    /**
+     * 通用配置json
+     */
+    var hbfx_json_common = {
+        100120: {
+            "typing": {//债务管理还本付息资金申请
+                jsFileUrl: 'hbfxzjsq.js'
+            },
+            "reviewed": {//债务管理还本付息资金审核
+                jsFileUrl: 'hbfxzjsh.js'
+            },
+            "export": {//债务管理还本付息excel导出
+                jsFileUrl: 'hbfxExport.js'
+            }
+        }
+    };
+    /**
+     * 页面初始化
+     */
+    $(document).ready(function () {
+        //显示提示，并form表单提示位置为表单项下方
+        Ext.QuickTips.init();
+        Ext.form.Field.prototype.msgTarget = 'side';
+        //动态加载js
+        $.ajaxSetup({
+            cache: true
+        });
+        $.getScript(hbfx_json_common[wf_id][node_type].jsFileUrl, function () {
+            initContent();
+            if (hbfx_json_common[wf_id][node_type].callBack) {
+                hbfx_json_common[wf_id][node_type].callBack();
+            }
+
+        });
+        store_DEBT_ZJLY = DebtEleTreeStoreDB('DEBT_CHZJLY', {condition: condition});
+    });
+    /**
+     * 初始化页面主要内容区域
+     */
+    function initContent() {
+        Ext.create('Ext.panel.Panel', {
+            itemId: 'main_content',
+            layout: 'border',
+            defaults: {
+                split: true,                  //是否有分割线
+                collapsible: false           //是否可以折叠
+            },
+            height: '100%',
+            renderTo: 'contentPanel',
+            border: false,
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    itemId: 'contentPanel_toolbar',
+                    items: hbfx_json_common[wf_id][node_type].items[hbfx_json_common[wf_id][node_type].defautItems]
+                }
+            ],
+            items: hbfx_json_common[wf_id][node_type].items_content()
+        });
+    }
+    /**
+     * 初始化右侧panel，放置1个表格
+     */
+    function initContentRightPanel(grid_dockedItems) {
+        var panel =  Ext.create('Ext.form.Panel', {
+            height: '100%',
+            flex: 5,
+            region: 'center',
+            layout: {
+                type: 'vbox',
+                align: 'stretch',
+                flex: 1
+            },
+            border: false,
+            items: hbfx_json_common[wf_id][node_type].items_content_rightPanel_items ? hbfx_json_common[wf_id][node_type].items_content_rightPanel_items() : [
+                initContentGrid()
+            ]/* ,
+             dockedItems: {
+             xtype: 'toolbar',
+             dock: 'top',
+             layout: {
+             type: 'column'
+             },
+             defaults: {
+             margin: '5 5 5 5',
+             width: 250,
+             labelWidth: 100,//控件默认标签宽度
+             labelAlign: 'left'//控件默认标签对齐方式
+             },
+             items: [
+
+
+             ]
+             } */
+        });
+        if (grid_dockedItems) {
+            panel.addDocked({
+                xtype: 'form',
+                dock: 'top',
+                layout: {
+                    type: 'column'
+                },
+                border: true,
+                bodyStyle: 'border-width:0 0 0 0',
+                height: 60,
+                defaults: {
+                    margin: '3 5 3 5',
+                    width: 250,
+                    labelWidth: 100,//控件默认标签宽度
+                    labelAlign: 'right'//控件默认标签对齐方式
+                },
+                items: [
+                    {
+                        xtype: "combobox",
+                        name: "DQ_YEAR",
+                        store: DebtEleStore(json_debt_year),
+                        displayField: "name",
+                        valueField: "id",
+                        value:currentDate.getFullYear(),
+                        fieldLabel: '截至年月',
+                        labelAlign: 'right',
+                        columnWidth: .25,
+                        editable: false, //禁用编辑
+                        labelWidth: 60,
+                        width: 175
+                    },
+                    {
+                        xtype: "combobox",
+                        name: "DQ_MO",
+                        store: DebtEleStore(json_debt_yf_nd),
+                        displayField: "name",
+                        valueField: "id",
+                        value: lpad(1 + currentDate.getUTCMonth(), 2),
+                        editable: false, //禁用编辑
+                        columnWidth: .15,
+                        width: 85,
+                        listeners: {
+                            change: function (self, newValue) {
+                                var dq_year = self.up('form').down('combobox[name="DQ_YEAR"]').getValue();
+                                if (newValue != null && (dq_year == null || dq_year == '')) {
+                                    Ext.MessageBox.alert('提示', '请先选择年度！');
+                                    self.setValue('');
+                                }
+                            }
+                        }
+                    },
+                    {
+                        xtype: "treecombobox",
+                        fieldLabel: '债权类型',
+                        columnWidth: .3,
+                        width: 200,
+                        labelWidth: 60,
+                        labelAlign: 'right',
+                        name: "zqfl_id",
+                        store: DebtEleTreeStoreDB('DEBT_ZQLX'),
+                        displayField: "name",
+                        valueField: "code",
+                        editable: false, //禁用编辑
+                        allowBlank: true,
+                        selectModel: 'all'
+                    }/*,
+                    {
+                        xtype: "checkboxgroup",
+                        name: 'checkboxgroup',
+                        id: 'checkboxgroup',
+                        columnWidth: .3,
+                        items: [//仅显示逾期
+                            {boxLabel: '包含逾期', name: 'cb', checked:false,inputValue: '1', labelAlign: 'right', labelWidth: 60, width: 220
+                            }
+                        ]
+                    }*/
+                ],
+                dockedItems: [
+                    {
+                        xtype: 'toolbar',
+                        border: false,
+                        dock: 'right',
+                        layout: {
+                            type: 'vbox',
+                            align: 'center'
+                        },
+
+                        items: [
+                            {
+                                xtype: 'button',
+                                text: '查询',
+                                icon: '/image/sysbutton/search.png',
+                                handler: function (btn) {
+                                    var form = btn.up('form');
+                                    if (form.isValid()) {
+                                        reloadGrid();
+                                    } else {
+                                        Ext.Msg.alert("提示", "查询区域未通过验证！");
+                                    }
+                                }
+                            }, {
+                                xtype: 'button',
+                                text: '重置',
+                                icon: '/image/sysbutton/cancel.png',
+                                handler: function (btn) {
+                                    var form = btn.up('form');
+                                    form.reset();
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },0);
+        }
+        return panel;
+    }
+    /**
+     * 树点击节点时触发，刷新content主表格，明细表置为空
+     */
+    function reloadGrid(param) {
+        if (hbfx_json_common[wf_id][node_type].reloadGrid) {
+            hbfx_json_common[wf_id][node_type].reloadGrid(param);
+        } else {
+            if (AD_CODE == null || AD_CODE == '') {
+                return;
+            }
+            {
+                var grid = DSYGrid.getGrid('contentGrid');
+                var store = grid.getStore();
+                var mhcx = Ext.ComponentQuery.query('textfield[name="contentGrid_search"]')[0].value;
+                var is_tqhk = Ext.ComponentQuery.query('combobox[name="is_tqhk"]')[0].value;
+                store.getProxy().extraParams = {
+                    AD_CODE: AD_CODE,
+                    AG_CODE: AG_CODE,
+                    wf_status: WF_STATUS,
+                    wf_id: wf_id,
+                    node_code: node_code,
+                    mhcx: mhcx,
+                    is_tqhk: is_tqhk,
+                    zwlb_id: zwlb_id
+                };
+                //刷新
+                store.loadPage(1);
+            }
+        }
+    }
+    /**
+     * 创建填写意见对话框
+     */
+    function initWindow_opinion(config) {
+        var default_config = {
+            closeAction: 'destroy',
+            title: null,
+            buttons: Ext.MessageBox.OKCANCEL,
+            width: 350,
+            value: '同意',
+            animateTarget: null,
+            fn: null
+        };
+        $.extend(default_config, config);
+        return Ext.create('Ext.window.MessageBox', {
+            closeAction: default_config.closeAction
+        }).show({
+            multiline: true,
+            value: default_config.value,
+            width: default_config.width,
+            title: default_config.title,
+            animateTarget: default_config.animateTarget,
+            buttons: default_config.buttons,
+            fn: default_config.fn
+        });
+    }
+    //----------------------------------------------------------------------查看------------------------
+    //创建新增偿还资金申请单弹出窗口
+    var window_debt_view_apply = {
+        window: null,
+        show: function (config) {
+            if (!this.window) {
+                this.window = initWindow_debt_view_apply(config);
+            }
+            this.window.show();
+        }
+    };
+    /**
+     * 初始化偿债资金申请单弹出窗口
+     */
+    function initWindow_debt_view_apply(config) {
+        config = $.extend({}, {
+            disabled: false,
+            gridId: ''
+        }, config);
+        return Ext.create('Ext.window.Window', {
+            title: TITLE, // 窗口标题
+            width: document.body.clientWidth * 0.95, // 窗口宽度
+            height: document.body.clientHeight * 0.95, // 窗口高度
+            layout: 'fit',
+            itemId: 'window_debt_view_apply', // 窗口标识
+            buttonAlign: 'right', // 按钮显示的位置
+            modal: true, // 模式窗口，弹出窗口后屏蔽掉其他组件
+            closeAction: 'destroy',//hide:单击关闭图标后隐藏，可以调用show()显示。如果是destory，则会将window销毁。
+            items: [
+                {
+                    xtype: 'tabpanel',
+                    items: [
+                        {
+                            title: '单据',
+                            layout: 'fit',
+                            items: [initWindow_debt_view_apply_contentForm()]
+                        },
+                        {
+                            title: '附件<span class="file_sum" style="color: #FF0000;">(0)</span>',
+                            layout: 'fit',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    layout: 'fit',
+                                    itemId: 'window_view_zcxx_file_panel',
+                                    items: [initWindow_save_zcxx_tab_upload(config)]
+                                }
+                            ],
+                            listeners: {
+                                beforeactivate: function () {
+                                    // 检验是否主表是否有数据
+                                    /* var grid = DSYGrid.getGrid('debt_view_apply_grid');
+                                     if (grid.getStore().getCount() <= 0) {
+                                     Ext.MessageBox.alert('提示', '单据明细表格无数据！');
+                                     return false;
+                                     }
+                                     // 获取选中数据
+                                     var record = grid.getCurrentRecord();
+                                     //如果当前无选中行，默认选中第一条数据
+                                     if (!record) {
+                                     $(grid.getView().getRow(0)).parents('table[data-recordindex=0]').addClass('x-grid-item-click');
+                                     record = grid.getStore().getAt(0);
+                                     Ext.toast({
+                                     html: "单据明细表格无当前选中行，默认选中第一条，展示第一条的附件！",
+                                     closable: false,
+                                     align: 't',
+                                     slideInDuration: 400,
+                                     minWidth: 400
+                                     });
+                                     } */
+                                    var panel = Ext.ComponentQuery.query('panel#window_view_zcxx_file_panel')[0];
+                                    panel.removeAll(true);
+                                    panel.add(initWindow_save_zcxx_tab_upload({
+                                        disabled: true,
+                                        gridId: panel.up('window').down('form#window_debt_view_apply_form').down('textfield[name="CHBJ_ID"]').getValue()
+                                    }));
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            listeners: {
+                close: function () {
+                    window_debt_view_apply.window = null;
+                }
+            }
+        });
+    }
+    /**
+     * 初始化还本付息中页签panel的附件页签
+     */
+    function initWindow_save_zcxx_tab_upload(config) {
+        var grid = UploadPanel.createGrid({
+            busiType: 'ET104',//业务类型
+            busiId: config.gridId,//业务ID
+            editable: !config.disabled,//是否可以修改附件内容
+            gridConfig: {
+                itemId: 'window_save_zcxx_tab_upload_grid'
+            }
+        });
+        //附件加载完成后计算总文件数，并写到页签上
+        grid.getStore().on('load', function (self, records, successful) {
+            var sum = 0;
+            if (records != null) {
+                for (var i = 0; i < records.length; i++) {
+                    if (records[i].data.STATUS == '已上传') {
+                        sum++;
+                    }
+                }
+            }
+            if (grid.up('tabpanel').el.dom) {
+                $(grid.up('tabpanel').el.dom).find('span.file_sum').html('(' + sum + ')');
+            } else {
+                $('span.file_sum').html('(' + sum + ')');
+            }
+        });
+        return grid;
+    }
+    /**
+     * 初始化偿债资金申请单表单
+     */
+    function initWindow_debt_view_apply_contentForm() {
+        return Ext.create('Ext.form.Panel', {
+            //title: '详情表单',
+            width: '100%',
+            height: '100%',
+            itemId: 'window_debt_view_apply_form',
+            layout: 'anchor',
+            defaults: {
+                anchor: '100%',
+                margin: '5 5 5 5'
+            },
+            defaultType: 'textfield',
+            items: [
+                //{ xtype: 'hiddenfield', name: 'userPageMenu.id' },
+                {
+                    xtype: 'container',
+                    layout: 'column',
+                    defaultType: 'textfield',
+                    defaults: {
+                        margin: '5 5 5 5',
+                        //columnWidth: .3,
+                        width: 210,
+                        labelWidth: 100//控件默认标签宽度
+                    },
+                    items: [
+                        {fieldLabel: '单据ID', hidden: true, name: 'CHBJ_ID', xtype: 'textfield'},
+                        {fieldLabel: '申请单位', name: 'AG_NAME', xtype: 'textfield'},
+                        {fieldLabel: '申请单位代码', name: 'AG_CODE', xtype: 'hiddenfield'},
+                        {
+                            fieldLabel: '<span class="required">✶</span>录入日期',
+                            xtype: 'datefield',
+                            name: 'CREATE_DATE',
+                            format: 'Y-m-d H:i:s',
+                            // width: 180,
+                            value: today,
+                            hidden: true,
+                            renderer: function (value) {
+                                return dsyDateFormat(value);
+                            }
+                        },
+                        // {fieldLabel: '申请金额(原币)', xtype: "numberFieldFormat", name: 'PAY_AMT_RMB', hideTrigger: true, labelWidth: 100},
+                        {
+                            fieldLabel: '还本付息总额', xtype: "numberFieldFormat", name: 'PAY_AMT_RMB',
+                            hideTrigger: true,
+                            labelAlign: 'right',
+                            readOnly: true, fieldStyle: 'background:#E6E6E6'//, //width: 250, labelWidth: 100
+                        }, {
+                            fieldLabel: '其中本金', xtype: "numberFieldFormat", name: 'PAY_BJ_AMT_RMB',
+                            hideTrigger: true, labelAlign: 'right',
+                            readOnly: true, fieldStyle: 'background:#E6E6E6'//, width: 250, labelWidth: 100
+                        }, {
+                            fieldLabel: '其中利息', xtype: "numberFieldFormat", name: 'PAY_LX_AMT_RMB',
+                            hideTrigger: true, labelAlign: 'right',
+                            readOnly: true, fieldStyle: 'background:#E6E6E6'//, width: 400, labelWidth: 100
+                        },
+                        {
+                            fieldLabel: '备注', xtype: "textfield", name: 'REMARK', width: 650
+                        }
+                    ]
+                },
+                {
+                    xtype: 'fieldset',
+                    anchor: '100% -80',
+                    title: '单据明细',
+                    layout: 'fit',
+                    padding: '10 5 3 10',
+                    height: '100%',
+                    collapsible: false,
+                    items: [
+                        initWindow_debt_view_apply_contentForm_grid()
+                    ]
+                }
+            ],
+            listeners: {
+                'beforeRender': function () {
+                    // if(node_type == "reviewed"|| WF_STATUS == "008"){
+
+                    SetItemReadOnly(this.items);
+
+                    // }
+                }
+            }
+        });
+    }
+    /**
+     * 初始化偿债资金申请单表单中的表格
+     */
+    function initWindow_debt_view_apply_contentForm_grid() {
+        var headerJson = [
+            {xtype: 'rownumberer', width: 40},
+            {
+                dataIndex: "ZW_NAME", type: "string", text: "债务名称", width: 250,
+                renderer: function (data, cell, record) {
+                    /*var hrefUrl = '/page/debt/common/zwyhs.jsp?zw_id=' + encodeURIComponent(record.get('ZW_ID'));
+                    return '<a href="' + hrefUrl + '" target="_blank" style="color:#3329ff;">' + data + '</a>';*/
+                    var url='/page/debt/common/zwyhs.jsp';
+                    var paramNames=new Array();
+                    paramNames[0]="zw_id";
+                    var paramValues=new Array();
+                    paramValues[0]=encodeURIComponent(record.get('ZW_ID'));
+                    var result='<a href="#" onclick="urlCt(\''+url+'\',\''+paramNames+'\',\''+paramValues+'\');" style="color:#3329ff;">'+data+'</a>';
+                    return result;
+                }
+            },
+            {dataIndex: "ZW_CODE", type: "string", text: "债务编码", hidden: true},
+            {
+                dataIndex: "PAY_DATE",
+                type: "string",
+                text: "申请日期",
+                renderer: function (value, metaData, record) {
+                    var newdate = dsyDateFormat(value);
+                    record.data.PAY_DATE = newdate;
+                    return newdate;
+                }
+            },
+            {dataIndex: "CH_TYPE_NAME", type: "string", text: "类型", width: 80},
+            {dataIndex: "ZJLY_NAME", type: "string", text: "偿还资金来源", width: 250, align: 'left'},
+            {
+                dataIndex: "APPLY_AMT", type: "float", text: "本次申请金额(原币)",
+                width: 180
+            },
+            {
+                dataIndex: "JZ_DATE",
+                type: "string",
+                text: "记账日期",
+                renderer: function (value) {
+                    return dsyDateFormat(value);
+                }
+            },
+            {dataIndex: "JZ_NO", type: "string", text: "会计凭证号", width: 100},
+            {dataIndex: "CHBJ_TYPE_NAME", type: "string", text: "还款类型", width: 80},
+            {
+                dataIndex: "HKJH_DATE",
+                type: "string",
+                text: "到期支付日期",
+                width: 120,
+                align: 'right',
+                renderer: function (value) {
+                    return dsyDateFormat(value);
+                }
+            },
+            {dataIndex: "DUE_AMT", type: "float", text: "到期金额(原币)", width: 140},
+            {dataIndex: "YE_AMT", type: "float", text: "债务余额(原币)", width: 140}
+
+            /* {dataIndex: "CHBJ_AMT", type: "float", text: "已申请金额(原币)", width: 180},
+             {dataIndex: "HL_RATE", type: "string", text: "汇率", editor: 'textfield', width: 50},
+
+             {dataIndex: "APPLY_AMT_RMB", type: "float", text: "本次申请金额(人民币)", width: 185},
+             {dataIndex: "CUR_NAME", type: "string", text: "币种"},
+             {dataIndex: "CHBJ_AMT_RMB", type: "float", text: "已申请金额(人民币)", width: 180} */
+
+
+            // {dataIndex: "REMARK", type: "string", text: "备注", editor: 'textfield'}
+        ];
+        var simplyGrid = new DSYGridV2();
+        var grid = simplyGrid.create({
+            itemId: 'debt_view_apply_grid',
+            headerConfig: {
+                headerJson: headerJson,
+                columnAutoWidth: false
+            },
+            plugins: [
+                {
+                    ptype: 'cellediting',
+                    clicksToEdit: 1,
+                    pluginId: 'debt_view_apply_grid_plugin_cell',
+                    clicksToMoveEditor: 1
+                }
+            ],
+            checkBox: true,
+            border: true,
+            bodyStyle: 'border-width:1px 1px 0 1px;',
+            height: '100%',
+            tbarHeight: 50,
+            params: {
+                WF_STATUS: WF_STATUS,
+                wf_id: wf_id,
+                node_code: node_code
+            },
+            data: [],
+            pageConfig: {
+                enablePage: false
+            }
+        });
+        //加日期格式转换
+        grid.getStore().on('endupdate', function () {
+            var self = grid.getStore();
+            //计算偿还资金录入窗口form申请金额
+            var sum_PAY_AMT_RMB = 0;
+            var sum_bj_amt_rmb = 0;
+            var sum_lx_amt_rmb = 0;
+            self.each(function (record) {
+                sum_PAY_AMT_RMB += record.get('APPLY_AMT');
+                if (0 == record.get('CH_TYPE')) {
+                    sum_bj_amt_rmb += record.get('APPLY_AMT');
+                } else if (1 == record.get('CH_TYPE')) {
+                    sum_lx_amt_rmb += record.get('APPLY_AMT');
+                }
+            });
+            Ext.ComponentQuery.query('textfield[name="PAY_AMT_RMB"]')[0].setValue(sum_PAY_AMT_RMB);
+            Ext.ComponentQuery.query('textfield[name="PAY_BJ_AMT_RMB"]')[0].setValue(sum_bj_amt_rmb);
+            Ext.ComponentQuery.query('textfield[name="PAY_LX_AMT_RMB"]')[0].setValue(sum_lx_amt_rmb);
+        });
+        return grid;
+    }
+    /**
+     * 查看操作记录
+     */
+    function dooperation() {
+        var records = DSYGrid.getGrid('contentGrid').getSelection();
+        if (records.length == 0) {
+            Ext.MessageBox.alert('提示', '请至少选择一条记录！');
+            return;
+        } else if (records.length > 1) {
+            Ext.MessageBox.alert('提示', '不能同时查看多条记录！');
+            return;
+        } else {
+            ZW_ID = records[0].get("CHBJ_ID");
+            fuc_getWorkFlowLog(ZW_ID);
+        }
+    }
+    function getDate(strDate) {
+        var date = eval('new Date(' + strDate.replace(/\d+(?=-[^-]+$)/,
+                function (a) {
+                    return parseInt(a, 10) - 1;
+                }).match(/\d+/g) + ')');
+        return date;
+    }
+    //取当前月时 长度为1时左侧补0
+    function lpad(num, n) {
+        return (Array(n).join(0) + num).slice(-n);
+    }
+    //--------------------------------------------还本红冲相关-------------------------------------//
+    //创建还本红冲弹出窗口
+    var window_dqzw_hbhc = {
+        window: null,
+        show: function () {
+            if (!this.window) {
+                this.window = initWindow_dqzw_hbhc();
+            }
+            this.window.show();
+        }
+    };
+    var chooseHbhcWindow = {
+        window: null,
+        show: function () {
+            if (!this.window) {
+                this.window = initWindow_dqzw_hbhc_panel();
+            }
+            this.window.show();
+        }
+    };
+    /**
+     *还本红冲
+     * */
+    function initWindow_dqzw_hbhc() {
+        return Ext.create('Ext.window.Window', {
+            title: '还本红冲', // 窗口标题
+            width: document.body.clientWidth * 0.9, // 窗口宽度
+            height: document.body.clientHeight * 0.95, // 窗口高度
+            itemId: 'window_dqzw_hbhc', // 窗口标识
+            maximizable: true,//最大化按钮
+            layout: 'fit',
+            buttonAlign: 'right', // 按钮显示的位置
+            modal: true, // 模式窗口，弹出窗口后屏蔽掉其他组件
+            closeAction: 'destroy',//hide:单击关闭图标后隐藏，可以调用show()显示。如果是destroy，则会将window销毁。
+            items: [initWindow_dqzw_hbhc_grid()],
+            buttons: [
+                {
+                    text: '确认',
+                    handler: function (btn) {
+                        //获取表格选中数据
+                        var records = btn.up('window').down('grid').getSelection();
+                        if (records.length != 1) {
+                            Ext.MessageBox.alert('提示', '请选择一条数据再进行操作');
+                            return;
+                        }
+                        btn.up('window').close();
+                        CHBJ_ID=GUID.createGUID();
+                        chooseHbhcWindow.show();
+                        CHBJ_DATE=records[0].data.CHBJ_DATE;
+                        TITLE='还本红冲录入';
+                        var contentGrid_lrBj_button = DSYGrid.getGrid('hbhcGrid');
+                        contentGrid_lrBj_button.insertData(null,records[0].data)
+                        $.post("/getId.action", {size: records.length + 1}, function (data) {
+                            if (!data.success) {
+                                Ext.MessageBox.alert('提示', '查询' + '失败！' + data.message);
+                                return;
+                            }
+                        }, "json");
+                    }
+
+                },
+                {
+                    text: '取消',
+                    handler: function (btn) {
+                        btn.up('window').close();
+                    }
+                }
+            ],
+            listeners: {
+                close: function () {
+                    window_dqzw_hbhc.window = null;
+                }
+            }
+        });
+    }
+    /**
+     * 还本红冲弹出框表格
+     */
+    function initWindow_dqzw_hbhc_grid() {
+        var headerJson = [
+            {
+                xtype: 'rownumberer', width: 40, summaryType: 'count',
+                summaryRenderer: function () {
+                    return '合计';
+                }
+            },
+            {dataIndex: "AG_NAME", type: "string", text: "债务单位", width: 240},
+            {
+                dataIndex: "ZW_NAME", type: "string", text: "债务名称", width: 150,
+                renderer: function (data, cell, record) {
+                    var url = '/page/debt/common/zwyhs.jsp';
+
+                    var paramNames=new Array();
+                    paramNames[0]="ZW_ID";
+                    paramNames[1]='ZWLB_ID';
+
+                    var paramValues=new Array();
+                    paramValues[0]=encodeURIComponent(record.get('ZW_ID'));
+                    paramValues[1]=encodeURIComponent(record.get('ZWLB_ID'));
+                    var result = '<a href="#" onclick="urlCt(\''+url+'\',\''+paramNames+'\',\''+paramValues+'\');" style="color:#3329ff;">' + data + '</a>';
+                    return result;
+                }
+            },
+            {dataIndex: "ZW_ID", type: "string", text: "债务ID", width: 150, hidden: true},
+            {dataIndex: "CHBJ_DATEOLD", type: "string", text: "偿还本金日期", format: 'Y-m-d', width: 100},
+            {dataIndex: "ZQR_NAME", type: "string", text: "债权人", width: 150},
+            {dataIndex: "ZQR_FULLNAME", type: "string", text: "债权人全称", width: 200},
+            {dataIndex: "ZQLX_NAME", type: "string", text: "债权类型", width: 150},
+            {dataIndex: "APPLY_AMT", type: "string", text: "偿还金额(万元)", width: 150,
+                renderer: function (value) {
+                    return Ext.util.Format.number(value, '0,000.######');
+                }
+            },
+            {dataIndex: "APPLY_AMT_RMB", type: "string", text: "偿还金额(万元)", width: 150,fieldCls : 'form-unedit',hidden:true,
+                renderer: function (value) {
+                    return Ext.util.Format.number(value, '0,000.######');
+                }
+            },
+            {dataIndex: "CREATE_DATE", width: 100, type: "string", text: "录入日期", hidden: true},
+            {dataIndex: "CHBJ_CODE", width: 100, type: "string", text: "申请单号"}
+        ];
+        var grid = DSYGrid.createGrid({
+            itemId: 'grid_dqzw_hbhc',
+            headerConfig: {
+                headerJson: headerJson,
+                columnAutoWidth: false
+            },
+            checkBox: false,
+            border: false,
+            autoScroll: true,
+            height: '100%',
+            autoLoad: false,
+            params: {
+                WF_STATUS: WF_STATUS,
+                wf_id: wf_id,
+                node_code: node_code,
+                AD_CODE: AD_CODE,
+                AG_ID: AG_ID,
+                AG_CODE: AG_CODE,
+                AG_NAME: AG_NAME,
+                zwlb_id: zwlb_id,
+                selectId: selectId
+            },
+            dataUrl: 'qyz_hbfx_getDqzwHbhc.action',
+            tbar:[
+                {
+                    xtype : 'textfield',
+                    name : 'MHCX',
+                    fieldLabel : '模糊查询',
+                    width:400,
+                    emptyText:'请输入债务名称/债务单位'
+                },
+                {
+                    xtype: 'button',
+                    text: '查询',
+                    icon: '/image/sysbutton/search.png',
+                    handler: function (btn) {
+                        reloadHbhcChooseGrid();
+                    }
+                }],
+            pageConfig: {
+                pageNum: true//设置显示每页条数
+            },
+            features: [{
+                ftype: 'summary'
+            }]
+        });
+        return grid;
+    }
+    function reloadHbhcChooseGrid() {
+        var grid = DSYGrid.getGrid("grid_dqzw_hbhc");
+        var store = grid.getStore();
+        var MHCX = Ext.ComponentQuery.query('textfield[name="MHCX"]')[0].getValue();
+        store.getProxy().extraParams["MHCX"]=MHCX;
+        store.loadPage(1);
+    }
+    function initWindow_dqzw_hbhc_panel() {
+        return Ext.create('Ext.window.Window', {
+            width: document.body.clientWidth * 0.9,
+            height: document.body.clientHeight * 0.9,
+            title: TITLE,
+            itemId: 'chooseHbhcWindow',
+            layout: 'vbox',
+            modal: true,
+            maximizable: true,
+            closeAction: 'destroy',
+            items: [initWindow_dqzw_hbhc_panel_Grid(),
+                initContentUploadPanel()],
+            buttons: [
+                {
+                    xtype: 'button',
+                    text: '保存',
+                    name: 'OK',
+                    handler: function (btn) {
+                        //保存表单数据
+                        var form = btn.up('window').down('form');
+                        var dateArray =[];
+                        DSYGrid.getGrid("hbhcGrid").getStore().each(function (record) {
+                            dateArray.push(record.getData());
+                        });
+                        hbhcsubmitInfo(form, btn,dateArray);
+                    }
+                }, {
+                    xtype: 'button',
+                    text: '取消',
+                    name: 'CLOSE',
+                    handler: function (btn) {
+                        btn.up('window').close();
+                    }
+                }
+            ],
+            listeners: {
+                close: function () {
+                    chooseHbhcWindow.window = null;
+                }
+            }
+        });
+    }
+    function initWindow_dqzw_hbhc_panel_Grid() {
+        var headerJson = [
+            {
+                xtype: 'rownumberer', width: 40, summaryType: 'count',
+                summaryRenderer: function () {
+                    return '合计';
+                }
+            },
+            {dataIndex: "AG_NAME", type: "string", text: "债务单位", width: 150,fieldCls : 'form-unedit'},
+            {dataIndex: "CHBJ_ID", type: "string", text: "偿还本金ID", width: 150,hidden: true},
+            {
+                dataIndex: "ZW_NAME", type: "string", text: "债务名称", width: 150,
+                renderer: function (data, cell, record) {
+                    var url = '/page/debt/common/zwyhs.jsp';
+
+                    var paramNames=new Array();
+                    paramNames[0]="ZW_ID";
+                    paramNames[1]='ZWLB_ID';
+
+                    var paramValues=new Array();
+                    paramValues[0]=encodeURIComponent(record.get('ZW_ID'));
+                    paramValues[1]=encodeURIComponent(record.get('ZWLB_ID'));
+                    var result = '<a href="#" onclick="urlCt(\''+url+'\',\''+paramNames+'\',\''+paramValues+'\');" style="color:#3329ff;">' + data + '</a>';
+                    return result;
+                }
+            },
+            {dataIndex: "ZW_ID", type: "string", text: "债务ID", width: 150, hidden: true},
+            {dataIndex: "ZW_CODE", type: "string", text: "债务编码", width: 150, hidden: true},
+            {dataIndex: "ZJLY_NAME",type: "string",width: 30, text:'偿还资金来源',width:150},
+            {dataIndex: "CHBJ_DATEOLD", text: "原偿还本金日期", format: 'Y-m-d', width: 120},
+            {dataIndex: "CHBJ_DATE", text: "<span class=\"required\">✶</span>红冲日期", format: 'Y-m-d', width: 100,
+                editor:{
+                    xtype: 'datefield',
+                    name: 'CHBJ_DATE',
+                },
+                renderer: function (value, metaData, record) {
+                    metaData.tdCls = 'grid-cell';
+                    var newdate = dsyDateFormat(value);
+                    record.data.CHBJ_DATE = newdate;
+                    return newdate;
+                }
+            },
+            {dataIndex: "ZQR_NAME", type: "string", text: "债权人", width: 150,fieldCls : 'form-unedit'},
+            {dataIndex: "ZQR_FULLNAME", type: "string", text: "债权人全称", width: 280,fieldCls : 'form-unedit'},
+            {dataIndex: "ZQLX_NAME", type: "string", text: "债权类型", width: 150,fieldCls : 'form-unedit'},
+            {dataIndex: "APPLY_AMT", type: "string", text: "偿还金额(万元)", width: 150,fieldCls : 'form-unedit',
+                renderer: function (value) {
+                    return Ext.util.Format.number(value, '0,000.######');
+                }
+            },
+            {dataIndex: "APPLY_AMT_RMB", type: "string", text: "偿还金额(万元)", width: 150,fieldCls : 'form-unedit',hidden:true,
+                renderer: function (value) {
+                    return Ext.util.Format.number(value, '0,000.######');
+                }
+            },
+            {dataIndex: "XZW_ID",type: "string",width: 30, hidden:true},
+            {dataIndex: "AD_LEVEL",type: "string",width: 30,  hidden:true},
+            {dataIndex: "ZJLY_ID",type: "string",width: 30,  hidden:true},
+            {dataIndex: "ORI_CHBJ_DATE",type: "string",width: 30,  hidden:true},
+            {dataIndex: "SJSH_STATUS",type: "string",width: 30,  hidden:true},
+            {dataIndex: "SET_YEAR",type: "string",width: 30, hidden:true},
+            {dataIndex: "REMARK",type: "string",width: 30,  hidden:true},
+            {dataIndex: "CHBJ_TYPE",type: "string",width: 30,  hidden:true},
+            {dataIndex: "JZ_DATE",type: "string",width: 30,  hidden:true},
+            {dataIndex: "JZ_NO",type: "string",width: 30,  hidden:true},
+            {dataIndex: "CHBJ_CODE",type: "string",width: 30, hidden:true},
+            {dataIndex: "CHZJ_MX_ID",type: "string",width: 30,  hidden:true},
+            {dataIndex: "ZC_ID",type: "string",width: 30,  hidden:true},
+            {dataIndex: "ZQ_CODE",type: "string",width: 30,  hidden:true}
+        ];
+        /**
+         * 设置表格属性
+         */
+        var config = {
+            itemId: 'hbhcGrid',
+            border: false,
+            width:'100%',
+            minHeight:200,
+            flex: 1,
+            data: [],
+            checkBox: false,
+            headerConfig: {
+                headerJson:   headerJson,
+                columnAutoWidth: false,
+
+            },
+            pageConfig: {
+                enablePage: false
+            },
+            rowNumber: {
+                rowNumber: true// 显示行号
+            },
+            features: [{
+                ftype: 'summary'
+            }],
+            plugins : [
+                {
+                    ptype : 'cellediting',
+                    clicksToEdit : 1,
+                    pluginId : 'cbtdzclr_grid_plugin_cell',
+                    clicksToMoveEditor : 1
+                }
+            ]
+        };
+        if(TITLE==""||TITLE=='还本红冲查看'){
+            delete config.plugins;
+        }
+        //生成表格
+        var grid = DSYGrid.createGrid(config);
+        return grid;
+    }
+    function initContentUploadPanel() {
+        return Ext.create('Ext.form.Panel', {
+            id: 'upPanel',
+            width:'100%',
+            minHeight:200,
+            flex: 1,
+            layout: 'fit',
+            border: false,
+            items: initWindow_dqzw_hbhc_Fj()
+        });
+    }
+    function initWindow_dqzw_hbhc_Fj() {
+        var editable = true;
+        if(TITLE==''||TITLE=='还本红冲查看'){
+            editable = false;
+        }
+        return UploadPanel.createGrid({
+            busiType: 'EThbhc',//业务类型
+            busiId: CHBJ_ID,//业务ID
+            busiProperty: '%',//业务规则，默认为‘%’
+            editable: editable,//是否可以修改附件内容，默认为ture
+            gridConfig: {
+                itemId: 'window_hbhc_contentForm_tab_upload_grid'//若无，会自动生成，建议填写，特别是出现多个附件上传时
+            }
+        });
+    }
+    function hbhcsubmitInfo(form, btn,dateArray) {
+        var b=true;
+        var dataListJson = Ext.util.JSON.encode(dateArray);
+        dataListJson = dataListJson.replaceAll(":null,",":\"\",");
+        var parameters = {
+            wf_id: wf_id,
+            node_code: node_code,
+            button_name: button_name,
+            AD_CODE: AD_CODE,
+            AG_ID: AG_ID,
+            AG_CODE: AG_CODE,
+            AG_NAME: AG_NAME,
+            IS_WF: IS_WF,
+            CHBJ_ID:CHBJ_ID,
+            CHZJ_MX_ID:GUID.createGUID(),
+            detailList: dataListJson
+        };
+        var CHBJ_DATENEW=dateArray[0].CHBJ_DATE;
+        var CHBJ_DATEOLD=dateArray[0].CHBJ_DATEOLD;
+        var sysdate = Ext.Date.format(currentDate,"Y-m-d");//当前时间
+        if(CHBJ_DATENEW==''||CHBJ_DATENEW==null){
+            Ext.Msg.alert('提示', '红冲日期不能为空！');
+            b=false;
+            return;
+        }
+        if(CHBJ_DATENEW<CHBJ_DATEOLD){
+            Ext.Msg.alert('提示', '"'+dateArray[0].ZW_NAME+'"的红冲日期不能早于原偿还本金日期');
+            b=false;
+            return;
+        }
+        if(CHBJ_DATENEW>sysdate){
+            Ext.Msg.alert('提示', '红冲日期不能大于当前系统时间');
+            b=false;
+            return;
+        }
+        btn.setDisabled(true);
+        //保存表单数据及明细数据
+        form.submit({
+            //设置表单提交的url
+            url: 'qyz_hbfx_saveZwglHbhcGrid.action',
+            params: parameters,
+            success: function (form, action) {
+                //关闭弹出框
+                btn.setDisabled(false);
+                btn.up("window").close();
+                //提示保存成功
+                Ext.toast({
+                    html: "<center>保存成功!</center>",
+                    closable: false,
+                    align: 't',
+                    slideInDuration: 400,
+                    minWidth: 400
+                });
+                DSYGrid.getGrid('contentGrid').getStore().loadPage(1);
+                //记录日志
+                saveLog("还本红冲保存","BUTTON", "还本红冲"+CHBJ_ID+"保存成功","0");
+            },
+            failure: function (form, action) {
+                btn.setDisabled(false);
+                var result = Ext.util.JSON.decode(action.response.responseText);
+                Ext.Msg.alert('提示', "保存失败！" + result ? result.message : '无返回响应');
+            }
+        });
+    }
+</script>
+</body>
+</html>
