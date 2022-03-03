@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;IE=11;IE=9;IE=8;">
+    <meta charset="UTF-8">
+    <title>发行手续费缴付</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+    </style>
+
+</head>
+<body>
+<div id="contentPanel" style="width: 100%;height:100%;">
+</div>
+<!-- 重要：引入统一extjs -->
+<script type="text/javascript" src="/js/commonUtil.js"></script> 
+<!--基础数据集-->
+<script type="text/javascript" src="/page/debt/zqgl/data/ele_data.js"></script>
+<script type="text/javascript">
+    ;
+    // 判断console是否存在
+    if (!console || !window.console) {
+        var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+        window.console = {};
+        for (var i = 0; i < names.length; ++i)
+            window.console[names[i]] = function () {
+            };
+    }
+    //TODO:弹出窗口可以后期优化
+    //创建存量债务弹出窗口
+    var window_clzw = {
+        window: null,
+        show: function () {
+            if (!this.window) {
+                this.window = initWindow_clzw();
+            }
+            this.window.show();
+        }
+    };
+    /**
+     * 页面初始化
+     */
+    $(document).ready(function () {
+        initContent();
+    });
+    /**
+     * 初始化页面主要内容区域
+     */
+    function initContent() {
+        Ext.create('Ext.panel.Panel', {
+            layout: 'hbox',
+            height: '100%',
+            renderTo: 'contentPanel',
+            border: false,
+            tbar: [//TODO 各按钮只实现了新增，其他均未实现
+                {
+                    xtype: 'button',
+                    text: '增加',
+                    icon: '/image/sysbutton/add.png'
+                },
+                {
+                    xtype: 'button',
+                    text: '修改',
+                    icon: '/image/sysbutton/edit.png',
+                    handler: function () {
+                        /*if (!AG_CODE || AG_CODE == '') {
+                         Ext.Msg.alert('提示', "请选择单位");
+                         return;
+                         }*/
+                        //window_clzw.show();
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: '删除',
+                    icon: '/image/sysbutton/delete.png',
+                    handler: function () {
+                        //Ext.alert('提示', '您确定要取消汇总么？');
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: '缴款',
+                    icon: '/image/sysbutton/confirm.png'
+                }
+            ],
+            items: [
+                initContentRightPanel()//初始化右侧2个表格
+            ]
+        });
+    }
+    /**
+     * 初始化右侧panel，放置2个表格
+     */
+    function initContentRightPanel() {
+        return Ext.create('Ext.form.Panel', {
+            height: '100%',
+            flex: 5,
+            layout: {
+                type: 'vbox',
+                align: 'stretch',
+                flex: 1
+            },
+            border: false,
+            //bodyStyle: 'border-width:0 1px 1px 0;',//设置panel边框有无，去掉上方边框
+            items: [
+                initContentGrid(),
+                initContentDetilGrid()
+            ]
+        });
+    }
+    /**
+     * 初始化右侧主表格
+     */
+    function initContentGrid() {
+        var headerJson = {
+            "header": [
+                {"dataIndex": "PAT_DATE", "width": 150, "type": "string", "text": "单据编号"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "地区"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "支付日期"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "手续费合计"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "发行手续费"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "登记服务费"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "转贷债券总额"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "float", "text": "手续费账户"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "开户行"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "账号"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "备注"}
+            ]
+        };
+        var simplyGrid = new DSYGrid();
+        simplyGrid.setItemId('contentGrid');
+        simplyGrid.setHeaderJson(headerJson);
+        simplyGrid.setColumnAutoWidth(false);
+        simplyGrid.setCheckBox(true);//显示复选框
+        simplyGrid.setRowNumber(true);//显示行号
+        simplyGrid.setHeight('50%');//设置高度后，当行数超出高度时出现滚动条
+        simplyGrid.setTbarHeight(50);
+        simplyGrid.setPageConfig({
+            pageNum: true//设置显示每页条数
+        });
+        simplyGrid.setBorder(false);//不显示边界
+        simplyGrid.setDataUrl("getHbfxDataList.action");
+        simplyGrid.setData([]);
+        simplyGrid.setTbar([
+            //TODO 工具栏按钮功能未实现，后端添加查询条件未实现
+            {
+                xtype: 'combobox',
+                fieldLabel: '状态',
+                name: 'contentGrid_status',
+                store: DebtEleStore(json_debt_zt4),
+                width: 150,
+                labelWidth: 30,
+                labelAlign: 'right',
+                displayField: "name",
+                valueField: "code",
+                value: '001'
+            },
+            {
+                xtype: 'treecombobox',
+                fieldLabel: '债券类型',
+                labelWidth: 70,
+                name: 'ZQLB_ID',
+                displayField: 'name',
+                valueField: 'code',
+                store: DebtEleTreeStoreDB('DEBT_ZQLB')
+            }
+        ]);
+        var grid = simplyGrid.create();
+        grid.setFlex(1);
+        //simplyGrid.getGrid().setBodyStyle('boder-width:0 0 0 1px');
+        return grid;
+    }
+    /**
+     * 初始化右侧明细表格
+     */
+    function initContentDetilGrid() {
+        var headerJson = {
+            "header": [
+                {"dataIndex": "PAT_DATE", "width": 150, "type": "string", "text": "债券编码"},
+                {"dataIndex": "AG_NAME", "width": 150, "type": "string", "text": "债券名称"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "债券期限（年）"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "转贷金额"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "手续费合计"},
+                {"dataIndex": "PAT_AMT_RMB", "width": 150, "type": "string", "text": "发行手续费"},
+                {"dataIndex": "PAT_AMT", "width": 150, "type": "string", "text": "登记服务费"},
+                {"dataIndex": "PAT_AMT", "width": 150, "type": "string", "text": "发行手续费率（%）"},
+                {"dataIndex": "PAT_AMT", "width": 150, "type": "string", "text": "登记服务费率（%）"},
+                {"dataIndex": "PAT_AMT", "width": 150, "type": "string", "text": "备注"}
+            ]
+        };
+        var simplyGrid = new DSYGrid();
+        simplyGrid.setItemId('contentGrid_detail');
+        simplyGrid.setHeaderJson(headerJson);
+        simplyGrid.setColumnAutoWidth(false);
+        simplyGrid.setCheckBox(false);//显示复选框
+        simplyGrid.setRowNumber(false);//显示行号
+        simplyGrid.setHeight("50%");//设置高度后，当行数超出高度时出现滚动条
+        simplyGrid.setPageConfig({
+            enablePage: false
+        });
+        simplyGrid.setBorder(false);//不显示边界
+        //simplyGrid.setDataUrl("getHbfxDataList.action");
+        simplyGrid.setData([]);
+        var grid = simplyGrid.create();
+        grid.setFlex(1);
+        //simplyGrid.getGrid().setBodyStyle('boder-width:0 0 0 1px');
+        return grid;
+    }
+    /**
+     * 初始化存量债务弹出窗口
+     */
+    function initWindow_clzw() {
+        return Ext.create('Ext.window.Window', {
+            title: '存量债务', // 窗口标题
+            width: document.body.clientWidth * 0.9, // 窗口宽度
+            height: document.body.clientHeight * 0.95, // 窗口高度
+            itemId: 'window_clzw', // 窗口标识
+            buttonAlign: 'right', // 按钮显示的位置
+            modal: true, // 模式窗口，弹出窗口后屏蔽掉其他组件
+            closeAction: 'hide',//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+            items: [initWindow_clzw_grid()],
+            buttons: [
+                {
+                    text: '确认',
+                    handler: function (btn) {
+                        //获取表格选中数据
+                        var records = btn.up('window').down('grid').getSelection();
+                        if (records.length <= 0) {
+                            Ext.MessageBox.alert('提示', '请选择至少一条后再进行操作');
+                            return;
+                        }
+                        btn.up('window').close();
+                    }
+                },
+                {
+                    text: '取消',
+                    handler: function (btn) {
+                        btn.up('window').close();
+                    }
+                }
+            ]
+        });
+    }
+    /**
+     * 初始化存量债务弹出框表格
+     */
+    function initWindow_clzw_grid() {
+        var headerJson = {
+            "header": [
+                {"dataIndex": "AG_NAME", "type": "string", "text": "债务编码"},
+                {"dataIndex": "ZW_NAME", "type": "string", "text": "债务名称"},
+                {"dataIndex": "ZW_NAME", "type": "string", "text": "项目名称"},
+                {"dataIndex": "SIGN_DATE", "type": "string", "text": "签订日期", format: 'Y-m-d'},
+                {"dataIndex": "ZQR_FULLNAME", "type": "string", "text": "协议号"},
+                {"dataIndex": "XY_AMT_RMB", "type": "float", "text": "利率(%)"},
+                {"dataIndex": "CH_TYPE", "type": "string", "text": "期限(月)"},
+                {"dataIndex": "HKJH_DATE", "type": "string", "text": "申报年度"},
+                {"dataIndex": "APPLY_AMT", "type": "float", "text": "债务类型"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "债务金额"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "逾期金额"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "到期日期"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "到期金额"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "已申请金额"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "债权类型"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "债权人"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "债权人全称"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "债务用途"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "币种"},
+                {"dataIndex": "RATE", "type": "string", "text": "汇率(%)"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "协议金额"},
+                {"dataIndex": "CUR_CODE", "type": "string", "text": "利率类型"}
+            ]
+        };
+        var simplyGrid = new DSYGrid();
+        simplyGrid.setItemId('grid_clzw');
+        simplyGrid.setHeaderJson(headerJson);
+        simplyGrid.setColumnAutoWidth(false);
+        simplyGrid.setCheckBox(true);//显示复选框
+        simplyGrid.setRowNumber(true);//显示行号
+        simplyGrid.setHeight("100%");//设置高度后，当行数超出高度时出现滚动条
+        simplyGrid.setPageConfig({
+            pageNum: true//设置显示每页条数
+        });
+        simplyGrid.setBorder(false);//不显示边界
+        simplyGrid.setDataUrl('getDqzwYjh.action');
+        simplyGrid.create();
+        //将form添加到表格中
+        var searchTool = initWindow_clzw_grid_searchTool();
+        simplyGrid.getGrid().addDocked(searchTool, 0);
+        return simplyGrid.getGrid();
+    }
+    /**
+     * 初始化存量债务弹出框搜索区域
+     */
+    function initWindow_clzw_grid_searchTool() {
+        try {
+            //初始化查询控件
+            var items = [];
+            items.push(//TODO 债务单位、债务名称查询条件未实现，后端添加查询条件未实现
+                    {
+                        xtype: 'combobox',
+                        fieldLabel: '到期年度',
+                        labelWidth: 60,
+                        width: 200,
+                        name: 'debt_year',
+                        value: '2008',
+                        displayField: 'name',
+                        valueField: 'code',
+                        store: DebtEleStore(json_debt_year)
+                    },
+                    {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: '到期月份',
+                        labelWidth: 60,
+                        width: 200,
+                        layout: 'hbox',
+                        items: [
+                            {
+                                xtype: 'numberfield',
+                                name: 'expire_date',
+                                width: 50,
+                                hideTrigger: true
+                            },
+                            {
+                                xtype: 'label',
+                                text: '至'
+                            },
+                            {
+                                xtype: 'numberfield',
+                                name: 'expire_date',
+                                width: 50,
+                                hideTrigger: true
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: '债务期限',
+                        labelWidth: 60,
+                        width: 310,
+                        layout: 'hbox',
+                        items: [
+                            {
+                                xtype: 'datefield',
+                                name: 'expire_date',
+                                width: 115
+                            },
+                            {
+                                xtype: 'label',
+                                text: '至'
+                            },
+                            {
+                                xtype: 'datefield',
+                                name: 'expire_date',
+                                width: 115
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: '利率(%)',
+                        labelWidth: 60,
+                        width: 200,
+                        layout: 'hbox',
+                        items: [
+                            {
+                                xtype: 'numberfield',
+                                name: 'expire_date',
+                                width: 50,
+                                hideTrigger: true
+                            },
+                            {
+                                xtype: 'label',
+                                text: '至'
+                            },
+                            {
+                                xtype: 'numberfield',
+                                name: 'expire_date',
+                                width: 50,
+                                hideTrigger: true
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'combobox',
+                        fieldLabel: '债务类型',
+                        labelWidth: 60,
+                        width: 200,
+                        displayField: 'name',
+                        valueField: 'code'
+                    },
+                    {
+                        xtype: 'combobox',
+                        fieldLabel: '债权类型',
+                        labelWidth: 60,
+                        width: 200,
+                        displayField: 'name',
+                        valueField: 'code'
+                    },
+                    {
+                        xtype: 'textfield',
+                        fieldLabel: '债务名称',
+                        labelWidth: 60,
+                        width: 200,
+                        displayField: 'name',
+                        valueField: 'code'
+                    }
+            );
+            //设置查询form
+            var searchTool = new DSYSearchTool();
+            searchTool.setSearchToolId('searchTool_grid');
+            return searchTool.create({
+                items: items,
+                dock: 'top',
+                // 查询按钮回调函数
+                callback: function (self) {
+                    var store = self.up('grid').getStore();
+                    // 清空参数中已有的查询项
+                    for (var search_form_i in self.getValues()) {
+                        delete store.getProxy().extraParams[search_form_i];
+                    }
+                    // 向grid中追加参数
+                    $.extend(true, store.getProxy().extraParams, self.getValues());
+                    // 刷新表格
+                    store.loadPage(1);
+                }
+            });
+        }
+        catch (err) {
+            // 当出现异常时，打印控制台异常
+        }
+    }
+</script>
+</body>
+</html>
