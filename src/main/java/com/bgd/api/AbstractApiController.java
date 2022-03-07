@@ -7,8 +7,6 @@ import com.bgd.api.common.utils.EnumUtil;
 import com.bgd.api.common.utils.ExceptionUtil;
 import com.bgd.api.common.utils.JSONUtil;
 import com.bgd.api.common.utils.MessageUtil;
-import com.bgd.platform.util.common.HttpTool;
-import com.bgd.platform.util.security.AccessControl;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
@@ -53,7 +51,7 @@ public abstract class AbstractApiController {
             // 用户编码
             String userCode = JSONUtil.getString(message, "USER_CODE");
             // 请求IP
-            String ipAddr = HttpTool.getIpAddr(request);
+            String ipAddr = "";//HttpTool.getIpAddr(request);
             // 校验
             apiCheckService.messageSecurityVerification(message, ipAddr, apiEnum);
             // 校验通过，根据报文编码，获取其具体业务实现类
@@ -166,8 +164,8 @@ public abstract class AbstractApiController {
      * @return
      */
     protected JSONObject stripXss(JSONObject message) {
-        String stripXss = AccessControl.stripXss(message.toString());
-        stripXss = AccessControl.stripXssSql(stripXss);
+        String stripXss = "";//AccessControl.stripXss(message.toString());
+        stripXss = "";//AccessControl.stripXssSql(stripXss);
         return JSONObject.fromObject(stripXss);
     }
 }
