@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=11;IE=9;IE=8;">
+    <meta charset="UTF-8">
+    <title>项目变更主界面</title>
+    <style type="text/css">
+        .label-color {
+            color: red;
+            font-size: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<div id="contentPanel" style="width: 100%;height:100%;">
+</div>
+<!-- 重要：引入统一extjs -->
+<script type="text/javascript" src="/js/commonUtil.js"></script>
+<script type="text/javascript" src="/js/debt/Map.js"></script>
+<!--收支平衡页签-->
+<script type="text/javascript" src="/js/debt/xmsySzysGrid.js"></script>
+<script type="text/javascript" src="xmjbxx.js"></script>
+<script type="text/javascript" src="/js/debt/xmInfo.js"></script>
+<script type="text/javascript" src="/page/plat/query/reportQueryUtil.js"></script>
+<script type="text/javascript" src="/page/plat/query/reportUtil.js"></script>
+<script type="text/javascript" src="/page/plat/olap/js/olaputil.js"></script>
+<script type="text/javascript">
+
+    var nowDate = Ext.Date.format(new Date(), 'Y-m-d');
+    var nowYear=nowDate.substr(0,4);
+    var ywcsbl = false;
+    var wf_id = getQueryParam("wf_id");//当前流程id
+    var node_code = getQueryParam("node_code");//当前节点id
+    var node_type = getQueryParam("node_type");
+    var url_xm_id = getQueryParam("url_xm_id");  //从单位新首页跳转过来 打开变更弹窗
+    var is_view = 0;
+    var is_cl = 0;
+    var is_xz = false;
+    var is_status = 1;
+    var szph_status = 1;
+
+    var guid = '';
+    var is_zbx = getQueryParam("is_zbx");
+    //var IS_XMSZPHJY = 0;// 20210726liyue是否添加项目收支系统校验
+    var xmxzCondition = " and 1=1";
+    var is_wzxt = getQueryParam("is_wzxt");//是否是外债系统
+    if (is_wzxt == null || is_wzxt == '' || is_wzxt.toUpperCase() == 'null') {
+        is_wzxt = '0';
+    }
+    if ("1" == is_zbx) {
+        xmxzCondition = " and GUID LIKE '01%'";
+    }
+    var BILL_ID = "";
+    var bg_type = "";
+    //var change_type = getQueryParam("change_type");
+    var IS_END = getQueryParam("is_end");
+    var XM_ID = null;
+    var button_name = null;
+    var audit_info = '';
+    var connNdjh = '';//项目是否已经申报年度计划
+    var connZwxx = '';//项目是否被债务信息引用
+    var WF_STATUS = getQueryParam("WF_STATUS");//当前状态
+    if (WF_STATUS == null || WF_STATUS == '' || WF_STATUS.toLowerCase() == 'null') {
+        WF_STATUS = '001';
+    }
+    var v_child = '0';
+    var IS_XMBCXX = '';// 是否显示项目补充信息 or 是否显示项目前期准备
+    if (node_type == "typing" || node_type == "reviewed") {
+        v_child = '1';
+    }
+    var button_status = '';//按钮状态
+    var address_Can_Alert = '';//项目地址是否可以修改
+    var is_tdcb = false; // 项目类型是否为土地储备
+    //基本信息中不允许修改项目名称等信息
+    var no_entry = getQueryParam("no_entry");
+    if (no_entry == null || no_entry == '') {
+        no_entry = '0';
+    }
+    //统一社会信用代码
+    var USCCODE;
+    var xmlx_id;//区分土储，统用
+    /**
+     * 通用配置json
+     */
+    var xmbg_json_common = {
+        100122: {
+            "typing": {//项目变更录入
+                jsFileUrl: 'xmbglr.js'
+            },
+            "reviewed": {//项目变更审核
+                jsFileUrl: 'xmbgsh.js'
+            }
+        }
+    };
+    /**
+     * 页面初始化
+     */
+    $(document).ready(function () {
+        //显示提示，并form表单提示位置为表单项下方
+        Ext.QuickTips.init();
+        Ext.form.Field.prototype.msgTarget = 'side';
+        //动态加载js
+        $.ajaxSetup({
+            cache: true
+        });
+        $.getScript(xmbg_json_common[wf_id][node_type].jsFileUrl, function () {
+            initContent();
+            if (xmbg_json_common[wf_id][node_type].callBack) {
+                xmbg_json_common[wf_id][node_type].callBack();
+            }
+        });
+        //zhanghl 20201231 延时等其他加载完成之后在进行弹窗弹开
+        setTimeout(function(){
+            //从单位新首页跳转过来
+            if(url_xm_id != null && url_xm_id != ''){
+                bg_type = "";
+                BILL_ID = "";
+                button_name = 'INPUT';
+                //关闭当前窗口，打开合同变更录入窗口
+                XM_ID = url_xm_id;
+                initWin_xmbglrWindow();
+                loadInfo();
+                //设置所有信息只读
+                setAllReadOnly();
+            }
+        }, 1000);
+
+    });
+    $.post("getXmbcxx.action", {
+        MESSAGE: "IS_XMBCXX"
+    }, function (data) {
+        IS_XMBCXX = data.success[0].D_VALUE;
+    }, "json");
+    /**
+     * 初始化页面主要内容区域
+     */
+    function initContent() {
+        Ext.create('Ext.panel.Panel', {
+            layout: 'border',
+            defaults: {
+                split: true,                  //是否有分割线
+                collapsible: false           //是否可以折叠
+            },
+            height: '100%',
+            renderTo: 'contentPanel',
+            border: false,
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    itemId: 'contentPanel_toolbar',
+                    items: xmbg_json_common[wf_id][node_type].items[WF_STATUS]
+                }
+            ],
+            items: xmbg_json_common[wf_id][node_type].items_content()
+        });
+    }
+
+    /**
+     * 初始化右侧panel，放置1个表格
+     */
+    function initContentRightPanel() {
+        return Ext.create('Ext.form.Panel', {
+            height: '100%',
+            flex: 5,
+            region: 'center',
+            layout: {
+                type: 'vbox',
+                align: 'stretch',
+                flex: 1
+            },
+            border: false,
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    layout: {
+                        type: 'column'
+                    },
+                    defaults: {
+                        margin: '5 5 5 5',
+                        width: 250,
+                        labelWidth: 60,
+                        labelAlign: 'left'//控件默认标签对齐方式
+                    },
+                    items: [
+                        {
+                            xtype: 'treecombobox',
+                            fieldLabel: '项目性质',
+                            itemId: 'XMXZ_SEARCH',
+                            displayField: 'name',
+                            valueField: 'code',
+                            hidden:true,
+                            rootVisible: true,
+                            lines: false,
+                            selectModel: 'all',
+                            store:DebtEleTreeStoreDB("DEBT_ZJYT")
+                        },
+                        {
+                            xtype: 'treecombobox',
+                            fieldLabel: '项目类型',
+                            itemId: 'XMLX_SEARCH',
+                            displayField: 'name',
+                            valueField: 'code',
+                            rootVisible: true,
+                            lines: false,
+                            selectModel: 'all',
+                            store: DebtEleTreeStoreDB("DEBT_ZWXMLX")
+                        },
+                        {
+                            xtype: "textfield",
+                            fieldLabel: '模糊查询',
+                            itemId: "XM_SEARCH",
+                            width: 400,
+                            emptyText: '请输入项目单位/项目编码/项目名称/项目内容',
+                            enableKeyEvents: true,
+                            listeners: {
+                                'keydown': function (self, e, eOpts) {
+                                    var key = e.getKey();
+                                    if (key == Ext.EventObject.ENTER) {
+                                        reloadGrid();
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            items: xmbg_json_common[wf_id][node_type].items_content_rightPanel_items ? xmbg_json_common[wf_id][node_type].items_content_rightPanel_items() : [
+                initContentGrid()
+            ]
+        });
+    }
+    /**
+     * 创建合同变更录入弹出窗口
+     */
+    function initWin_xmbglrWindow() {
+        var buttons;
+        if (WF_STATUS == '008' || button_name == 'VIEW') {
+            buttons = [
+                {
+                    text: '关闭',
+                    hidden: true,
+                    handler: function (btn) {
+                        btn.up('window').close();
+                    }
+                }
+            ];
+        }
+        else {
+            buttons = [
+                {
+                    xtype: 'button',
+                    itemId:'mbxz',
+                    hidden: true,
+                    text: '模板下载',
+                    handler: function (btn) {
+                        szysExcelDown();//收支平衡表格模板下载
+                    }
+                }
+                ,{
+                    xtype: 'button',
+                    text: '导入',
+                    itemId:"import",
+                    hidden: true,
+                    name: 'upload',
+                    fileUpload: true,
+                    buttonConfig: {
+                        width: 140,
+                        icon: '/image/sysbutton/report.png'
+                    },
+                    handler: function (btn) {
+                        var xmsyForm = Ext.ComponentQuery.query(formName)[0];
+                        //获取运行年限
+                        var yyqx = xmsyForm.down('numberFieldFormat[name="XM_USED_LIMIT"]').getValue();
+                        if(yyqx==""||yyqx==undefined){
+                            Ext.MessageBox.alert('提示', "请先填写项目期限!");
+                            return false;
+                        }
+                        window_xekjdr.show({TITLE:'请导入收支平衡表数据',DR_TYPE:'0'});//收支平衡表格模板下载
+                    }
+                },
+                {
+                    xtype: 'button',
+                    itemId:'tbsm',
+                    hidden: true,
+                    text: '填报说明',
+                    handler: function (btn) {
+                        window.open('../common/ystbsmText.jsp');
+                    }
+                },
+                {
+                    text: '保存',
+                    handler: function (btn) {
+                        //保存表单数据
+                        submitInfo('',btn);
+                    }
+                },
+                {
+                    text: '关闭',
+                    handler: function (btn) {
+                        btn.up('window').close();
+                    }
+                }
+            ];
+        }
+        var htbglrWindow = Ext.create('Ext.window.Window', {
+            title: "项目变更",
+            name: 'xmbglrWin',
+            width: document.body.clientWidth * 0.9, //自适应窗口宽度
+            height: document.body.clientHeight * 0.95, //自适应窗口高度
+            maximizable: true,
+            itemId: 'window_clzw', // 窗口标识
+            buttonAlign: 'right', // 按钮显示的位置
+            modal: true, // 模式窗口，弹出窗口后屏蔽掉其他组件
+            closeAction: 'destroy',
+            layout: 'vbox',
+            defaults: {
+                width: '100%'
+            },
+            items: [
+                {
+                    xtype: 'container',
+                    margin: '2 2 2 2',
+                    layout: 'hbox',
+                    hidden: button_name == 'VIEW',
+                    items: [
+                        {xtype: 'label', text: '单位名称:', width: 70},
+                        {xtype: 'label', text: AG_NAME, width: 200, flex: 5},
+                        {xtype: 'label', text: '单位:万元', width: 80, cls: "label-color"}
+                    ]
+                },
+                initWin_xmbglrTabPanel()
+            ],
+            buttons: buttons
+        });
+        htbglrWindow.show();
+    }
+    /**
+     * 初始化合同变更录入弹出窗口内容
+     */
+    function initWin_xmbglrTabPanel() {
+        if(IS_XMBCXX == '1'){
+            var xmbglrTabPanel = Ext.create('Ext.tab.Panel', {
+                name: 'EditorPanel',
+                flex: 1,
+                border: false,
+                defaults: {
+                    border: false
+                },
+                items: [
+                    {
+                        title: '变更说明',
+                        layout: 'fit',
+                        items: initWindow_debt_xmbglr_contentForm()
+                    },
+                    {
+                        title: '项目信息',
+                        scrollable: true,
+                        items: initWindow_zqxxtb_contentForm_tab_jbqk('3')
+                    },
+                    {
+//                        title: '补充信息',
+                        title: '前期准备',
+                        scrollable: true,
+                        items: initWindow_zqxxtb_contentForm_tab_bcxx()
+                    },
+                    {
+                        title: '投资计划',
+                        layout: 'fit',
+                        items: initWindow_zqxxtb_contentForm_tab_tzjh()
+                    },
+                    {
+                        title: '收支预算',
+                        btnsItemId: 'szys',
+                        layout: 'fit',
+                        hidden:true,
+                        items: [],//initWindow_zqxxtb_contentForm_tab_szys(button_name)
+                    },
+                    {
+                        title: '附件<span class="file_sum_fj" style="color: #FF0000;">(0)</span>',
+                        name: 'xmjsjdFJ',
+                        layout:'fit',
+                        items: [
+                            {
+                                xtype: 'panel',
+                                layout: 'fit',
+                                itemId: 'winPanel_xmbgPanel',
+                                border: false,
+                                items: initWindow_xmbg_upload(XM_ID)
+                            }
+                        ]
+                    }
+                ],
+                listeners: {
+                    tabchange: function (tabPanel, newCard, oldCard) {
+                        if(button_name=="VIEW"){//项目看板没有下方按钮，不做校验下面获取按钮报错
+                            return false;
+                        }
+                        if (isOld_szysGrid == '0' && newCard.btnsItemId == 'szys') {
+                            Ext.ComponentQuery.query('button#tbsm')[0].setHidden(false);
+                            Ext.ComponentQuery.query('button#mbxz')[0].setHidden(false);
+                            Ext.ComponentQuery.query('button#import')[0].setHidden(false);
+                        }else{
+                            Ext.ComponentQuery.query('button#tbsm')[0].setHidden(true);
+                            Ext.ComponentQuery.query('button#mbxz')[0].setHidden(true);
+                            Ext.ComponentQuery.query('button#import')[0].setHidden(true);
+                        }
+                        if(is_tdcb==true){//土地储备隐藏导入按钮
+                            Ext.ComponentQuery.query('button#import')[0].setHidden(true);
+                            Ext.ComponentQuery.query('button#mbxz')[0].setHidden(true);
+                        }
+
+                    }
+                }
+
+            });
+            return xmbglrTabPanel;
+        }else{
+            var xmbglrTabPanel = Ext.create('Ext.tab.Panel', {
+                name: 'EditorPanel',
+                flex: 1,
+                border: false,
+                defaults: {
+                    border: false
+                },
+                items: [
+                    {
+                        title: '变更说明',
+                        layout: 'fit',
+                        items: initWindow_debt_xmbglr_contentForm()
+                    },
+                    {
+                        title: '项目信息',
+                        scrollable: true,
+                        items: initWindow_zqxxtb_contentForm_tab_jbqk({IS_SZYS:3})
+                    },
+                    {
+                        title: '投资计划',
+                        layout: 'fit',
+                        items: initWindow_zqxxtb_contentForm_tab_tzjh()
+                    },
+                    {
+                        title: '收支预算',
+                        btnsItemId: 'szys',
+                        layout: 'fit',
+                        hidden:true,
+                        items: [],//initWindow_zqxxtb_contentForm_tab_szys(button_name)
+                    },
+                    {
+                        title: '附件<span class="file_sum_fj" style="color: #FF0000;">(0)</span>',
+                        name: 'xmjsjdFJ',
+                        layout:'fit',
+                        items: [
+                            {
+                                xtype: 'panel',
+                                layout: 'fit',
+                                itemId: 'winPanel_xmbgPanel',
+                                border: false,
+                                items: initWindow_xmbg_upload(XM_ID)
+                            }
+                        ]
+                    }
+                ],
+                listeners: {
+                    tabchange: function (tabPanel, newCard, oldCard) {
+                        if(button_name=="VIEW"){//项目看板没有下方按钮，不做校验下面获取按钮报错
+                            return false;
+                        }
+                        if (isOld_szysGrid == '0' && newCard.btnsItemId == 'szys') {
+                            Ext.ComponentQuery.query('button#tbsm')[0].setHidden(false);
+                            Ext.ComponentQuery.query('button#mbxz')[0].setHidden(false);
+                            Ext.ComponentQuery.query('button#import')[0].setHidden(false);
+//                            change_tdcbysbz_grid ('', {IS_YHS: false,XM_ID:XM_ID});
+                        }else{
+                            Ext.ComponentQuery.query('button#tbsm')[0].setHidden(true);
+                            Ext.ComponentQuery.query('button#mbxz')[0].setHidden(true);
+                            Ext.ComponentQuery.query('button#import')[0].setHidden(true);
+                        }
+                        if(is_tdcb==true){//土地储备隐藏导入按钮
+                            Ext.ComponentQuery.query('button#import')[0].setHidden(true);
+                            Ext.ComponentQuery.query('button#mbxz')[0].setHidden(true);
+                        }
+                    }
+                }
+            });
+            return xmbglrTabPanel;
+        }
+    }
+
+
+
+
+
+    /**
+     * 初始化页签panel的附件页签
+     */
+    function initWindow_xmbg_upload(XM_ID) {
+        var busiId = XM_ID;
+        var msg = false;
+        var grid = UploadPanel.createGrid({
+            busiType: 'ET001',//业务类型
+            busiId: busiId,//业务ID
+            //20201217 fzd 附件增加“第三方单位名称”、“组织机构代码”、“备注”
+            addHeaders:[
+                {text:'第三方单位名称',dataIndex:'DSF_AG_NAME',width: 260,type:'string', editor: 'textfield'},
+                {text:'组织机构代码',dataIndex:'DSF_ZZJG_CODE',type:'string', editor: 'textfield'},
+                {text:'备注',dataIndex:'REMARK',type:'string', editor: 'textfield'}
+            ],
+            editable: msg,
+            gridConfig: {
+                itemId: button_name == 'VIEW'?'window_fj':'window_xmbgfj'
+            }
+        });
+        //附件加载完成后计算总文件数，并写到页签上
+        grid.getStore().on('load', function (self, records, successful) {
+            var sum = 0;
+            if (records != null) {
+                for (var i = 0; i < records.length; i++) {
+                    if (records[i].data.STATUS == '已上传') {
+                        sum++;
+                    }
+                }
+            }
+            if (grid.up('winPanel_xmbgPanel') && grid.up('winPanel_xmbgPanel').el && grid.up('winPanel_xmbgPanel').el.dom) {
+                $(grid.up('winPanel_xmbgPanel').activeTab.el.dom).find('span.file_sum_fj').html('(' + sum + ')');
+            } else if ($('span.file_sum_fj')) {
+                $('span.file_sum_fj').html('(' + sum + ')');
+            }
+        });
+        return grid;
+
+    }
+
+    /**
+     * 初始化页签panel的附件页签
+     */
+    function initWindow_xmbgxm_upload(BILL_ID) {
+        var busiId = BILL_ID;
+        var msg = true;
+        if(button_name == 'VIEW'){
+            msg = false;
+        }else{
+            msg = true;
+        }
+        var grid = UploadPanel.createGrid({
+            //busiType: 'ET001',//业务类型
+            busiId: button_name == 'INPUT' ? guid = GUID.createGUID() : busiId,//业务ID
+            editable: msg,
+            border:false,
+            gridConfig: {
+                itemId: 'window_xmbglsfj'
+            }
+        });
+        return grid;
+
+    }
+    var json_debt_bcxx_bglx = [
+        {"id": "1", "code": "1", "name": "投资计划变更"},
+        {"id": "2", "code": "2", "name": "基本信息变更"},
+        {"id": "3", "code": "3", "name": "建设周期变更"},
+        // {"id": "4", "code": "4", "name": "收支平衡调整"},
+//        {"id": "5", "code": "5", "name": "补充信息变更"},
+        {"id": "5", "code": "5", "name": "前期准备变更"},
+        //{"id": "6", "code": "6", "name": "建设进度变更"}
+
+    ];
+    var json_debt_bcxx_yxdj = [
+        {"id": "1", "code": "一级", "name": "1"},
+        {"id": "2", "code": "二级", "name": "2"},
+        {"id": "3", "code": "三级", "name": "3"},
+        {"id": "4", "code": "四级", "name": "4"},
+        {"id": "5", "code": "五级", "name": "5"}
+    ];
+    /*基础数据，下拉框形式*/
+    function DebtEleStore(debtEle, params) {
+        var namecode = '0';
+        if (typeof params != 'undefined' && params != null) {
+            namecode = params.namecode;
+        }
+        var debtStore = Ext.create('Ext.data.Store', {
+            fields: ['id', 'code', 'name'],
+            sorters: [{
+                property: 'id',
+                direction: 'asc'
+            }],
+            data: namecode == '1' ? DebtJSONNameWithCode(debtEle) : debtEle
+        });
+        return debtStore;
+    }
+
+    // 初始化补充信息页签 or 初始化前期准备页签
+    function initWindow_zqxxtb_contentForm_tab_bcxx() {
+        return Ext.create('Ext.form.Panel', {
+            name: 'bcxxForm',
+            itemId:'bcxxForm',
+            width: '100%',
+            height: '100%',
+            layout: 'anchor',
+            border: false,
+            defaults: {
+                margin: '0 0 0 0',
+                padding: '0 0 0 0',
+                anchor: '100%'
+            },
+            defaultType: 'textfield',
+            items: [
+                {
+                    xtype: 'fieldcontainer',
+                    layout: 'anchor',
+                    defaults: {
+                        anchor: '100%',
+                        margin: '20 10 0 0'
+                    },
+                    items: [
+                        {
+                            xtype: 'fieldcontainer',
+                            layout: 'column',
+                            defaultType: 'textfield',
+                            fieldDefaults: {
+                                labelWidth: 225,
+                                columnWidth: .33,
+                                margin: '5 5 5 5'
+                            },
+                            items: [
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否已经主管部门立项审批',
+                                    name: "BCXX1",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: false
+
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否已完成环评工作',
+                                    name: "BCXX2",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否已完成安评工作',
+                                    name: "BCXX3",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否已完成招投标工作',
+                                    name: "BCXX4",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否已完成相关征地拆迁等相关工作',
+                                    name: "BCXX5",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: false
+                                },
+                                // 2021 新增项
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否取得《国有土地使用证》',
+                                    name: "BCXX11",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 0,
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否取得《建设用地规划许可证》',
+                                    name: "BCXX12",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 0,
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否取得《建设工程规划许可证》',
+                                    name: "BCXX13",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 0,
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>是否取得《建设工程施工许可证》',
+                                    name: "BCXX14",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 0,
+                                    allowBlank: false
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>能否形成实物工作量',
+                                    name: "BCXX6",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: true,
+                                    hidden:true
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>能否形成有效投资支出',
+                                    name: "BCXX7",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: true,
+                                    hidden:true
+                                },
+                                {
+                                    xtype: "combobox",
+                                    name: "BCXX8",
+                                    store: DebtEleStore(json_debt_bcxx_yxdj),
+                                    fieldLabel: '<span class="required">✶</span>项目优先等级（一级优先等级最高）',
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: 1,
+                                    allowBlank: true,
+                                    hidden:true
+                                },
+                                {
+                                    xtype: "combobox",
+                                    fieldLabel: '<span class="required">✶</span>实施方案中是否包含事前绩效评估内容',
+                                    name: "BCXX15",
+                                    store: DebtEleStore(json_debt_bcxx),
+                                    displayField: 'code',
+                                    valueField: 'id',
+                                    editable: false,
+                                    value: '',
+                                    allowBlank: false
+                                }
+                            ]
+                        }
+
+                    ]
+                }
+            ]
+        });
+    }
+    /**
+     * 初始化合同变更信息表单
+     */
+    function initWindow_debt_xmbglr_contentForm() {
+        return Ext.create('Ext.form.Panel', {
+            //title: '详情表单',
+            width: '100%',
+            height: '100%',
+            itemId: 'window_debt_xmbglr_contentForm',
+            name: 'bgxxForm',
+            layout: 'vbox',
+            border: false,
+            defaults: {
+                width: '100%'
+            },
+            defaultType: 'textfield',
+            items: [
+                //{ xtype: 'hiddenfield', name: 'userPageMenu.id' },
+                {
+                    xtype: 'container',
+                    layout: 'column',
+                    margin: '0 0 0 0',
+                    defaultType: 'textfield',
+                    defaults: {
+                        margin: '5 5 5 5',
+                        columnWidth: .99,
+                        labelWidth: 70//控件默认标签宽度
+                    },
+                    items: [
+                        {
+                            fieldLabel: '<span class="required">✶</span>变更类型',
+                            name: 'BG_TYPE',
+                            xtype: 'combobox',
+                            store: IS_XMBCXX == '1' ? DebtEleStore(json_debt_bcxx_bglx) : DebtEleStore(json_debt_bglx_xm),
+                            displayField:'name',
+                            editable: false,
+                            valueField: 'id',
+                            allowBlank: false,
+                            columnWidth: .5,
+                            listeners: {
+                                'change': function (self, newValue, oldValue) {
+                                    bg_type = newValue;
+                                    szph_status = 1;
+                                    address_Can_Alert == 'canNotAlter';
+                                    //设置所有信息只读
+                                    setAllReadOnly();
+                                    if(button_name == 'VIEW'){
+                                        return false;
+                                    }
+
+                                    if(newValue == '建设周期变更' || newValue == '3'){
+                                        address_Can_Alert = 'canNotAlter';
+                                        is_status = 1;
+                                        szph_status = 1;
+                                        if(IS_XMBCXX == '1'){
+                                            setBcxxReadOnly(true);
+                                        }
+                                        setXmzqReadOnly(false);
+                                        setJbxxReadOnly(true);
+                                        setTzjhReadOnly(true);
+                                        // setSzphReadOnly(true);
+                                    }
+                                    //2021051217_dengzq_项目变更修改 增加 建设进度变更
+                                    if(newValue == '建设进度变更' || newValue == '6'){
+                                        address_Can_Alert = 'canNotAlter';
+                                        is_status = 1;
+                                        szph_status = 1;
+                                        if(IS_XMBCXX == '1'){
+                                            setBcxxReadOnly(true);
+                                        }
+                                        // 建设状态
+                                        var BUILD_STATUS_ID = Ext.ComponentQuery.query('treecombobox[name="BUILD_STATUS_ID"]')[0].getValue();
+                                        if(BUILD_STATUS_ID == '03' || BUILD_STATUS_ID == '04'){
+                                            setSjDateReadOnly(false);
+                                        }
+                                        setJsjdReadOnly(false);
+                                        setXmzqReadOnly(true);
+                                        setJbxxReadOnly(true);
+                                        setTzjhReadOnly(true);
+                                        // setSzphReadOnly(true);
+                                    }
+
+
+                                    if(newValue == '投资计划变更' || newValue == '1'){
+                                        address_Can_Alert = 'canNotAlter';
+                                        is_status = 0;
+                                        szph_status = 1;
+                                        if(IS_XMBCXX == '1'){
+                                            setBcxxReadOnly(true);
+                                        }
+                                        setXmzqReadOnly(true);
+                                        setJbxxReadOnly(true);
+                                        setTzjhReadOnly(false);
+                                        // setSzphReadOnly(true);
+                                    }
+
+                                    if(newValue == '收支平衡调整' || newValue == '4'){
+                                        address_Can_Alert = 'canNotAlter';
+                                        //20210604 fzd 控制不可修改投资计划
+                                        is_status = 1;
+                                        szph_status = 0;
+                                        if(IS_XMBCXX == '1'){
+                                            setBcxxReadOnly(true);
+                                        }
+                                        setXmzqReadOnly(true);
+                                        setJbxxReadOnly(true);
+                                        setTzjhReadOnly(true);
+                                        // setSzphReadOnly(false);
+                                        //重新加载会导致变更类型在修改时重新选择类型失效
+                                    //    loadInfo();//重新加载收支平衡框
+                                    }
+                                    if(newValue == '基本信息变更' || newValue == '2'){
+                                        is_status = 1;
+                                        szph_status = 1;
+                                        address_Can_Alert = 'canAlter';
+                                        if(IS_XMBCXX == '1'){
+                                            setBcxxReadOnly(true);
+                                        }
+                                        setXmzqReadOnly(true);
+                                        setJbxxReadOnly(false);
+                                        setTzjhReadOnly(true);
+                                        // setSzphReadOnly(true);
+                                    }
+//                                    if(newValue == '补充信息变更' || newValue == '5'){
+                                    if(newValue == '前期准备变更' || newValue == '5'){
+                                        address_Can_Alert = 'canNotAlter';
+                                        is_status = 1;
+                                        szph_status = 1;
+                                        if(IS_XMBCXX == '1'){
+                                            setBcxxReadOnly(false);
+                                        }
+                                        setXmzqReadOnly(true);
+                                        setJbxxReadOnly(true);
+                                        setTzjhReadOnly(true);
+                                        // setSzphReadOnly(true);
+                                    }
+                                },
+                                'render':function (t) {
+                                    address_Can_Alert = 'canNotAlter';
+                                }
+                            },
+                        },
+                        {fieldLabel: '<span class="required">✶</span>变更日期', xtype: 'datefield', name: 'BG_DATE',editable: false,columnWidth: .5, format: 'Y-m-d'},
+                        {
+                            fieldLabel: '<span class="required">✶</span>变更原因',
+                            xtype: "textarea",
+                            columnWidth: 1,
+                            name: 'BG_REASON',
+                            maxLength:100,//限制输入字数
+                            maxLengthText:"输入内容过长！",
+                            minLength:20,
+                            minLengthText:"最少输入20个汉字"
+                        },
+                        {
+                            fieldLabel: '<span class="required">✶</span>变更要点',
+                            xtype: "textarea",
+                            name: 'BG_IMPORT',
+                            columnWidth: 1,
+                            maxLength:100,//限制输入字数
+                            maxLengthText:"输入内容过长！",
+                            minLength:20,
+                            minLengthText:"最少输入20个汉字"
+                        }
+                    ]
+                },
+                {
+                    xtype: 'fieldset',
+                    flex: 1,
+                    border: false,
+                    layout: 'fit',
+                    margin: '2 2 2 2',
+                    width: '100%',
+                    collapsible: false,
+                    items: [
+                        insert_grid()
+                    ]
+                }
+            ],
+            listeners: {
+                'beforeRender': function () {
+                    if (button_name == 'VIEW') {
+                        SetItemReadOnly(this.items);
+                    }
+                }
+            }
+        });
+    }
+
+    function insert_grid(){
+        return Ext.create('Ext.panel.Panel', {
+            border:false,
+            autoHeight: false,
+            height: '100%',
+            layout : {
+                type :'hbox'
+            },
+            xtype: 'layout-horizontal-box',
+            width : '100%',
+            frame :false,
+            items : [
+                insert_rightgrid_panel(),
+                insert_leftgrid_panel()
+            ]
+        });
+    }
+    function insert_leftgrid_panel(){
+        return Ext.create('Ext.panel.Panel', {
+            xtype: 'fieldset',
+            border:true,
+            title: '<span style="color:#000000;font-size:12px;">变更历史</span>',
+            autoHeight: false,
+            collapsible: false,
+            height: '100%',
+            margin: '1 2 1 1',
+            layout : {
+                type :'fit'
+            },
+            width : '50%',
+            listeners : {
+                'afterrender' : function(grid) {
+                    var elments = Ext.select(".x-panel-header",true);//   title 的class  
+                    elments.each(function(el) {
+                        el.setStyle("color", 'white');
+                        el.setStyle("background", 'white');
+                        el.setStyle("border-color", '#D0D0D0');
+                    }, this);
+                }
+            },
+            frame :false,
+            items : [initWindow_debt_xmbglr_contentForm_grid()]
+        });
+    }
+    function insert_rightgrid_panel(){
+        return Ext.create('Ext.panel.Panel', {
+            border:false,
+            autoHeight: false,
+            height: '100%',
+            margin: '1 1 1 2',
+            id:'upPanel',
+            layout : {
+                type :'fit'
+            },
+            width : '50%',
+            frame :false,
+            items : [initWindow_xmbgxm_upload(BILL_ID)]
+        });
+    }
+
+    /**
+     * 初始化合同变更录入弹出表格
+     */
+    function initWindow_debt_xmbglr_contentForm_grid() {
+        var headerJson = [
+            {xtype: 'rownumberer', width: 45},
+            {"dataIndex": "BILL_ID","type": "string",hidden:true },
+            {"dataIndex": "BG_TYPE", "width": 150, "type": "string", "text": "变更类型"},
+            {"dataIndex": "BG_DATE", "width": 100, "type": "string", "text": "变更日期"},
+            {"dataIndex": "CREATE_USER_NAME", "width": 150, "type": "string", "text": "变更人"},
+            {"dataIndex": "BG_IMPORT", "width": 250, "type": "string", "text": "变更要点"},
+            {"dataIndex": "BG_REASON", "width": 250, "type": "string", "text": "变更原因"},
+            {"dataIndex": "BG_STATUS", "width": 150, "type": "string", "text": "状态"}
+        ];
+        var grid = DSYGrid.createGrid({
+            itemId: 'grid_xmbg_bgls',
+            headerConfig: {
+                headerJson: headerJson,
+                columnAutoWidth: false
+            },
+            checkBox: false,
+            border: false,
+            height: '100%',
+            params: {
+                AD_CODE: AD_CODE,
+                AG_ID: AG_ID,
+                AG_CODE: AG_CODE,
+                XM_ID: XM_ID
+            },
+            dataUrl: 'getXMBglsInfo.action',
+            pageConfig: {
+                enablePage: false
+            },
+            listeners:{
+                /*select :function( self , record , index , eOpts ){
+                    var msg = true;
+                    if(button_name == 'VIEW'){
+                        msg = false;
+                    }else{
+                        msg = true;
+                    }
+                    var uploadpanel = UploadPanel.createGrid({
+                        busiId: record.get("BILL_ID"),
+                        editable: msg,
+                        gridConfig: {
+                            itemId: 'window_xmbglsfj'
+                        }
+                    });
+                    var item=[uploadpanel];
+                    var panel = Ext.getCmp('upPanel');
+                    panel.removeAll();
+                    panel.add(item);
+                    panel.doLayout();
+                }*/
+            }
+        });
+        return grid;
+    }
+
+
+
+    /**
+     * 加载页面数据
+     * @param form
+     */
+    function loadInfo() {
+        //获取基本情况页签表单
+        var jbqkForm = Ext.ComponentQuery.query('form[name="jbqkForm"]')[0];
+        // 获取补充信息页签表单or获取前期准备页签表单
+        var bcxxForm = Ext.ComponentQuery.query('form[name="bcxxForm"]')[0];
+        // 20210802 guoyf 参数改为xmlx_id否则不按公式自动计算（土储）
+        // change_xmysbz_grid (xmlx_id, {IS_YHS: false,XM_ID:XM_ID});
+        jbqkForm.load({
+            url: 'getXMInfo.action',
+            params: {
+                BILL_ID:BILL_ID,
+                XM_ID: XM_ID,
+                BG_TYPE: bg_type,
+                IS_XMBCXX: IS_XMBCXX,
+                BUTTON_NAME:button_name,
+                XMLX_ID:xmlx_id//区分类型
+            },
+            waitTitle: '请等待',
+            waitMsg: '正在加载中...',
+            success: function (form_success, action) {
+
+                connNdjh = action.result.data.jbqkForm.CONNNDJH;
+                connZwxx = action.result.data.jbqkForm.CONNZWXX;
+                //加载基本情况页签表单
+                jbqkForm.getForm().setValues(action.result.data.jbqkForm);
+                //2021051215_dengzq_项目信息建设单位、运营单位、建设单位统一社会信用代码、运营单位统一社会信用代码为空则取项目单位信息
+                let USE_UNIT_ID = action.result.data.jbqkForm.USE_UNIT_ID;
+                let JSDW_TYSHXY = action.result.data.jbqkForm.JSDW_TYSHXY;
+                let YY_UNIT_ID = action.result.data.jbqkForm.YY_UNIT_ID;
+                let YYDW_TYSHXY = action.result.data.jbqkForm.YYDW_TYSHXY;
+                let useUnitId = form_success.owner.getForm().findField('USE_UNIT_ID');//建设单位
+                let jsdwTyshxy =  form_success.owner.getForm().findField('JSDW_TYSHXY');//建设单位统一社会信用代码
+                let yyUnitId =  form_success.owner.getForm().findField('YY_UNIT_ID');//运营单位
+                let yydwTyshxy =  form_success.owner.getForm().findField('YYDW_TYSHXY');//运营单位统一社会信用代码
+
+                $.post("/getAgtyshcode.action", {
+                    AG_ID:AG_ID
+                }, function (data) {
+                    if (!data.success) {
+                        Ext.MessageBox.alert('提示', '查询' + '失败！' + data.message);
+                        return;
+                    }
+                    //统一社会信用代码
+                    USCCODE = data.data[0].TYSHXYDM;
+                    var jbqkForm = Ext.ComponentQuery.query('form[name="jbqkForm"]')[0];
+                    //项目信息建设单位、运营单位、建设单位统一社会信用代码、运营单位统一社会信用代码为空则取项目单位信息
+                    if(isNull(USE_UNIT_ID)){
+                        useUnitId.setValue(action.result.data.jbqkForm.AG_NAME);
+                    }
+                    if(isNull(JSDW_TYSHXY)){
+                        jsdwTyshxy.setValue(USCCODE);
+                    }
+                    if(isNull(YY_UNIT_ID)){
+                        yyUnitId.setValue(action.result.data.jbqkForm.AG_NAME);
+                    }
+                    if(isNull(YYDW_TYSHXY)){
+                        yydwTyshxy.setValue(USCCODE);
+                    }
+                }, "json");
+
+                if(IS_XMBCXX == '1'){
+                    bcxxForm.getForm().setValues(action.result.data.bcxxForm);
+                }
+                //加载投资计划表单
+                var LJWCTZ_AMT = action.result.data.jbqkForm.LJWCTZ_AMT;
+                var ZBJ_AMT = action.result.data.jbqkForm.ZBJ_AMT;
+                var ZBJ_ZQ_AMT = action.result.data.jbqkForm.ZBJ_ZQ_AMT;
+                var ZBJ_YS_AMT = action.result.data.jbqkForm.ZBJ_YS_AMT;
+                var bgxxForm = Ext.ComponentQuery.query('form[name="bgxxForm"]')[0];
+                bgxxForm.getForm().setValues(action.result.data.bgxxForm);
+                //控制项目变更日期不能为项目开始日期之前
+                bgxxForm.getForm().findField('BG_DATE').minValue = new Date(Date.parse(action.result.data.jbqkForm.CREATE_DATE.replace(/-/g, "/")));
+                Ext.ComponentQuery.query('numberFieldFormat[name="LJWCTZ_AMT"]')[0].setValue(LJWCTZ_AMT);
+                //加载投资计划页签表格
+                var tzjhStore = action.result.data.tzjhGrid;
+                for(var i in tzjhStore){
+                    var SJBZ_PLAN_AMT = action.result.data.tzjhGrid[i].SJBZ_PLAN_AMT;
+                    var CZYS_PLAN_AMT = action.result.data.tzjhGrid[i].CZYS_PLAN_AMT;
+                    var RZZJ_PLAN_AMT = action.result.data.tzjhGrid[i].RZZJ_PLAN_AMT;
+                    var DWZC_PLAN_AMT = action.result.data.tzjhGrid[i].DWZC_PLAN_AMT;
+                    var QT_PLAN_AMT = action.result.data.tzjhGrid[i].QT_PLAN_AMT;
+                    var SCRZ_PLAN_AMT = action.result.data.tzjhGrid[i].SCRZ_PLAN_AMT;
+                    action.result.data.tzjhGrid[i].ZTZ_PLAN_AMT = SJBZ_PLAN_AMT + CZYS_PLAN_AMT + RZZJ_PLAN_AMT + DWZC_PLAN_AMT + QT_PLAN_AMT + SCRZ_PLAN_AMT;
+                }
+                var tzjhGrid = DSYGrid.getGrid('tzjhGrid');
+                tzjhGrid.getStore().removeAll();
+                tzjhGrid.insertData(null, tzjhStore);
+                initWindow_zqxxtb_contentForm_tab_tzjh_refreshForm();
+                Ext.ComponentQuery.query('numberFieldFormat[name="ZBJ_AMT"]')[0].setValue(ZBJ_AMT);
+                Ext.ComponentQuery.query('numberFieldFormat[name="ZBJ_ZQ_AMT"]')[0].setValue(ZBJ_ZQ_AMT);
+                Ext.ComponentQuery.query('numberFieldFormat[name="ZBJ_YS_AMT"]')[0].setValue(ZBJ_YS_AMT);
+
+//                 //加载收支平衡页签表格(此处需要修改)
+// //                if (isOld_szysGrid == '0') {
+//                      var xmsyStore = action.result.data.xmsyGrid;
+//                     if(!isNull(xmsyStore)){//判空
+//                         for (var i = 0; i < xmsyStore.length; i++) {
+//                             xmsyStore[i].TOTAL_AMT = xmsyStore[i].YYSR_AMT + xmsyStore[i].CZBZ_AMT + xmsyStore[i].ZCBX_AMT + xmsyStore[i].QT_AMT;
+//                             xmsyStore[i].YSCB_HJ_AMT = xmsyStore[i].XM_YY_AMT + xmsyStore[i].ZJFY_AMT + xmsyStore[i].LXZC_AMT + xmsyStore[i].SFZC_AMT + xmsyStore[i].HBZC_AMT;
+//                         }
+//                         //如果加"4" == bg_type，页面初始化时会导致收支预算页签带不出来数据
+//                       /*  if("4" == bg_type){*/
+// //                            editTab(5); 20210617_dengzq_收支平衡调整，修改：修改数据时页签加载方式(数字服务平台bug:6111)
+//                             var xmsyForm = Ext.ComponentQuery.query('form[name="xmsyForm"]')[0];
+//                             var xmsyGrid = xmsyForm.down('grid');
+//                             xmsyGrid.getStore().removeAll();
+//                             xmsyGrid.insertData(null, xmsyStore);
+//                             if (xmsyStore && xmsyStore.length > 0) {
+//                                 xmsyForm.down('treecombobox[name="ZFXJJKM_ID"]').setValue(typeof xmsyStore[0].ZFXJJKM_ID == 'undefined' ? '' : xmsyStore[0].ZFXJJKM_ID);
+//                                 xmsyForm.down('datefield[name="XM_USED_DATE"]').setValue(typeof xmsyStore[0].XM_USED_DATE == 'undefined' ? '' : xmsyStore[0].XM_USED_DATE);
+//                                 xmsyForm.down('numberFieldFormat[name="XM_USED_LIMIT"]').setValue(typeof xmsyStore[0].XM_USED_LIMIT == 'undefined' ? '' : xmsyStore[0].XM_USED_LIMIT);
+//                             }
+//                             var yyqx = xmsyForm.down('numberFieldFormat[name="XM_USED_LIMIT"]').getValue();
+//                             var xmztr_amt = 0.00; // 总收入金额
+//                             var xmzcb_amt = 0.00; // 总支出金额
+//                             var grid = xmsyForm.down('grid');
+//                             //获取01行
+//                             var record_01 = grid.getStore().getAt(gs_relation_guid["01"]);
+//                             //获取03行
+//                             var record_03 = grid.getStore().getAt(gs_relation_guid["03"]);
+//                             var yyqx_count = 4; // 默认显示5年编制计划列
+//                             if (!!yyqx) {
+//                                 yyqx_count = yyqx;
+//                             }
+//                             // 循环计算所有年度总收入总支出合计值
+//                             for (var i = 0; i <= yyqx_count; i++) {
+//                                 var SR = "SRAMT_Y" + i;
+//                                 var ZC = "ZCAMT_Y" + i;
+//                                 if (!!record_01.get(SR)) {
+//                                     xmztr_amt += parseFloat(record_01.get(SR));
+//                                 }
+//                                 if (!!record_03.get(ZC)) {
+//                                     xmzcb_amt += record_03.get(ZC);
+//                                 }
+//                             }
+//                                  Ext.ComponentQuery.query('numberFieldFormat[name="XMZTR_AMT"]')[0].setValue(xmztr_amt);
+//                                  Ext.ComponentQuery.query('numberFieldFormat[name="XMZCB_AMT"]')[0].setValue(xmzcb_amt);
+//                        /* }*/
+//                     }
+            },
+            failure: function (form, action) {
+                alert('加载失败');
+                Ext.ComponentQuery.query('window[name="window_zqxxtb"]')[0].close();
+            }
+        });
+
+    }
+    /**
+     * 查询按钮实现
+     */
+    function getHbfxDataList() {
+        var store = DSYGrid.getGrid('contentGrid').getStore();
+        var XMXZ_ID = Ext.ComponentQuery.query('treecombobox#XMXZ_SEARCH')[0].getValue();
+        var XMLX_ID = Ext.ComponentQuery.query('treecombobox#XMLX_SEARCH')[0].getValue();
+        var mhcx = Ext.ComponentQuery.query('textfield#XM_SEARCH')[0].getValue();
+        //初始化表格Store参数
+        store.getProxy().extraParams = {
+            AD_CODE: AD_CODE,
+            AG_ID: AG_ID,
+            AG_CODE: AG_CODE,
+            mhcx: mhcx,
+            XMXZ_ID: XMXZ_ID,
+            XMLX_ID: XMLX_ID,
+            wf_status: WF_STATUS,
+            wf_id: wf_id,
+            node_code: node_code,
+            is_zbx: is_zbx
+        };
+        //刷新表格内容
+        store.loadPage(1);
+    }
+    /**
+     * 合同变更信息送审/审核
+     */
+    function next() {
+        var records = DSYGrid.getGrid('contentGrid').getSelectionModel().getSelection();
+        if (records.length == 0) {
+            Ext.MessageBox.alert('提示', '请至少选择一条记录！');
+            return false;
+        }
+        //判断操作按钮
+        if (node_type == 'typing') {
+            button_name = '送审';
+        } else if (node_type == 'reviewed') {
+            button_name = '审核';
+        }
+        var bgInfoArray = [];
+        var XMIDS = [];
+        for (var i in records) {
+            XMIDS.push(records[i].get("XM_ID"));
+        }
+        Ext.each(records, function (record) {
+            var array = {};
+            array.ID = record.get("BILL_ID");
+            array.XM_ID = record.get("XM_ID");
+            array.AD_CODE = record.get("AD_CODE");
+            array.BG_TYPE = record.get("BG_TYPE");
+            array.BG_TYPE_ID = record.get("BG_TYPE_ID");
+            bgInfoArray.push(array);
+        });
+        var bgInfoArrays=Ext.util.JSON.encode(bgInfoArray);
+        if(button_name =="送审"){
+            //发送ajax请求，修改节点信息
+            $.post("checkXmbgSzsj.action", {//20210727liyue校验收支平衡不符合规格数据，如果成功则可以继续送审，如不成功则展示不成功数据
+                XMIDS: XMIDS
+            }, function (data) {
+                //校验中数据都通过情况下，默认级别为0，直接走工作流
+                if (data.list[0].CHECK_LEVEL == 0) {
+                    doXzzq(bgInfoArrays);
+                }
+                if (data.list[0].CHECK_LEVEL == 2&&button_name =="送审") {
+                    Ext.onReady(function(){
+                        Ext.MessageBox.buttonText.yes = "查看";
+                        Ext.MessageBox.buttonText.no = "取消";
+                        Ext.MessageBox.show({
+                            title : '提示：',
+                            msg : '送审数据中，项目信息存在不合规格项，请检查数据并在修改后，继续送审！',
+                            modal:true,
+                            buttons : Ext.Msg.YESNO, fn:function (btn_confirm,msgs) {
+                                if(btn_confirm=="yes"){//查看
+                                    showwindows(XMIDS);
+                                }
+                                Ext.MessageBox.buttonText.yes = "是";//已经改成这样了
+                                Ext.MessageBox.buttonText.no = "否";//已经改成这样了
+                            }
+                        });
+                    });
+                }
+                //级别为1的情况下，提示性信息，点击查看可查看提示项，也可直接送审
+                if (data.list[0].CHECK_LEVEL == 1&&  button_name =="送审") {
+                    Ext.onReady(function () {
+                        Ext.MessageBox.buttonText.yes = "送审";//已经改成这样了
+                        Ext.MessageBox.buttonText.no = "查看";//已经改成这样了
+                        Ext.MessageBox.buttonText.cancel = "取消";//已经改成这样了
+                        Ext.MessageBox.show({
+                            title: '提示：',
+                            msg: '送审数据中，存在建议性数据问题，可查看提示信息，若无需修改数据，可直接进行送审操作',
+                            modal: true,
+                            buttons: Ext.Msg.YESNOCANCEL, fn: function (btn_confirm, msgs) {
+                                if (btn_confirm == "yes") {//送审
+                                    doXzzq(bgInfoArrays);
+                                }
+                                if (btn_confirm == "no") {//查看
+                                    showwindows(XMIDS);
+                                }
+                                Ext.MessageBox.buttonText.yes = "是";//已经改成这样了
+                                Ext.MessageBox.buttonText.no = "否";//已经改成这样了
+                            }
+                        });
+                    });
+                }
+            }, "json");
+        }else{
+            doXzzq(bgInfoArrays);
+        }
+    }
+    /*修改工作流节点*/
+    function doXzzq(bgInfoArrays) {
+        //向后台传递变更数据信息
+        $.post('/nextXMBgInfo.action', {
+            wf_id: wf_id,
+            node_code: node_code,
+            button_name: button_name,
+            audit_info: audit_info,
+            IS_END: IS_END,
+            bgInfoArray: bgInfoArrays,
+            IS_XMBCXX: IS_XMBCXX,
+            NO_ENTRY:no_entry
+        }, function (data) {
+            if (data.success) {
+                Ext.toast({
+                    html: button_name + "成功！" + (data.message ? data.message : ''),
+                    closable: false,
+                    align: 't',
+                    slideInDuration: 400,
+                    minWidth: 400
+                });
+                DSYGrid.getGrid("contentGrid").getStore().loadPage(1);
+            } else {
+                Ext.MessageBox.alert('提示', button_name + "失败！" + (data.message ? data.message : ''));
+                DSYGrid.getGrid("contentGrid").getStore().loadPage(1);
+            }
+        }, 'json');
+    }
+    //送审时判断不通过数据原因展示
+    function  showwindows(XMIDS) {
+        q_code = 'DEBT_V_ZQGL_XM_SZPHJY_HISTORY';
+        //var ag_id = USER_AG_ID;
+        var XMIDS = XMIDS;
+        var str = {XM_ID: XMIDS};
+        var window = Ext.create('Ext.window.Window', {
+            width: document.body.clientWidth * 0.9,
+            height: document.body.clientHeight * 0.9,
+            layout: 'fit',
+            maximizable: true,
+            modal: true, // 模式窗口，弹出窗口后屏蔽掉其他组件
+            title: '送审数据检查结果',
+            items: [initReportQuery(q_code, str)]
+        });
+        window.show();
+        window.down("button#report_query_close").on('click', function () {
+            window.close();
+        });
+    }
+    //20210628liyue重写平台展示报表panle
+    function initReportQuery(q_code, q_condition, closeHidden) {
+        var paramShow = '0';
+        conditionItems = new Array();
+        columns = new Array();
+        url = {};
+        urlType = {};
+        urlParam = new Array();
+        is_newline = {};
+        url_field = {};
+        return initReportQueryPanel(q_code, q_condition, closeHidden, paramShow);
+    };
+    /**
+     * 债务合同信息退回/撤销
+     */
+    function back(btnName) {
+        var records = DSYGrid.getGrid('contentGrid').getSelectionModel().getSelection();
+        if (records.length == 0) {
+            Ext.MessageBox.alert('提示', '请至少选择一条记录！');
+            return false;
+        }
+        var records = DSYGrid.getGrid('contentGrid').getSelectionModel().getSelection();
+        var bgInfoArray = [];
+        Ext.each(records, function (record) {
+            var array = {};
+            array.ID = record.get("BILL_ID");
+            array.XM_ID = record.get("XM_ID");
+            bgInfoArray.push(array);
+        });
+        //向后台传递变更数据信息
+        $.post('/backXMBgInfo.action', {
+            wf_id: wf_id,
+            node_code: node_code,
+            button_name: btnName,
+            audit_info: audit_info,
+            IS_END: IS_END,
+            bgInfoArray: Ext.util.JSON.encode(bgInfoArray),
+            IS_XMBCXX: IS_XMBCXX
+        }, function (data) {
+            if (data.success) {
+                Ext.toast({
+                    html: button_name + "成功！" + (data.message ? data.message : ''),
+                    closable: false,
+                    align: 't',
+                    slideInDuration: 400,
+                    minWidth: 400
+                });
+                DSYGrid.getGrid("contentGrid").getStore().loadPage(1);
+            } else {
+                Ext.MessageBox.alert('提示', button_name + "失败！" + (data.message ? data.message : ''));
+                DSYGrid.getGrid("contentGrid").getStore().loadPage(1);
+            }
+        }, 'json');
+    }
+    /**
+     * 操作记录
+     */
+    function dooperation() {
+        var records = DSYGrid.getGrid('contentGrid').getSelection();
+        if (records.length == 0) {
+            Ext.MessageBox.alert('提示', '请至少选择一条记录！');
+            return;
+        } else if (records.length > 1) {
+            Ext.MessageBox.alert('提示', '不能同时查看多条记录！');
+            return;
+        } else {
+            BILL_ID = records[0].get("BILL_ID");
+
+            fuc_getWorkFlowLog(BILL_ID);
+        }
+    }
+    //设置所有信息只读
+    function setAllReadOnly(){
+        var jbqkForm = Ext.ComponentQuery.query('form[name="jbqkForm"]')[0];
+        var bcxxForm = Ext.ComponentQuery.query('form[name="bcxxForm"]')[0];
+        var tzjhForm = Ext.ComponentQuery.query('form[name="tzjhForm"]')[0];
+        // var xmsyForm = Ext.ComponentQuery.query('form[name="xmsyForm"]')[0];
+        SetjbFormItemsReadOnly(jbqkForm.items);
+        if(IS_XMBCXX == '1'){
+            SetFormItemsReadOnly(bcxxForm.items);
+        }
+        SetFormItemsReadOnly(tzjhForm.items);
+        // SetFormItemsReadOnly(xmsyForm.items);
+        var tzjhGrid = DSYGrid.getGrid('tzjhGrid');
+        tzjhGrid.down('#tzjhDelBtn').setDisabled(true);
+        tzjhGrid.down('#tzjhInsertBtn').setDisabled(true);
+    }
+    //设置基本信息只读属性
+    function setJbxxReadOnly(flag){
+        var jbqkForm = Ext.ComponentQuery.query('form[name="jbqkForm"]')[0];
+        jbqkForm.items.each(function (item1) {
+            if (item1.items != undefined && item1.items != "" && item1.items != "null") {
+                item1.items.each(function (item) {
+                    if (item.name == 'FGW_XMK_CODE'    // 发改委项目库编码
+                        || item.name == 'YSXM_NO'       // 预算项目编码
+                        || item.name == (no_entry=='0'?'LXSPYJ_ID':'')     // 立项审批依据
+                        || item.name == (no_entry=='0'?'JYS_NO':'')        // 项目建议书文号
+                        || item.name == (no_entry=='0'?'PF_NO':'' )        // 可研批复文号
+                        || item.name == 'BILL_PERSON'   // 单位项目负责人
+                        || item.name == 'BILL_PHONE'    // 负责人联系电话
+                        || item.name == 'BUILD_CONTENT' // 项目建设内容
+                        || item.name == (no_entry=='0'?'XM_NAME':'' )       // 项目名称
+                        //|| item.name == 'LX_YEAR'       // 立项年度(禁止修改)
+                        || item.name == 'AG_NAME'       // 项目单位
+                        || item.name == (no_entry=='0'?'':'XM_ADDRESS')    //2021053117_dengzq_项目变更录入，项目地址可以修改
+                        || item.name == (no_entry=='0'?'':'LNG')    // 项目地址经度_穿透项目地图修改经度
+                        || item.name == (no_entry=='0'?'':'LAT')    // 项目地址纬度_穿透项目地图修改纬度
+                        || item.name == 'UPPER_XM_ID'   // 上级项目
+                        || item.name == 'DISC'          // 国土部门监管码
+                        || item.name == (no_entry=='0'?'USE_UNIT_ID':'')   // 管理（使用）单位
+                        || item.name == 'IS_FGW_XM'   // 是否为重大项目
+                        || item.name == 'ZJTXLY_ID'  // 资金投向领域
+                        || item.name == 'GJZDZLXM_ID'  // 重大战略项目
+                        || item.name == 'XMSY_YCYJ'   // 项目收益预测依据
+                        || item.name=='GK_PAY_XMNO'//国库支付项目编码
+                        || item.name == 'SS_ZGBM_ID' // 所属主管部门
+                        //20201119 fzd 放开录入
+                        || item.name == 'JSXZ_ID' //建设性质
+                        || item.name == 'BUILD_STATUS_ID' //建设状态  2021051216_dengzq_变更中增加建设进度变更，变更【建设状态】字段
+                        //20210225 zhuangrx 放开单位的项目变更
+                        || item.name == 'USE_UNIT_ID' //建设单位
+                        || item.name == 'JSDW_TYSHXY' //建设单位统一信用代码
+                        || item.name == 'YY_UNIT_ID' //运营单位
+                        || item.name == 'YYDW_TYSHXY' //运营单位统一信用代码
+                        ||item.name == 'XMZCQS_ID'
+                    ) {
+                        if(flag){
+                            if (item.getXType() == 'container' || item.getXType() == 'fieldcontainer' || item.getXType() == 'fieldset') {
+                                SetItemReadOnly(item.items);
+                                SetjbFormItemsReadOnly(item.items);
+                            } else {
+                                if(item.name=='IS_PPP'||item.name=='PPP_YZFS'||item.name=='PPP_YZFS'
+                                    ||item.name=='PPP_HBFS'||item.name=='PPP_SCJD'||item.name=='PPP_SCJD'||item.name=='PPP_RKQK_ID'
+                                    ||item.name=='XMJSQ_START'||item.name=='XMJSQ_END'||item.name=='XMYYQ_START'||item.name=='XMYYQ_END'||item.name=='IS_TGWUSZPJ'
+                                    ||item.name=='IS_TGCZCSNLLZ'||item.name=='IS_XCCBSSFA'||item.name=='HZQX'
+                                ){
+                                    return;
+                                }
+                                item.readOnly = true;
+                                if (item.getXType() != 'checkbox' && item.getXType() != 'radio') {
+                                    item.fieldCls = 'form-unedit';
+                                    if (item.getXType() == 'numberfield' || item.getXType() == 'numberFieldFormat') {
+                                        item.fieldCls = 'form-unedit-number';
+                                    }
+                                }
+                                if (item.setReadOnly && item.setFieldStyle) {
+                                    item.setReadOnly(true);
+                                    if (item.getXType() != 'checkbox' && item.getXType() != 'radio') {
+                                        item.setFieldStyle('background:#E6E6E6');
+                                    }
+                                }
+                            }
+                        }else{
+                            item.setReadOnly(false);
+                            item.setFieldStyle('background:#FFFFFF');
+                            item.readOnly = false;
+                            item.editable = true;
+                            item.fieldStyle = 'background:#FFFFFF';
+                        }
+                    }
+                });
+            }
+        });
+    }
+    //设置建设周期只读属性
+    function setXmzqReadOnly(flag){
+        var jbqkForm = Ext.ComponentQuery.query('form[name="jbqkForm"]')[0];
+        jbqkForm.items.each(function (item1) {
+            if (item1.items != undefined && item1.items != "" && item1.items != "null") {
+                item1.items.each(function (item) {
+                    var xmxz_id = Ext.ComponentQuery.query('treecombobox[name="XMXZ_ID"]')[0].getValue();
+
+                    if (item.name == 'START_DATE_ACTUAL'     //计划开工日期
+                        || item.name == 'END_DATE_ACTUAL'     //计划竣工日期
+                    ) {
+                        if(flag){
+                            item.setReadOnly(true);
+                            item.setFieldStyle('background:#E6E6E6');
+                            item.readOnly = true;
+                            item.fieldStyle = 'background:#E6E6E6';
+                            Ext.ComponentQuery.query('treecombobox[name="ZJTXLY_ID"]')[0].allowBlank = false;
+                            Ext.ComponentQuery.query('treecombobox[name="ZJTXLY_ID"]')[0].setFieldLabel("<span class=\"required\">✶</span>资金投向领域");
+                        }else{
+                            item.setReadOnly(false);
+                            item.setFieldStyle('background:#FFFFFF');
+                            item.readOnly = false;
+                            item.fieldStyle = 'background:#FFFFFF';
+                            Ext.ComponentQuery.query('treecombobox[name="ZJTXLY_ID"]')[0].allowBlank = true;
+                            Ext.ComponentQuery.query('treecombobox[name="ZJTXLY_ID"]')[0].setFieldLabel("资金投向领域");
+                        }
+                    }
+                });
+            }
+        });
+    }
+    // 20210621 guoyf 设置建设进度变更下建设状态为03、04、时，实际开工日、实际竣工日、可变更
+    function setSjDateReadOnly(flag){
+        var jbqkForm = Ext.ComponentQuery.query('form[name="jbqkForm"]')[0];
+        jbqkForm.items.each(function (item1) {
+            if (item1.items != undefined && item1.items != "" && item1.items != "null") {
+                item1.items.each(function (item) {
+                    if (item.name == 'START_DATE_ACTUAL'     //实际开工日期
+                        || item.name == 'END_DATE_ACTUAL'     //实际竣工日期
+                    ) {
+                        if(flag){
+                            item.setReadOnly(true);
+                            item.setFieldStyle('background:#E6E6E6');
+                            item.readOnly = true;
+                            item.fieldStyle = 'background:#E6E6E6';
+                        }else{
+                            item.setReadOnly(false);
+                            item.setFieldStyle('background:#FFFFFF');
+                            item.readOnly = false;
+                            item.fieldStyle = 'background:#FFFFFF';
+                        }
+                    }
+                });
+            }
+        });
+    }
+    //设置建设进度只读属性_2021051217_dengzq_项目变更修改 增加 建设进度变更
+    function setJsjdReadOnly(flag){
+        var jbqkForm = Ext.ComponentQuery.query('form[name="jbqkForm"]')[0];
+        jbqkForm.items.each(function (item1) {
+            if (item1.items != undefined && item1.items != "" && item1.items != "null") {
+                item1.items.each(function (item) {
+                    if (item.name == 'BUILD_STATUS_ID') {
+                        if(flag){
+                            item.setReadOnly(true);
+                            item.setFieldStyle('background:#E6E6E6');
+                            item.readOnly = true;
+                            item.fieldStyle = 'background:#E6E6E6';
+                            Ext.ComponentQuery.query('treecombobox[name="BUILD_STATUS_ID"]')[0].allowBlank = false;
+                        }else{
+                            item.setReadOnly(false);
+                            item.setFieldStyle('background:#FFFFFF');
+                            item.readOnly = false;
+                            item.fieldStyle = 'background:#FFFFFF';
+                            Ext.ComponentQuery.query('treecombobox[name="BUILD_STATUS_ID"]')[0].allowBlank = true;
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    //设置补充信息只读属性 or 设置前期准备只读属性
+    function setBcxxReadOnly(flag){
+        var bcxxForm = Ext.ComponentQuery.query('form[name="bcxxForm"]')[0];
+        bcxxForm.items.each(function (item1) {
+            if (item1.items != undefined && item1.items != "" && item1.items != "null") {
+                item1.items.each(function (item2) {
+                    item2.items.each(function (item) {
+                        if (item.name == 'BCXX1'
+                            || item.name == 'BCXX2'
+                            || item.name == 'BCXX3'
+                            || item.name == 'BCXX4'
+                            || item.name == 'BCXX5'
+                            || item.name == 'BCXX6'
+                            || item.name == 'BCXX7'
+                            || item.name == 'BCXX8'
+                            || item.name == 'BCXX11'
+                            || item.name == 'BCXX12'
+                            || item.name == 'BCXX13'
+                            || item.name == 'BCXX14'
+                            || item.name == 'BCXX15'
+                        ) {
+                            if (flag) {
+                                item.setReadOnly(true);
+                                item.setFieldStyle('background:#E6E6E6');
+                                item.readOnly = true;
+                                item.fieldStyle = 'background:#E6E6E6';
+                            } else {
+                                item.setReadOnly(false);
+                                item.setFieldStyle('background:#FFFFFF');
+                                item.readOnly = false;
+                                item.fieldStyle = 'background:#FFFFFF';
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    }
+    //设置投资计划只读属性
+    function setTzjhReadOnly(flag){
+        var tzjhForm = Ext.ComponentQuery.query('form[name="tzjhForm"]')[0];
+        tzjhForm.items.each(function (item1) {
+            if (item1.items != undefined && item1.items != "" && item1.items != "null") {
+                item1.items.each(function (item) {
+                    if (item.name == 'ZBJ_AMT'     //计划开工日期
+                        || item.name == 'ZBJ_ZQ_AMT'     //计划竣工日期
+                        || item.name == 'ZBJ_YS_AMT'     //其中财政预算安排
+                    ) {
+                        if(flag){
+                            item.setReadOnly(true);
+                            item.setFieldStyle('background:#E6E6E6');
+                            item.readOnly = true;
+                            item.fieldStyle = 'background:#E6E6E6';
+                        }else{
+                            item.setReadOnly(false);
+                            item.setFieldStyle('background:#FFFFFF');
+                            item.readOnly = false;
+                            item.fieldStyle = 'background:#FFFFFF';
+                        }
+                    }
+                });
+            }
+        });
+        //设置按钮只读
+        var tzjhGrid = DSYGrid.getGrid('tzjhGrid');
+        if(flag){
+            tzjhGrid.down('#tzjhDelBtn').setDisabled(true);
+            tzjhGrid.down('#tzjhInsertBtn').setDisabled(true);
+        }else{
+            tzjhGrid.down('#tzjhDelBtn').setDisabled(false);
+            tzjhGrid.down('#tzjhInsertBtn').setDisabled(false);
+        }
+    }
+
+
+    //设置收支平衡只读属性
+    function setSzphReadOnly(flag){
+        var xmsyForm = Ext.ComponentQuery.query('form[name="xmsyForm"]')[0];
+        xmsyForm.items.each(function (item1) {
+            if (item1.items != undefined && item1.items != "" && item1.items != "null") {
+                item1.items.each(function (item) {
+                    if (item.name == 'ZFXJJKM_ID'
+                        || item.name == 'XM_USED_DATE'
+                        || item.name == 'XM_USED_LIMIT'
+                        || item.name == 'REMARK'
+                    ) {
+                        if(flag){
+                            item.setReadOnly(true);
+                            item.setFieldStyle('background:#E6E6E6');
+                            item.readOnly = true;
+                            item.fieldStyle = 'background:#E6E6E6';
+                        }else{
+                            item.setReadOnly(false);
+                            item.setFieldStyle('background:#FFFFFF');
+                            item.readOnly = false;
+                            item.fieldStyle = 'background:#FFFFFF';
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 树点击节点时触发，刷新content主表格，明细表置为空
+     */
+    function reloadGrid(param) {
+        if (AD_CODE == null || AD_CODE == '') {
+            Ext.Msg.alert('提示', '请选择区划！');
+            return;
+        }
+        if (xmbg_json_common[wf_id][node_type].reloadGrid) {
+            xmbg_json_common[wf_id][node_type].reloadGrid(param);
+        } else {
+            var grid = DSYGrid.getGrid("contentGrid");
+            var store = grid.getStore();
+            var XMXZ_ID = Ext.ComponentQuery.query('treecombobox#XMXZ_SEARCH')[0].getValue();
+            var XMLX_ID = Ext.ComponentQuery.query('treecombobox#XMLX_SEARCH')[0].getValue();
+            var mhcx = Ext.ComponentQuery.query('textfield#XM_SEARCH')[0].getValue();
+            //增加查询参数
+            store.getProxy().extraParams["AD_CODE"] = AD_CODE;
+            store.getProxy().extraParams["AG_CODE"] = AG_CODE;
+            store.getProxy().extraParams["XMXZ_ID"] = XMXZ_ID;
+            store.getProxy().extraParams["XMLX_ID"] = XMLX_ID;
+            store.getProxy().extraParams["mhcx"] = mhcx;
+            store.getProxy().extraParams["is_zbx"] = is_zbx;
+
+            if (typeof param != 'undefined' && param != null) {
+                for (var name in param) {
+                    store.getProxy().extraParams[name] = param[name];
+                }
+            }
+            //刷新
+            store.loadPage(1);
+        }
+    }
+    /**
+     * 遍历form表单项，修改子级为只读项
+     * @param Items
+     * @constructor
+     */
+    function SetItemReadOnly(Items) {
+
+        Items.each(function (item, index, length) {
+            if (item.getXType() == 'container' || item.getXType() == 'fieldcontainer' || item.getXType() == 'fieldset') {
+                SetItemReadOnly(item.items);
+            } else {
+                if(item.name=='IS_PPP'||item.name=='PPP_YZFS'||item.name=='PPP_YZFS'
+                    ||item.name=='PPP_HBFS'||item.name=='PPP_SCJD'||item.name=='PPP_SCJD'||item.name=='PPP_RKQK_ID'
+                    ||item.name=='XMJSQ_START'||item.name=='XMJSQ_END'||item.name=='XMYYQ_START'||item.name=='XMYYQ_END'||item.name=='IS_TGWUSZPJ'
+                    ||item.name=='IS_TGCZCSNLLZ'||item.name=='IS_XCCBSSFA'||item.name=='HZQX'
+                ){
+                    return;
+                }
+                item.readOnly = true;
+                item.editable = false;
+                if (item.getXType() != 'checkbox' && item.getXType() != 'radio') {
+                    item.fieldCls = 'form-unedit';
+                    if (item.getXType() == 'numberfield' || item.getXType() == 'numberFieldFormat') {
+                        item.fieldCls = 'form-unedit-number';
+                    }
+                }
+            }
+        });
+    }
+
+    function SetjbFormItemsReadOnly(Items) {
+        Items.each(function(item) {
+            if (item.getXType() == 'container' || item.getXType() == 'fieldcontainer' || item.getXType() == 'fieldset') {
+                SetjbFormItemsReadOnly(item.items);
+            } else {
+                if((button_name!='VIEW'&&button_name!=''&&button_name!='undefined')&&bg_type=='2'){
+                    if(item.name=='IS_PPP'||item.name=='PPP_YZFS'||item.name=='PPP_YZFS'
+                        ||item.name=='PPP_HBFS'||item.name=='PPP_SCJD'||item.name=='PPP_SCJD'||item.name=='PPP_RKQK_ID'
+                        ||item.name=='XMJSQ_START'||item.name=='XMJSQ_END'||item.name=='XMYYQ_START'||item.name=='XMYYQ_END'||item.name=='IS_TGWUSZPJ'
+                        ||item.name=='IS_TGCZCSNLLZ'||item.name=='IS_XCCBSSFA'||item.name=='HZQX'
+                    ){
+                        item.setReadOnly(false);
+                        item.setFieldStyle('background:#FFFFFF');
+                        return;
+                    }
+                }
+                //防止某些控件不支持setReadOnly
+                if (item.setReadOnly && item.setFieldStyle) {
+                    item.setReadOnly(true);
+                    if (item.getXType() != 'checkbox' && item.getXType() != 'radio') {
+                        item.setFieldStyle('background:#E6E6E6');
+                    }
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 切换页签
+     * @param index
+     */
+    function editTab(index) {
+        var editTab = Ext.ComponentQuery.query('panel[name="EditorPanel"]')[0];
+        editTab.items.get(index-1).show();
+    }
+
+
+
+    //收支平衡弹出窗口
+    var window_xekjdr = {
+        window: null,
+        config: {
+            closeAction: 'destroy'
+        },
+        show: function (config) {
+            if (!this.window || this.config.closeAction == 'destroy') {
+
+                this.window = initWindow_xekjdr(config);
+            }
+            this.window.show();
+        }
+    };
+
+    function initWindow_xekjdr(config){
+        return Ext.create('Ext.window.Window',{
+            title:config.TITLE,
+            width:document.body.clientWidth*0.4,
+            height:document.body.clientHeight*0.4,
+            layout:{
+                type:'fit'
+            },
+            //maximizable:true,//最大最小化
+            modal:true,
+            closeAction:'destroy',
+            buttonAlign:'right',
+            items:initxekjdatadrform(config),
+        });
+    }
+
+    //初始化导入名录信息form
+    function initxekjdatadrform(config) {
+        return Ext.create('Ext.form.Panel',{
+            labelWidth: 70,
+            fileUpload: true,
+            defaultType: 'textfield',
+            layout :'anchor',
+            items: [
+                {
+                    xtype: 'container',
+                    layout: 'anchor',
+                    anchor: '100% 100%',
+                    defaultType: 'textfield',
+                    style: {borderColor: '#e1e1e1', borderStyle: 'solid', borderWidth: '1px'},
+                    defaults: {
+                        margin: '2 5 2 5',
+                        //width: 315,
+                        fontSize:20,
+                        labelWidth: 100//控件默认标签宽度
+                    },
+                    items:[
+                        {
+                            xtype:'displayfield',
+                            fieldLabel:'<span class="required">✶</span>注意事项',
+                            margin: '2 5 2 5',
+                            anchor:'100% 10%'
+                        },
+                        {
+                            xtype:'textarea',
+                            multiline: true,
+                            name:'',
+                            editable:false,
+                            readOnly:true,
+                            anchor:'100% 60%',
+                            border: true,
+                            fieldStyle:'background:#E6E6E6',
+                            value:'1.导入的Excel文件最大不可超过20M。\n\n' +
+                            '2.不可删除Excel中固定的数据列，否则会造成数据错乱。\n\n'+
+                            '3.导入年数应与项目期限保持同步!'
+                        },
+                        {//分割线
+                            xtype: 'menuseparator',
+                            anchor: '100%',
+                            border: true
+                        },
+                        {
+                            xtype:'filefield',
+                            fieldLabel:'请选择文件',
+                            name:'upload',
+                            anchor:'100% 30%',
+                            msgTarget: 'side',
+                            allowBlank: true,
+                            margin: '5 5 2 5',
+                            width:70,
+                            height:30,
+                            labelWidth: 80,
+                            buttonConfig:{
+                                width:100,
+                                height:25,
+                                text:'预览',
+                                icon: '/image/sysbutton/report.png'
+                            }
+                        }
+                    ]
+                }
+            ],
+            buttons:[
+                {
+                    xtype:'button',
+                    text:'上传',
+                    name:'upload',
+                    handler:function(btn){
+                        var form = this.up('form').getForm();
+                        var file = form.findField('upload').getValue();
+                        if(file==null||file==''){
+                            Ext.Msg.alert('提示','请选择文件！');
+                            return;
+                        }else if(!(file.endWith('.xls')||file.endWith('.xlsx')||file.endWith('.et'))){//20210601 zhuangrx 文件导入兼容et类型
+                            Ext.Msg.alert('提示','请选择Excel类型文件！');
+                            return;
+                        }
+                        if(form.isValid()){
+                            // upLoadExcel(form,btn);
+                        }
+                    }
+                },
+                {
+                    xtype:'button',
+                    text:'取消',
+                    name:'cancel',
+                    handler:function(btn){
+                        btn.up('window').close();
+                    }
+                }
+            ]
+        });
+    }
+
+    //收支平衡模板下载
+    function szysExcelDown(){
+        window.location.href = 'downExcel.action?file_name='+encodeURI(encodeURI("收支预算表格模板.xls"));
+    }
+    function upLoadExcel(form,btn){
+        var xmsyForm = Ext.ComponentQuery.query(formName)[0];
+        //获取运行年限
+        var yyqx = xmsyForm.down('numberFieldFormat[name="XM_USED_LIMIT"]').getValue();
+        var url = '/importExcel_szys.action';
+        form.submit({
+            url: url,
+            params:{
+                "yyqx":yyqx
+            },
+            waitTitle: '请等待',
+            waitMsg: '正在导入中...',
+            success: function (form, action) {
+                var columnStore = action.result.list;
+                var grid = DSYGrid.getGrid('xmsyGrid');
+                grid.getStore().removeAll();
+                grid.insertData(null, columnStore);
+                btn.up('window').close();
+                editLoad(grid,false);
+            },
+            failure: function (resp, action) {
+                var msg = action.result.data.message;
+                Ext.MessageBox.show({
+                    title: '提示',
+                    msg: '导入失败:' + msg,
+                    width: 200,
+                    fn: function (btn) {
+                    }
+                });
+            }
+        });
+    }
+    //辽宁新添加建设项目内容填报模板
+    function downloadJsxmnrTbsm(){
+        window.location.href = 'downloadTemplate.action?file_name='+encodeURI(encodeURI("建设项目内容填报模板.docx"));
+    }
+</script>
+</body>
+</html>
