@@ -3,7 +3,6 @@ package com.bgd.api;
 import com.bgd.api.common.enums.ApiEnum;
 import com.bgd.api.common.exceptions.ApiException;
 import com.bgd.api.common.security.check.ApiCheckService;
-import com.bgd.api.common.utils.EnumUtil;
 import com.bgd.api.common.utils.ExceptionUtil;
 import com.bgd.api.common.utils.JSONUtil;
 import com.bgd.api.common.utils.MessageUtil;
