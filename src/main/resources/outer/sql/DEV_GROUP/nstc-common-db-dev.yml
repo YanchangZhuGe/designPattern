@@ -1,0 +1,83 @@
+spring:
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    druid:
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          merge-sql: true
+          slow-sql-millis: 10000
+      stat-view-servlet:
+        allow: ''
+        enabled: true
+        login-password: nstc
+        login-username: nstc
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+        profile-enable: true
+        session-stat-enable: true
+        url-pattern: /*
+    dynamic:
+      datasource:
+        bems:
+          connectionTimeout: 30000
+          driver-class-name: oracle.jdbc.OracleDriver
+          idleTimeout: 60000
+          jdbc-url: ${spring.datasource.dynamic.datasource.workflow.url}
+          leakDetectionThreshold: 5000
+          maxLifetime: 60000
+          maxPoolSize: 50
+          minIdle: 10
+          password: 11111111
+          poolName: bems
+          url: jdbc:oracle:thin:@192.168.2.109:1521:NSDEV
+          username: bems
+        ebs:
+          connectionTimeout: 30000
+          driver-class-name: oracle.jdbc.OracleDriver
+          idleTimeout: 60000
+          leakDetectionThreshold: 5000
+          maxLifetime: 60000
+          maxPoolSize: 100
+          minIdle: 10
+          password: 11111111
+          poolName: ebs
+          url: jdbc:oracle:thin:@192.168.2.109:1521:NSDEV
+          username: ebs
+        workflow:
+          connectionTimeout: 30000
+          driver-class-name: oracle.jdbc.OracleDriver
+          idleTimeout: 60000
+          jdbc-url: ${spring.datasource.dynamic.datasource.workflow.url}
+          leakDetectionThreshold: 5000
+          maxLifetime: 60000
+          maxPoolSize: 50
+          minIdle: 10
+          password: 11111111
+          poolName: workflow
+          url: jdbc:oracle:thin:@192.168.2.109:1521:NSDEV
+          username: bems
+      druid:
+        wall:
+          commentAllow: true
+          multiStatementAllow: true
+          noneBaseStatementAllow: true
+          variantCheck: false
+      enabled: true
+      p6spy: false
+      primary: ebs
+      seata: false
+      strict: true
+  flyway:
+    enabled: false
+    locations:
+      - "classpath:sql/{vendor}/table"
+    table: BEMS_VERSION
+    schema: BEMS_NEW
+    placeholders:
+      - owner: bems
+    baseline-on-migrate: true
+    validate-on-migrate: false

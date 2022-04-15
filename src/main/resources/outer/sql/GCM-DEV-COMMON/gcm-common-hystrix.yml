@@ -1,0 +1,25 @@
+# 设置熔断时间为
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            # 超时时间，单位毫秒。默认30s
+            timeoutInMilliseconds: 30000
+
+# 设置feign调用超时时间
+feign:
+  client:
+    config:
+      default:
+        # 连接超时时间，默认30s
+        connect-timeout: 30000
+        # 返回超时时间，默认30s
+        read-timeout: 30000
+        # 调用日志
+        loggerLevel: full
+  okhttp:
+    enabled: true
+  hystrix:
+    enabled: true

@@ -1,0 +1,290 @@
+nstc:
+  jetcache:
+    host: 192.168.2.70
+    password: NSTCG20&123456
+    port: 7371
+  uas:
+    signing-key: uas123
+  nsg:
+    swagger:
+      groups:
+        - ebs_routh;转账;存款;贷款;回单;对账;票据;收付汇;客户关系（万向）;贸易背景（东风）;ERP接口;结售汇;委存贷;现金管理(东风);信用证-万向;网银业务设置
+        - bems_routh;工作流配置管理(ACTIVITI-ADMIN);应用中心;签名服务(DSSC);主数据管理(MDM);系统设置管理(STS);用户权限管理(USER)
+        - nstcportal_routh;门户(portal);
+    safe:
+      repeated-submit-time: 3
+      xss:
+        blackList: XXX-0003
+        paramBlackList: 'action:,redirect:'
+        whiteList: XXX-0001,XXX-0002
+    audit-log:
+      enable:
+        method-name: NONE
+    login-log:
+      enable:
+        url: /bems/prod_1.0/uas/api/authorization/login,/bems/prod_1.0/uas/api/authorization/logout
+    ignore:
+      authentication:
+        activeModule: test
+        startWith: /bems/prod_1.0/uas/api/authorization/login,/bems/prod_1.0/uas/api/authorization/authorizationCode,/bems/prod_1.0/dssc/sign/loginSignVerify,/bems/prod_1.0/dssc/sign/buildSignJs,/bems/prod_1.0/dssc/sign/getUserDn,/bems/1.0/sysSetting/list,/bems/test/222,/bems/prod_1.0/uas/api/authorization/authorizationCode,/bems/1.0/attach/COMPANY_LOGOE,/bems/1.0/attach/LOGIN_BACKGROUND_IMAGE,/bems/prod_1.0/uas/api/authorization/captcha,/bems/prod_1.0/uas/api/authorization/password/reset,/bems/prod_1.0/uas/api/authorization/verify,/bems/prod_1.0/uas/api/qrCode,/bems/prod_1.0/user/api/userController/use
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials,
+          RETAIN_FIRST
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allow-credentials: true
+            allowed-headers:
+              - '*'
+            allowed-methods:
+              - '*'
+            allowed-origins:
+              - '*'
+            max-age: 1800
+      routes:
+        -   id: ebs_routh
+            predicates:
+              - Path=/ebs/**
+              -   name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+        -   id: bems_routh
+            predicates:
+              - Path=/bems/**
+              -   name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+        -   id: user_routh
+            predicates:
+              - Path=/api/user/**
+              -   name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+
+        -   id: nstc-login_routh
+            predicates:
+              - Path=/api/nstc-login/**
+              -   name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+            filters:
+              - StripPrefix=2
+
+        -   id: apiportal_routh
+            predicates:
+              - Path=/api/portal/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+            filters:
+              - RewritePath=/api/portal/(?<segment>.*),/bems/${segment}
+
+        -   id: apimessage_routh
+            predicates:
+              - Path=/api/message/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://message-service
+            filters:
+              - RewritePath=/api/message/(?<segment>.*),/message/${segment}
+        -   id: aims_routh
+            predicates:
+              - Path=/api/aims/**
+              -   name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/aims/(?<segment>.*),/ebs/${segment}
+        -   id: nstc_mdm_route
+            predicates:
+              - Path=/api/nstc-mdm/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+            filters:
+              - RewritePath=/api/nstc-mdm/(?<segment>.*),/bems/${segment}
+        -   id: apibems_routh
+            predicates:
+              - Path=/api/bems/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+            filters:
+              - RewritePath=/api/bems/(?<segment>.*),/bems/${segment}
+        -   id: apiebs_routh
+            predicates:
+              - Path=/api/ebs/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/ebs/(?<segment>.*),/ebs/${segment}
+
+        -   id: apiwkb_routh
+            predicates:
+              - Path=/api/wkb/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+            filters:
+              - RewritePath=/api/wkb/(?<segment>.*),/bems/wkb/${segment}
+        -   id: nstc-portal_routh
+            predicates:
+              - Path=/api/nstc-portal/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://bems-service
+            filters:
+              - RewritePath=/api/nstc-portal/(?<segment>.*),/bems/${segment}
+
+        -   id: nps_routh
+            predicates:
+              - Path=/nps/**
+              -   name: NstcReadBodyPredicateFactory
+            uri: lb://nps-service
+        -   id: mdm_routh
+            predicates:
+              - Path=/mdm/**
+              -   name: NstcReadBodyPredicateFactory
+            uri: lb://mdm-service
+        -   id: nstc-gdt
+            predicates:
+              - Path=/api/nstc-gdt/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-gdt/(?<segment>.*),/ebs/api/nstc-gdt/${segment}
+        -   id: nstc-clms
+            predicates:
+              - Path=/api/nstc-clms/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-clms/(?<segment>.*),/ebs/api/nstc-clms/${segment}
+        -   id: nstc-ers
+            predicates:
+              - Path=/api/nstc-ers/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-ers/(?<segment>.*),/ebs/api/nstc-ers/${segment}
+        -   id: nstc-gwms
+            predicates:
+              - Path=/api/nstc-gwms/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-gwms/(?<segment>.*),/ebs/api/nstc-gwms/${segment}
+        -   id: nstc-cfb
+            predicates:
+              - Path=/api/nstc-cfb/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-cfb/(?<segment>.*),/ebs/api/nstc-cfb/${segment}
+        -   id: nstc-rpls
+            predicates:
+              - Path=/api/nstc-rpls/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-rpls/(?<segment>.*),/api/nstc-rpls/${segment}
+        -   id: nstc-lms
+            predicates:
+              - Path=/api/nstc-lms/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-lms/(?<segment>.*),/ebs/api/nstc-lms/${segment}
+###付款集成部署
+#        -   id: nstc-ptms
+#            predicates:
+#              - Path=/api/nstc-ptms/**
+#              - name: NstcReadBodyPredicateFactory
+#            uri: lb://ebs-service
+#            filters:
+#              - RewritePath=/api/nstc-ptms/(?<segment>.*),/ebs/api/nstc-ptms/${segment}
+###付款单独部署
+        -   id: nstc-ptms
+            predicates:
+              - Path=/api/nstc-ptms/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://nstc-ptms-service
+            filters:
+              - RewritePath=/api/nstc-ptms/(?<segment>.*),/api/nstc-ptms/${segment}
+        -   id: nstc-ctms
+            predicates:
+              - Path=/api/nstc-ctms/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-ctms/(?<segment>.*),/ebs/api/nstc-ctms/${segment}
+        -   id: nstc-cam
+            predicates:
+              - Path=/api/nstc-cam/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-cam/(?<segment>.*),/ebs/api/nstc-cam/${segment}
+        -   id: nstc-cfas
+            predicates:
+              - Path=/api/nstc-cfas/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-cfas/(?<segment>.*),/ebs/api/nstc-cfas/${segment}
+        -   id: nstc-bi
+            predicates:
+              - Path=/bi/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://bi-service
+            filters:
+              - RewritePath=/api/bi/(?<segment>.*),/bi/${segment}
+        -   id: nstc-invest
+            predicates:
+              - Path=/invest/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/invest/(?<segment>.*),/ebs/${segment}
+        -   id: nstc-tss
+            predicates:
+              - Path=/api/nstc-tss/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-tss/(?<segment>.*),/ebs/api/nstc-tss/${segment}
+        -   id: nstc-fts
+            predicates:
+              - Path=/api/nstc-fts/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/nstc-fts/(?<segment>.*),/ebs/api/nstc-fts/${segment}
+        -   id: neams
+            predicates:
+              - Path=/api/neams/**
+              - name: NstcReadBodyPredicateFactory
+            uri: lb://ebs-service
+            filters:
+              - RewritePath=/api/neams/(?<segment>.*),/ebs/api/neams/${segment}
+feign:
+  okhttp:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+
+ribbon:
+  ConnectTimeout: 5000
+  ReadTimeout: 5000
+
+## redis
+jetcache:
+  areaInCacheName: false
+  local:
+    default:
+      type: caffeine
+      keyConvertor: fastjson
+  remote:
+    default:
+      type: redis.lettuce
+      keyConvertor: fastjson
+      uri: redis://123456@192.168.2.70:7371/0

@@ -1,0 +1,87 @@
+# 数据类型：
+# 1、此配置可控制oracle主键策略的注入
+dbtype: ${DB_TYPE}
+
+# 自定义配置
+nstc:
+  mybatis:
+    # 配置mybatis自动填充字段，多个字段使用“,”分割。目前只支持时间的自动填充
+    auto-fill-fields:
+      # 插入时自动填充字段
+      insert: createTime,lastUpdateTime,operatingTime
+      # 更新时自动填充字段
+      update: lastUpdateTime
+  datasource:
+    name: ebs-service
+    names: ebs,workflow,bems
+    primary-key: ebs
+  flyway:
+    dialect: oracle
+    # 目录接口遵循 resouces/sql/${dialect}/${scope}
+    # scope : table,data ... 多个scope通过,号分割
+    scope: table,seq,data,optional/mdm_client_init_table
+    table: EBS_VERSION
+    bemsDataSource: bems
+    bemsLocations: bems,mdm-data
+    bemsTable: BEMS_VERSION
+    outOfOrder: true
+    allowRepair: true
+# flyway配置
+spring:
+  flyway:
+    enabled: true
+    # 校验locations的目录是否存在
+    check-location: true
+    # 配置脚本文件读取目录，{vendor}作为特殊变量，会被解析为url中的数据库类型。未配置时，默认db/migration
+    locations: classpath:sql/{vendor}/table,classpath:sql/{vendor}/data,classpath:sql/{vendor}/seq,classpath:sql/{vendor}/optional/mdm_client_init_table
+    # 若脚本文件中需要使用外部变量，可进行此配置
+    # 例如: insert into table (name) values('${owner}') -> insert into table (name) values('ebs')
+    placeholders:
+      - owner: ebs
+    url: ${EBS_DB_URL}
+    user: ${EBS_DB_USERNAME}
+    password: ${EBS_DB_PASSWORD}
+    # 设置'版本信息控制表'名称，默认flyway_schema_history
+    table: EBS_VERSION
+    # 执行migrate命令时需要有'版本信息控制表'，通过baseline命令可以生成该表
+    baseline-on-migrate: true
+    # 是否进行迁移前检查，默认true。
+    # 生产建议使用true。严格控制flyway脚本不要在原脚本上修改。
+    validate-on-migrate: false
+    # 忽略缺失的历史脚本，在validate-on-migrate开启时使用
+    ignore-missing-migrations: true
+    # false-只执行最大版本号的脚本，true-按顺序依次执行未执行的脚本。建议开发环境配置为true，生产环境配置为false
+    outOfOrder: true
+    allowRepair: true
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
+# mybatis-plus配置
+mybatis-plus:
+  # mapper.xml文件读取路径，默认为classpath*:mapper/**/*.xml
+  mapper-locations:
+    - classpath*:mapper/**/*.xml
+  # 别名包扫描路径，通过该属性可以给包中的类注册别名。在mapper.xml中可直接使用类名
+  # 禁用此项配置。开启时，多模块集成可能存在重复类名，在启动时会报错。
+  # 如果需要指定别名，请在类上使用@Aliases("xxx")
+  # typeAliasesPackage: com.nstc.*.model.*
+  global-config:
+    db-config:
+      # id生成策略，建议统一配置，谨慎使用注解指定
+      # INPUT:用户输入。该类型可以通过自己注册自动填充插件进行填充（Oracle推荐策略）
+      # AUTO:数据库ID自增（MySQL推荐策略）
+      id-type: input
+  configuration:
+    # 开启Mybatis二级缓存，默认为 true
+    cache-enabled: true
+    # 开启自动驼峰映射，即 A_COLUMN(列名) -> aColumn(java类属性名)
+    map-underscore-to-camel-case: true
+    # 延时加载的开关, more为 false
+    lazy-loading-enabled: false
+    # 开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+    multipleResultSetsEnabled: true
+    # 打印sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

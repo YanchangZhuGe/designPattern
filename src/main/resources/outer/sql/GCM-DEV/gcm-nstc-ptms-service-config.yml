@@ -1,0 +1,27 @@
+# * 当前配置文件名称建议修改为应用名称 如aims服务 则修改为gcm-aims-config.yml
+# ** 应用配置
+# APP_PORT_{num} num主要是配置集群时使用, 列出所有服务IP:PORT
+# APP_HOST列出所有IP地址  建议与num顺序保持一致 暂时无作用, 方便总览
+APP_NAME: nstc-ptms-service
+APP_CONTEXT_PATH: /
+APP_HOST:
+  - 127.0.0.1
+  - 127.0.0.2
+APP_PORT_0: 7276
+APP_PORT_1: 7277
+#NSOSP-JOB 任务注册端口
+NSOSP_EXECUTOR_PORT: 7090
+# ** 服务内部业务配置
+# 添加并入当前应用的各个模块的内部配置
+# nstc:
+#   fts:
+#     bp-asynchronous: true
+#     # 资金池类型配置
+#     capital-pool:
+#       type: '{"TERRITORY": "境内", "ABROAD": "境外", "CROSS_BORDER": "跨境"}'
+#       cross-bank: '{"1": "跨行", "0": "不跨行"}'
+nstc:
+  ptms:
+    auto-pay: true
+    reservation-pay: false
+    bp-asynchronous: true

@@ -1,0 +1,117 @@
+# * 当前配置文件名称建议修改为应用名称 如aims服务 则修改为gcm-aims-config.yml
+# ** 应用配置
+# APP_PORT_{num} num主要是配置集群时使用, 列出所有服务IP:PORT
+# APP_HOST列出所有IP地址  建议与num顺序保持一致 暂时无作用, 方便总览
+APP_NAME: aims-service
+APP_CONTEXT_PATH: /
+APP_HOST:
+  - 127.0.0.1
+  - 127.0.0.2
+APP_PORT_0: 7901
+APP_PORT_1: 7902
+#NSOSP-JOB 注册端口号
+NSOSP_EXECUTOR_PORT: 7903
+# ** 服务内部业务配置
+# 添加并入当前应用的各个模块的内部配置
+# nstc:
+#   fts:
+#     bp-asynchronous: true
+#     # 资金池类型配置
+#     capital-pool:
+#       type: '{"TERRITORY": "境内", "ABROAD": "境外", "CROSS_BORDER": "跨境"}'
+#       cross-bank: '{"1": "跨行", "0": "不跨行"}'
+ebs:
+  common:
+    file:
+      parentPath: /home/user/project/upload/common_fileUpload
+  edl:
+    file:
+      parentPath: /home/user/project/upload/edl_fileUpload
+  gdps:
+    financeCompCnapsNo: 907521000017
+    financeCompCnapsName: CWGS
+    dfCnapsNo: 907521000017
+    dbmsAutoFlag: false
+    bpServiceUrl: http://192.168.20.194:9281/bp-server
+    file:
+      parentPath: /nstc/G20/BS/project/upload/gdps_fileUpload
+  service: ebs-service
+  tcm:
+    file:
+      parentPath: /nstc/G20/BS/project/upload/tcm/fileUpload/file
+  crm:
+    file:
+      parentPath: /nstc/G20/BS/project/upload/crm_fileTemplate/
+  payment:
+    budget: 1
+    uploadAttachPath: /nstc/G20/BS/project/upload/payment_fileUpload
+aims:
+  #bp_server: http://192.168.20.194:9281/bp-server
+  default_flow_no: sample
+  ftp_file_path: /FTP
+  ftp_password: 123456
+  ftp_port: 21
+  ftp_url: 192.168.20.238
+  ftp_user_name: xzq
+  group_code: GROUP_G6
+  group_name: 账户
+  module_code: AIMS
+  module_name: 账户
+  swagger-open: 'false'
+  upload_dir: /nstc/G20/BS/project/upload/aims
+  bcsUrl: http://192.168.60.55:9001/SMS-Service
+#授信上传下载路径
+clmsUploadDir: /nstc/G20/BS/project/upload/clms
+#以下是投资理财配置
+#柜面访问地址
+investCpmUrl: ""
+#文件上传下载地址
+investUploadDir: "/nstc/G20/BS/project/upload/invest"
+#货币基金合同导入模板下载地址
+investContractTemplateDir: ""
+#货币基金交易登记导入模板下载地址
+investLedgersTemplateDir: ""
+investRoleName: ""
+investSmsServiceUrl: ""
+#电子回单
+bp_bill_ftp_url: 192.168.20.143
+bp_bill_ftp_port: 21
+bp_bill_ftp_user_name: Test
+bp_bill_ftp_password: 123456
+ers_bp_bill_file_temp_dir: /nstc/G20/BS/project/gcm/ersTempFill
+#融资私有配置
+gdt:
+  swagger-open: true                #是否开启swagger (true/false)
+  module_code: gdt
+  module_name: "融资"
+  group_code: "GROUP_G6"
+  group_name: "融资"
+  default_flow_no: "sample"
+  upload_dir: /nstc/G20/BS/project/upload/gdt   #要在nacos中配置
+#资金计划
+rpls:
+  swagger-open: true                #是否开启swagger (true/false)
+  gdtUrl: "http://192.168.20.109:7200/ebs/api/nstc-gdt/1.0/plan/sync/list"
+#资金集中
+fts:
+  # 资金池类型配置
+  capital-pool:
+    type: '{"TERRITORY": "境内", "ABROAD": "境外", "CROSS_BORDER": "跨境"}'
+    cross-bank: '{"1": "跨行", "0": "不跨行"}'
+nstc:
+  cfb:
+    upload_dir: /nstc/G20/BS/project/upload/cfb
+lms:
+  swagger-open: true                #是否开启swagger (true/false)
+  module_code: lms
+  module_name: "借款"
+  group_code: "GROUP_G6"
+  group_name: "借款"
+  default_flow_no: "sample"
+  upload_dir: /nstc/G20/BS/project/upload/lms
+  
+servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB

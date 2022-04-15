@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.2.109:1521/NSDEV
+    username: lianxi_sk
+    password: "11111111"
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    locations: classpath:db/migration
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+    validate-on-migrate: true
+    baseline-on-migrate: true
+  cloud:
+    compatibility-verifier:
+      enabled: false
+text:
+  name: "client"
