@@ -21,7 +21,7 @@ public class CodeGenMain {
                 // 开启fileOverrride重新旧文件，disableOpenDir禁用代码生成后打开输出目录对话框
                 .globalConfig(builder -> builder.author("wyc").fileOverride().disableOpenDir().outputDir(OUTPUT_DIR))
                 // parent指定生成的代码在哪个包下，entity可以指定实体(DO)所在的包名
-                .packageConfig(builder -> builder.parent("com.gv.ops.web"))//.entity("entity")
+                .packageConfig(builder -> builder.parent("com.ops.web"))//.entity("entity")
                 // addInclude指定包含的表名，不调用该方法默认为所有表生成代码；
                 .strategyConfig(builder -> builder.addInclude("student_info_gen")
                         // addTablePrefix可以过滤表前缀，即t_user变成user
