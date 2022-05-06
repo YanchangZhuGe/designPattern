@@ -23,7 +23,7 @@ public class CodeGenMain {
                 // parent指定生成的代码在哪个包下，entity可以指定实体(DO)所在的包名
                 .packageConfig(builder -> builder.parent("com.ops.web"))//.entity("entity")
                 // addInclude指定包含的表名，不调用该方法默认为所有表生成代码；
-                .strategyConfig(builder -> builder.addInclude("student_info_gen")
+                .strategyConfig(builder -> builder.addInclude("student_info")
                         // addTablePrefix可以过滤表前缀，即t_user变成user
 //                        .addTablePrefix("t_")
                         // 禁用为实体类生成序列化ID；formatFileName格式化生成的实体类名称，即t_user -> UserDO
