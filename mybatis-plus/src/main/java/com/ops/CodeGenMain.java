@@ -15,7 +15,7 @@ public class CodeGenMain {
     private static final String USERNAME = "ebs";
     private static final String PASSWORD = "11111111";
 
-    private static final String TABLE = "lms_extend_contra_apply";
+    private static final String TABLE = "um_form";
 
     /**
      * 自动生成代码输出目录，这里默认类路径下的src/test/java/com/universe包下，即当前工程的test目录下。
