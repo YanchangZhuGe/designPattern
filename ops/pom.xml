@@ -29,6 +29,14 @@
 
     <!-- 依赖集合, 包括模块依赖 -->
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- springboot 基础框架依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
