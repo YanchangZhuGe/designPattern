@@ -18,7 +18,7 @@
     <artifactId>ops</artifactId> <!-- 项目jar的标识ID -->
     <version>0.0.1-SNAPSHOT</version> <!-- 项目jar版本 -->
 
-    <name>ops</name> <!-- 开发们常用的简称 -->
+    <name>ops</name> <!-- 开发们常用的简称 默认-->
     <description>ops</description> <!-- 项目简介 -->
     <url>https://blog.csdn.net/qq_34462698</url> <!-- 演示地址 -->
 
