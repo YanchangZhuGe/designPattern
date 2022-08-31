@@ -42,7 +42,7 @@ public final class BizFlowUtil {
      * @since：2021/1/12 16:56
      */
     public static final String getBizNo(UmFmClsEnum umFmCls) {
-        // 流程编号规则为  模块编号-流程编号-YYYYMMDD+4位序列号
+        // 流程编号规则为  模块编号-流程编号-YYYYMMDD+4位序列号 sad
         StringBuilder bizNoBuilder = new StringBuilder()
                 //.append(AccountConstants.CHANNEL)
                 //.append(AccountConstants.BIZ_NO_SEPARATOR)
