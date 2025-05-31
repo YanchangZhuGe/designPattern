@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>  
+       function getTypeList(){
+         var  element =  getElementByTypeAndName('SELECT','mt_type');
+          if(element.value=='c'){
+             window.showModalDialog("cModuleList2Link.lpmd", window, "dialogHeight:500px; dialogLeft:200px;");
+          }else {
+             window.showModalDialog("sModuleList2Link.lpmd", window, "dialogHeight:500px; dialogLeft:200px;");
+          }
+        }
+     </CRU>
+  </JavaScripts>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select  * from sys_wsdl_metadata  </sql>
+    <tableName>sys_wsdl_metadata</tableName>
+    <fields>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="mt_en_name" type="TEXT">SS字符 SN数字</field>
+      <field name="mt_cn_name" type="TEXT">元数据描述</field>
+      <field name="mt_type" type="TEXT">元数据类型 C复杂类型 S简单类型</field>
+      <field name="mt_type_id" type="TEXT">类型ID</field>
+      <field name="parent_id" type="TEXT">-1 表示根类型</field>
+      <field name="remark" type="TEXT">描述</field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="moduleTypes">
+      <option value="c">组合类型</option>
+      <option value="s">简单类型</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="mt_cn_name">中文名称</field>
+    <field name="mt_en_name">英文名称</field>
+    <field name="mt_type" type="SEL_OPs" selValue="moduleTypes">数据类型</field>
+    <field name="module_id" type="FK" defaultValue="$ENTITY.module_id:$ENTITY.module_id" selValue="getTypeList()">模块类型</field>
+    <field name="remark">描述</field>
+    <field name="parent_id" isShow="Hide" defaultValue="$PARAM.parent_id" ></field>
+    <field name="mt_type_id" isShow="Hide">数据类型ID</field>
+  </EntityFields>
+</SAIS_EAW_TL>

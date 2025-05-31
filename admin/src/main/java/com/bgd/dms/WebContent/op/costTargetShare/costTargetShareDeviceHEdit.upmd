@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			var money = document.getElementsByName('money')[0].value;
+			money = money.replace(/[^\+\-\*//\.\d]/g,'');
+			var retObj = jcdpCallService('OPCostSrv','getTransportHOtherMoney','money='+money);
+			var other_money = retObj.money;
+			document.getElementsByName('other_money')[0].value=other_money;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>人员动迁费测算表</PageTitle>
+  <QuerySQL>
+    <sql>select * from BGP_OP_TARGET_DEVICE_HUM where bsflag='0' and if_change = '0' and COST_HUMAN_ID = '$PARAM.id'</sql>
+    <tableName>bgp_op_target_device_hum</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+    <Select name="devType">
+      <option value="0">震源</option>
+      <option value="1">仪器</option>
+      <option value="2">测量</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="cost_human_id" isShow="Hide">id</field>
+    <field name="if_change" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="transport_type" type="SEL_OPs" selValue="devType">动迁类型</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">id</field>
+    <field name="person_num" maxLength="12" nonEmpty="true">人数</field>
+    <field name="apply_team" maxLength="32" nonEmpty="true">班组</field>
+    <field name="start_loc" maxLength="32">起始地点</field>
+    <field name="end_loc" maxLength="32">到达地点</field>
+    <field name="person_money" maxLength="12" nonEmpty="true">单价</field>
+    <field name="money" maxLength="2000">其他费用</field>
+    <field name="other_money" isShow="Hide" maxLength="200">money</field>
+  </EntityFields>
+</SAIS_EAW_TL>

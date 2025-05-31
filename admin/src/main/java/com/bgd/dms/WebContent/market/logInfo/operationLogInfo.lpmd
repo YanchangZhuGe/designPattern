@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select * from comm_operation_log c order by c.modify_date desc</sql>
+    <fields>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="memo" type="TEXT"></field>
+      <field name="modifier" type="TEXT"></field>
+      <field name="modify_date" type="D"></field>
+      <field name="operation_log_id" type="TEXT"></field>
+      <field name="operation_place" type="TEXT"></field>
+      <field name="operation_time" type="D"></field>
+      <field name="operation_title" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{operation_title}">操作标题</data>
+    <data exp="{operation_place}">所处位置</data>
+    <data exp="{create_date}">操作时间</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="operation_title">操作标题</field>
+      <field name="operation_place">所处位置</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

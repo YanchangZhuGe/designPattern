@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>技术方案编制</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_op_cost_project_schema where bsflag='0'  and cost_project_schema_id = '$PARAM.id'</sql>
+    <tableName>bgp_op_cost_project_schema</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="cost_project_schema_id" isShow="Hide">id</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">id</field>
+    <field name="creator" maxLength="64" isShow="Hide" defaultValue="$PARAM.userName">创建人</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="if_workflow" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="if_decision" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="schema_name" maxLength="32" nonEmpty="true">方案名称</field>
+    <field name="schema_desc" maxLength="500" >方案描述</field>
+    <field name="tech_001" maxLength="32" nonEmpty="true">观测系统类型</field>
+    <field name="tech_002" maxLength="32" nonEmpty="true">设计线束</field>
+    <field name="tech_003" maxLength="32" nonEmpty="true">配置道数</field>
+    <field name="tech_004" maxLength="32" nonEmpty="true">炮数</field>
+    <field name="tech_005" maxLength="32" nonEmpty="true">面元</field>
+    <field name="tech_006" maxLength="32">横向覆盖次数</field>
+    <field name="tech_007" maxLength="32">纵向覆盖次数</field>
+    <field name="tech_008" maxLength="32" nonEmpty="true">接收道数</field>
+    <field name="tech_009" maxLength="32" nonEmpty="true">道间距</field>
+    <field name="tech_010" maxLength="32" nonEmpty="true">炮点距</field>
+    <field name="tech_011" maxLength="32" nonEmpty="true">总覆盖次数</field>
+    <field name="tech_012" maxLength="32">接收线距</field>
+    <field name="tech_013" maxLength="32" nonEmpty="true">炮线距</field>
+    <field name="tech_014" maxLength="32">滚动接收线数</field>
+    <field name="tech_015" maxLength="32">单线道数</field>
+    <field name="tech_016" maxLength="32">排列总道数</field>
+    <field name="tech_017" maxLength="32">滚动距离</field>
+    <field name="tech_020" maxLength="32" nonEmpty="true">满覆盖工作量(km2)</field>
+    
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+	  		var schema_name = document.getElementsByName("schema_name")[0].value;
+	  		schema_name = schema_name.replace(/\d/g,'');
+	  		if(schema_name==''){
+	  			alert("方案名称不能是数字!");
+	  			return;
+	  		}
+			var path = cruConfig.contextPath+'/op/OpCostSrv/saveCostProjectVersionData.srq';
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

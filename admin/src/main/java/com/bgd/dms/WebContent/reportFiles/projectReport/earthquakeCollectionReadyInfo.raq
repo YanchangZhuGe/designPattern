@@ -1,0 +1,476 @@
+version=1.0
+6,19
+<0-0>
+	3:1108="";1109=0;1106="1";1105="en=\"startDate\",ch=\"参数1\",tp=2,w=,fmt=\"yyyy-MM-dd\",val=\"2010-12-24\";en=\"endDate\",ch=\"参数2\",tp=2,w=,fmt=\"yyyy-MM-dd\",val=\"2010-12-30\";en=\"userSubId\",ch=\"参数3\",tp=6,w=,fmt=\"\",val=\"C105\";";1102="name=ds1,sql=\"select rownum,info.* from (select * from (select distinct case substr(gtpd.org_subjection_id,1,7) when \\\'C105005\\\' then substr(gtpd.org_subjection_id,1,10) when \\\'C105001\\\' then substr(gtpd.org_subjection_id,1,10) else substr(gtpd.org_subjection_id,1,7) end as SorgSubId\\r\\n,case substr(gtpd.org_subjection_id,1,7) when \\\'C105002\\\' then substr(gtpd.org_subjection_id,1,10) else \\\'\\\' end as JorgSubId\\r\\n      ,gtp.project_info_no\\r\\n      ,gtp.project_name\\r\\n      ,gtp.PROJECT_STATUS\\r\\n      ,  gtp.PROJECT_NAME as xiangmu_name\\r\\n      ,  gwd.basin as pendi\\r\\n      ,ccsd.coding_name as fangfa\\r\\n      ,  ccsd2.coding_name as jiafang_name\\r\\n      ,  ccsd3.coding_name as dibiaoleixing\\r\\n      ,  ccsd4.coding_name as ciyaodibiaoleixing\\r\\n, decode(gtp.project_business_type,\\\'5000100011000000001\\\',\\\'采集\\\',\\\'5000100011000000002\\\',\\\'采集、处理\\\',\\\'5000100011000000003\\\',\\\'采集、处理、解释\\\',\\\'\\\') as project_business_type\\r\\nfrom gp_task_project gtp\\r\\njoin gp_task_project_dynamic gtpd\\r\\non   gtp.project_info_no=gtpd.project_info_no\\r\\njoin gp_workarea_diviede gwd\\r\\non   gtp.workarea_no=gwd.workarea_no\\r\\nleft join comm_coding_sort_detail ccsd on   gtp.EXPLORATION_METHOD=ccsd.coding_code_id\\r\\nleft join comm_coding_sort_detail ccsd2 on   gtp.MANAGE_ORG=ccsd2.coding_code_id\\r\\nleft join comm_coding_sort_detail ccsd3 on   gwd.surface_type=ccsd3.coding_code_id\\r\\nleft join comm_coding_sort_detail ccsd4 on   gwd.second_surface_type=ccsd4.coding_code_id\\r\\nwhere gtpd.org_subjection_id like ?||\\\'%\\\'\\r\\nand gtp.bsflag=\\\'0\\\' and gtpd.bsflag=\\\'0\\\'  and gwd.bsflag=\\\'0\\\' \\r\\nand gtp.EXPLORATION_METHOD in(\\\'0300100012000000002\\\',\\\'0300100012000000003\\\',\\\'0300100012000000023\\\')\\r\\nand nvl(gtp.acquire_end_time,gtp.design_end_date)>=?\\r\\nand gtp.design_start_date<=?\\r\\nand gtp.project_status = \\\'5000100001000000001\\\'\\r\\n) \\r\\norder by SorgSubId,fangfa,JorgSubId) info ORDER BY rownum\",type=normal,param=\"@userSubId:9;@startDate:9;@endDate:9\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds4,sql=\"select t.project_info_no\\r\\n       ,max(to_char(b.project_leader_build_time,\\\'yyyy-MM-dd\\\')) as project_leader_build_time\\r\\n       ,max(to_char(b.tema_leader_build_time,\\\'yyyy-MM-dd\\\')) as tema_leader_build_time\\r\\n       ,max(to_char(g.recon_end_date,\\\'yyyy-MM-dd\\\')) as recon_end_date\\r\\n       ,max(to_char(p.end_date,\\\'yyyy-MM-dd\\\')) as end_date\\r\\n       ,max(to_char(d.composing_date,\\\'yyyy-MM-dd\\\')) as composing_date\\r\\nfrom gp_task_project t \\r\\nleft join gp_ops_recon_complexion g on (t.project_info_no=g.project_info_no and g.bsflag=\\\'0\\\') \\r\\nleft join gp_proj_oper_plan p on (t.project_info_no=p.project_info_no and p.bsflag=\\\'0\\\')\\r\\nleft join gp_ops_design_doc d on (t.project_info_no=d.project_info_no and d.bsflag=\\\'0\\\')\\r\\nleft join gp_ops_bgp_report b on (t.project_info_no=b.project_info_no and b.bsflag=\\\'0\\\')\\r\\nwhere t.bsflag=\\\'0\\\'\\r\\nand t.acquire_end_time >= ?\\r\\nand t.design_start_date <= ?\\r\\ngroup by t.project_info_no\",type=normal,param=\"@startDate:9;@endDate:9\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds2,sql=\"select t1.project_info_no,\\n       sum(nvl(t1.DESIGN_OBJECT_WORKLOAD, 0)) as FULL_FOLD_WORKLOAD,\\n       sum(nvl(t1.DESIGN_SP_NUM, 0)) as DESIGN_SP_NUM\\n  from gp_task_project_dynamic t1,gp_task_project t\\n  where t.project_info_no=t1.project_info_no\\n  and t.acquire_end_time >= ?\\nand t.design_start_date <= ?\\n group by t1.project_info_no\",type=normal,param=\"@startDate:9;@endDate:9\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds3,sql=\"select distinct ot.org_abbreviation as TorgName, gtpd.project_info_no\\n  from gp_task_project_dynamic gtpd\\n  join comm_org_information ot on gtpd.org_id = ot.org_id\\n  join gp_task_project t on t.project_info_no = gtpd.project_info_no\\n where ot.bsflag = \\\'0\\\'\\n   and gtpd.bsflag = \\\'0\\\'\\n   and t.bsflag=\\\'0\\\'\\n   and t.acquire_end_time >= ?\\n   and t.design_start_date <= ?\",type=normal,param=\"@startDate:9;@endDate:9\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds5,sql=\"select distinct nvl(t.VSP_TEAM_LEADER,che.employee_name) as duijingli, gtpd.project_info_no\\r\\n  from gp_task_project_dynamic gtpd\\r\\n  join comm_org_team ot on gtpd.org_id = ot.org_id\\r\\n  left join comm_human_employee che on ot.header = che.employee_id\\r\\n  join gp_task_project t on t.project_info_no = gtpd.project_info_no\\r\\n where ot.bsflag = \\\'0\\\'\\r\\n   and gtpd.bsflag = \\\'0\\\'\\r\\n   and t.bsflag=\\\'0\\\'\\r\\n   and t.acquire_end_time >= ?\\r\\n   and t.design_start_date <= ?\",type=normal,param=\"@startDate:9;@endDate:9\",cached=0,,indexSorted=false,indexIsUnique=false;";1101="2";1110="excel_hiderows=\"true\";pdf_password_owner=\"\";excel_password=\"\";pdf_permission=\"0\";excel_hidecols=\"true\";pdf_password_user=\"\"";9998="E1CE7C217972F467C29D3A555A1105A1";1220="100";1214="1";1204="1.0";1203="1.0";1215="1";1206="19.0";1216=1;1205="19.0";1210="1";1211="10";1212="1";1202="1";1201="3";1213="1";1208="25.0";1207="25.0";1209="2"
+</>
+<0-1>
+	3:4405="0.75";4404="1";2101="91.0";4406="-16777216";2102="10"
+</>
+<0-2>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="62.0";4406="-16777216";2102="10"
+</>
+<0-3>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="83.0";4406="-16777216";2102="10"
+</>
+<0-4>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="40.0";4406="-16777216";2102="10"
+</>
+<0-5>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="105.0";4406="-16777216";2102="10"
+</>
+<0-6>
+	3:4402="0.75";4401="1";4403="-16777216";2102="10"
+</>
+<0-7>
+	3:4405="0.75";4404="1";4406="-16777216";2102="10"
+</>
+<0-8>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="61.0";4406="-16777216";2102="10"
+</>
+<0-9>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="65.0";4406="-16777216";2102="10"
+</>
+<0-10>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";4406="-16777216";2102="10"
+</>
+<0-11>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="66.0";4406="-16777216";2102="10"
+</>
+<0-12>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="70.86614";4406="-16777216"
+</>
+<0-13>
+	3:4402="0.75";4401="1";4403="-16777216";4405="0.75";4404="1";2101="70.86614";4406="-16777216"
+</>
+<0-14>
+	3:4402="0.75";4401="1";4403="-16777216";4106=0
+</>
+<0-15>
+	3:4106=0
+</>
+<0-16>
+</>
+<0-17>
+</>
+<0-18>
+</>
+<1-0>
+	3:3101="34.015747";3103="0"
+</>
+<1-1>
+	3:4302="18";4304=1;4303="-16777216";4409="-16777216";4408="0.75";4201="2";4103="1,1-1,18";4407="1";4415="-16777216";4401="1";4109="1";4413="-1";4412="-16777216";4403="-16777216";4402="0.75";4411="0.75";4410="1";4102="东方地球物理公司地震采集项目准备信息表"
+</>
+<1-2>
+	1:1
+	2:4401,4403,4402,4102
+</>
+<1-3>
+	1:1
+</>
+<1-4>
+	1:1
+	2:4302,4304,4303,4201,4415,4109,4413
+</>
+<1-5>
+	1:1
+	3:4302="18";4304=1;4303="-16777216";4201="2";4415="-16777216";4109="1";4413="-1"
+</>
+<1-6>
+	1:1
+	2:4409,4408,4407,4412,4411,4410,4302,4304,4303,4201,4415,4109,4413
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<1-7>
+	1:1
+	2:4405,4404,4406
+	3:4402="0.75";4401="1";4403="-16777216"
+</>
+<1-8>
+	1:1
+	2:4402,4401,4403
+	3:4302="18";4304=1;4303="-16777216";4409="-16777216";4201="2";4408="0.75";4407="1";4415="-16777216";4109="1";4413="-1";4412="-16777216";4411="0.75";4410="1"
+</>
+<1-9>
+	1:1
+</>
+<1-10>
+	1:1
+</>
+<1-11>
+	1:1
+</>
+<1-12>
+	1:1
+	3:4301="宋体";4306=0;4305=0;4202="2";4203="0"
+</>
+<1-13>
+	1:1
+</>
+<1-14>
+	1:1
+	2:4302,4304,4303,4201,4415,4109,4413,4301,4306,4305,4202,4203
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<1-15>
+	1:1
+	3:4402="0.75";4401="1";4403="-16777216"
+</>
+<1-16>
+	1:1
+</>
+<1-17>
+	1:1
+	2:4405,4404,4406
+</>
+<1-18>
+	1:1
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<2-0>
+	3:3101="24.0";3103="1"
+</>
+<2-1>
+	1:0
+	2:4302,4303,4415,4109,4413,4102
+	3:4304=0;4103="2,1-2,18";4411="0.5";4410="4"
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-2>
+	1:1
+	2:4401,4403,4402
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-3>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-4>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-5>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-6>
+	1:1
+	2:4409,4408,4407,4304,4201
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<2-7>
+	1:1
+	2:4405,4404,4406
+	3:4402="0.75";4401="1";4403="-16777216"
+</>
+<2-8>
+	1:0
+	2:4302,4303,4415,4109,4413
+	3:4103="2,1-2,18";4304=0;4411="0.5";4410="4"
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-9>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-10>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-11>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-12>
+	1:0
+	2:4415,4109
+	3:4103="2,1-2,18";4302="12";4304=0;4411="0.5";4410="4"
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-13>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-14>
+	1:1
+	2:4302,4303,4413,4301,4306,4305,4202,4203
+	3:4405="0.75";4404="1";4406="-16777216"
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-15>
+	1:1
+	3:4402="0.75";4401="1";4403="-16777216"
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-16>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-17>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<2-18>
+	1:1
+	4:4102=" string(@startDate,\'yyyy-MM-dd\')+\' 至 \'+string(@endDate,\'yyyy-MM-dd\')"
+</>
+<3-0>
+	3:3101="22.677166";3103="10"
+</>
+<3-1>
+	1:0
+	3:4407="4";4408="0.5";4103="3,1-4,1";4401="4";4402="0.5";4303="-16777216";4405="0.5";4404="4";4415="-16777216";4109="1";4413="-1";4102="直属单位"
+</>
+<3-2>
+	1:1
+	2:4403
+	3:4103="3,2-4,2";4102="施工方法"
+</>
+<3-3>
+	1:1
+	3:4103="3,3-4,3";4102="下属单位"
+</>
+<3-4>
+	1:1
+	2:4304,4303,4415,4109,4413
+	3:4103="3,4-4,4";4102="序号"
+</>
+<3-5>
+	1:1
+	3:4103="3,5-4,5";4304=0;4303="-16777216";4415="-16777216";4109="1";4413="-1";4102="项目名称"
+</>
+<3-6>
+	1:1
+	2:4304,4303,4415,4109,4413
+	3:4103="3,6-4,6";4406="-16777216";4102="施工队号"
+</>
+<3-7>
+	1:1
+	2:4406
+	3:4403="-16777216";4103="3,7-4,7";4102="队经理"
+</>
+<3-8>
+	1:1
+	2:4403
+	3:4103="3,8-4,8";4304=0;4303="-16777216";4415="-16777216";4109="1";4413="-1";4102="甲方名称"
+</>
+<3-9>
+	1:1
+	3:4103="3,9-4,9";4107=1;4102="地区（盆地）"
+</>
+<3-10>
+	1:1
+	2:4107
+	3:4103="3,10-4,10";4102="地表类型"
+</>
+<3-11>
+	1:1
+	3:4103="3,11-4,11";4107=1;4102="项目类型（采集、处理、解释）"
+</>
+<3-12>
+	1:1
+	2:4107
+	3:4103="3,12-3,13";4302="12";4301="宋体";4306=0;4305=0;4202="2";4203="0";4102="设计工作量"
+</>
+<3-13>
+	1:1
+	2:4102
+</>
+<3-14>
+	1:1
+	3:4103="3,14-4,14";4406="-16777216";4107=1;4102="项目领导班子组建时间 "
+</>
+<3-15>
+	1:1
+	3:4403="-16777216";4103="3,15-4,15";4102="队领导班子组建时间"
+</>
+<3-16>
+	1:1
+	3:4103="3,16-4,16";4102="踏勘工区完成时间"
+</>
+<3-17>
+	1:1
+	3:4103="3,17-4,17";4102="《六个计划》编写完成时间"
+</>
+<3-18>
+	1:1
+	3:4103="3,18-4,18";4102="施工设计编写完成时间 "
+</>
+<4-0>
+	3:3101="23.0";3103="10"
+</>
+<4-1>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-2>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-3>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-4>
+	1:0
+	2:4102
+</>
+<4-5>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-6>
+	1:0
+	2:4102
+</>
+<4-7>
+	1:0
+	2:4102
+</>
+<4-8>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-9>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-10>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-11>
+	1:0
+	2:4201,4303,4415,4109,4413,4102
+</>
+<4-12>
+	1:0
+	2:4103,4415
+	3:4102="Km/K㎡ "
+</>
+<4-13>
+	1:0
+	2:4103,4415
+	3:4102="炮数"
+</>
+<4-14>
+	1:0
+	2:4415,4109,4102
+	3:4201="1"
+</>
+<4-15>
+	1:0
+	2:4415,4109,4102
+	3:4201="1"
+</>
+<4-16>
+	1:0
+	2:4415,4109,4102
+	3:4201="1"
+</>
+<4-17>
+	1:0
+	2:4415,4109,4102
+	3:4201="1"
+</>
+<4-18>
+	1:0
+	2:4415,4109,4102
+	3:4201="1"
+</>
+<5-0>
+	3:3101="40.0";4410="1";4412="-16777216";4411="0.75"
+	4:4106="if(A5==null,false,true)"
+</>
+<5-1>
+	1:0
+	2:4304
+	3:4103="5,1-5,1";4201="2";4501="1";4109="1";4107=1
+	4:4102=" ds1.group(SorgSubId)";4105="query(\"select oi.org_abbreviation from comm_org_information oi join comm_org_subjection os on oi.org_id=os.org_id where os.org_subjection_id=? and oi.bsflag=\'0\' and os.bsflag=\'0\'\",@value)"
+</>
+<5-2>
+	1:1
+	2:4103,4403
+	3:4107=0
+	4:4102=" ds1.group(FANGFa)"
+</>
+<5-3>
+	1:1
+	3:4107=1;4502="B5"
+	4:4102=" ds1.group (JorgSubId)";4105="query(\"select oi.org_abbreviation from comm_org_information oi join comm_org_subjection os on oi.org_id=os.org_id where os.org_subjection_id=? and oi.bsflag=\'0\' and os.bsflag=\'0\'\",@value)"
+</>
+<5-4>
+	1:1
+	3:4501="3";4107=0;4502="#REF!E5"
+	4:4102="ds1.select(rownum)"
+</>
+<5-5>
+	1:1
+	2:4502
+	3:4501="1";4107=1
+	4:4102=" ds1.PROJECT_INFO_NO";4105=" ds1.xiangmu_name"
+</>
+<5-6>
+	1:0
+	2:4103
+	3:4501="0"
+	4:4102=" ds3.select(TorgName,false,project_info_no=ds1.project_info_no)"
+</>
+<5-7>
+	1:0
+	2:4103
+	3:4501="0"
+	4:4102="ds5.select(duijingli,false,project_info_no=ds1.project_info_no)"
+</>
+<5-8>
+	1:1
+	2:4403,4501
+	3:4109="1"
+	4:4102=" ds1.JIAFANG_NAME"
+</>
+<5-9>
+	1:1
+	3:4107=0
+	4:4102=" ds1.PENDI"
+</>
+<5-10>
+	1:1
+	4:4102=" ds1.DIBIAOLEIXING+\'、\'+ ds1.CIYAODIBIAOLEIXING";4105="if(pos(@value,\'、\')==(len(value)-1),left(@value,len(@value)-1),@value)"
+</>
+<5-11>
+	1:1
+	4:4102="ds1.project_business_type"
+</>
+<5-12>
+	1:0
+	2:4102
+	3:4201="3";4415="-16777216";4107=0
+	4:4102=" ds2.select(FULL_FOLD_WORKLOAD,false,project_info_no=ds1.project_info_no)"
+</>
+<5-13>
+	1:1
+	4:4102=" ds2.DESIGN_SP_NUM"
+</>
+<5-14>
+	1:1
+	2:4415
+	3:4201="2";4502="M5";4406="-16777216"
+	4:4102="ds4.select(PROJECT_LEADER_BUILD_TIME,,PROJECT_INFO_NO=E5)"
+</>
+<5-15>
+	1:1
+	2:4502
+	3:4403="-16777216"
+	4:4102="ds4.TEMA_LEADER_BUILD_TIME"
+</>
+<5-16>
+	1:1
+	4:4102="ds4.RECON_END_DATE"
+</>
+<5-17>
+	1:1
+	4:4102="ds4.END_DATE"
+</>
+<5-18>
+	1:1
+	4:4102="ds4.COMPOSING_DATE"
+</>

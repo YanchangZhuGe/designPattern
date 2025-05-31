@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List2Link</PagerAction>
+  <PageTitle>选择机构列表</PageTitle>
+  <QuerySQL>
+    <sql>select coding_code_id,coding_name from comm_coding_sort_detail where coding_code_id like '0100100014_________'</sql>
+    <fields>
+      <field name="coding_code_id" type="TEXT"></field>
+      <field name="coding_name" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{coding_code_id}">机构id</data>
+    <data exp="{coding_name}">机构名称</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="coding_name">机构名称</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

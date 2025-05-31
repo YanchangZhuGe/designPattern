@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PageTitle>业务小类定制</PageTitle>
+  <PagerAction>EntityAndItems</PagerAction>
+  <Buttons>
+    <Button Type="Add" funCode="">businessWFNodeConfig.upmd?config_id=$PARAM.parent_id</Button>
+    <Button Type="Edit" funCode="">businessWFNodeConfig.upmd?id={id}</Button>
+    <Button Type="Delete" funCode="">DELETE FROM common_busi_node_config_dms WHERE node_config_id='{id}'</Button>
+    <Button Type="Back" funCode=""></Button>
+  </Buttons>
+  <QuerySQL>
+    <sql>select * from common_busi_node_config_dms WHERE config_id='$PARAM.parent_id'</sql>
+    <fields>
+      <field name="node_config_id" type="TEXT"></field>
+      <field name="config_id" type="TEXT"></field>
+      <field name="business_node_type" type="TEXT"></field>
+      <field name="node_link" type="TEXT"></field>
+      <field name="node_link_type" type="TEXT"></field>
+      <field name="node_link_param" type="TEXT"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="updator" type="TEXT"></field>
+      <field name="modifi_date" type="D"></field>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="locked_if" type="TEXT"></field>
+      <field name="spare1" type="TEXT"></field>
+      <field name="spare2" type="TEXT"></field>
+      <field name="spare3" type="TEXT"></field>
+      <field name="spare4" type="D"></field>
+      <field name="spare5" type=""></field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="link_type">
+      <option value="0">公共审批页面</option>
+      <option value="1">自定义审批页面</option>
+    </Select>
+  </Options>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{node_config_id}'\&gt;"/>
+    <data exp="{business_node_type}">业务小类</data>
+    <data func="getOpValue, link_type" exp="{node_link_type}">挂靠类型</data>
+    <data exp="{node_link}">挂靠链接</data>
+    <data exp="{node_link_param}">挂靠参数</data>
+  </DataList>
+  <MainEntity>
+    <PageTitle>数据项</PageTitle>
+    <EditPMD>businessWFConfig.upmd</EditPMD>
+    <EditPMD_Height>110</EditPMD_Height>
+  </MainEntity>
+</SAIS_EAW_TL>

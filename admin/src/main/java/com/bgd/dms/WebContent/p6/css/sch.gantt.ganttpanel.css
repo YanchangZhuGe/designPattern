@@ -1,0 +1,53 @@
+/*
+
+Ext Gantt 2.1.0
+Copyright(c) 2009-2012 Bryntum AB
+http://bryntum.com/contact
+http://bryntum.com/license
+
+*/
+.sch-ganttpanel-highlightweekends .sch-dayheadercell-6,	/* Saturday */
+.sch-ganttpanel-highlightweekends .sch-dayheadercell-0	/* Sunday */
+ {
+    background-image:url('../images/column-weekend-header-bg.gif');
+    background-image:-webkit-gradient(linear, #E3E4E6, #DDEEEE);
+    background-image:-moz-linear-gradient(top, #E3E4E6 50%, #DDEEEE 50%);
+    background-image:linear-gradient(top, #E3E4E6 80%, #DDEEEE 80%);
+ }
+ 
+.sch-ganttpanel .x-grid-row {
+	height:24px;
+}
+
+.sch-ganttpanel .x-grid-row-alt {
+	background:transparent url(../images/altrow.png) repeat-x;
+}
+
+.sch-ganttpanel .x-grid-row {
+	height: 24px;
+}
+
+
+.sch-ganttpanel .x-grid-body {
+	overflow:hidden;
+}
+
+.sch-todayLine
+{
+	border-left:2px dashed #999 !important;
+}
+
+.sch-ganttpanel {
+    z-index        : 0;
+}
+
+.sch-ganttpanel-container-body {
+    background-color:#DFE8F6 !important;
+}
+
+
+.sch-ganttpanel .x-splitter-vertical
+{
+    background-color:#DFE8F6;
+    border-right: 1px solid #99BCE8;
+}

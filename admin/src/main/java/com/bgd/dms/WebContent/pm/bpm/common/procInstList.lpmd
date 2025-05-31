@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select t1.entity_id, t1.proc_name, t1.create_user_name, t2.node_name, decode(t5.ispass, 0, '审批中', 2, '审批通过', null, '未接到审批请求', '1', '审批不通过') curState, t5.state, t5.examine_user_name, t5.examine_start_date, t5.examine_end_date, t6.is_open, t5.examine_info from wf_r_procinst t1 inner join wf_d_node t2 on t1.proc_id = t2.proc_id and t2.node_type = 'PEOPLES_NODE' inner join wf_d_task t3 on t2.entity_id = t3.node_id inner join wf_d_examineuser t4 on t3.entity_id = t4.task_id left outer join wf_r_examineinst t5 on t2.entity_id = t5.node_id and t1.entity_id = t5.procinst_id left outer join wf_r_taskinst t6 on t2.entity_id = t6.node_id and t1.entity_id = t6.procinst_id where t1.entity_id = '$PARAM.id' order by examine_end_date</sql>
+    <fields>
+      <field name="create_user_name" type="TEXT"></field>
+      <field name="curstate" type="TEXT"></field>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="examine_end_date" type="TEXT"></field>
+      <field name="examine_start_date" type="TEXT"></field>
+      <field name="examine_user_name" type="TEXT"></field>
+      <field name="is_open" type="TEXT"></field>
+      <field name="node_name" type="TEXT"></field>
+      <field name="proc_name" type="TEXT"></field>
+      <field name="state" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{entity_id}" isShow="Hide">entity_id</data>
+    <data exp="{node_name}">业务环节</data>
+    <data exp="{examine_user_name}">审批人</data>
+    <data exp="{curstate}">审批情况</data>
+    <data exp="{examine_info}">审批意见</data>
+    <data exp="{examine_end_date}">审批日期</data>
+    <data exp="{examine_start_date}">流程发起日期</data>
+    <data exp="{proc_name}">流程模板名称</data>
+    <data exp="{create_user_name}">发起人</data>
+    <data exp="{is_open}" isShow="Hide">is_open</data>
+    <data exp="{state}" isShow="Hide">state</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="node_name">业务环节</field>
+      <field name="examine_user_name">审批人</field>
+      <field name="curstate">审批情况</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

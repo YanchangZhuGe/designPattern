@@ -1,0 +1,101 @@
+﻿@charset "utf-8";
+/*查询结果提示栏*/
+#rtToolbarDiv{
+
+	width:100%;
+	height:28px;
+	border:1px #afbccc solid;
+	margin-top:1px;
+	font:normal 12px/28px "微软雅黑";
+	color:#FFF;
+	background:#8097c1;
+}
+
+.rtToolbar {
+}
+
+.rtToolbar td {
+	color:#FFF;
+	font:normal 12px "微软雅黑";
+}
+
+.rtToolbar_chkboxme{
+	font:normal 12px/28px "微软雅黑";
+	color:#FFF;
+
+}
+
+/*查询后主表格和带一格子表格的样式*/
+.rtTable {
+	FONT-SIZE: 12px;
+	BORDER-TOP: #AAB7D5 1px solid;
+	BORDER-LEFT: #AAB7D5 0px solid;
+	width: 100%;
+	
+}
+
+.rtTable TD {
+	FONT-SIZE: 12px;
+	BORDER-BOTTOM: #fff 1px solid;
+	BORDER-RIGHT: #fff 1px solid;
+	text-align:center;
+}
+
+.rtTable thead{
+ FONT-SIZE: 12px;
+COLOR: #666666;
+FONT-FAMILY: "宋体";
+font-weight:normal;
+/*background-image: url(../images/bg00.gif);
+background-repeat: repeat-x;
+background-position: left top;*/
+background-color:#bddff4;
+vertical-align: middle;
+padding-top: 2px;
+padding-bottom: 2px;
+line-height:20px; 
+text-align:center;
+}
+
+.rtTable .odd {
+	background-color: #FFFFFF;
+}
+
+.rtTable .even {
+  	background-color: #f0f0f0;
+}
+
+.rtTable .trSel {
+  	background-color: #4B96FF;
+}
+
+.rtTable A {
+COLOR: #3366FF; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.rtTable A:link {
+COLOR: #3366FF; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.rtTable A:visited {
+COLOR: #3366FF; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.rtTable A:hover {
+COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.rtTable A:active {
+COLOR: #3366FF; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+
+/*查询Table的可编辑框样式*/
+.rtTableInputEdit{
+	border: none;
+	color: #FF0000;
+	background-color: #FFFF99;		
+}
+
+.rtTableInputReadOnly{
+	border: none;
+	border-style: none;
+	border-width: 0;
+	text-align: center;
+	background-color: transparent;		
+}

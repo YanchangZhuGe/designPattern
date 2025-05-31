@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>
+  		function preSubmitFunc(){
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			afterSubmit(retObject);
+		}
+  	</CRU>
+    <C>  
+    	function submitFunc(){
+  			var result = jcdpCallService('A7Srv','getNewCodingCodeId','codingSortId='+getObj('coding_sort_id').value);
+			if (result.returnCode != "0"){
+				alert("操作失败!");
+				return;
+			}
+
+			getObj('coding_code_id').value=result.newcodeid;
+			getObj('coding_show_id').value=result.coding_show_id;
+			var params = "table=comm_coding_sort_detail&amp;key=coding_code_id,coding_code,coding_sort_id,bsflag&amp;value='"+getObj('coding_code_id').value+"','"+getObj('coding_code').value+"','"+getObj('coding_sort_id').value+"','1'";
+
+			var result = jcdpCallService('A7Srv','insertPrimaryKey',params);
+			if (result.returnCode != "0"){
+				alert("操作失败!");
+				return;
+			}
+			preSubmitFunc();
+		}
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				refreshData();
+				newClose();
+			}
+		}
+    </C> 
+    <U>  
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				refreshData();
+				newClose();
+			}
+		}
+		function submitFunc(){
+			preSubmitFunc();
+		}
+    </U> 
+  </JavaScripts>  
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>编码明细</PageTitle>
+  <QuerySQL>
+    <sql>select t.* from comm_coding_sort_detail t where t.bsflag = '0' and t.coding_code_id = '$PARAM.id'</sql>
+    <tableName>comm_coding_sort_detail</tableName>
+    <fields>
+      <field name="coding_code_id" type="TEXT"></field>
+      <field name="coding_sort_id" type="TEXT"></field>
+      <field name="coding_code" type="TEXT"></field>
+      <field name="coding_name" type="TEXT"></field>yyy
+      <field name="coding_mnemonic_id" type="TEXT"></field>
+      <field name="coding_show_id" type=""></field>
+      <field name="superior_code_id" type="TEXT"></field>
+      <field name="locked_if" type="TEXT"></field>
+      <field name="cite_if" type="TEXT"></field>
+      <field name="end_if" type="TEXT"></field>
+      <field name="note" type="TEXT"></field>
+      <field name="edition_nameplate" type=""></field>
+      <field name="spare1" type=""></field>
+      <field name="spare2" type="TEXT"></field>
+      <field name="code_afford_org_id" type="TEXT"></field>
+      <field name="creator_id" type="TEXT"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="modifi_date" type="D"></field>
+      <field name="create_date" type="D"></field>
+      <field name="bsflag" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="endIf">
+      <option value="0">否</option>
+      <option value="1">是</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="coding_sort_id" isShow="Hide" defaultValue="$PARAM.codingSortId" action="C">编码分类编号</field>
+    <field name="coding_code_id" isShow="ReadOnly">分类明细编号</field>
+    <field name="coding_name" maxLength="70" nonEmpty="true">编码明细名称</field>
+    <field name="coding_show_id" type="N" maxLength="8">编码显示序号</field>
+    <field name="coding_code" isShow="Hide" defaultValue="0">编码代码</field>
+    <field name="superior_code_id" isShow="Hide" maxLength="32" defaultValue="$PARAM.superiorCodeId" action="C">上级编码编号</field>
+    <field name="superior_code_name" isShow="ReadOnly" defaultValue="$PARAM.superiorCodeName" action="C">上级编码名称</field>
+    <field name="coding_mnemonic_id" maxLength="32">编码助记码</field>
+    <field name="end_if" type="SEL_OPs" selValue="endIf">是否末级</field>
+    <field name="note" maxLength="500">分类明细备注</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0" action="C"/>
+    <field name="create_date" type="D" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C"/>
+    <field name="creator" isShow="Hide" defaultValue="$USER.userName" action="C"/>
+    <field name="creator_id" isShow="Hide" defaultValue="$USER.userId" action="C"/>
+    <field name="modifi_date" type="D" isShow="Hide" defaultValue="CURRENT_DATE_TIME"/>
+  </EntityFields>
+</SAIS_EAW_TL>

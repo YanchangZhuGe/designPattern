@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+		function changeOilUnitPrice(){
+			document.getElementById("").value;
+		}
+	</CRU>
+  </JavaScripts>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>油料费用预算调整</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_op_tartet_device_oil where bsflag='0' and if_change = '0' and cost_device_id = '$PARAM.id'</sql>
+    <tableName>bgp_op_tartet_device_oil</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+    <Select name="oilType">
+      <option value="2">柴油</option>
+      <option value="1">汽油</option>
+    </Select>
+  </Options>
+  <Codes>
+    <Code name="teamOps" sql="SELECT coding_code_id AS value,t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id='0110000001' and t.bsflag='0' and length(t.coding_code)=2 and t.spare1='0' order by t.coding_show_id">班组</Code>
+  </Codes>
+  <EntityFields>
+    <field name="cost_device_id" isShow="Hide">id</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="if_change" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">id</field>
+    <field name="dev_name" maxLength="32">设备名称</field>
+    <field name="dev_model" maxLength="32">规格型号</field>
+    <field name="dev_team" type="SEL_Codes" maxLength="32" selValue="teamOps">班组</field>
+    <field name="device_count" maxLength="12">数量</field>
+    <field name="plan_start_date" type="D">计划进入时间</field>
+    <field name="plan_end_date" type="D">计划离开时间</field>
+    <field name="daily_oil_type" type="SEL_OPs" selValue="oilType" event="changeOilUnitPrice()">日消耗油料类型</field>
+    <field name="daily_oil" maxLength="12">日消耗油料（公斤）</field>
+    <field name="daily_small_oil" maxLength="12">日消耗小油品（元/天）</field>
+    <field name="single_well_oil" maxLength="12">单井消耗油料（公斤）</field>
+    <field name="oil_unit_price" maxLength="12">油料单价(元/公斤)</field>
+  </EntityFields>
+</SAIS_EAW_TL>

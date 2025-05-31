@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_TL>
+  <PageTitle>审批人员选择</PageTitle>
+  <PagerAction>List</PagerAction>
+  <Buttons/>
+  <QuerySQL>
+    <sql>SELECT * FROM p_auth_user</sql>
+    <fields>
+      <field name="user_id" type="TEXT"></field>
+      <field name="org_id" type="TEXT"></field>
+      <field name="user_pwd" type="TEXT"></field>
+      <field name="user_name" type="TEXT"></field>
+      <field name="login_id" type="TEXT"></field>
+      <field name="user_status" type="TEXT"></field>
+      <field name="email" type="TEXT"></field>
+      <field name="last_login_time" type="D"></field>
+      <field name="this_login_time" type="D"></field>
+      <field name="login_ip" type="TEXT"></field>
+      <field name="user_domain" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{user_name}">user_name</data>
+    <data exp="{user_status}">user_status</data>
+    <data exp="{email}">email</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="user_name">用户名称</field>
+    </cdt_fields>
+  </QueryCondition>
+</SAIS_EAW_TL>

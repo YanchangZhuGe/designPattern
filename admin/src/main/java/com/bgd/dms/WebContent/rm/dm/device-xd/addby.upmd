@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select * from BGP_COMM_DEVICE_MAINTAIN </sql>
+    <tableName>BGP_COMM_DEVICE_MAINTAIN</tableName>
+    <fields>
+      <field name="maintain_id" type="TEXT">MAINTAIN_ID</field>
+      <field name="device_account_id" type="TEXT">DEVICE_ACCOUNT_ID</field>
+      <field name="creator" type="TEXT">CREATOR</field>
+      <field name="create_date" type="D">CREATE_DATE</field>
+      <field name="updator" type="TEXT">UPDATOR</field>
+      <field name="modifi_date" type="D">MODIFI_DATE</field>
+      <field name="bsflag" type="TEXT">BSFLAG</field>
+      <field name="locked_if" type="TEXT">LOCKED_IF</field>
+      <field name="notes" type="TEXT">NOTES</field>
+      <field name="spare1" type="TEXT">SPARE1</field>
+      <field name="spare2" type="TEXT">SPARE2</field>
+      <field name="spare3" type="TEXT">SPARE3</field>
+      <field name="spare4" type="D">SPARE4</field>
+      <field name="spare5" type="">SPARE5</field>
+      <field name="maintain_cycle" type="">MAINTAIN_CYCLE</field>
+      <field name="last_maintain_date" type="D">LAST_MAINTAIN_DATE</field>
+      <field name="next_maintain_date" type="D">NEXT_MAINTAIN_DATE</field>
+      <field name="usage_org_subjection_id" type="TEXT">USAGE_ORG_SUBJECTION_ID</field>
+      <field name="usage_org_id" type="TEXT">USAGE_ORG_ID</field>
+    </fields>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+  
+    <field name="device_account_id" isShow="Hide" defaultValue="$PARAM.id">DEVICE_ACCOUNT_ID</field>
+    <field name="next_maintain_date" type="D">保养时间</field>
+  </EntityFields>
+</SAIS_EAW_TL>

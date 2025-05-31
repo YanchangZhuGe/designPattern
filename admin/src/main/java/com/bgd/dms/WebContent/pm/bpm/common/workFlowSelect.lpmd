@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List2Link</PagerAction>
+  <PageTitle>选择页面</PageTitle>
+  <QuerySQL>
+    <sql>select distinct t1.proc_e_name,t1.proc_name,t1.proc_version,t1.state,t1.proc_type, t2.coding_name proc_type_name,oi.org_name
+  from wf_d_procdefine t1
+ left join comm_coding_sort_detail t2 on t1.proc_type = t2.coding_code_id
+ join comm_org_subjection os on t1.create_user_name=os.org_subjection_id
+ join comm_org_information oi on os.org_id=oi.org_id
+ where t1.state='0' and t2.coding_sort_id='5110000181' and t1.delete_flag!=1 and t1.create_user_name like '$USER.subOrgIDofAffordOrg%' and t1.proc_type not in ('8ad889962ac7d328012ac84699a90013','8ad889962ac7d328012ac846e74c0014')
+order by t1.proc_type,t1.proc_name
+</sql>
+    <fields>
+      <field name="create_user_name" type="TEXT"></field>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="is_termination_implicit" type="TEXT"></field>
+      <field name="proc_e_name" type="TEXT"></field>
+      <field name="proc_name" type="TEXT"></field>
+      <field name="proc_type" type="TEXT"></field>
+      <field name="proc_version" type="TEXT"></field>
+      <field name="start_node" type="TEXT"></field>
+      <field name="state" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+   <SavedParams>create_user_name</SavedParams>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{proc_e_name}"  isShow="TextHide"  >ID</data>
+    <data exp="{proc_name}">流程名称</data>
+    <data exp="{proc_type_name}">流程类型</data>
+    <data exp="{org_name}" fieldName="创建单位">创建单位</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="proc_name">流程名称</field>
+    </cdt_fields>
+  </QueryCondition>
+</SAIS_EAW_TL>

@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+.content_info {
+	FONT-SIZE: 11px;
+	line-height: 20px;
+}
+.box {
+	border-left:1px solid #aeb1b2;
+	border-right:1px solid #aeb1b2;
+	border-bottom:1px solid #aeb1b2;
+	border-top:none;
+	BORDER: #aebbcb 1px solid;
+	background:rgba(0,0,0,0.3);
+	
+}
+.assess_tab_info {
+	FONT-SIZE: 12px;
+	height:30px;
+	BORDER: #aebbcb 1px solid;
+	line-height: 30px;
+	width:100%;
+	position:absolute;
+	/*margin-top:2px;*/
+	background:rgba(0,0,0,0.3);
+}
+.assess_tab_info TD {
+	FONT-SIZE: 12px;
+	height:30px;
+	line-height: 30px;
+	word-break:keep-all;
+	white-space:nowrap;
+	vertical-align: middle;
+	width:100%;
+	position:absolute;
+	background:rgba(0,0,0,0.3);
+}

@@ -1,0 +1,13 @@
+.login_part{ width:586px; height:267px;position:relative;left:216px;top:184px;}
+.login_part{left:216px;*left:0px;_left:0px;}
+.login_1{ width:472px; height:123px; background-image:url(../../images/gms4/login_03.png); float:left;}
+.login_2{ width:106px; height:123px; float:left;margin-left:8px;}
+.login_3{ width:285px; height:136px; background-image:url(../../images/gms4/login_11.jpg); float:left;margin-top:8px;}
+.login_4{ width:293px; height:136px; background-image:url(../../images/gms4/login_13.jpg); float:left;margin-top:8px; margin-left:8px}
+.login_2_2{margin-top:8px;}
+.login_2_1 a{line-hight:58px; height:58px; display:block;}
+.login_2_2 a{line-hight:57px; height:57px;display:block;}
+.login_1 ul{position:relative;top:9px;left:190px;width:190px;}
+.login_1 ul{left:190px;*left:40px;_left:40px;}
+.login_1 ul li{margin-top:22px;}
+.login_1 ul li input{width:190px; height:22px;}

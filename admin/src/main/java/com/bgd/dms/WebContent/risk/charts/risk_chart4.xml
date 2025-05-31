@@ -1,0 +1,29 @@
+<chart palette='3' caption='风险分布图' showLegend='1' showLabels='1' showvalues='0' xAxisName='可能性' yAxisName='影响程度' xAxisMaxValue='5.0' xAxisMinValue='0' yAxisMaxValue='5.0'> 
+
+<categories verticalLineThickness='1'>
+<category label='1.0' x='1' showVerticalLine='1'/> 
+<category label='2.0' x='2' showVerticalLine='1'/>
+<category label='3.0' x='3' showVerticalLine='1'/> 
+<category label='4.0' x='4' showVerticalLine='1'/> 
+<category label='5.0' x='5' showVerticalLine='1'/>
+</categories>
+
+<dataSet color='FF0000' plotBorderThickness='0' showPlotBorder='1' anchorSides='3'> 
+<set id='INVEQ324_1' x='4.2' y='4.2' tooltext='5'/>
+<set id='INVEQ324_2' x='4.8' y='3.6' tooltext='4'/> 
+<set id='INVEQ324_3' x='4.5' y='4.8' tooltext='3'/> 
+<set id='INVEQ324_4' x='3.7' y='4.2' tooltext='2'/>
+<set id='INVEQ324_5' x='4.5' y='4.4' tooltext='1'/>
+</dataSet>
+
+<styles> 
+<definition>
+<style name="myCaptionFont" type="font" font="Arial" size="14" bold="1" underline="1" />
+</definition> 
+
+<application> 
+<apply toObject="Caption" styles="myCaptionFont" />
+</application> 
+
+</styles> 
+</chart> 

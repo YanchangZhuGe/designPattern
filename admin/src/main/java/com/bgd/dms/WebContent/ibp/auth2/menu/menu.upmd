@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>JCDP_menu</PageTitle>
+  <SavedParams>parent_menu_id,id</SavedParams>
+  <QuerySQL>
+    <sql>SELECT m.* ,(select count(*) from P_AUTH_MENU_DMS p where p.parent_menu_id = m.menu_id)  as sel_validate FROM P_AUTH_MENU_DMS m WHERE m.menu_id='$PARAM.id'</sql>
+    <tableName>P_AUTH_MENU_DMS</tableName>
+  </QuerySQL>
+  <Options>
+    <Select name="leafType">
+      <option value="1">JCDP_leafMenu</option>
+      <option value="0">JCDP_nLeafMenu</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="menu_c_name" nonEmpty="true" maxLength="20">JCDP_cName</field>
+    <field name="menu_e_name" maxLength="32">JCDP_EnglishName</field>
+    <field name="img_url">图片</field>
+    <field name="is_leaf" type="SEL_OPs" selValue="leafType" size="155">JCDP_type</field>
+    <field name="order_num">序号</field>
+    <field name="menu_url" size="48">JCDP_link</field>
+    <field name="menu_hint" type="MEMO" size="38:3">JCDP_remark</field>
+     <field name="parent_menu_id" isShow="Hide" defaultValue="$PARAM.parent_menu_id" action="C"/>
+     <field name="parent_menu_id" isShow="Hide" action="R,U"/>
+  </EntityFields>
+    <JavaScripts>
+  
+    <CRU>
+      function dialogOpen(tt,w,h,src){
+	w = screen.width*0.85;
+	h = screen.height*0.99;
+	var $parent = self.parent.parent.$; 
+	var dialogDiv = self.parent.parent.$("&lt;div&gt;&lt;/div&gt;");
+	var dialogContent = self.parent.parent.$("&lt;iframe class=\"frame_dialog\" src=\""+src+"\" frameborder=\"0\" scrolling=\"yes\"&gt;&lt;/iframe&gt;");
+	if($parent("#dialog").length == 0)
+		$parent("#dialog_wrap").append(dialogDiv);
+
+	dialogDiv.append(dialogContent);
+	dialogDiv.dialog({
+		bgiframe: true,
+		draggable:false,
+		resizable: false,
+		title: tt,
+		height: h,
+		width: w,
+		modal: true,
+		autoOpen : true
+	});
+	dialogContent.css('width',w-35);
+	self.parent.parent.topDialogs.push( [ dialogContent, dialogDiv ] );
+}
+
+var $parent = parent.parent.$; 
+function setCruTitle(){
+}
+function refreshData(){
+		var ctt = parent.parent.frames['list'];
+		if(ctt.frames.length == 0){
+				ctt.refreshData();
+		}
+		else{
+				ctt.frames[1].refreshData();
+		}
+}
+
+    $(function(){
+    	page_init = (function(orgFunc){
+    		return function(){
+    			orgFunc.call(arguments);
+    			if(jcdp_record &amp;&amp; jcdp_record["sel_validate"] !== "0"){
+    				$("select[name='is_leaf']").attr("disabled","disabled");
+    			}
+    		}
+    	})(page_init)
+    });
+	function afterSubmit(retObject,successHint,failHint){  /*重写，关闭、刷新方法不同*/
+		if(retObject==null){ 
+			alert('retObject==null');
+			return;
+		}  
+		if(successHint==undefined){ 
+			successHint = "JCDP_alert_OK";
+		}  
+		if(failHint==undefined){ 
+			failHint = "JCDP_alert_FAIL";
+		}  
+		if (retObject.returnCode != "0") { 
+			alert(failHint);  
+		}else{  
+			alert(successHint);  
+			var parentId = getObj("parent_menu_id").value;
+	    	parent.treeFrame.tree.getNodeById(parentId).reload();
+			location.href = "../../../blank.html";
+			/*增加刷新菜单缓存*/
+			jcdpCallService("IBPLoginAndMenuTree","reloadCache","cacheType=menu");  
+		} 
+	}
+	<![CDATA[
+	function submitFunc(){  
+		var strArr = $("form").serializeArray(),obj = {};
+		for(var i = 0,len = strArr.length ; i < len ;i++){ 
+			obj[strArr[i]["name"]] = strArr[i]["value"];
+		}
+		var menuId = obj["JCDP_TABLE_ID"];
+		if(menuId == null){
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;  
+			submitStr = getSubmitStr();  
+			if(submitStr == null) return;  
+			var retObject = syncRequest('Post',path,submitStr);  
+		}else{
+			var tableName =  obj["JCDP_TABLE_NAME"],
+				path = cruConfig.contextPath+"/rad/asyncUpdateEntitiesBySql.srq",
+				sql = "",
+				sqls = [],
+				set = " set ",
+				is_leaf = $("select[name='is_leaf']").val();
+			delete obj["JCDP_TABLE_NAME"];
+			delete obj["JCDP_TABLE_ID"];
+			for( i in obj){  
+			    if(i.indexOf("toJSONString")==-1){
+			       set += (i + "='"+obj[i]+"',");  
+			    }
+				   
+			} 
+			
+			set = set.slice(0,set.length-1);
+			
+			sql = encodeURIComponent(encodeURIComponent("update "+tableName + set + " where menu_id = '"+menuId+"'"));
+			sqls.push(sql);
+			if(jcdp_record && jcdp_record["is_leaf"] === "1" && is_leaf === "0"){
+				if(window.confirm("叶子菜单修改为非叶子菜单，同时会删除与此菜单关联的机构功能集、用户自定义菜单和角色")){
+					sqls.push("delete from p_auth_user_defined_menu where menu_id = '"+menuId+"'");
+					sqls.push("delete from p_auth_org_resource where res_id = '"+menuId+"'");
+					sqls.push("delete from p_auth_role_menu where menu_id = '"+menuId+"'");			
+				}else{
+					return;
+				}
+			}
+			var params = "sql="+sqls.join(";")+"&ids=";
+			var retObject = syncRequest('Post',path,params);
+		}
+		afterSubmit(retObject);
+	}
+	]]> 
+    </CRU> 
+  </JavaScripts>   
+</SAIS_EAW_TL>

@@ -1,0 +1,22 @@
+<chart caption="钻井检查结果汇总分析" palette="1" animation="1" formatNumberScale="0" numberPrefix="" 
+	labeldisplay="ROTATE" slantLabels="1" seriesNameInToolTip="0" sNumberSuffix="" yAxisName='检查数量' 
+		showValues="1" plotSpacePercent="0" labelDisplay="STAGGER" xAxisName='钻井检查项' 
+		bgColor='FFFFFF,F0F0F0' yAxisNamePadding ='1'>
+	<set label="钻井点位" value="57182" />
+	<set label="钻井深度" value="42980" />
+	<set label="下药深度" value="42006" />
+	<set label="下井药量" value="42206" />
+	<set label="井口卡填写" value="42006" />
+	<set label="封井质量" value="40806" />
+	<set label="其他" value="35054" />
+	<styles>
+		<definition>
+			<style type="font" name="CaptionFont" size="15" color="666666" />
+			<style type="font" name="SubCaptionFont" bold="0" />
+		</definition>
+		<application>
+			<apply toObject="caption" styles="CaptionFont" />
+			<apply toObject="SubCaption" styles="SubCaptionFont" />
+		</application>
+	</styles>
+</chart>

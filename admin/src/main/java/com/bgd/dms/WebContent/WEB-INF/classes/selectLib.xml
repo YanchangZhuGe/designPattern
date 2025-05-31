@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_Codes>
+  <Select name="nationOps" desc="民族">
+    <option value="01">汉</option>
+    <option value="02">满</option>
+    <option value="03">蒙</option>
+    <option value="04">回</option>
+    <option value="05">壮</option>
+    <option value="05">维</option>
+    <option value="99">其他</option>
+  </Select>
+  <Select name="booleanOps" desc="是否">
+    <option value="1">是</option>
+    <option value="0">否</option>
+  </Select>
+  <Select name="genderOps" desc="性别">
+    <option value="1">男</option>
+    <option value="0">女</option>
+  </Select>
+  <Select name="degreeOps" desc="学历">
+    <option value="0">本科</option>
+    <option value="1">硕士</option>
+    <option value="2">博士</option>
+    <option value="3">其它</option>
+  </Select>
+  <Select name="politicalStatus" desc="政治面貌">
+    <option value="0">群众</option>
+    <option value="1">党员</option>
+    <option value="2">团员</option>
+    <option value="3">其它</option>
+  </Select>  
+  <Select name="hrDegreeOps" desc="学历">
+    <option value="0">博士研究生</option>
+    <option value="1">硕士研究生</option>
+    <option value="2">大学本科以上</option>
+    <option value="3">大学专科(高职)以上</option>
+    <option value="4">中专</option>
+    <option value="5">技校 </option>
+    <option value="6">高中以上</option>
+    <option value="7">初中以上</option>
+    <option value="8">小学以上</option>
+    <option value="9">其他</option>
+  </Select>
+  <Select name="hrAgeOps" desc="年龄">
+    <option value="0">20-30岁</option>
+    <option value="1">30-40岁</option>
+    <option value="2">40岁以上</option>
+  </Select>
+   <Select name="workYearOps" desc="工作年限">
+    <option value="0">3年以下</option>
+    <option value="1">3-5年</option>
+    <option value="2">5-10年</option>
+    <option value="3">10年以上</option>
+  </Select>
+  <Select name="humanScatteredOps" desc="用工分布">
+      <option value="0">一线员工</option>
+      <option value="1">境外一线</option>
+      <option value="2">二线员工</option>
+      <option value="4">三线员工</option>
+      <option value="3">境外二三线</option>
+  </Select>
+  <Select name="queueStatus" desc="客户端状态">
+    <option value="0">启动</option>
+    <option value="1">未启动</option>
+  </Select>  
+  <Select name="entityStatus" desc="客户端状态">
+    <option value="0">禁用</option>
+    <option value="1">可用</option>
+  </Select>  
+  <Select name="srvAuthType" desc="服务授权类型">
+    <option value="0">公开授权</option>
+    <option value="1">用户名密码授权</option>
+    <option value="2">IP授权</option>
+  </Select>  
+  <Select name="prj_status" desc="项目状态类型">
+    <option value="0">JCDP_notstart_cn</option>
+    <option value="1">JCDP_process_cn</option>
+    <option value="2">JCDP_end_cn</option>
+  </Select>  
+    <Select name="authorizedOrgIf" desc="组织机构属性">
+    <option value="1">在编组织机构</option>
+    <option value="2">非在编组织机构</option>
+    <option value="3">应急组织机构</option>
+    <option value="0">虚拟组织机构</option>
+  </Select>
+  <Select name="orgType" desc="组织机构类型">
+    <option value="0200100004000000003">物探</option>
+    <option value="0200100004000000014">物探机关</option>
+    <option value="0200100004000000015">物探生产单位</option>
+    <option value="0200100004000000024">物探作业队</option>
+    <option value="0200100004000000027">物探专业化公司</option>
+    <option value="0200100004000000051">物探辅助单位</option>
+  </Select>  
+  <Select name="owner" desc="分类码所属系统">
+    <option value="1">公共</option>
+    <option value="2">市场</option>
+    <option value="3">生产</option>
+    <option value="4">经营</option>
+    <option value="5">设备</option>
+    <option value="6">人力</option>
+    <option value="7">质量</option>
+    <option value="8">HSE</option>
+    <option value="9">风险</option>
+    <option value="10">文档</option>
+  </Select>
+  
+   <Select name="opFormulaType" desc="费用科目树公式类型">
+    <option value="0">计划实际公式维护</option>
+    <option value="1">计划实际手动维护</option>
+    <option value="2">计划公式实际手动维护</option>
+    <option value="3">计划手动实际公式维护</option>
+  </Select>
+  
+  <Select name="opReportType" desc="经营报表类型">
+    <option value="2">辅助生产单位</option>
+    <option value="3">机关及附属单位管理</option>
+    <option value="4">非施工期费用支出表</option>
+  </Select>
+</SAIS_EAW_Codes>

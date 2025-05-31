@@ -1,0 +1,11 @@
+/* CSS file */
+
+/*------------------------------------------------------------------------------ Fonts */
+
+
+DrawBoard
+{
+	borderSkin: ClassReference("com.skins.GridSkin");
+}
+
+

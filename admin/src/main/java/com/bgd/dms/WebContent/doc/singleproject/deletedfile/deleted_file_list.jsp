@@ -1,0 +1,405 @@
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="auth" uri="auth"%>
+<%
+	String contextPath = request.getContextPath();
+	String folderId = "";
+	if(request.getParameter("folderid") != null){
+		folderId = request.getParameter("folderid");
+	}
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="<%=contextPath%>/styles/style.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/styles/SpryTabbedPanels3.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=contextPath%>/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/dialog_open.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/rt_base.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/gms_list.js"></script>
+<title>文档回收站</title>
+</head>
+
+<body style="background:#fff">
+      	<div id="list_table">
+			<div id="inq_tool_box">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td width="6"><img src="<%=contextPath%>/images/list_13.png" width="6" height="36" /></td>
+			<td background="<%=contextPath%>/images/list_15.png">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td class="ali_cdn_name">文件名称</td>
+			    <td class="ali_cdn_input">
+				    <input id="file_name" name="file_name" type="text" class="input_width"/>
+			    </td>
+			    <td class="ali_query">
+				    <span class="cx"><a href="#" onclick="simpleSearch()" title="JCDP_btn_query"></a></span>
+			    </td>
+			    <td class="ali_query">
+				    <span class="qc"><a href="#" onclick="clearQueryText()" title="JCDP_btn_clear"></a></span>
+			    </td>
+			    <td>&nbsp;</td>
+			    <auth:ListButton functionId="" css="gl" event="onclick='toSearch()'" title="JCDP_btn_filter"></auth:ListButton>
+			    <auth:ListButton functionId="F_DOC_011" css="fh" event="onclick='toRestore()'" title="JCDP_btn_restore"></auth:ListButton>
+			    <auth:ListButton functionId="F_DOC_012" css="sc" event="onclick='toDelete()'" title="JCDP_btn_delete"></auth:ListButton>
+			    <auth:ListButton functionId="" css="xz" event="onclick='toDownload()'" title="JCDP_btn_download"></auth:ListButton>
+			  </tr>
+			</table>
+			</td>
+			    <td width="4"><img src="<%=contextPath%>/images/list_17.png" width="4" height="36" /></td>
+			  </tr>
+			</table>
+			</div>
+			<div id="table_box">
+			  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab_info" id="queryRetTable">
+			    <tr>
+			      <td class="bt_info_odd" exp="<input type='checkbox' name='rdo_entity_id' value='{file_id}:{ucm_id}' id='rdo_entity_id_{file_id}' onclick=doCheck(this)/>" >选择</td>
+			      <td class="bt_info_even" autoOrder="1">序号</td> 
+			      <td class="bt_info_odd" exp="{file_name}">文件标题</td>
+			      <td class="bt_info_even" exp="{create_date}">上传时间</td>
+			      <td class="bt_info_odd" exp="{user_name}">责任人</td>
+			      <td class="bt_info_even" exp="{proc_status}">审批状态</td>
+			    </tr>
+			  </table>
+			</div>
+			<div id="fenye_box"><table width="100%" border="0" cellspacing="0" cellpadding="0" id="fenye_box_table">
+			  <tr>
+			    <td align="right">第1/1页，共0条记录</td>
+			    <td width="10">&nbsp;</td>
+			    <td width="30"><img src="<%=contextPath%>/images/fenye_01.png" width="20" height="20" /></td>
+			    <td width="30"><img src="<%=contextPath%>/images/fenye_02.png" width="20" height="20" /></td>
+			    <td width="30"><img src="<%=contextPath%>/images/fenye_03.png" width="20" height="20" /></td>
+			    <td width="30"><img src="<%=contextPath%>/images/fenye_04.png" width="20" height="20" /></td>
+			    <td width="50">到 
+			      <label>
+			        <input type="text" name="textfield" id="textfield" style="width:20px;" />
+			      </label></td>
+			    <td align="left"><img src="<%=contextPath%>/images/fenye_go.png" width="22" height="22" /></td>
+			  </tr>
+			</table>
+			</div>
+			<div class="lashen" id="line"></div>
+			<div id="tag-container_3">
+			  <ul id="tags" class="tags">
+			    <li class="selectTag" id="tag3_0"><a href="#" onclick="getTab3(0)">常用</a></li>
+			    <li id="tag3_1"><a href="#" onclick="getTab3(1)">附件</a></li>
+			    <li id="tag3_2"><a href="#" onclick="getTab3(2)">日志</a></li>
+			    <li id="tag3_3"><a href="#" onclick="getTab3(3)">版本</a></li>
+			    <li id="tag3_4"><a href="#" onclick="getTab3(4)">分类码</a></li>
+			  </ul>
+			</div>
+			
+			<div id="tab_box" class="tab_box">
+				<div id="tab_box_content0" class="tab_box_content">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td width="6"><img src="<%=contextPath%>/images/list_13.png" width="6" height="36" /></td>
+			    <td background="<%=contextPath%>/images/list_15.png"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>			      			    
+			  </tr>
+			</table>
+			</td>
+			    <td width="4"><img src="<%=contextPath%>/images/list_17.png" width="4" height="36" /></td>
+			  </tr>
+			</table>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" id="commonInfoTable" class="tab_line_height">
+					  <tr>
+					    <td class="inquire_item6">UCM编号：</td>
+					    <td class="inquire_form6" id="item0_0"><input type="text" id="ucm_id" name="ucm_id" class="input_width" readonly="readonly"/></td>
+					    <td class="inquire_item6">原始文件名称：</td>
+					    <td class="inquire_form6" id="item0_1">&nbsp;</td>
+					    <td class="inquire_item6">关键字：</td>
+					    <td class="inquire_form6" id="item0_2"><input type="text" id="ucm_keyword" name="ucm_keyword" class="input_width" readonly="readonly"/></td>
+					  </tr>
+					  <tr>
+					    <td class="inquire_item6">文件后缀：</td>
+					    <td class="inquire_form6" id="item0_3"><input type="text" id="ucm_fileType" name="ucm_fileType" class="input_width" readonly="readonly"/></td>
+					    <td class="inquire_item6">文件大小：</td>
+					    <td class="inquire_form6" id="item0_4"><input type="text" id="ucm_fileSize" name="ucm_fileSize" class="input_width" readonly="readonly"/></td>
+					    <td class="inquire_item6">创建时间：</td>
+					    <td class="inquire_form6" id="item0_5"><input type="text" id="ucm_createDate" name="ucm_createDate" class="input_width" readonly="readonly"/></td>
+					  </tr>	
+					  <tr>
+					    <td class="inquire_item6">文件摘要：</td>
+					    <td class="inquire_form6" id="item0_6"><input type="text" id="ucm_filebrief" name="ucm_filebrief" class="input_width" readonly="readonly"/></td>
+					    <td class="inquire_item6">文件类型：</td>
+					    <td class="inquire_form6" id="item0_7"><input type="text" id="ucm_filedoctype" name="ucm_filedoctype" class="input_width" readonly="readonly"/></td>
+					    <td class="inquire_item6">分数：</td>
+					    <td class="inquire_form6" id="item0_8"><input type="text" id="ucm_filescore" name="ucm_filescore" class="input_width" readonly="readonly"/></td>
+					  </tr>					    
+					</table>
+				</div>
+				<div id="tab_box_content1" class="tab_box_content" style="display:none;">
+						<iframe width="100%" height="100%" name="attachement" id="attachement" frameborder="0" src="" marginheight="0" marginwidth="0" >
+						</iframe>
+				</div>
+				<div id="tab_box_content2" class="tab_box_content" style="display:none;">
+						<iframe width="100%" height="100%" name="doclog" id="doclog" frameborder="0" src="" marginheight="0" marginwidth="0" >
+						</iframe>
+				</div>
+				<div id="tab_box_content3" class="tab_box_content" style="display:none;">
+						<iframe width="100%" height="100%" name="docversion" id="docversion" frameborder="0" src="" marginheight="0" marginwidth="0" >
+						</iframe>			
+				</div>
+
+				<div id="tab_box_content4" class="tab_box_content" style="display:none;">
+						<iframe width="100%" height="100%" name="codeManager" id="codeManager" frameborder="0" src="" marginheight="0" marginwidth="0" >
+						</iframe>			
+				</div>
+			</div>
+		  </div>
+
+</body>
+<script type="text/javascript">
+function frameSize(){
+	//$("#tab_box").children("div").css("height",$(window).height()-$("#inq_tool_box").height()-$("#table_box").height()-$("#fenye_box").height()-$("#line").height()-$("#tag-container_3").height());
+	setTabBoxHeight();
+}
+frameSize();
+
+
+$(function(){
+	$(window).resize(function(){
+  		frameSize();
+	});
+})	
+
+$(document).ready(lashen);
+</script>
+
+<script type="text/javascript">
+	
+	cruConfig.contextPath = "<%=contextPath%>";
+	cruConfig.cdtType = 'form';
+	cruConfig.queryStr = "";
+	cruConfig.queryService = "ucmSrv";
+	cruConfig.queryOp = "getDeletedDocsInFolder";
+	//cruConfig.queryRetTable_id = "";
+	var folderid= parent.mainTopframe.rootMenuId;
+	var file_name="";
+	var ucm_id="";
+	var procinstId="";
+	var fileId="";
+	
+	var doc_type = "";
+	var doc_keyword = "";
+	var doc_importance = "";
+	var create_date = "";
+	
+	// 复杂查询
+	function refreshData(q_folderid, q_file_name,q_doc_type,q_doc_keyword,q_doc_importance,q_create_date){
+		if(q_folderid==undefined) q_folderid = folderid;
+		folderid = q_folderid;
+
+		if(q_file_name==undefined) q_file_name = file_name;
+		file_name = q_file_name;
+		document.getElementById("file_name").value = q_file_name;
+		
+		if(q_doc_type==undefined) q_doc_type = doc_type;
+		doc_type = q_doc_type;
+		
+		if(q_doc_keyword==undefined) q_doc_keyword = doc_keyword;
+		doc_keyword = q_doc_keyword;
+		
+		if(q_doc_importance==undefined) q_doc_importance = doc_importance;
+		doc_importance = q_doc_importance;		
+		
+		if(q_create_date==undefined) q_create_date = create_date;
+		create_date = q_create_date;
+
+		cruConfig.submitStr = "folderid="+q_folderid+"&file_name="+q_file_name+"&doc_type="+q_doc_type+"&doc_keyword="+q_doc_keyword+"&doc_importance="+q_doc_importance+"&create_date="+q_create_date;	
+		queryData(1);
+	}
+
+	refreshData(undefined, undefined);
+	
+	function simpleSearch(){
+			var q_file_name = document.getElementById("file_name").value;
+			refreshData(undefined, q_file_name);
+	}
+	
+	function clearQueryText(){
+		document.getElementById("file_name").value = "";
+	}
+	
+	function dbclickRow(ids){
+		var file_id = ids.split(":")[0];
+		var ucm_id = ids.split(":")[1];
+		if(ucm_id != ""){
+			var retObj = jcdpCallService("ucmSrv", "getDocInfo", "ucmid="+ids+"&isdeleted=deletedfile");
+			var fileExtension = retObj.docInfoMap.dWebExtension;
+			window.open('<%=contextPath %>/doc/onlineview/view_doc.jsp?ucmId='+file_id+'&isdeleted=deletedfile&fileExt='+fileExtension);			
+		}else{
+	    	alert("该条记录没有文档");
+	    	return;
+		}
+		
+	}
+	
+	
+	function loadDataDetail(ids){
+			var theFileID = ids.split(":")[0];
+			document.getElementById("attachement").src = "<%=contextPath%>/doc/singleproject/deletedfile/deleted_attach_list.jsp?relationId="+theFileID;
+			document.getElementById("doclog").src = "<%=contextPath%>/doc/log/doc_log.jsp?theFileId="+theFileID;
+			document.getElementById("docversion").src = "<%=contextPath%>/doc/singleproject/deletedfile/deleted_doc_version.jsp?theFileId="+theFileID;
+			document.getElementById("codeManager").src = "<%=contextPath%>/pm/projectCode/projectCodeAssignment.jsp?owner=10&relationId="+theFileID;
+			var retObj = jcdpCallService("ucmSrv", "getDocInfo", "ucmid="+ids+"&isdeleted=deletedfile");
+			//file_name=retObj.docInfoMap.dDocTitle;
+			fileId=retObj.fileId;
+			ucm_id=retObj.docInfoMap.dID;
+			procinstId=retObj.procInstId;
+			document.getElementById("ucm_id").value= retObj.docInfoMap.dID != undefined ? retObj.docInfoMap.dID:"";
+			if(retObj.docInfoMap.dID == undefined){
+				document.getElementById("item0_1").innerHTML = "未上传文档";
+			}else{
+				document.getElementById("item0_1").innerHTML = "<a href='<%=contextPath%>/doc/downloadDelDoc.srq?docId="+retObj.docInfoMap.file_id+"&isdeleted=deletedfile'>"+retObj.docInfoMap.dOriginalName+"</a>";
+
+			}		
+			
+			document.getElementById("ucm_keyword").value= retObj.docInfoMap.doc_keyword != undefined ? retObj.docInfoMap.doc_keyword:"";
+			document.getElementById("ucm_fileType").value= retObj.docInfoMap.dWebExtension != undefined ? retObj.docInfoMap.dWebExtension:"";
+			document.getElementById("ucm_fileSize").value= retObj.docInfoMap.doc_size != undefined ? retObj.docInfoMap.doc_size:"";
+			document.getElementById("ucm_createDate").value= retObj.docInfoMap.dCreateDate.substring(0,10);
+
+			document.getElementById("ucm_filebrief").value= retObj.docInfoMap.doc_brief != undefined ? retObj.docInfoMap.doc_brief:"";
+			document.getElementById("ucm_filedoctype").value= retObj.docInfoMap.doc_type != undefined ? retObj.docInfoMap.doc_type:"";
+			document.getElementById("ucm_filescore").value= retObj.docInfoMap.doc_score != undefined ? retObj.docInfoMap.doc_score:"";
+
+			
+			if("未提交"==retObj.procStatus) {
+				document.getElementById("item4_0").innerHTML = retObj.procStatus + '<span class="tj"><input type="button" onclick="submitProcess()" value="提交"  class="iButton2"/></span>';
+			}else{
+				document.getElementById("item4_0").innerHTML = retObj.procStatus + '<span class="ck"><input type="button" onclick="viewProcInfo()" value="审批轨迹"  class="iButton2"/></span>';
+			}
+
+	}
+	var selectedTagIndex = 0;//document.getElementById("tag3_0").parentElement;
+	var showTabBox = document.getElementById("tab_box_content0");
+
+	function toAdd(){
+
+		popWindow('<%=contextPath%>/doc/singleproject/upload_file.jsp?id='+folderid);
+		
+	}
+	//彻底删除文档
+	function toDelete(){
+ 		
+	    ids = getSelIds('rdo_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     	return;
+	    }	
+		    
+		if(confirm('确定要彻底删除吗?')){  
+			var retObj = jcdpCallService("ucmSrv", "deleteFileCompletely", "docId="+ids);
+			queryData(cruConfig.currentPage);
+			clearCommonInfo();
+		}
+	}
+
+	function toSearch(){
+		popWindow('<%=contextPath%>/doc/singleproject/deletedfile/search_deleted_file.jsp');
+	}
+	
+	//还原文档
+	function toRestore(){
+
+	    ids = getSelIds('rdo_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     	return;
+	    }	
+		    
+		if(confirm('确定要还原?')){  
+			var retObj = jcdpCallService("ucmSrv", "restoreDeletedFile", "docId="+ids);
+			queryData(cruConfig.currentPage);
+			clearCommonInfo();
+		}
+	}
+	
+	//选中一条记录在线查看文档
+	function toView(){
+		
+	    ids = getSelIds('rdo_entity_id');
+
+	    if(ids==''){ alert("请先选中一条记录!");
+	     	return;
+	    }	
+	    
+	    if(ids.split(":").length > 2){
+	    	alert("只能查看一条记录");
+	    	return;
+	    }
+	    var file_id = ids.split(":")[0];
+		var ucm_id = ids.split(":")[1];
+		var retObj = jcdpCallService("ucmSrv", "getDocInfo", "ucmid="+ids);
+		var fileExtension = retObj.docInfoMap.dWebExtension;
+		//var retObj = jcdpCallService("ucmSrv", "getDocUrl", "ucmId="+ucm_id);
+		//var ucm_url = retObj.ucmUrl;
+		window.open('<%=contextPath %>/doc/onlineview/view_doc.jsp?ucmId='+file_id+'&fileExt='+fileExtension);
+	}
+	
+	//修改文档，文档版本
+	
+	function toEdit(){
+
+	    ids = getSelIds('rdo_entity_id');
+
+	    if(ids==''){ alert("请先选中一条记录!");
+	     	return;
+	    }	
+	    
+	    if(ids.split(":").length > 2){
+	    	alert("只能编辑一条记录");
+	    	return;
+	    }
+	    
+	    var file_id = ids.split(":")[0];
+		var ucm_id = ids.split(":")[1];
+		popWindow('<%=contextPath%>/doc/singleproject/edit_file.jsp?id='+folderid+'&fileId='+file_id);
+
+	}
+	
+	function toDownload(){
+		
+	    ids = getSelIds('rdo_entity_id');
+
+	    if(ids==''){ alert("请先选中一条记录!");
+	     	return;
+	    }	
+	    
+	    if(ids.split(":").length > 2){
+	    	alert("只能下载一条记录");
+	    	return;
+	    }
+	    var file_id = ids.split(":")[0];
+	    var ucm_id = ids.split(":")[1];
+	    if(ucm_id != ""){
+	    	window.location = "<%=contextPath%>/doc/downloadDelDoc.srq?docId="+file_id+"&isdeleted=deletedfile";
+	    }else{
+	    	alert("该条记录没有文档");
+	    	return;
+	    }	    
+	    
+	}
+	
+	function clearCommonInfo(){
+		var qTable = getObj('commonInfoTable');
+		for (var i=0;i<qTable.all.length; i++) {
+			var obj = qTable.all[i];
+			if(obj.name==undefined || obj.name=='') continue;
+			
+			if (obj.tagName == "INPUT") {
+				if(obj.type == "text") 	obj.value = "";		
+			}
+		}
+		document.getElementById("item0_1").innerHTML = "";
+		document.getElementById("attachement").src = "";
+		document.getElementById("doclog").src = "";
+		document.getElementById("docversion").src = "";
+		document.getElementById("codeManager").src = "";
+
+	}
+</script>
+
+</html>
+

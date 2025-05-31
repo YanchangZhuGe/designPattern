@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	   default-autowire="byName" default-lazy-init="true">	
+
+	<!-- 构造单元信息操作服务 -->
+	<bean id="StuctureUnitInfoSrv" 
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.mcs.service.pm.service.structureunit.StructureUnitSrv"/>
+		</property>
+	</bean>
+	
+	<!-- 工区信息操作服务 -->
+	<bean id="WorkAreaSrv" 
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.mcs.service.pm.service.workarea.WorkAreaSrv"/>
+		</property>
+	</bean>
+	
+	<!-- EPS编码服务 -->
+	<bean id="EpsCodesSrv" 
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.mcs.service.pm.service.eps.EpsCodeManager"/>
+		</property>
+	</bean>
+</beans>

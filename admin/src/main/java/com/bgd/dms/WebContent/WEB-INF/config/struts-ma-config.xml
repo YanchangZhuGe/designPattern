@@ -1,0 +1,593 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+	
+		 <action path="/market/DownloadFileAction"
+    		type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+    		scope="request"> 	
+     		<serviceCall serviceName="MarketInfoInputSrv" operationName="queryFile"/>    			
+    	</action>                
+	
+		<!-- CRM系统集成 -->
+		<action path="/crm/ssoLogin" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="CrmIntSrv" operationName="ssoLogin" />
+			<forward name="success" path="/crmInt/crmSsoLogin.jsp" />
+		</action>		
+		<!-- 市场的 -->
+		<action path="/market/addSckf" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addSckf" />
+			<forward name="success" path="/market/marketSckfPage/MarketSckfPageList.jsp" />
+		</action>
+		<action path="/market/viewSckf" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewSckf" />
+			<forward name="success" path="/market/marketSckfPage/viewMarketSckfPage.jsp" />
+		</action>
+		<action path="/market/editSckf" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editSckf" />
+			<forward name="success" path="/market/marketSckfPage/editMarketSckfPage.jsp" />
+		</action>
+		<action path="/market/updateSckf" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateSckf" />
+			<forward name="success" path="/market/marketSckfPage/MarketSckfPageList.jsp" />
+		</action>
+		
+		<!-- 市场管理-->
+		<action path="/market/addManage" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addManage" />
+			<forward name="success" path="/market/marketScglPage/MarketManagePageList.jsp" />
+		</action>
+		<action path="/market/viewManage" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewManage" />
+			<forward name="success" path="/market/marketScglPage/viewMarketManagePage.jsp" />
+		</action>
+		<action path="/market/editManage" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editManage" />
+			<forward name="success" path="/market/marketScglPage/editMarketManagePage.jsp" />
+		</action>
+		<action path="/market/updateManage" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateManage" />
+			<forward name="success" path="/market/marketScglPage/MarketManagePageList.jsp" />
+		</action>
+		
+		<!-- 物探公司动态-->
+		<action path="/market/addWtgs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addWtgs" />
+			<forward name="success" path="/market/marketWtgsPage/MarketWtgsPageList.jsp" />
+		</action>
+		<action path="/market/viewWtgs" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewWtgs" />
+			<forward name="success" path="/market/marketWtgsPage/viewMarketWtgsPage.jsp" />
+		</action>
+		<action path="/market/editWtgs" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editWtgs" />
+			<forward name="success" path="/market/marketWtgsPage/editMarketWtgsPage.jsp" />
+		</action>
+		<action path="/market/updateWtgs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateWtgs" />
+			<forward name="success" path="/market/marketWtgsPage/MarketWtgsPageList.jsp" />
+		</action>
+		
+		<!-- 油田公司动态-->
+		<action path="/market/addYtgs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addYtgs" />
+			<forward name="success" path="/market/markertYtgsPage/MarketYtgsPageList.jsp" />
+		</action>
+		<action path="/market/viewYtgs" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewYtgs" />
+			<forward name="success" path="/market/markertYtgsPage/viewMarketYtgsPage.jsp" />
+		</action>
+		<action path="/market/editYtgs" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editYtgs" />
+			<forward name="success" path="/market/markertYtgsPage/editMarketYtgsPage.jsp" />
+		</action>
+		<action path="/market/updateYtgs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateYtgs" />
+			<forward name="success" path="/market/markertYtgsPage/MarketYtgsPageList.jsp" />
+		</action>
+		
+		<!-- 统计分析-->
+		<action path="/market/addTj" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addTj" />
+			<forward name="success" path="/market/marketTjfxPage/MarketTjPageList.jsp" />
+		</action>
+		<action path="/market/viewTj" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewTj" />
+			<forward name="success" path="/market/marketTjfxPage/viewMarketTjPage.jsp" />
+		</action>
+		<action path="/market/editTj" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editTj" />
+			<forward name="success" path="/market/marketTjfxPage/editMarketTjPage.jsp" />
+		</action>
+		<action path="/market/updateTj" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateTj" />
+			<forward name="success" path="/market/marketTjfxPage/MarketTjPageList.jsp" />
+		</action>
+		
+		<!-- 附件处理 -->
+		<!-- 市场信息平台新增 -->
+		<action path="/market/add" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addTest" />
+		</action>
+		<!-- 市场信息平台查看 -->
+		<action path="/market/view" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewTest" />
+			<forward name="success" path="/market/marketWtgsPage/viewMarketWtgsPage.jsp" />
+		</action>
+		<!-- 市场信息平台修改-->
+		<action path="/market/editWtgs" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editWtgs" />
+			<forward name="success" path="/market/marketWtgsPage/editMarketWtgsPage.jsp" />
+		</action>
+		<!-- 市场信息平台修改保存-->
+		<action path="/market/updateWtgs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateWtgs" />
+			<forward name="success" path="/market/marketWtgsPage/MarketWtgsPageList.lpmd" />
+		</action>
+		
+		<!-- 市场信息平台展示页面top页 -->
+		<action path="/market/show/showTopPage" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="getTopPageInfo" />
+			<forward name="success" path="/market/showModel/showMainFrameTop.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面首页 -->
+		<action path="/market/show/showHomePage" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="getHomePageInfo" />
+			<forward name="success" path="/market/showModel/showHomePage.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面二级页面-->
+		<action path="/market/show/showSecondPage" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="getSecondPageInfo" />
+			<forward name="success" path="/market/showModel/showSecondPage.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面二级页面左中右-->
+		<action path="/market/show/showSecondPageLike" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="getSecondPageInfoMod" />
+			<forward name="success" path="/market/showModel/showSecondPageLike.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面二级页面统计分析-->
+		<action path="/market/show/showSecondPage_tj" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="getSecondPageInfo" />
+			<forward name="success" path="/market/showModel/showSecondPage_tj.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面三级页面列表信息-->
+		<action path="/market/show/viewList" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewList" />
+			<forward name="success" path="/market/showModel/showThirdPageList.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面三级页面列表信息+组织机构的-->
+		<action path="/market/show/viewListMore" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListMore" />
+			<forward name="success" path="/market/showModel/showThirdPageListMore.jsp" />
+		</action>
+		
+		<!-- 市场信息平台展示页面二级页面列表信息（市场开发）-->
+		<action path="/market/show/viewListTreeSckf" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListTreeSckf" />
+			<forward name="success" path="/market/showModel/showThirdPageListRightSckf.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面三级页面-->
+		<action path="/market/show/viewDetail" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewDetail" />
+			<forward name="success" path="/market/showModel/showThirdPageDetail.jsp" />
+		</action>
+		
+		<!-- 市场信息平台展示页面三级页面-->
+		<action path="/market/show/viewDetailImg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="getSecondNewPageInfo" />
+			<forward name="success" path="/market/showModel/showThirdPageDetailModel.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面三级页面列表信息外带右侧树-->
+		<action path="/market/show/viewListTree" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListTree" />
+			<forward name="success" path="/market/showModel/showThirdPageListRight.jsp" />
+		</action>
+		
+		
+		<!-- 市场信息平台展示页面三级页面列表信息(市场管理)-->
+		<action path="/market/show/viewListTreeManage" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListTreeManage" />
+			<forward name="success" path="/market/showModel/showSecondPageManage.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面三级页面列表信息(历史数据)-->
+		<action path="/market/show/viewListReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListReport" />
+			<forward name="success" path="/market/showModel/showSecondPageReport.jsp" />
+		</action>
+		
+		
+		<!-- 市场信息平台展示页面三级页面列表信息外带右侧树+列表分开-->
+		<action path="/market/show/viewListTreeFen" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListTree" />
+			<forward name="success" path="/market/showModel/showThirdPageListRightFen.jsp" />
+		</action>
+		<!-- 市场信息平台展示页面三级页面列表信息外带右侧树+带润乾报表-->
+		<action path="/market/show/viewListTreeReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListTree" />
+			<forward name="success" path="/market/showModel/showThirdPageListRightReport.jsp" />
+		</action>
+		
+		
+		<!-- 市场信息平台展示页面三级页面列表信息外带右侧树统计信息-->
+		<action path="/market/show/viewListTreeTj" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewListTree" />
+			<forward name="success" path="/market/showModel/showThirdPageListRightTj.jsp" />
+		</action>
+		
+		<!-- 市场信息平台展示页面三级页面列表信息外带右侧树-->
+		<action path="/market/show/viewListTreeLike" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="getSecondPageInfoLike" />
+			<forward name="success" path="/market/showModel/showSecondPage.jsp" />
+		</action>
+		<!-- 市场人员维护查看（CRM）-->
+		<action path="/market/viewPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewPerson" />
+			<forward name="success" path="/market/departmentPage/viewPerson.jsp" />
+		</action>
+		<!-- 市场人员维护添加（CRM）-->
+		<action path="/market/addPerson" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addPerson" />
+			<forward name="success" path="/market/departmentPage/selectPerson1.jsp" />
+		</action>
+		<action path="/market/editPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editPerson" />
+			<forward name="success" path="/market/departmentPage/editPerson.jsp" />
+		</action>
+		<action path="/market/personOrder" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="personOrder" />
+			<forward name="success" path="/market/departmentPage/personOrder.jsp" />
+		</action>
+		<action path="/market/personOrderSave" type="com.cnpc.jcdp.mvc.action.WSAction"
+			 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="personOrderSave" />
+		</action>
+		<action path="/market/updatePerson" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updatePerson" />
+			<forward name="success" path="/market/departmentPage/selectPerson1.jsp" />
+		</action>
+		<!-- 市场物探公司人员维护添加（CRM）-->
+		<action path="/market/addWuTanPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+		 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addWuTanPerson" />
+			<forward name="success" path="/market/competePage/competeList.lpmd" />
+		</action>
+		<action path="/market/editWuTanPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+		 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editWuTanPerson" />
+			<forward name="success" path="/market/competePage/editPerson.jsp" />
+		</action>
+		<action path="/market/updateWuTanPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+		 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateWuTanPerson" />
+			<forward name="success" path="/market/competePage/competeList.lpmd" />
+		</action>
+		<action path="/market/viewWuTanPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+		 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editWuTanPerson" />
+			<forward name="success" path="/market/competePage/editPerson.jsp" />
+		</action>
+		
+		<!-- 物探人员位置调整 -->
+		<action path="/market/wtPersonOrder" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="personOrder" />
+			<forward name="success" path="/market/competePage/personOrder.jsp" />
+		</action>
+		<action path="/market/wtPersonOrderSave" type="com.cnpc.jcdp.mvc.action.WSAction"
+			 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="wtPersonOrderSave" />
+		</action>
+		<!-- 部门位置调整 -->
+		<action path="/market/deptOrder" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="deptOrder" />
+			<forward name="success" path="/market/departmentPage/deptOrder.jsp" />
+		</action>
+		<action path="/market/deptOrderSave" type="com.cnpc.jcdp.mvc.action.WSAction"
+			 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="deptOrderSave" />
+		</action>
+		<!-- 修改特色技术装备-->
+		<action path="/market/addSkill" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="addSkill" />
+			<forward name="success" path="/market/showModel/addSkill.jsp" />
+		</action>
+		<action path="/market/saveSkill" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="saveSkill" />
+		</action>
+		<!-- 修改公司简介-->
+		<action path="/market/editOrgInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="editOrgInfo" />
+			<forward name="success" path="/market/showModel/editOrgInfo.jsp" />
+		</action>
+		<action path="/market/saveOrgInfo" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketGetInfoSrv" operationName="saveOrgInfo" />
+		</action>
+		<!-- 市场的历史数据（周月季报表） -->
+		<action path="/market/startReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="startReport" />
+			<forward name="success" path="/market/reportPage/reportPageList.jsp" />
+		</action>
+		<action path="/market/addReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addReport" />
+			<forward name="success" path="/market/startReport.srq" />
+		</action>
+		<action path="/market/viewReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewReport" />
+			<forward name="success" path="/market/reportPage/viewHistoryReport.jsp" />
+		</action>
+		<action path="/market/editReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editReport" />
+			<forward name="success" path="/market/reportPage/editHistoryReport.jsp" />
+		</action>
+		<action path="/market/updateReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateReport" />
+			<forward name="success" path="/market/startReport.srq" />
+		</action>
+		
+		<!-- 市场的价值量图（原CRM） -->
+		<action path="/market/startValueQuantity" type="com.cnpc.jcdp.mvc.action.WSAction"
+			 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="startValueQuantity" />
+			<forward name="success" path="/market/valueQuantity/valueQuantityPageList.jsp" />
+		</action>
+		<action path="/market/addValueQuantity" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addValueQuantity" />
+			<forward name="success" path="/market/startValueQuantity.srq" />
+		</action>
+		<action path="/market/editValueQuantity" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editValueQuantity" />
+			<forward name="success" path="/market/valueQuantity/editValueQuantity.jsp" />
+		</action>
+		<action path="/market/updateValueQuantity" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateValueQuantity" />
+			<forward name="success" path="/market/startValueQuantity.srq" />
+		</action>
+		<!-- 市场的合同台账 -->
+		<action path="/market/addContract" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addContract" />
+			<forward name="success" path="/market/contractPage/contractPageList.lpmd"  redirect="true"/>
+		</action>
+		<action path="/market/editContract" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editContract" />
+			<forward name="success" path="/market/contractPage/editContract.jsp" />
+		</action>
+		<action path="/market/updateContract" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateContract" />
+			<forward name="success" path="/market/contractPage/contractPageList.lpmd" redirect="true"/>
+		</action>
+		
+		<!-- 市场周报 -->
+		<action path="/market/week/weekReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="weekReport" />
+			<forward name="success" path="/market/budgetWeek/wrMartandprojectInfo.jsp" />
+		</action>
+		<action path="/market/week/addWeekReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addWeekReport" />
+			<forward name="success" path="/market/budgetWeek/addMartandprojectInfo.jsp" />
+		</action>
+		<action path="/market/week/saveWeekReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="saveWeekReport" />
+			<forward name="success" path="/market/week/weekReport.srq" />
+		</action>
+		<action path="/market/week/saveWeekReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="saveWeekReport" />
+			<forward name="success" path="/market/week/weekReport.srq" />
+		</action>
+		<action path="/market/week/editWeekReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editWeekReport" />
+			<forward name="success" path="/market/budgetWeek/wrMartandprojectInfoModify.jsp" />
+		</action>
+		<action path="/market/week/updateWeekReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateWeekReport" />
+			<forward name="success" path="/market/week/weekReport.srq" />
+		</action>
+		<!-- 市场月报 -->
+		<action path="/market/month/monthReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="monthReport" />
+			<forward name="success" path="/market/budgetMonth/wrMartandprojectInfo.jsp" />
+		</action>
+		<action path="/market/month/addMonthReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addMonthReport" />
+			<forward name="success" path="/market/budgetMonth/addMartandprojectInfo.jsp" />
+		</action>
+		<action path="/market/month/saveMonthReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="saveMonthReport" />
+			<forward name="success" path="/market/month/monthReport.srq" />
+		</action>
+		<action path="/market/month/editMonthReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editMonthReport" />
+			<forward name="success" path="/market/budgetMonth/wrMartandprojectInfoModify.jsp" />
+		</action>
+		<action path="/market/month/updateMonthReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateMonthReport" />
+			<forward name="success" path="/market/month/monthReport.srq" />
+		</action>
+		<!-- 市场价值工作量（周报） -->
+		<action path="/market/income/incomeReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="incomeReport" />
+			<forward name="success" path="/market/incomeWeek/list.jsp" />
+		</action>
+		<action path="/market/week/addValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addValueReport" />
+			<forward name="success" path="/market/incomeWeek/totalInsert.jsp" />
+		</action>
+		<action path="/market/week/editValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editValueReport" />
+			<forward name="success" path="/market/incomeWeek/editInsert.jsp" />
+		</action>
+		<action path="/market/week/viewValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewValueReport" />
+			<forward name="success" path="/market/incomeWeek/viewInsert.jsp" />
+		</action>
+		<action path="/market/week/saveValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="saveValueReport" />
+			<forward name="success" path="/market/income/incomeReport.srq" />
+		</action>
+		
+		
+		<!-- 市场价值工作量（月报） -->
+		<action path="/market/incomeMonth/incomeReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="incomeMonthReport" />
+			<forward name="success" path="/market/incomeMonth/list.jsp" />
+		</action>
+		<action path="/market/month/addValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addMonthValueReport" />
+			<forward name="success" path="/market/incomeMonth/totalInsert.jsp" />
+		</action>
+		<action path="/market/month/editValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="editMonthValueReport" />
+			<forward name="success" path="/market/incomeMonth/editMonthInsert.jsp" />
+		</action>
+		<action path="/market/month/viewValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewMonthValueReport" />
+			<forward name="success" path="/market/incomeMonth/viewMonthInsert.jsp" />
+		</action>
+		<action path="/market/month/saveValueReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="saveMonthValueReport" />
+			<forward name="success" path="/market/incomeMonth/incomeReport.srq" />
+		</action>
+		<!-- 项目明细填报 -->
+		<action path="/market/startProjectDynamic" type="com.bgp.mcs.service.ma.marketInfoInput.WSForwardAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="startProjectDynamic" />
+			<forward name="successB" path="/market/projectDynamic/orgProjectDynamic.jsp" />
+			<forward name="successA" path="/market/projectDynamic/ProjectDynamic.jsp" />
+		</action>
+		<action path="/market/addProjectDynamic" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addProjectDynamic" />
+			<forward name="success" path="/market/startProjectDynamic.srq" />
+		</action>
+		<action path="/market/viewProjectDynamic" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewProjectDynamic" />
+			<forward name="success" path="/market/projectDynamic/viewProjectDynamic.jsp" />
+		</action>
+		<action path="/market/editProjectDynamic" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewProjectDynamic" />
+			<forward name="success" path="/market/projectDynamic/viewProjectDynamic.jsp" />
+		</action>
+		<action path="/market/updateProjectDynamic" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateProjectDynamic" />
+			<forward name="success" path="/market/startProjectDynamic.srq" />
+		</action>
+		<action path="/market/showProjectDynamic" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="showProjectDynamic" />
+			<forward name="success" path="/market/projectDynamic/showProjectDynamic.jsp" />
+		</action>
+		<!-- 操作日志中的删除部分 -->
+		<action path="/market/logDelete" type="com.cnpc.jcdp.mvc.action.jcdp.WSAction"
+	 scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="logDelete" />
+		</action>
+		
+		<!-- 队伍动态 -->
+		<action path="/market/startTeamDynamic" type="com.bgp.mcs.service.ma.marketInfoInput.WSForwardAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="startTeamDynamic" />
+			<forward name="successB" path="/market/teamDynamic/orgTeamDynamic.jsp" />
+			<forward name="successA" path="/market/teamDynamic/teamDynamic.jsp" />
+		</action>
+		<action path="/market/addTeamDynamic" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="addTeamDynamic" />
+			<forward name="success" path="/market/startTeamDynamic.srq" />
+		</action>
+		<action path="/market/editTeamDynamic" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="viewTeamDynamic" />
+			<forward name="success" path="/market/teamDynamic/editTeamDynamic.jsp" />
+		</action>
+		<action path="/market/updateTeamDynamic" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MarketInfoInputSrv" operationName="updateTeamDynamic" />
+			<forward name="success" path="/market/startTeamDynamic.srq" />
+		</action>
+		
+		
+	</action-mappings>
+</struts-config>

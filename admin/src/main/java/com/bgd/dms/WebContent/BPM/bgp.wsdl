@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:cnpc_tns="http://www.cnpc.com/SAIS/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.cnpc.com/SAIS/wsdl/" name="workFlowSrv">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.cnpc.com/SAIS/wsdl/">
+			<xsd:element name="updateProcName">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="procName" type="xsd:string"/>
+						<xsd:element name="procEName" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="ReturnCodeMsg">
+				<xsd:sequence>
+					<xsd:element name="retCode" type="xsd:string"/>
+					<xsd:element name="retMsg" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="updateProcName_response">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="StateMsg" type="xsd:string"/>
+						<xsd:element name="ReturnCodeMsg" type="cnpc_tns:ReturnCodeMsg"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="reloadOneProcCache">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="procEName" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="reloadOneProcCache_response">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="StateMsg" type="xsd:string"/>
+						<xsd:element name="ReturnCodeMsg" type="cnpc_tns:ReturnCodeMsg"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="msg_updateProcName_resp">
+		<wsdl:part name="response" element="cnpc_tns:updateProcName_response"/>
+	</wsdl:message>
+	<wsdl:message name="msg_updateProcName">
+		<wsdl:part name="request" element="cnpc_tns:updateProcName"/>
+	</wsdl:message>
+	<wsdl:message name="msg_reloadOneProcCache_resp">
+		<wsdl:part name="response" element="cnpc_tns:reloadOneProcCache_response"/>
+	</wsdl:message>
+	<wsdl:message name="msg_reloadOneProcCache">
+		<wsdl:part name="request" element="cnpc_tns:reloadOneProcCache"/>
+	</wsdl:message>
+	<wsdl:portType name="workFlowSrvSoap">
+		<wsdl:operation name="updateProcName">
+			<wsdl:input message="cnpc_tns:msg_updateProcName"/>
+			<wsdl:output message="cnpc_tns:msg_updateProcName_resp"/>
+		</wsdl:operation>
+		<wsdl:operation name="reloadOneProcCache">
+			<wsdl:input message="cnpc_tns:msg_reloadOneProcCache"/>
+			<wsdl:output message="cnpc_tns:msg_reloadOneProcCache_resp"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="workFlowSrv" type="cnpc_tns:workFlowSrvSoap">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="updateProcName">
+			<soap:operation soapAction="workFlowSrv/updateProcName"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="reloadOneProcCache">
+			<soap:operation soapAction="workFlowSrv/reloadOneProcCache"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="workFlowSrv">
+		<wsdl:port name="workFlowSrv" binding="cnpc_tns:workFlowSrv">
+			<soap:address location="/DMS/WSDLEngine/workFlowSrv"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

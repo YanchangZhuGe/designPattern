@@ -1,0 +1,197 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="utf-8"%>
+<%@page import="com.cnpc.jcdp.common.UserToken"%>
+<%@page import="com.cnpc.jcdp.webapp.util.OMSMVCUtil"%>
+<%
+	String contextPath = request.getContextPath();
+	UserToken user = OMSMVCUtil.getUserToken(request);
+    String userId = (user==null)?"":user.getEmpId();
+    String projectInfoNo = user.getProjectInfoNo();
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    String curDate = format.format(new Date());
+    String isSingle=request.getParameter("isSingle")==null?"true":request.getParameter("isSingle");
+    String businessType = request.getParameter("businessType")==null?"":request.getParameter("businessType");
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="<%=contextPath%>/styles/style.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/styles/SpryTabbedPanels3.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=contextPath%>/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/verify.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/gms_list.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/dialog_open.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/rt_base.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/calendar.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/cn/calendar_lan.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/calendar-setup.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="<%=contextPath%>/css/calendar-blue.css" />
+<!--Remark JavaScript定义-->
+<script language="javaScript">
+var isSingle='<%=isSingle%>';
+cruConfig.contextPath =  "<%=contextPath%>";
+
+function save(){
+	if (!checkForm()) return;
+	var form = document.getElementById("CheckForm");
+	form.action = "<%=contextPath%>/td/wt/toSaveConsdesignDoc.srq?isSingle="+isSingle;
+	form.submit();
+	newClose();
+}
+
+function checkForm(){
+	if(null!=document.getElementById("projectName")){
+		if (!isTextPropertyNotNull("projectName", "项目名称")) return false;	
+	}
+	if (!isTextPropertyNotNull("written_unit", "编写单位")) return false;	
+	if (!isTextPropertyNotNull("written_time", "编写日期")) return false;	
+	if (!isLimitB20("written_unit","编写单位")) return false;  
+	if (!isLimitB20("writer","编写人")) return false; 
+	if (!isLimitB20("auditor","审核人")) return false; 
+	if (!isLimitB20("leader","负责人")) return false; 
+	return true;
+}
+
+function page_init(){
+	var fileId = '<%=request.getParameter("id")%>';	
+	var businessType = '<%=businessType%>';	
+	var fileAbbr = '<%=request.getParameter("fileAbbr")%>';	
+
+	if(fileId!='null'){
+		var querySql = " select * from(select b.project_info_no,p.project_name,t.file_id,t.ucm_id,t.file_abbr,b.business_type,t.doc_file_type,t.file_name,b.tecnical_id,b.title,b.written_unit,b.written_time,b.writer,b.auditor,b.leader,b.exploration_method from gp_ws_tecnical_basic b left join gp_task_project p on b.project_info_no=p.project_info_no and p.bsflag='0' left join bgp_doc_gms_file t on  b.tecnical_id = t.relation_id and t.bsflag='0')m where m.tecnical_id ='"+fileId+"'";
+		var queryRet = syncRequest('Post','<%=contextPath%>'+appConfig.queryListAction,'querySql='+querySql);
+		var datas = queryRet.datas;
+		if(datas!=null && datas.length>0){
+			document.getElementById("tecnical_id").value = datas[0].tecnical_id;
+			document.getElementById("written_time").value = datas[0].written_time;
+			document.getElementById("written_unit").value = datas[0].written_unit;
+			document.getElementById("writer").value = datas[0].writer;
+			document.getElementById("auditor").value = datas[0].auditor;
+			document.getElementById("leader").value = datas[0].leader;
+			document.getElementById("exploration_method").value = datas[0].exploration_method;
+			if(null!=document.getElementById("projectName")){
+				document.getElementById("projectName").value = datas[0].project_name;
+			}
+			document.getElementById("project_info_no").value = datas[0].project_info_no;
+			document.getElementById("business_type").value = datas[0].business_type;
+			for(var i=0;i<datas.length;i++){
+				if(""!=datas[i].ucm_id){
+					var ucmId=datas[i].ucm_id;
+					document.getElementById("pk_"+datas[i].doc_file_type).value =ucmId;
+					$("#down_"+datas[i].doc_file_type).html("");
+					$("#down_"+datas[i].doc_file_type).append("&nbsp;<a style='color:blue;'  href=<%=contextPath%>/doc/downloadDocByUcmId.srq?docId="+ucmId+"&emflag=0>"+datas[i].file_name+"</a>");
+				}
+			}
+		}
+	}else{
+		document.getElementById("business_type").value = businessType;
+		document.getElementById("file_abbr").value = fileAbbr;
+	}		
+}
+
+//选择项目
+function selectTeam(){
+    var result = window.showModalDialog('<%=contextPath%>/rm/em/humanCostPlan/searchProjectList.jsp','');
+    if(result!=""){
+    	var checkStr = result.split("-");	
+	        document.getElementById("project_info_no").value = checkStr[0];
+	        document.getElementById("projectName").value = checkStr[1];
+    }
+}
+</script>
+</head>
+<body onload="page_init();">
+	<form id="CheckForm" action="" method="post" target="list" enctype="multipart/form-data">
+			<div id="new_table_box_content">
+				<div id="new_table_box_bg" >
+					<div id="tab_box" class="tab_box">
+						<div id="tab_box_content0" class="tab_box_content">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab_line_height">
+								<tr>
+								  <%
+							      	if("false".equals(isSingle)){
+							      %>
+							       <td class="inquire_item4"><span class="red_star">*</span>项目名称：</td>
+						           <td class="inquire_form4">
+						           <input name="projectName" id="projectName" class="input_width" value="" type="text" readonly="readonly"/>
+						           <img src="<%=contextPath%>/images/magnifier.gif" width="16" height="16" style="cursor:hand;" onclick="selectTeam()"/>   
+						           </td>
+							      <%} %>
+									<td class="inquire_item4"></td>
+									<td class="inquire_form4">
+									<input name="tecnical_id" id="tecnical_id" class="input_width" value="" type="hidden" readonly="readonly"/>
+										<input name="business_type" id="business_type" class="input_width" value="" type="hidden" readonly="readonly"/>
+							            <input name="file_id" id="file_id" class="input_width" value="" type="hidden" readonly="readonly"/>
+								        <input name="project_info_no" id="project_info_no" class="input_width" value="<%=projectInfoNo%>" type="hidden" readonly="readonly"/>           
+							           	<input name="file_abbr" id="file_abbr" class="input_width" value="" type="hidden" readonly="readonly"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="inquire_item4"><span class="red_star">*</span>编写单位：</td>
+									<td class="inquire_form4" id="item0_7"><input type="text" id="written_unit" name="written_unit" value="" class="input_width"/></td>
+									<td class="inquire_item4"><span class="red_star">*</span>编写日期：</td>
+									<td class="inquire_form4" id="item0_6">
+										<input type="text" id="written_time" name="written_time" value="" class="input_width" readonly="readonly"/>
+										&nbsp;&nbsp;<img src="<%=contextPath%>/images/calendar.gif" id="tributton1" width="16" height="16" style="cursor: hand;" onmouseover="calDateSelector(written_time,tributton1);" />
+									</td>
+								</tr>
+								<tr>
+									<td class="inquire_item4">编写人：</td>
+									<td class="inquire_form4"><input type="text" id="writer" name="writer" value="" class="input_width" /></td>
+									<td class="inquire_item4">审核人：</td>
+									<td class="inquire_form4"><input type="text" id="auditor" name="auditor" value="" class="input_width" /></td>
+								</tr>
+								<tr>
+									<td class="inquire_item4">负责人：</td>
+									<td class="inquire_form4"><input type="text" id="leader" name="leader" value="" class="input_width" /></td>
+									<td class="inquire_item4">勘探方法：</td>
+									<td class="inquire_form4"><input type="text" id="exploration_method" name="exploration_method" value="" class="input_width" /></td>
+								</tr>
+								<tr>
+									<td class="inquire_item4">施工设计报告：</td>
+									<td colspan="2">
+										<input type="hidden" id="pk_0110000061100000010" name="pk_0110000061100000010" value=""/>
+										<input type="file" name="0110000061100000010" id="0110000061100000010" class="input_width"/>
+					    				<div id="down_0110000061100000010"></div>
+									</td>
+									<td class="inquire_form4"></td>
+								</tr>
+								<tr>
+									<td class="inquire_item4">设计图：</td>
+									<td colspan="2">
+										<input type="hidden" id="pk_0110000061100000011" name="pk_0110000061100000011" value=""/>
+										<input type="file" name="0110000061100000011" id="0110000061100000011" class="input_width"/>
+										<div id="down_0110000061100000011"></div>
+									</td>
+									<td class="inquire_form4"></td>
+								</tr>
+								<tr>
+									<td class="inquire_item4">审查意见书：</td>
+									<td colspan="2">
+										<input type="hidden" id="pk_0110000061100000008" name="pk_0110000061100000008" value=""/>
+										<input type="file" name="0110000061100000008" id="0110000061100000008" class="input_width"/>
+					    				<div id="down_0110000061100000008"></div>
+									</td>
+									<td class="inquire_form4"></td>
+								</tr>
+								<tr>
+									<td class="inquire_item4"></td>
+									<td class="inquire_form4"></td>
+									<td class="inquire_item4"></td>
+									<td class="inquire_form4"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div id="oper_div">
+						<span class="tj_btn"><a href="#" onclick="save()"></a>
+						</span> <span class="gb_btn"><a href="#" onclick="newClose()"></a>
+						</span>
+					</div>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

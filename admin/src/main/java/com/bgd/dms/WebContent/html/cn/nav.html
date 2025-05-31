@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/nav.js"></script>
+<title></title>
+</head>
+
+<body class="bgColor">
+<div class="nav">
+  <div class="navLv1 fl">
+    <input type="button" class="btn_navSlide_prev" onClick="slide_prev()" />
+    <div class="navLv1_wrap">
+      <ul>
+        <li><a href="#"><img src="img/menu_ic/computer.png" /><br />菜单名称A</a></li>
+        <li><a href="#"><img src="img/menu_ic/user.png" /><br />菜单名称B</a></li>
+        <li><a href="#"><img src="img/menu_ic/address.png" /><br />菜单名称C</a></li>
+        <li><a href="#"><img src="img/menu_ic/key.png" /><br />菜单名称D</a></li>
+        <li><a href="#"><img src="img/menu_ic/tools.png" /><br />菜单名称E</a></li>
+      </ul>
+    </div>
+    <input type="button" class="btn_navSlide_next" onClick="slide_next()" />
+  </div>
+  <div class="navLv2 fl">
+    <ul>
+      <li><a href="#">项目名称</a></li>
+      <li><a href="#">项目名称</a></li>
+      <li><a href="#">项目名称</a></li>
+      <li><a href="#">项目名称</a></li>
+      <li><a href="#">项目名称</a></li>
+    </ul>
+  </div>
+  <div class="clear"></div>
+</div>
+</body>
+<script type="text/javascript">
+function nav_autoHeight(){
+	var navHeight = $(window).height();
+	$(".nav").css("height",navHeight);
+	var navLv1Height = navHeight-$(".btn_navSlide_prev").height()-$(".btn_navSlide_next").height();
+	$(".navLv1_wrap").css("height",navLv1Height);
+}
+nav_autoHeight();
+
+$(function(){
+	$(window).resize(function (){
+		nav_autoHeight();
+	});
+})
+
+$(".navLv1 a:eq(0)").addClass("getFocus");
+$(".navLv2 a:eq(0)").addClass("getFocus");
+
+</script>
+</html>

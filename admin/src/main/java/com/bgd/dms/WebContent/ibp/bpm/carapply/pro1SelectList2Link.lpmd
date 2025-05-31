@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List2Link</PagerAction>
+  <PageTitle>选择页面</PageTitle>
+  <QuerySQL>
+    <sql>select wf.*,b_code_item.* from   wf_d_procdefine wf ,b_code_item
+
+ where wf.STATE=0 and b_code_item.ITEM_ID =wf.PROC_TYPE</sql>
+    <fields>
+      <field name="create_user_name" type="TEXT"></field>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="is_termination_implicit" type="TEXT"></field>
+      <field name="proc_e_name" type="TEXT"></field>
+      <field name="proc_name" type="TEXT"></field>
+      <field name="proc_type" type="TEXT"></field>
+      <field name="proc_version" type="TEXT"></field>
+      <field name="start_node" type="TEXT"></field>
+      <field name="state" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+   <SavedParams>create_user_name</SavedParams>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{entity_id}" isShow="TextHide" ></data>
+    <data exp="{proc_name}">模板名称</data>
+    <data exp="{item_c_name}">模板类型</data>
+    <data exp="{create_user_name}">创建者</data>
+    <data exp="{proc_e_name}"  isShow="TextHide" ></data>
+    <data exp="{proc_version}"  isShow="TextHide" ></data>
+    
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="proc_name"></field>
+    </cdt_fields>
+  </QueryCondition>
+ <JavaScripts>
+	  function myOnRowSelect(trObj){
+	      var obj = window.dialogArguments;
+		  var cname=obj.getElementByTypeAndName('INPUT','module');
+		  var eName=obj.getElementByTypeAndName('INPUT','procEName');
+		  var version=obj.getElementByTypeAndName('INPUT','procVersion');
+		  var proId=obj.getElementByTypeAndName('INPUT','procid');
+	      proId.value=trObj.cells[0].innerText; 
+	      cname.value = trObj.cells[1].innerText;     
+	      eName.value =  trObj.cells[5].innerText;
+		  version.value = trObj.cells[4].innerText;
+		  window.close();
+	  }
+  </JavaScripts>
+  <RowSelFuncName> myOnRowSelect </RowSelFuncName>
+</SAIS_EAW_TL>

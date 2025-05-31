@@ -1,0 +1,869 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!-- 物资分类管理编辑 -->
+		<action path="/mat/multiproject/matEdit" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveOrUpdateMat" />
+		</action>
+		<!-- 构建物资分类树 -->
+		<action path="/mat/multiproject/matquery"
+			type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryMat" />
+		</action>
+		<!-- 物资台账查看 -->
+		<action path="/mat/multiproject/matLedger/queryMatLedger" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="findMatLedger" />
+			<forward name="success" path="/mat/multiproject/matLedger/matItemList.jsp" />
+		</action>
+		<!-- 物资台账管理编辑 -->
+		<action path="/mat/multiproject/matLedger/saveMatLedger" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveOrUpdateMatLedger" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 物资台账管理查询详细 -->
+		<action path="/mat/multiproject/matLedger/queryMatLedger" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getMatLedger" />
+			<forward name="success" path="/mat/multiproject/matLedger/matLedgerEdit.jsp" />
+		</action>
+		<!-- 代管物资调剂信息查询 -->
+		<action path="/mat/multiproject/matescrow/findEscDep" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="findEscDep" />
+			<forward name="success" path="/mat/multiproject/matescrow/matEscAdd.jsp" />
+		</action>
+		<!-- 物资调剂信息查询 -->
+		<action path="/mat/multiproject/matDeployment/findEscDep" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="findEscDep" />
+			<forward name="success" path="/mat/multiproject/matDeployment/matAdd.jsp" />
+		</action>
+		<!-- 可重复利用物资调剂信息查询 -->
+		<action path="/mat/multiproject/repeatMatLedger/findEscDep"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="findEscDep" />
+			<forward name="success"
+				path="/mat/multiproject/repeatMatLedger/matRepAdd.jsp" />
+		</action>
+		<!-- 物资调剂单信息查询 -->
+		<action path="/mat/multiproject/matLedger/queryMatEscList"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryMatEscList" />
+			<forward name="success" path="/mat/multiproject/matescrow/matEscEdit.jsp" />
+		</action>
+		<!-- 物资调剂信息保存 -->
+		<action path="/mat/multiproject/matescrow/saveMatEscEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatEscEdit" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 物资调剂修改信息保存 -->
+		<action path="/mat/multiproject/matescrow/updateMatEscEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateMatEscEdit" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 处级物资台账管理新增 -->
+		<action path="/mat/multiproject/matLedger/saveMatLedgerWTC"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatLedgerWTC" />
+			<forward name="success" path="/mat/multiproject/matLedger/close_page.jsp" />
+		</action>
+		<!-- 可重复利用物资台账管理新增 -->
+		<action path="/mat/multiproject/repeatMatLedger/saveRepMatLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRepMatLedger" />
+			<forward name="success"
+				path="/mat/multiproject/repeatMatLedger/close_page.jsp" />
+		</action>
+		<!-- 可重复利用物资台账管理查询详细 -->
+		<action path="/mat/multiproject/repeatMatLedger/queryMatLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getRepMatLedger" />
+			<forward name="success"
+				path="/mat/multiproject/repeatMatLedger/repMatLedgerEdit.jsp" />
+		</action>
+		<!-- 可重复利用物资台账管理修改 -->
+		<action path="/mat/multiproject/repMatLedger/updateRepMatLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateRepMatLedger" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目自购物资台账管理 -->
+		<action path="/mat/singleproject/warehouse/accept/purchase/saveMatLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveSingleMatLedger" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目自购物资台账查询 -->
+		<action path="/mat/singleproject/warehouse/accept/purchase/queruPurList"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getPurList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/purchase/purLedgerEdit.jsp" />
+		</action>
+		<!-- 单项目调拨物资台账查询 -->
+		<action path="/mat/singleproject/warehouse/accept/trac/queruTracList"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getPurList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/trac/tracLedgerAdd.jsp" />
+		</action>
+		<!-- 单项目退库物资台账查询 -->
+		<action path="/mat/singleproject/warehouse/out/rettrac/queryTracOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getTracOut" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/out/rettrac/matOutEdit.jsp" />
+		</action>
+		<!-- 单项目退库物资台账查询 -->
+		<action path="/mat/singleproject/warehouse/out/rettrac/updateMatOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateMatOut" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目调可重复利用资台账查询 -->
+		<action path="/mat/singleproject/warehouse/accept/repeat/queruRepList"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getPurList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/repeat/repAdd.jsp" />
+		</action>
+		<!-- 单项目可重复利用物资台账修改查询 -->
+		<action path="/mat/singleproject/warehouse/accept/repeat/getRepEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getPurList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/repeat/repLedgerEdit.jsp" />
+		</action>
+		<!-- 单项目代管物资台账修改查询 -->
+		<action path="/mat/singleproject/warehouse/accept/escrow/getEscEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getPurList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/escrow/escLedgerEdit.jsp" />
+		</action>
+		<!-- 单项目调代管资台账查询 -->
+		<action path="/mat/singleproject/warehouse/accept/escrow/queryEscList"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getPurList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/escrow/escAdd.jsp" />
+		</action>
+		<!-- 单项目调拨物资台账修改查询 -->
+		<action path="/mat/singleproject/warehouse/accept/trac/getTracEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getPurList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/trac/tracLedgerEdit.jsp" />
+		</action>
+		<!-- 单项目调拨物资台账入库 -->
+		<action path="/mat/singleproject/warehouse/accept/trac/saveTracLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveTrac" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目可重复利用物资台账入库 -->
+		<action path="/mat/singleproject/warehouse/accept/repeat/saveTracLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRep" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目调拨物资台账修改保存-->
+		<action path="/mat/singleproject/warehouse/accept/trac/updateTracLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateTrac" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目物资退货信息保存-->
+		<action path="/mat/singleproject/warehouse/out/retpur/saveRetPur"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRetPur" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目物资退货单信息查询-->
+		<action path="/mat/singleproject/warehouse/out/retpur/purOutEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getRetPur" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/out/retpur/purOutEdit.jsp" />
+		</action>
+		<!-- 单项目物资退货信息修改-->
+		<action path="/mat/singleproject/warehouse/out/retpur/saveRetPurOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRetPurOut" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目物资发放信息保存-->
+		<action path="/mat/singleproject/warehouse/out/grant/saveGrant"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveGrant" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目物资虚拟发放信息保存-->
+		<action path="/mat/singleproject/warehouse/out/grant/saveOutGrant"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveOutGrant" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目物资发放虚拟转正式-->
+		<action path="/mat/singleproject/warehouse/out/grant/saveEditGrant"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveEditGrant" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目物资发放信息修改-->
+		<action path="/mat/singleproject/warehouse/out/grant/updateGrant"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateGrant" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目物资发放信息单据查询-->
+		<action path="/mat/singleproject/warehouse/out/grant/grantOutEdite"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getGrantList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/out/grant/grantOutEdite.jsp" />
+		</action>
+		<!-- 单项目大港物资发放信息单据查询-->
+		<action path="/mat/singleproject/warehouseDg/out/grant/grantOutEdite"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getGrantList" />
+			<forward name="success"
+				path="/mat/singleproject/warehouseDg/out/grant/grantOutEdite.jsp" />
+		</action>
+		<!-- 单项目其他物资发放信息单据查询-->
+		<action path="/mat/singleproject/warehouse/out/grant/grantOtherEdite"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getState" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/out/grant/grantOthEdit.jsp" />
+		</action>
+		<!-- 单项目大港其他物资发放信息单据查询-->
+		<action path="/mat/singleproject/warehouseDg/out/grant/grantOtherEdite"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getState" />
+			<forward name="success"
+				path="/mat/singleproject/warehouseDg/out/grant/grantOthEdit.jsp" />
+		</action>
+		<!-- 单项目物资退库信息保存-->
+		<action path="/mat/singleproject/warehouse/out/rettrac/saveMatOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatOut" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 单项目大港物资退库信息保存-->
+		<action path="/mat/singleproject/warehouseDg/out/rettrac/saveMatOutDg"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatOutDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 计划编制新增 -->
+		<action path="/mat/singleproject/plan/savePlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="savePlan" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 计划编制新增                大港各个中心编写计划 -->
+		<action path="/mat/singleproject/plan/savePlanDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="savePlanDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 可重复物资计划编制新增             lx -->
+		<action path="/mat/singleproject/plan/saveRepPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRepPlan" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 计划编制新增  综合物化探            lx -->
+		<action path="/mat/singleproject/plan/saveRoughPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRoughPlan" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 计划编制项目部新增  综合物化探            lx -->
+		<action path="/mat/singleproject/plan/savePlanProject" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="savePlanProject" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 计划编制项目部修改  综合物化探            lx -->
+		<action path="/mat/singleproject/plan/updatePlanProject" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updatePlanProject" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 可重复计划编制新增  综合物化探            lx -->
+		<action path="/mat/singleproject/plan/repeat/saveRepeatRoughPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRepeatRoughPlan" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 可重复计划物资小站保存方法  综合物化探            lx -->
+		<action path="/mat/singleproject/plan/savePlanWZXZ" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="savePlanWZXZ" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 可重复计划物资小站修改保存方法  综合物化探            lx -->
+		<action path="/mat/singleproject/plan/updatePlanWZXZ" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updatePlanWZXZ" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		
+		
+		
+		
+		<!-- 计划编制信息查询-->
+		<action path="/mat/singleproject/plan/queryPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryPlan" />
+			<forward name="success" path="/mat/singleproject/plan/planEdit.jsp" />
+		</action>
+		<!-- 大港计划编制信息查询-->
+		<action path="/mat/singleproject/plan/queryPlanDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryPlanDg" />
+			<forward name="success" path="/mat/singleproject/plan/planEditDg.jsp" />
+		</action>
+		<!-- 可重复物资计划编制信息查询             lx  -->
+		<action path="/mat/singleproject/plan/repMatPlan/queryPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryPlan" />
+			<forward name="success" path="/mat/singleproject/plan/repMatPlan/planEdit.jsp" />
+		</action>
+		<!-- 计划编制信息修改-->
+		<action path="/mat/singleproject/plan/updatePlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updatePlan" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 可重复物资划编制信息修改              lx-->
+		<action path="/mat/singleproject/plan/updateRepPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateRepPlan" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 计划编制信息汇总-->
+		<action path="/mat/singleproject/plan/savePlanSum" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="savePlanSum" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 获取计划编制版本-->
+		<action path="/mat/singleproject/plan/getplanSum" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getplanSum" />
+			<forward name="success" path="/mat/singleproject/plan/planSumEdit.jsp" />
+		</action>
+		<!-- 计划编辑-->
+		<action path="/mat/singleproject/plansub/updatePlanSub" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updatePlanSum" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 大港计划编辑-->
+		<action path="/mat/singleproject/plansub/updatePlanSubDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updatePlanSumDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 计划提交-->
+		<action path="/mat/singleproject/plansub/planSubmit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="submitMat" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 计划审批-->
+		<action path="/mat/multiproject/matapprove/updateApprove" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateApprove" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 油料excel导入-->
+		<action path="/mat/singleproject/matLedger/saveMatExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatExcel" />
+			<forward name="success" path="/mat/singleproject/oilconsumption/oilExcelAdd.jsp" />
+		</action>
+		<!-- 可重复利用物资excel导入-->
+		<action path="/mat/multiproject/matLed/repmat/saveExcelRepMat" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="saveExcelRepMat" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 大港物资excel导入-->
+		<action path="/mat/multiproject/matLed/repmat/saveExcelRepMatDg" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="saveExcelRepMatDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 新增模板-->
+		<action path="/mat/singleproject/mattemplate/saveMatTem" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatTem" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 获取模板信息-->
+		<action path="/mat/singleproject/mattemplate/getMatTem" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getMatTem" />
+			<forward name="success" path="/mat/singleproject/mattemplate/matEditTem.jsp" />
+		</action>
+		<!-- 模板信息excel导出-->
+		<action path="/mat/singleproject/mattemplate/matExcelOutTemList"
+			type="com.bgp.mcs.web.mat.ExportExcelAction" scope="request">
+			<serviceCall serviceName="MatItemSrv"
+				operationName="getMatTemList" />
+		</action>
+		<!-- 计划信息excel导出-->
+		<action path="/mat/singleproject/plan/outExcelPlanList"
+			type="com.bgp.mcs.web.mat.PlanExportExcelAction" scope="request">
+			<serviceCall serviceName="MatItemSrv"
+				operationName="getMatPlanList" />
+		</action>
+		<!-- 入库信息excel导出-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/acceptItemList"
+			type="/com/bgp/mcs/web/mat/AcceptExportExcelAction" scope="request">
+			<serviceCall serviceName="MatItemSrv"
+				operationName="queryAcceptList" />
+		</action>
+		<!-- 出库信息excel导出-->
+		<action path="/mat/singleproject/warehouse/out/grant/excelGrantList"
+			type="com.bgp.mcs.web.mat.GrantExportExcelAction" scope="request">
+			<serviceCall serviceName="MatItemSrv"
+				operationName="getGrantPlanList" />
+		</action>
+		<!-- 计划审批通过信息excel导出-->
+		<action path="/mat/singleproject/plansub/matExcelOutPlanList"
+			type="com.bgp.mcs.web.mat.AppExportExcelAction" scope="request">
+			<serviceCall serviceName="MatItemSrv"
+				operationName="getAppPlanList" />
+		</action>
+		<!-- 班组退货信息保存-->
+		<action path="/mat/singleproject/warehouse/accept/rettrac/saveTeamOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveTeamOut" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 班组退货信息查询 -->
+		<action path="/mat/singleproject/warehouse/accept/rettrac/queryTracOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="getTracOut" />
+			<forward name="success"
+				path="/mat/singleproject/warehouse/accept/rettrac/matOutEdit.jsp" />
+		</action>
+		<!-- 班组退货信息保存 -->
+		<action path="/mat/singleproject/warehouse/accept/rettrac/updateTeamOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateTeamOut" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 设备退货信息保存-->
+		<action path="/mat/singleproject/warehouse/accept/devtrac/devMatRet"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveDevOut" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 仪表盘数据查询 -->
+		<action path="/mat/panel/getChart1"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart1" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart2"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart2" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart3"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart3" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart4"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart4" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart5"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart5" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart6"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart6" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart7"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart7" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart8"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart8" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart9"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart9" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart10"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart10" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart11"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart11" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart12"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart12" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart13"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart13" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart14"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart14" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart15"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart15" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart16"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart16" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart17"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart17" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChart18"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChart18" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChartBI1"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChartBI1" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChartBI2"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChartBI2" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/mat/panel/getChartBI3"
+			type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="MatChartServiceSrv"
+				operationName="queryViewChartBI3" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<!-- 油料消耗新增-->
+		<action path="/mat/singleproject/oilconsumption/addConsumption"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="addConsumption" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 油料消耗信息查询-->
+		<action path="/mat/singleproject/oilconsumption/editConsumption"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryConsumption" />
+			<forward name="success"
+				path="/mat/singleproject/oilconsumption/eidtConsumption.jsp" />
+		</action>
+		<!-- 多项目油料消耗信息查询-->
+		<action path="/rm/dm/devRun/equipmentOperator/toEOEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryConsumption" />
+			<forward name="success"
+				path="/rm/dm/devRun/equipmentOperator/eo_edit.jsp" />
+		</action>
+		<!-- 油料消耗修改-->
+		<action path="/mat/singleproject/oilconsumption/eidtConsumption"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="updateConsumption" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 可重复利用物资台账新增-->
+		<action path="/mat/multiproject/matLed/repmat/repMatLedgerEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRepMatLedgerEdit" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 可重复利用物资台账修改-->
+		<action path="/mat/multiproject/matLed/repmat/repMatLedgerUpdate"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRepMatLedgerUpdate" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 可重复利用物资台账详细入库情况修改-->
+		<action path="/mat/multiproject/matLed/repmat/repMatLedgerUpdateDetail"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="repMatLedgerUpdateDetail" />
+			<forward name="success" path="/mat/multiproject/matLed/repmat/repMatItemList.jsp" />
+		</action>
+		<!-- 可重复利用物资台账物子查询-->
+		<action path="/mat/multiproject/matLed/repmat/queryRepMatLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryRepMatLedger" />
+			<forward name="success" path="/mat/multiproject/matLed/repmat/repMatLedgerEdit.jsp" />
+		</action>
+		<!-- 小队库存物资转出项目-->
+		<action path="/mat/singleproject/warehouse/out/matremove/saveRemove"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRemove" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 大港小队库存物资转出项目-->
+		<action path="/mat/singleproject/warehouseDg/out/matremove/saveRemoveDg"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveRemoveDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 其他油品消耗新增-->
+		<action path="/mat/singleproject/oilconother/addConsumption"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveConOil" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 其他油品消耗修改查找-->
+		<action path="/mat/singleproject/oilconother/editConsumption"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="findConOil" />
+			<forward name="success" path="/mat/singleproject/oilconother/eidtConsumption.jsp" />
+		</action>
+		<!-- 其他油品消耗修改保存-->
+		<action path="/mat/singleproject/oilconother/eidtConsumption"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="editConOil" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 其他物资新增保存-->
+		<action path="/mat/singleproject/warehouse/out/grant/saveOtherGrantOut"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveOtherGrantOut" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 其他物资发放修改-->
+		<action path="/mat/singleproject/warehouse/out/grant/saveOthEdit"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveOthEdit" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 手动验收物资保存-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/saveAcceptLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveAcceptLedger" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 手动验收物资修改查询-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/queryAcceptDatas"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryAcceptDatas" />
+			<forward name="success" path="/mat/singleproject/warehouse/accept/selfaccept/acceptLedgerEdit.jsp" />
+		</action>
+		<!-- 手动验收物资修改查询-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/queryAcceptDatasDg"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="queryAcceptDatas" />
+			<forward name="success" path="/mat/singleproject/warehouseDg/accept/selfacceptNew/acceptLedgerEdit.jsp" />
+		</action>
+		<!-- 手动验收物资修改-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/EditAcceptLedger"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="EditAcceptLedger" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 手动验收物资修改                   DG-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/EditAcceptLedgerDg"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="EditAcceptLedgerDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 大港验收物资保存-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/saveAcceptLedgerDg"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveAcceptLedgerDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 大港退库物资验收保存-->
+		<action path="/mat/singleproject/warehouse/accept/selfaccept/saveAcceptWz"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveAcceptWz" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+
+		<!-- 单机消耗计划管理-->
+		<action path="/mat/singleproject/expense/addExpense" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="addExpense" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+
+		<!-- 修改  读取数据 -->
+		<action path="/mat/singleproject/expense/viewExpense" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="viewExpense" />
+			<forward name="success"
+				path="/mat/singleproject/singleExpense/editExpense.jsp" />
+		</action>
+		<!-- 修改  保存 -->
+		<action path="/mat/singleproject/expense/saveExpense" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveExpense" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!--计划送审审批数据的查询 new -->
+		<action path="/mat/singleproject/plan/getMatAllAddAppInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="getMatAllAddAppInfosForProcwfpg" />
+			<forward name="success"	path="/mat/singleproject/plansub/planMatAppList.jsp" redirect="false" />
+		</action>
+		<!--计划送审审批数据的查询   大港中心 -->
+		<action path="/mat/singleproject/plan/getMatPlanDgAddAppInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="getMatPlanDgAddAppInfosForProcwfpg" />
+			<forward name="success"	path="/mat/multiproject/plan/planDG/planMatAppListDg.jsp" redirect="false" />
+		</action>
+		<!--计划送审审批数据的查询 new -->
+		<action path="/mat/singleproject/plan/toSaveMatAllAddAppAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="toSaveMatAllAddAppAuditInfowfpa" />
+			<forward name="success"	path="/common/close_page.jsp" />
+		</action>
+		
+		<!-- 转出计划审批数据的查询   大港 -->
+		<action path="/mat/singleproject/plan/getMatRemoveDgAddAppInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="getMatPlanDgAddAppInfosForProcwfpg" />
+			<forward name="success"	path="/mat/singleproject/warehouseDg/out/matremove/matRemoveListDg.jsp" redirect="false" />
+		</action>
+		
+		<!--计划审批          大港中心 -->
+		<action path="/mat/singleproject/plan/toSaveMatPlanDgAddAppAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="toSaveMatPlanDgAddAppAuditInfowfpa" />
+			<forward name="success"	path="/common/close_page.jsp" />
+		</action>
+		
+		<!--多项目大港计划送审审批数据的查询 new -->
+		<action path="/mat/singleproject/plan/getMatAllAddAppInfosForProcwfpgDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="getMatAllAddAppInfosForProcwfpg" />
+			<forward name="success"	path="/mat/singleproject/plansub/planMatAppListDg.jsp" redirect="false" />
+		</action>
+		<!--多项目大港物资审批数据的查询 new -->
+		<action path="/mat/singleproject/plan/toSaveMatAllAddAppAuditInfowfpaDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="toSaveMatAllAddAppAuditInfowfpaDg" />
+			<forward name="success"	path="/common/close_page.jsp" />
+		</action>
+		
+		
+		<!--物资设置中的物资库的添加业务保存方法 -->
+		<action path="/mat/buss/saveMatBuss" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatBuss" />
+			<forward name="success"	path="/mat/common/setMatOrg/close_page.jsp" />
+		</action>
+		
+		<!--物资编制计划 调整计划在任务中的阶段-->
+		<action path="/mat/singleproject/plan/planItemListTo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="MatItemSrv" operationName="planItemListTo" />
+			<forward name="success"	path="/mat/singleproject/plan/close_page.jsp" />
+		</action>
+		
+		<!-- 大港分配出库-->
+		<action path="/mat/singleproject/plan/saveMatItem" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveMatItem" />
+			<forward name="success"	path="/common/close_page.jsp" />
+		</action>
+		
+		
+		<!-- 大港班组退货信息保存-->
+		<action path="/mat/singleproject/warehouseDg/accept/rettrac/saveTeamOutDg"
+			type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="MatItemSrv" operationName="saveTeamOutDg" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		<!--物资管理，导出excel -->
+		<action path="/mat/common/MatToExcel" type="com.bgp.mcs.service.mat.action.MatToExcelAction"
+			scope="request">
+		</action>
+	</action-mappings>
+</struts-config>

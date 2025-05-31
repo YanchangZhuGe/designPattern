@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select d.*,sm.org_name from ci_department d, sm_org sm, bgp_infomation_type_info t where d.corp_id =sm.org_id and t.infomation_type_id = sm.bgp_infomation_type_id and d.bsflag='0' order by sm.org_name,d.ORDER_NO</sql>
+    <fields>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="corp_id" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="dept_function" type="TEXT"></field>
+      <field name="dept_id" type="TEXT"></field>
+      <field name="dept_name" type="TEXT"></field>
+      <field name="memo" type="TEXT"></field>
+      <field name="modifier" type="TEXT"></field>
+      <field name="modify_date" type="D"></field>
+      <field name="order_no" type=""></field>
+      <field name="org_name" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">editDepartment.upmd</Button>
+    <Button Type="Edit" funCode="" Label="">editDepartment.upmd</Button>
+    <Button Type="Delete" funCode="" Label="">update ci_department set bsflag='1' where dept_id='{id}'</Button>
+    <Button Type="sql" funCode="" Label="调整部门位置"></Button>
+  </Buttons>
+  <Options>
+    <Select sais_select_name="ytgsOrgId" name="ytgsOrgId"/>
+  </Options>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{dept_id}'&gt;">选择</data>
+    <data exp="{dept_name}">部门名称</data>
+    <data exp="{org_name}">组织机构</data>
+    <data exp="&lt;a href=javascript:viewLink('{dept_id}','{corp_id}') &gt;查看部门人员&lt;/a&gt;">人员</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="dept_name">部门名称</field>
+      <field name="corp_id" selType="SEL_OPs" selValue="ytgsOrgId">组织机构</field>
+    </cdt_fields>
+  </QueryCondition>
+   <JavaScripts>
+   function JcdpButton3OnClick(){
+		ids = getSelIds('chx_entity_id');
+			    if(ids==''){ alert("请先选中一条记录!");
+			     return;
+			    } 
+			    editUrl = "/market/deptOrder.srq?dept_id="+ids; 
+			    var returnVlue=window.showModalDialog(cruConfig.contextPath+editUrl,window,'dialogHeight:200px;dialogWidth:600px');
+	
+	}
+   
+  
+	function viewLink(dept_id,corp_id){
+	    	editUrl = "/market/departmentPage/selectPerson.jsp?id="+dept_id+"&amp;corpId="+corp_id;
+	    	window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+		}
+  </JavaScripts>
+</SAIS_EAW_TL>

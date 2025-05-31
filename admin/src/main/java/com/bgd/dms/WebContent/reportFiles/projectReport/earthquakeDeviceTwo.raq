@@ -1,0 +1,956 @@
+version=1.0
+7,35
+<0-0>
+	3:1110="excel_hiderows=\"true\";pdf_password_owner=\"\";excel_password=\"\";pdf_permission=\"0\";excel_hidecols=\"true\";pdf_password_user=\"\"";1202="1";1201="3";1105="en=\"startDate\",ch=\"startDate\",tp=6,w=,fmt=\"\",val=\"2012-01-01\";en=\"endDate\",ch=\"endDate\",tp=6,w=,fmt=\"\",val=\"2013-05-20\";en=\"userSubId\",ch=\"参数1\",tp=6,w=,fmt=\"\",val=\"C105\";";1102="name=ds1,sql=\"select distinct \\r\\ncase substr(gtpd.org_subjection_id,1,7) when \\\'C105005\\\' then substr(gtpd.org_subjection_id,1,10) when \\\'C105001\\\' then substr(gtpd.org_subjection_id,1,10) else substr(gtpd.org_subjection_id,1,7) end as SorgSubId\\r\\n,case substr(gtpd.org_subjection_id,1,7) when \\\'C105002\\\' then substr(gtpd.org_subjection_id,1,10) else \\\'\\\' end as JorgSubId\\r\\n      ,gtp.project_info_no\\r\\n      ,gtp.project_name\\r\\n      ,gtp.project_id\\r\\n      ,c1.coding_name project_country\\r\\n      ,gwd.basin as basin\\r\\nfrom gp_task_project gtp\\r\\nleft join gp_task_project_dynamic gtpd\\r\\non   gtp.project_info_no=gtpd.project_info_no and gtpd.bsflag=\\\'0\\\'\\r\\nleft join gp_workarea_diviede gwd\\r\\non   gtp.workarea_no=gwd.workarea_no and gwd.bsflag=\\\'0\\\'\\r\\nleft join comm_coding_sort_detail c1 on c1.coding_code_id=gwd.country and c1.bsflag=\\\'0\\\'\\r\\nleft join comm_org_team ot\\r\\non gtpd.org_id=ot.org_id and ot.bsflag=\\\'0\\\' \\r\\nwhere gtpd.org_subjection_id like ?||\\\'%\\\'\\r\\nand gtp.exploration_method=\\\'0300100012000000002\\\'\\r\\nand gtp.bsflag=\\\'0\\\'\\r\\nand gtp.project_info_no in (\\r\\n      select project_info_no\\r\\n       from (select project_info_no,\\r\\n               design_start_date as start_date,\\r\\n               nvl(end_date1,end_date2) as end_date\\r\\n          from (select t.project_info_no,\\r\\n                       t.design_start_date,\\r\\n                       max(case p.if_build\\r\\n                             when \\\'9\\\' then\\r\\n                              r.produce_date\\r\\n                             else\\r\\n                              null\\r\\n                           end) as end_date1,\\r\\n                       t.design_end_date as end_date2\\r\\n                  from gp_task_project t\\r\\n                  left join gp_ops_daily_report r on r.project_info_no =\\r\\n                                                     t.project_info_no\\r\\n                  left join gp_ops_daily_produce_sit p on p.daily_no =\\r\\n                                                          r.daily_no \\r\\n                 where t.bsflag = \\\'0\\\'\\r\\n\\tand (r.bsflag is null or (r.bsflag=\\\'0\\\' and ((r.ratifier is not null and r.notes is not null) or(r.ratifier is null and r.notes is null))))\\r\\n\\tand (p.bsflag is null or p.bsflag=\\\'0\\\')\\r\\n                 group by t.project_info_no, t.design_start_date, t.design_end_date)) erp_info\\r\\n        where erp_info.start_date <= to_date(?,\\\'yyyy-MM-dd\\\')\\r\\n              and erp_info.end_date >= to_date(?,\\\'yyyy-MM-dd\\\')\\r\\n)\\r\\nORDER BY SorgSubId,JorgSubId\",type=normal,param=\"userSubId:6;endDate:6;startDate:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds2,sql=\"select distinct gtp.project_info_no\\r\\n      ,go2dbd.INSTRUMENT_MODEL as yiqixinghao\\r\\n      ,go2dbd.RECEIVING_TRACK_NUM as jieshoudaoshu\\r\\n      ,go2dbd.TRACK_INTERVAL as daoju\\r\\n      ,go2dbd.SHOT_INTERVAL as paodianju\\r\\n      ,go2dbd.FOLD as fugaicishu\\r\\n      ,go2dbd.LAYOUT as guancexitong\\r\\n      ,go2dbd.WELL_NUM as jingshu\\r\\n      ,go2dbd.WELL_DEPTH as jingshen\\r\\n      ,go2dbd.EXPLOSIVE_QTY as yaoliang\\r\\n      ,go2dbd.COONCUSS_LEVEL as zhendongtaishu\\r\\n      ,go2dbd.vibrator_num as zuhetaishu\\r\\n      ,go2dbd.sweeping_times as zhendongcishu\\r\\n      ,go2dbd.SCAN_WIDTH as shaomiaopingkuan\\r\\n      ,go2dbd.SCAN_LENGTH as shaomiaochangdu\\r\\n      ,go2dbd.PER_BUNCH_NUM as geshu\\r\\n      ,go2dbd.PER_TRACK_BUNCH_NUM as chuanshu\\r\\nfrom gp_task_project gtp\\r\\nleft join gp_task_project_dynamic gtpd\\r\\non   gtp.project_info_no=gtpd.project_info_no\\r\\nleft join gp_ops_2dwa_design_basic_data go2dbd\\r\\non   gtp.project_info_no=go2dbd.project_info_no\\r\\nwhere gtpd.org_subjection_id like ?||\\\'%\\\'\\r\\nand gtp.exploration_method=\\\'0300100012000000002\\\'\\r\\nand gtp.project_info_no in (\\r\\n      select project_info_no\\r\\n       from (select project_info_no,\\r\\n               design_start_date as start_date,\\r\\n               nvl(end_date1,end_date2) as end_date\\r\\n          from (select t.project_info_no,\\r\\n                       t.design_start_date,\\r\\n                       max(case p.if_build\\r\\n                             when \\\'9\\\' then\\r\\n                              r.produce_date\\r\\n                             else\\r\\n                              null\\r\\n                           end) as end_date1,\\r\\n                       t.design_end_date as end_date2\\r\\n                  from gp_task_project t\\r\\n                  left join gp_ops_daily_report r on r.project_info_no =\\r\\n                                                     t.project_info_no\\r\\n                  left join gp_ops_daily_produce_sit p on p.daily_no =\\r\\n                                                          r.daily_no\\r\\n                 where t.bsflag = \\\'0\\\'\\r\\n                   and (p.bsflag = \\\'0\\\' or p.bsflag is null)\\r\\n                   and (r.bsflag = \\\'0\\\' or r.bsflag is null)\\r\\n                 group by t.project_info_no, t.design_start_date, t.design_end_date)) erp_info\\r\\n        where erp_info.start_date <= to_date(?,\\\'yyyy-MM-dd\\\')\\r\\n              and erp_info.end_date >= to_date(?,\\\'yyyy-MM-dd\\\')\\r\\n)\\r\\nand gtp.bsflag=\\\'0\\\' and go2dbd.bsflag=\\\'0\\\' and gtpd.bsflag=\\\'0\\\'\",type=normal,param=\"userSubId:6;endDate:6;startDate:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds3,sql=\"select * from (\\r\\nselect goid.project_info_no\\r\\n      ,goid.INST_TYPE \\r\\n      ,goid.DEPLOY_NUM as peizhidaoshu\\r\\n      ,goid.INUSE_NUM as inuse_num\\r\\n      ,goid.INST_MODEL as xinghao\\r\\n      ,ROW_NUMBER() over(partition by goid.project_info_no,goid.INST_TYPE order by goid.STAT_TIME desc)  as rowl\\r\\nfrom gp_ops_instrument_dynamic goid\\r\\njoin gp_task_project gtp on gtp.project_info_no = goid.project_info_no and gtp.bsflag=\\\'0\\\'\\r\\njoin gp_task_project_dynamic gtpd on gtpd.project_info_no = goid.project_info_no and gtpd.bsflag=\\\'0\\\'\\r\\nwhere goid.bsflag=\\\'0\\\'\\r\\nand gtp.exploration_method=\\\'0300100012000000002\\\'\\r\\nand gtpd.org_subjection_id like ?||\\\'%\\\'\\r\\nand goid.project_info_no in (\\r\\n      select project_info_no\\r\\n       from (select project_info_no,\\r\\n               design_start_date as start_date,\\r\\n               nvl(end_date1,end_date2) as end_date\\r\\n          from (select t.project_info_no,\\r\\n                       t.design_start_date,\\r\\n                       max(case p.if_build\\r\\n                             when \\\'9\\\' then\\r\\n                              r.produce_date\\r\\n                             else\\r\\n                              null\\r\\n                           end) as end_date1,\\r\\n                       t.design_end_date as end_date2\\r\\n                  from gp_task_project t\\r\\n                  left join gp_ops_daily_report r on r.project_info_no =\\r\\n                                                     t.project_info_no\\r\\n                  left join gp_ops_daily_produce_sit p on p.daily_no =\\r\\n                                                          r.daily_no\\r\\n                 where t.bsflag = \\\'0\\\'\\r\\n                    and (p.bsflag = \\\'0\\\' or p.bsflag is null)\\r\\n                   and (r.bsflag = \\\'0\\\' or r.bsflag is null)\\r\\n                 group by t.project_info_no, t.design_start_date, t.design_end_date)) erp_info\\r\\n        where erp_info.start_date <= to_date(?,\\\'yyyy-MM-dd\\\')\\r\\n              and erp_info.end_date >= to_date(?,\\\'yyyy-MM-dd\\\')\\r\\n))where rowl = 1\",type=normal,param=\"userSubId:6;endDate:6;startDate:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds4,sql=\"select distinct ot.ORG_ABBREVIATION as team_id,t.project_info_no from gp_task_project_dynamic t,comm_org_information ot where  t.org_id=ot.org_id and ot.bsflag=\\\'0\\\' and t.project_info_no in (\\n      select project_info_no\\n       from (select project_info_no,\\n               design_start_date as start_date,\\n               nvl(end_date1,end_date2) as end_date\\n          from (select t.project_info_no,\\n                       t.design_start_date,\\n                       max(case p.if_build\\n                             when \\\'9\\\' then\\n                              r.produce_date\\n                             else\\n                              null\\n                           end) as end_date1,\\n                       t.design_end_date as end_date2\\n                  from gp_task_project t\\n                  left join gp_ops_daily_report r on r.project_info_no =\\n                                                     t.project_info_no\\n                  left join gp_ops_daily_produce_sit p on p.daily_no =\\n                                                          r.daily_no\\n                 where t.bsflag = \\\'0\\\'\\n                   and (p.bsflag = \\\'0\\\' or p.bsflag is null)\\n                   and (r.bsflag = \\\'0\\\' or r.bsflag is null)\\n                 group by t.project_info_no, t.design_start_date, t.design_end_date)) erp_info\\n        where erp_info.start_date <= to_date(?,\\\'yyyy-MM-dd\\\')\\n              and erp_info.end_date >= to_date(?,\\\'yyyy-MM-dd\\\')\\n)\",type=normal,param=\"endDate:6;startDate:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds5,sql=\"select wm_concat(distinct(dev_model)) as dev_model\\r\\n    from gms_device_account_dui t \\r\\n    left join (select device_account_id,operator_name from ( \\r\\n      select tmp.device_account_id,tmp.operator_name,row_number() \\r\\n      over(partition by device_account_id order by length(operator_name) desc ) as seq \\r\\n      from (select device_account_id,wmsys.wm_concat(operator_name) \\r\\n      over(partition by device_account_id order by operator_name) as operator_name \\r\\n      from gms_device_equipment_operator) tmp ) tmp2 where tmp2.seq=1) oprtbl on t.dev_acc_id = oprtbl.device_account_id \\r\\n    left join comm_coding_sort_detail sdc on sdc.coding_code_id = t.using_stat \\r\\n    left join comm_coding_sort_detail sdt on sdt.coding_code_id = t.tech_stat \\r\\n    left join comm_coding_sort_detail sda on sda.coding_code_id = t.account_stat \\r\\n    left join comm_coding_sort_detail teamsd on teamsd.coding_code_id = t.dev_team \\r\\n    left join comm_org_information org on org.org_id = t.owning_org_id \\r\\n    where  t.bsflag=\\\'0\\\'\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds6,sql=\"select t.* from gms_device_account_dui t where t.bsflag=\\\'0\\\'\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;";1101="2"
+</>
+<0-1>
+	3:2101="79.0"
+</>
+<0-2>
+	3:2101="79.0"
+</>
+<0-3>
+	3:4106=1;2101="35.0"
+</>
+<0-4>
+	3:2101="49.0"
+</>
+<0-5>
+	3:2101="45.0"
+</>
+<0-6>
+	3:2102="10"
+</>
+<0-7>
+	3:2101="106.0"
+</>
+<0-8>
+	3:2101="128.0"
+</>
+<0-9>
+	3:2101="54.0"
+</>
+<0-10>
+	3:2101="34.0"
+</>
+<0-11>
+	3:2101="32.0"
+</>
+<0-12>
+	3:2101="39.0"
+</>
+<0-13>
+	3:2101="39.0"
+</>
+<0-14>
+	3:2101="109.0"
+</>
+<0-15>
+	3:2101="54.32681"
+</>
+<0-16>
+	3:2101="54.32681"
+</>
+<0-17>
+	3:2101="50.0"
+</>
+<0-18>
+	3:2101="50.0"
+</>
+<0-19>
+	3:2101="54.32681"
+</>
+<0-20>
+	3:2101="35.0"
+</>
+<0-21>
+	3:2101="36.0"
+</>
+<0-22>
+	3:2101="41.0"
+</>
+<0-23>
+	3:2101="36.0"
+</>
+<0-24>
+	3:2101="32.0"
+</>
+<0-25>
+	3:2101="39.0"
+</>
+<0-26>
+	3:2101="88.0"
+</>
+<0-27>
+	3:2101="45.0"
+</>
+<0-28>
+	3:2101="39.0"
+</>
+<0-29>
+	3:2101="83.0"
+</>
+<0-30>
+	3:2101="43.0"
+</>
+<0-31>
+	3:2101="39.0"
+</>
+<0-32>
+	3:2101="42.0"
+</>
+<0-33>
+	3:2101="35.0"
+</>
+<0-34>
+	3:2101="54.32681"
+</>
+<1-0>
+	3:3101="44.0";3103="0"
+</>
+<1-1>
+	3:4302="18";4301="宋体";4304=1;4303="-16777216";4409="-16777216";4408="0.75";4201="2";4202="2";4405="0.75";4404="1";4103="1,1-1,34";4407="1";4406="-16777216";4401="1";4413="-1";4403="-16777216";4107=1;4412="-16777216";4411="0.75";4402="0.75";4410="1";4102="东方地球物理公司陆上二维地震勘探项目施工因素及设备动态报表"
+</>
+<1-2>
+	1:1
+	2:4102
+</>
+<1-3>
+	1:1
+</>
+<1-4>
+	1:1
+</>
+<1-5>
+	1:1
+</>
+<1-6>
+	1:1
+	2:4301,4304,4303,4201,4202,4413,4107
+</>
+<1-7>
+	1:1
+	3:4301="宋体";4304=1;4303="-16777216";4201="2";4202="2";4413="-1";4107=1
+</>
+<1-8>
+	1:1
+</>
+<1-9>
+	1:1
+</>
+<1-10>
+	1:1
+</>
+<1-11>
+	1:1
+</>
+<1-12>
+	1:1
+</>
+<1-13>
+	1:1
+</>
+<1-14>
+	1:1
+</>
+<1-15>
+	1:1
+</>
+<1-16>
+	1:1
+</>
+<1-17>
+	1:1
+</>
+<1-18>
+	1:1
+</>
+<1-19>
+	1:1
+</>
+<1-20>
+	1:1
+</>
+<1-21>
+	1:1
+</>
+<1-22>
+	1:1
+</>
+<1-23>
+	1:1
+</>
+<1-24>
+	1:1
+</>
+<1-25>
+	1:1
+</>
+<1-26>
+	1:1
+</>
+<1-27>
+	1:1
+</>
+<1-28>
+	1:1
+</>
+<1-29>
+	1:1
+</>
+<1-30>
+	1:1
+</>
+<1-31>
+	1:1
+</>
+<1-32>
+	1:1
+</>
+<1-33>
+	1:1
+</>
+<1-34>
+	1:1
+</>
+<2-0>
+	3:3101="22.0";3103="1"
+</>
+<2-1>
+	1:0
+	2:4107,4102
+	3:4302="12";4304=0;4202="3";4103="2,1-2,34";4410="4"
+	4:4102=" @startDate+\' 至 \'+@endDate"
+</>
+<2-2>
+	1:1
+	2:4301,4303,4202,4413
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-3>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-4>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-5>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-6>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-7>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-8>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-9>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-10>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-11>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-12>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-13>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-14>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-15>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-16>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-17>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-18>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-19>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-20>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-21>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-22>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-23>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-24>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-25>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-26>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-27>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-28>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-29>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-30>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-31>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-32>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-33>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<2-34>
+	1:1
+	4:4102="\'日期自：\'+String(@startTime,\'yyyy-MM-dd\')+\'至：\'+String(@endTime,\'yyyy-MM-dd\')"
+</>
+<3-0>
+	3:3101="32.0";3103="10"
+</>
+<3-1>
+	1:0
+	3:4407="4";4202="2";4404="4";4103="3,1-5,1";4401="4";4107=1;4102="直属单位";4109="2"
+</>
+<3-2>
+	1:1
+	3:4103="3,2-5,2";4102="下属单位"
+</>
+<3-3>
+	1:1
+	3:4103="3,3-5,3";4102="序号"
+</>
+<3-4>
+	1:1
+	3:4103="3,4-5,4";4102="队号"
+</>
+<3-5>
+	1:1
+	3:4103="3,5-5,5";4102="国家"
+</>
+<3-6>
+	1:1
+	2:4301,4303,4202,4413
+	3:4103="3,6-5,6";4102="地区(盆地)"
+</>
+<3-7>
+	1:1
+	3:4103="3,7-5,7";4301="宋体";4303="-16777216";4202="2";4413="-1";4102="项目编号"
+</>
+<3-8>
+	1:1
+	3:4103="3,8-5,8";4102="项目名称"
+</>
+<3-9>
+	1:1
+	3:4103="3,9-3,19";4102="主要施工因素"
+</>
+<3-10>
+	1:1
+	2:4107,4102
+	3:4201="1";4202="3"
+</>
+<3-11>
+	1:1
+</>
+<3-12>
+	1:1
+</>
+<3-13>
+	1:1
+</>
+<3-14>
+	1:1
+</>
+<3-15>
+	1:1
+</>
+<3-16>
+	1:1
+</>
+<3-17>
+	1:1
+</>
+<3-18>
+	1:1
+</>
+<3-19>
+	1:1
+</>
+<3-20>
+	1:1
+	3:4201="2";4103="3,20-3,21";4202="2";4107=1;4102="仪器(大线)"
+</>
+<3-21>
+	1:1
+	2:4102
+</>
+<3-22>
+	1:1
+	3:4103="3,22-3,23";4102="钻井(钻机)"
+</>
+<3-23>
+	1:1
+	2:4102
+</>
+<3-24>
+	1:1
+	3:4103="3,24-3,25";4102="震源(可控震源)"
+</>
+<3-25>
+	1:1
+	2:4102
+</>
+<3-26>
+	1:1
+	3:4103="3,26-3,28";4102="检波器"
+</>
+<3-27>
+	1:1
+	2:4102
+</>
+<3-28>
+	1:1
+</>
+<3-29>
+	1:1
+	3:4103="3,29-3,31";4102="测量(测量仪)"
+</>
+<3-30>
+	1:1
+	2:4102
+</>
+<3-31>
+	1:1
+</>
+<3-32>
+	1:1
+	3:4103="3,32-3,33";4102="运载设备(运输车辆)"
+</>
+<3-33>
+	1:1
+	2:4102
+</>
+<3-34>
+	1:1
+	3:4103="3,34-5,34";4102="备注"
+</>
+<4-0>
+	3:3101="24.0";3103="10"
+</>
+<4-1>
+	1:0
+	2:4102
+</>
+<4-2>
+	1:0
+	2:4102
+</>
+<4-3>
+	1:0
+	2:4102
+</>
+<4-4>
+	1:0
+	2:4102
+</>
+<4-5>
+	1:0
+	2:4102
+</>
+<4-6>
+	1:0
+	2:4102
+</>
+<4-7>
+	1:0
+	2:4102
+</>
+<4-8>
+	1:0
+	2:4102
+</>
+<4-9>
+	1:0
+	3:4103="4,9-5,9";4102="仪器型号"
+</>
+<4-10>
+	1:1
+	3:4103="4,10-5,10";4102="接收道数"
+</>
+<4-11>
+	1:1
+	3:4103="4,11-5,11";4102="道距(m)"
+</>
+<4-12>
+	1:1
+	3:4103="4,12-5,12";4102="炮点距(m)"
+</>
+<4-13>
+	1:1
+	3:4103="4,13-5,13";4102="覆盖次数"
+</>
+<4-14>
+	1:1
+	3:4103="4,14-5,14";4102="观测系统"
+</>
+<4-15>
+	1:1
+	3:4103="4,15-5,15";4102="井数*井深*药量(口*m*kg)"
+</>
+<4-16>
+	1:1
+	3:4103="4,16-5,16";4102="震动台次(台*次)"
+</>
+<4-17>
+	1:1
+	3:4103="4,17-5,17";4102="扫描频宽(Hz)"
+</>
+<4-18>
+	1:1
+	3:4103="4,18-5,18";4102="扫描长度(s)"
+</>
+<4-19>
+	1:1
+	3:4103="4,19-5,19";4102="检波器组合(个数*串数)"
+</>
+<4-20>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,20-5,20";4102="配置道数"
+</>
+<4-21>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,21-5,21";4102="利用率(%)"
+</>
+<4-22>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,22-5,22";4102="配置钻机(台)"
+</>
+<4-23>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,23-5,23";4102="利用率(%)"
+</>
+<4-24>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,24-5,24";4102="配置台数"
+</>
+<4-25>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,25-5,25";4102="利用率(%)"
+</>
+<4-26>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,26-5,26";4102="型号"
+</>
+<4-27>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,27-5,27";4102="配置数量(串)"
+</>
+<4-28>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,28-5,28";4102="利用率(%)"
+</>
+<4-29>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,29-5,29";4102="型号"
+</>
+<4-30>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,30-5,30";4102="配置数量(台)"
+</>
+<4-31>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,31-5,31";4102="利用率(%)"
+</>
+<4-32>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,32-5,32";4102="配置数量(台)"
+</>
+<4-33>
+	1:0
+	2:4301,4303,4202,4413
+	3:4103="4,33-5,33";4102="利用率(%)"
+</>
+<4-34>
+	1:0
+	2:4102
+</>
+<5-0>
+	3:3101="33.0";3103="10"
+</>
+<5-1>
+	1:0
+</>
+<5-2>
+	1:0
+</>
+<5-3>
+	1:0
+</>
+<5-4>
+	1:0
+</>
+<5-5>
+	1:0
+</>
+<5-6>
+	1:0
+</>
+<5-7>
+	1:0
+</>
+<5-8>
+	1:0
+</>
+<5-9>
+	1:0
+	2:4102
+</>
+<5-10>
+	1:0
+	2:4102
+</>
+<5-11>
+	1:0
+	2:4102
+</>
+<5-12>
+	1:0
+	2:4102
+</>
+<5-13>
+	1:0
+	2:4102
+</>
+<5-14>
+	1:0
+	2:4102
+</>
+<5-15>
+	1:0
+	2:4102
+</>
+<5-16>
+	1:0
+	2:4102
+</>
+<5-17>
+	1:0
+	2:4102
+</>
+<5-18>
+	1:0
+	2:4102
+</>
+<5-19>
+	1:0
+	2:4102
+</>
+<5-20>
+	1:1
+	3:4103="4,20-5,20"
+</>
+<5-21>
+	1:1
+	3:4103="4,21-5,21"
+</>
+<5-22>
+	1:1
+	3:4103="4,22-5,22"
+</>
+<5-23>
+	1:1
+	3:4103="4,23-5,23"
+</>
+<5-24>
+	1:1
+	3:4103="4,24-5,24"
+</>
+<5-25>
+	1:1
+	3:4103="4,25-5,25"
+</>
+<5-26>
+	1:1
+	3:4103="4,26-5,26"
+</>
+<5-27>
+	1:1
+	3:4103="4,27-5,27"
+</>
+<5-28>
+	1:1
+	3:4103="4,28-5,28"
+</>
+<5-29>
+	1:1
+	3:4103="4,29-5,29"
+</>
+<5-30>
+	1:1
+	3:4103="4,30-5,30"
+</>
+<5-31>
+	1:1
+	3:4103="4,31-5,31"
+</>
+<5-32>
+	1:1
+	3:4103="4,32-5,32"
+</>
+<5-33>
+	1:1
+	3:4103="4,33-5,33"
+</>
+<5-34>
+	1:0
+</>
+<6-0>
+	3:3101="45.0"
+</>
+<6-1>
+	1:0
+	2:4302,4301,4304,4202,4103
+	3:4415="-16777216"
+	4:4102="ds1.group(SorgSubId,,,,SorgSubId,true)";4105="query(\"select oi.org_abbreviation from comm_org_information oi join comm_org_subjection os on oi.org_id=os.org_id where os.org_subjection_id=? and oi.bsflag=\'0\' and os.bsflag=\'0\'\",@value)"
+</>
+<6-2>
+	1:0
+	2:4302,4301,4304,4303,4202,4103,4413
+	4:4102="ds1.select(JorgSubId,false)";4105="query(\"select oi.org_abbreviation from comm_org_information oi join comm_org_subjection os on oi.org_id=os.org_id where os.org_subjection_id=? and oi.bsflag=\'0\' and os.bsflag=\'0\'\",@value)"
+</>
+<6-3>
+	1:0
+	2:4302,4301,4304,4303,4202,4103,4413
+	3:4502="D6"
+	4:4102="row()-5"
+</>
+<6-4>
+	1:0
+	2:4302,4301,4304,4303,4202,4103,4413
+	3:4501="0"
+	4:4102="ds1.group(project_info_no,false)";4105="ds4.select(team_id,false,project_info_no = ds1.project_info_no)"
+</>
+<6-5>
+	1:0
+	2:4302,4301,4304,4303,4202,4103,4413
+	4:4102="ds1.project_country"
+</>
+<6-6>
+	1:0
+	2:4302,4304,4103
+	4:4102=" ds1.basin"
+</>
+<6-7>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds1.project_id"
+</>
+<6-8>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds1.PROJECT_INFO_NO";4105=" ds1.project_name"
+</>
+<6-9>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.select(YIQIXINGHAO,,PROJECT_INFO_NO=H6)"
+</>
+<6-10>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.JIESHOUDAOSHU"
+</>
+<6-11>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.DAOJU"
+</>
+<6-12>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.PAODIANJU"
+</>
+<6-13>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.FUGAICISHU"
+</>
+<6-14>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.GUANCEXITONG"
+</>
+<6-15>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.JINGSHU+\'*\'+ ds2.JINGSHEN+\'*\'+ds2.YAOLIANG"
+</>
+<6-16>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.ZUHETAISHU+\'*\'+ ds2.ZHENDONGCISHU"
+</>
+<6-17>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.SHAOMIAOPINGKUAN"
+</>
+<6-18>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.SHAOMIAOCHANGDU"
+</>
+<6-19>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102=" ds2.GESHU+\'*\'+ ds2.CHUANSHU"
+</>
+<6-20>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	3:4104="#"
+</>
+<6-21>
+	1:0
+	2:4302,4304,4103,4301,4202
+	3:4415="-16777216"
+	4:4104="#0.00"
+</>
+<6-22>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	3:4104="#"
+	4:4102="ds6.count(project_info_id=H6 && dev_type like \'S0601*\')"
+</>
+<6-23>
+	1:0
+	2:4302,4304,4103,4301,4202
+	3:4415="-16777216"
+	4:4102="if( V6==null or V6==0,0, query(\"select sum(nvl(t.actual_out_time,to_date(to_char(sysdate,\'yyyy-MM-dd\'),\'yyyy-MM-dd\')) - t.actual_in_time) sum_days from gms_device_account_dui t where t.bsflag=\'0\' and project_info_id=? and dev_type like \'S0601%\'\",H6)/(V6*365)*100)";4104="#0.00"
+</>
+<6-24>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	3:4104="#"
+	4:4102="ds6.count(project_info_id=H6 && dev_type like \'S062301*\')"
+</>
+<6-25>
+	1:0
+	2:4302,4304,4103,4301,4202
+	3:4415="-16777216"
+	4:4102="if( X6==null or X6==0,0, query(\"select sum(nvl(t.actual_out_time,to_date(to_char(sysdate,\'yyyy-MM-dd\'),\'yyyy-MM-dd\')) - t.actual_in_time) sum_days from gms_device_account_dui t where t.bsflag=\'0\' and project_info_id=? and dev_type like \'S062301%\'\",H6)/(X6*365)*100)";4104="#0.00"
+</>
+<6-26>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102="query(\"select wm_concat(distinct(dev_model)) as dev_model from gms_device_account_dui t where t.bsflag=\'0\' and t.project_info_id=? and dev_type like ?||\'%\'\",H6,\"S14050208\")"
+</>
+<6-27>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	3:4104="#"
+	4:4102="ds6.count(project_info_id=H6 && dev_type like \'S14050208\'+\"*\")"
+</>
+<6-28>
+	1:0
+	2:4302,4304,4103,4301,4202
+	3:4415="-16777216"
+	4:4102="if( AA6==null or AA6==0,0, query(\"select sum(nvl(t.actual_out_time,to_date(to_char(sysdate,\'yyyy-MM-dd\'),\'yyyy-MM-dd\')) - t.actual_in_time) sum_days from gms_device_account_dui t where t.bsflag=\'0\' and project_info_id=? and dev_type like \'S14050208%\'\",H6)/(AA6*365)*100)";4104="#0.00"
+</>
+<6-29>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	4:4102="query(\"select wm_concat(distinct(dev_model)) as dev_model from gms_device_account_dui t where t.bsflag = \'0\' and t.project_info_id = ? and  (dev_type like \'S14040201%\' or dev_type like \'S14040202%\' or dev_type like \'S14040203%\')\",H6) "
+</>
+<6-30>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	3:4104="#"
+	4:4102="ds6.count(project_info_id=H6 && (dev_type like \'S14040201*\' or dev_type like \'S14040202*\' or dev_type like \'S14040203*\'))"
+</>
+<6-31>
+	1:0
+	2:4302,4304,4103,4301,4202
+	3:4415="-16777216"
+	4:4102="if( AD6==null or AD6==0,0, query(\"select sum(nvl(t.actual_out_time,to_date(to_char(sysdate,\'yyyy-MM-dd\'),\'yyyy-MM-dd\')) - t.actual_in_time) sum_days from gms_device_account_dui t where t.bsflag=\'0\' and project_info_id=? and (dev_type like \'S14040201%\' or dev_type like \'S14040202%\' or dev_type like \'S14040203%\')\",H6)/(AD6*365)*100)";4104="#0.00"
+</>
+<6-32>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+	3:4104="#"
+	4:4102="ds6.count(project_info_id=H6 && dev_type like \'S08*\')"
+</>
+<6-33>
+	1:0
+	2:4302,4304,4103,4301,4202
+	3:4415="-16777216"
+	4:4102="if( AF6==null or AF6==0,0, query(\"select sum(nvl(t.actual_out_time,to_date(to_char(sysdate,\'yyyy-MM-dd\'),\'yyyy-MM-dd\')) - t.actual_in_time) sum_days from gms_device_account_dui t where t.bsflag=\'0\' and project_info_id=? and (dev_type like \'S08%\' and dev_type not like \'S0808%\' and dev_type not like \'S0809%\')\",H6)/(AF6*365)*100)";4104="#0.00"
+</>
+<6-34>
+	1:0
+	2:4302,4304,4103,4301,4303,4202,4413
+</>

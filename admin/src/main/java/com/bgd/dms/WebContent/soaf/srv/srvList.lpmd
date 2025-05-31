@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>服务定义</PageTitle>
+  <QuerySQL>
+    <sql>SELECT srv.*,ss.name AS subsys_name,m.name AS module_name FROM sys_config_service_dms srv LEFT JOIN ew_module ss ON srv.sub_sys_id=ss.entity_id LEFT JOIN ew_module m ON srv.module_id=m.entity_id ORDER BY service_name</sql>
+    <fields>
+      <field name="service_id" type="TEXT"></field>
+      <field name="service_name" type="TEXT"></field>
+      <field name="cn_name" type="TEXT"></field>
+      <field name="is_log" type="TEXT"></field>
+      <field name="is_monitor" type="TEXT"></field>
+      <field name="domain" type="TEXT"></field>
+      <field name="create_time" type="D"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="memo" type="TEXT"></field>
+      <field name="sub_sys_id" type="TEXT"></field>
+      <field name="module_id" type="TEXT"></field>
+      <field name="subsys_name" type="TEXT"></field>
+      <field name="module_name" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">editSrv.upmd</Button>
+    <Button Type="Edit" funCode="" Label="">editSrv.upmd?id={id}</Button>
+    <Button Type="Delete" funCode="" Label="">DELETE FROM sys_config_service_dms WHERE service_id='{id}'</Button>
+  </Buttons>
+  <Options/>
+  <Codes>
+    <Code name="modules" sql="SELECT entity_id AS value,name AS label FROM ew_module ss WHERE ss.flag='11'">模块</Code>
+  </Codes>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{service_id}'\&gt;"/>
+    <data exp="&lt;a href='srvAndItems.cpmd?id={service_id}'&gt;{service_name}&lt;/a&gt;">服务名</data>
+    <data exp="{cn_name}">中文名称</data>
+    <data exp="{module_name}">模块</data>
+    <data exp="&lt;a href=javascript:popWindow('/WSDLEngine/{service_name}?wsdl','800:600')&gt;WSDL&lt;/a&gt;"/>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="service_name">服务名</field>
+      <field name="cn_name">中文名称</field>
+      <field name="module_id" selType="SEL_Codes" selValue="modules">模块</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

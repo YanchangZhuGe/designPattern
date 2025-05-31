@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>  
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{			
+				var ctt = top.frames('list');
+				if(ctt.frames.length == 0){
+					ctt.refreshData();
+				}else{
+					if(ctt.frames[0].length == 0){
+						ctt.frames["checkrecord"].location.reload();
+					}else{
+						ctt.frames[1].frames["checkrecord"].location.reload();
+					}
+				}
+				newClose();
+			}
+		}
+    </CRU> 
+  </JavaScripts> 
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>增加编辑风险检查</PageTitle>
+  <QuerySQL>
+    <sql>select t.risk_check_id,t.check_user_id,t.check_org_id,t.check_result,t.relation_id,t.check_date,e.employee_name,o.org_abbreviation from bgp_risk_check t left outer join comm_human_employee e on t.check_user_id = e.employee_id left outer join comm_org_information o on t.check_org_id = o.org_id where t.bsflag = '0' and t.risk_check_id = '$PARAM.id'</sql>
+    <tableName>BGP_RISK_CHECK</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="risk_check_id" isShow="Hide">风险检查ID</field>
+    <field name="check_user_id" type="FK" defaultValue="$ENTITY.check_user_id:$ENTITY.employee_name" selValue="/common/selectOrgHR.jsp?select=employeeid">检查人</field>
+    <field name="check_org_id" type="FK" defaultValue="$ENTITY.check_org_id:$ENTITY.org_abbreviation" selValue="/common/selectOrgHR.jsp?select=orgid">检查单位</field>
+    <field name="check_date" type="D">检查时间</field>
+    <field name="check_result" type="MEMO">检查结果</field>
+    <field name="relation_id" isShow="Hide" defaultValue="$PARAM.relationid" action="C">关联主键</field>  
+    <field name="bsflag" isShow="Hide" defaultValue="0" action="C,U">文件状态</field>
+    <field name="creator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="C">创建人</field>
+    <field name="updator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="C,U">修改人</field>
+    <field name="create_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C">创建时间</field>
+    <field name="modifi_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C,U">修改时间</field>
+    <field name="org_id" isShow="Hide" defaultValue="$USER.codeAffordOrgID">org_id</field>
+    <field name="org_subjection_id" isShow="Hide" defaultValue="$USER.subOrgIDofAffordOrg">org_subjection_id</field>
+  </EntityFields>
+</SAIS_EAW_TL>

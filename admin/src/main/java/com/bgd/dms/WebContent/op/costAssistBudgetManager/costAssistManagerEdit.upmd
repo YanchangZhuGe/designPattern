@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>辅助单位费用管理</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_op_target_assist_info where bsflag='0'  and assist_info_id = '$PARAM.id'</sql>
+    <tableName>bgp_op_target_assist_info</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="assist_info_id" isShow="Hide">id</field>
+    <field name="assist_type" isShow="Hide" defaultValue="$PARAM.assistType">id</field>
+    <field name="creator" maxLength="64" isShow="Hide" defaultValue="$PARAM.userName">创建人</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="create_date" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="modify_date" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="record_org_name" maxLength="32" nonEmpty="true" defaultValue="$PARAM.orgName">单位名称</field>
+    <field name="record_time"   nonEmpty="true">预算年份</field>
+    
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+'/op/OpCostSrv/saveCostAssistTargetInfo.srq';
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

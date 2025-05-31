@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select a.struct_unit_no,a.struct_unit_name,case a.struct_unit_level when '1' then '一级' when '2' then '二级'  when '3' then '三级' when '4' then '四级' else '' end as struct_unit_level ,(select b.struct_unit_name from gp_structure_unit b where b.struct_unit_no = a.struct_unit_parent) as struct_unit_parent,a.basin , a.divide_date,a.region_name from gp_structure_unit a</sql>
+    <fields>
+      <field name="basin" type="TEXT"></field>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="divide_date" type="TEXT"></field>
+      <field name="divide_unit" type="TEXT"></field>
+      <field name="locked_if" type="TEXT"></field>
+      <field name="modifi_date" type="D"></field>
+      <field name="notes" type="TEXT"></field>
+      <field name="policy_id" type="TEXT"></field>
+      <field name="region_name" type="TEXT"></field>
+      <field name="spare1" type=""></field>
+      <field name="spare2" type="TEXT"></field>
+      <field name="struct_unit_area" type=""></field>
+      <field name="struct_unit_id" type="TEXT"></field>
+      <field name="struct_unit_level" type="TEXT"></field>
+      <field name="struct_unit_name" type="TEXT"></field>
+      <field name="struct_unit_no" type="TEXT"></field>
+      <field name="struct_unit_parent" type="TEXT"></field>
+      <field name="updator" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">stuctureUnitEdit.upmd</Button>
+    <Button Type="Edit" funCode="" Label="">stuctureUnitEdit.upmd?id={id}</Button>
+    <Button Type="Delete" funCode="" Label=""></Button>
+  </Buttons>
+ <Options>
+    <Select name="sopLevel">
+      <option value="1">一级</option>
+      <option value="2">二级</option>
+      <option value="3">三级</option>
+      <option value="4">四级</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{struct_unit_no}'&gt;">序号</data>
+    <data exp="{struct_unit_name}">构造单元名称</data>
+    <data exp="{struct_unit_level}" func="getOpValue,sopLevel">构造单元级别</data>
+    <data exp="{struct_unit_parent}">上级构造单元</data>
+    <data exp="{basin}">盆地</data>
+    <data exp="{divide_date}">划分年度</data>
+    <data exp="{region_name}">行政区划</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="struct_unit_name">构造单元名称</field>
+      <field name="struct_unit_level" selType="SEL_OPs" selValue="sopLevel">构造单元级别</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

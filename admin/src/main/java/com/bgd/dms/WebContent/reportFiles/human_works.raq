@@ -1,0 +1,1413 @@
+version=1.0
+11,35
+<0-0>
+	3:1220="100";1105="en=\"org_sub_id\",ch=\"参数1\",tp=6,w=,fmt=\"\",val=\"C105\";en=\"end_date\",ch=\"参数2\",tp=6,w=,fmt=\"\",val=\"20131228\";en=\"start_date\",ch=\"参数3\",tp=6,w=,fmt=\"\",val=\"20130101\";en=\"year_date\",ch=\"参数1\",tp=6,w=,fmt=\"\",val=\"2013\";";1102="name=ds1,sql=\"select ROWNUM ,t3.org_subjection_id  , t1.org_hr_short_name   as org_name,hrs.A1 \\r\\n    from bgp_comm_org_hr t1\\r\\n    join bgp_comm_org_hr_gms t2\\r\\n      on t1.org_hr_id = t2.org_hr_id\\r\\n    join comm_org_subjection t3\\r\\n      on t3.org_id = t2.org_gms_id    and t3.bsflag = \\\'0\\\'\\r\\n    join ( \\r\\n         select h.spare7 ,s.org_subjection_id ,\\r\\n           1                          A1 \\r\\n          from comm_human_employee e\\r\\n         inner join comm_human_employee_hr h\\r\\n            on e.employee_id = h.employee_id\\r\\n           and h.bsflag = \\\'0\\\'\\r\\n          left join comm_org_subjection s\\r\\n            on e.org_id = s.org_id\\r\\n           and s.bsflag = \\\'0\\\'\\r\\n         where e.bsflag = \\\'0\\\'\\r\\n           and h.spare7 is not null and  h.spare7 =\\\'0\\\'\\r\\n           and s.org_subjection_id like  ?  ||\\\'%\\\' \\r\\n             \\r\\n             ) hrs\\r\\n      on hrs.org_subjection_id  like t3.org_subjection_id || \\\'%\\\'  \\r\\n   where t1.org_hr_parent_id = \\\'50000674\\\'\",type=normal,param=\"org_sub_id:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds2,sql=\"select  1   as snum ,trunc(t.nums )nums, t.org_subjection_id    from (   select distinct d.*,  dy.org_subjection_id,  (nvl(d.actual_end_date,sysdate) - d.actual_start_date + 1) nums    from bgp_human_prepare_human_detail d  inner join bgp_human_prepare p  on d.prepare_no = p.prepare_no  and p.prepare_status = \\\'2\\\'  left join bgp_project_human_relation r  on d.employee_id = r.employee_id  and p.project_info_no = r.project_info_no  and r.team = d.team  and r.work_post = d.work_post  left join common_busi_wf_middle te  on te.business_id = p.prepare_no  and te.bsflag = \\\'0\\\'  left join bgp_project_human_profess pr1  on pr1.profess_no = p.profess_no  and p.profess_no is not null  and pr1.bsflag = \\\'0\\\'         left join bgp_project_human_requirement pr  on pr.requirement_no = p.requirement_no  and p.requirement_no is not null  and pr.bsflag = \\\'0\\\'         left join bgp_project_human_relief re  on re.human_relief_no = p.human_relief_no  and p.human_relief_no is not null  and re.bsflag = \\\'0\\\'  left join comm_human_employee e  on d.employee_id = e.employee_id  left join comm_human_employee_hr h  on d.employee_id = h.employee_id  left join gp_task_project t  on p.project_info_no = t.project_info_no  \\r\\njoin gp_task_project_dynamic dy\\r\\n     on dy.bsflag = \\\'0\\\'\\r\\n    and dy.project_info_no = t.project_info_no\\r\\n    and dy.exploration_method = t.exploration_method\\r\\n  \\r\\nwhere p.bsflag = \\\'0\\\'  and d.between_param is null  and d.bsflag = \\\'0\\\' \\r\\n    and (te.business_id is null or te.proc_status = \\\'3\\\')   and (d.spare1 is null or d.spare1 = \\\'1\\\')   )   t  where 1 = 1\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds3,sql=\"select  t3.org_subjection_id  , t1.org_hr_short_name   as org_name,hrs.snum  ,hrs.nums \\r\\n    from bgp_comm_org_hr t1\\r\\n    join bgp_comm_org_hr_gms t2\\r\\n      on t1.org_hr_id = t2.org_hr_id\\r\\n    join comm_org_subjection t3\\r\\n      on t3.org_id = t2.org_gms_id    and t3.bsflag = \\\'0\\\'\\r\\n    join ( \\r\\n        select  1   as snum ,trunc(t.nums )nums,t.org_subjection_id  ,t.org_id    from (   select  d.employee_id,   st.org_subjection_id, st.org_id ,   sum(trunc((nvl(d.actual_end_date,sysdate) - d.actual_start_date + 1))) nums    from bgp_human_prepare_human_detail d  inner join bgp_human_prepare p  on d.prepare_no = p.prepare_no  and p.prepare_status = \\\'2\\\'  left join bgp_project_human_relation r  on d.employee_id = r.employee_id  and p.project_info_no = r.project_info_no  and r.team = d.team  and r.work_post = d.work_post  left join common_busi_wf_middle te  on te.business_id = p.prepare_no  and te.bsflag = \\\'0\\\'  left join bgp_project_human_profess pr1  on pr1.profess_no = p.profess_no  and p.profess_no is not null  and pr1.bsflag = \\\'0\\\'         left join bgp_project_human_requirement pr  on pr.requirement_no = p.requirement_no  and p.requirement_no is not null  and pr.bsflag = \\\'0\\\'         left join bgp_project_human_relief re  on re.human_relief_no = p.human_relief_no  and p.human_relief_no is not null  and re.bsflag = \\\'0\\\'  left join comm_human_employee e  on d.employee_id = e.employee_id  left join comm_human_employee_hr h  on d.employee_id = h.employee_id  left join gp_task_project t  on p.project_info_no = t.project_info_no  \\r\\n left join comm_org_subjection st\\r\\n            on e.org_id = st.org_id\\r\\n           and st.bsflag = \\\'0\\\'\\r\\n           \\r\\nwhere p.bsflag = \\\'0\\\'  and d.between_param is null  and d.bsflag = \\\'0\\\'     and d.actual_start_date >= to_date(?, \\\'yyyy-MM-dd\\\')    \\r\\n    and (te.business_id is null or te.proc_status = \\\'3\\\')   and (d.spare1 is null or d.spare1 = \\\'1\\\')  \\r\\ngroup by    d.employee_id,\\r\\n                                st.org_subjection_id,\\r\\n                                st.org_id  \\r\\n\\r\\n )  t     \\r\\n      where 1 = 1   and   t.org_subjection_id like   ?  ||\\\'%\\\' \\r\\n             \\r\\n             ) hrs\\r\\n      on hrs.org_subjection_id  like t3.org_subjection_id || \\\'%\\\'  \\r\\n   where t1.org_hr_parent_id = \\\'50000674\\\'\",type=normal,param=\"start_date:6;org_sub_id:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds4,sql=\"Select os.org_subjection_id  , oi.org_abbreviation AS org_name  FROM bgp_comm_org_wtc oi, comm_org_subjection os WHERE oi.bsflag = \\\'0\\\' and os.bsflag = \\\'0\\\' and os.bsflag = \\\'0\\\' and oi.org_id = os.org_id      and  os.org_subjection_id like  ? || \\\'%\\\'      order by os.coding_show_id\",type=normal,param=\"org_sub_id:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds5,sql=\"select to_date(?,\\\'yyyymmdd\\\') - to_date(?,\\\'yyyymmdd\\\') + 1  as year_num from dual\",type=normal,param=\"end_date:6;start_date:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds6,sql=\"select  t3.org_subjection_id  , t1.org_hr_short_name   as org_name,hrs.numsub  ,hrs.subnum \\n    from bgp_comm_org_hr t1\\n    join bgp_comm_org_hr_gms t2\\n      on t1.org_hr_id = t2.org_hr_id\\n    join comm_org_subjection t3\\n      on t3.org_id = t2.org_gms_id    and t3.bsflag = \\\'0\\\'\\n    join (  select t.org_subjection_id, t.numsub ,1 subnum   from ( select       d.employee_id,\\n                                st.org_subjection_id,\\n                                st.org_id,\\n                                  trunc((nvl(d.actual_end_date, sysdate) -\\n                                d.actual_start_date + 1)  )nums ,\\n                                 to_date(?,\\\'yyyymmdd\\\') - to_date(?,\\\'yyyymmdd\\\') + 1 -   trunc((nvl(d.actual_end_date, sysdate) -\\n                                d.actual_start_date + 1)  )  numsub \\n                  from bgp_human_prepare_human_detail d\\n                 inner join bgp_human_prepare p\\n                    on d.prepare_no = p.prepare_no\\n                   and p.prepare_status = \\\'2\\\'\\n                  left join bgp_project_human_relation r\\n                    on d.employee_id = r.employee_id\\n                   and p.project_info_no = r.project_info_no\\n                   and r.team = d.team\\n                   and r.work_post = d.work_post\\n                  left join common_busi_wf_middle te\\n                    on te.business_id = p.prepare_no\\n                   and te.bsflag = \\\'0\\\'\\n                  left join bgp_project_human_profess pr1\\n                    on pr1.profess_no = p.profess_no\\n                   and p.profess_no is not null\\n                   and pr1.bsflag = \\\'0\\\'\\n                  left join bgp_project_human_requirement pr\\n                    on pr.requirement_no = p.requirement_no\\n                   and p.requirement_no is not null\\n                   and pr.bsflag = \\\'0\\\'\\n                  left join bgp_project_human_relief re\\n                    on re.human_relief_no = p.human_relief_no\\n                   and p.human_relief_no is not null\\n                   and re.bsflag = \\\'0\\\'\\n                  left join comm_human_employee e\\n                    on d.employee_id = e.employee_id\\n                  left join comm_human_employee_hr h\\n                    on d.employee_id = h.employee_id\\n                  left join gp_task_project t\\n                    on p.project_info_no = t.project_info_no\\n                  left join comm_org_subjection st\\n                    on e.org_id = st.org_id\\n                   and st.bsflag = \\\'0\\\'\\n                \\n                 where p.bsflag = \\\'0\\\'\\n                   and d.between_param is null\\n                   and d.bsflag = \\\'0\\\'\\n                   and (te.business_id is null or te.proc_status = \\\'3\\\')\\n                   and (d.spare1 is null or d.spare1 = \\\'1\\\')   ) t      where t.numsub is not null    ) hrs\\n      on hrs.org_subjection_id  like t3.org_subjection_id || \\\'%\\\'  \\n   where t1.org_hr_parent_id = \\\'50000674\\\'\",type=normal,param=\"end_date:6;start_date:6\",cached=0,,indexSorted=false,indexIsUnique=false;";1101="2";1206="19.0";1216=1;1205="19.0";1202="2";1201="4";4502="B3";1208="25.0";1207="25.0";1209="2"
+</>
+<0-1>
+	3:2101="61.0"
+</>
+<0-2>
+	3:2101="105.0"
+</>
+<0-3>
+	3:4106=0;2101="87.0"
+</>
+<0-4>
+	3:2101="102.0"
+</>
+<0-5>
+	3:2101="99.0"
+</>
+<0-6>
+	3:2101="53.0"
+</>
+<0-7>
+	3:2101="83.0"
+</>
+<0-8>
+	3:2101="70.86614"
+</>
+<0-9>
+	3:2101="78.0"
+</>
+<0-10>
+	3:2101="84.0";2102="10"
+</>
+<0-11>
+	3:2101="91.0";2102="10"
+</>
+<0-12>
+	3:2101="97.0";2102="10"
+</>
+<0-13>
+	3:2101="98.0";2102="10"
+</>
+<0-14>
+	3:2101="92.0";2102="10"
+</>
+<0-15>
+	3:2101="92.0";2102="10"
+</>
+<0-16>
+	3:2101="96.0";2102="10"
+</>
+<0-17>
+	3:2101="103.0";2102="10"
+</>
+<0-18>
+	3:2101="100.0";2102="10"
+</>
+<0-19>
+	3:2101="52.0";2102="10"
+</>
+<0-20>
+	3:2101="96.0";2102="10"
+</>
+<0-21>
+	3:2101="85.0";2102="10"
+</>
+<0-22>
+	3:2101="88.0";2102="10"
+</>
+<0-23>
+	3:2101="95.0";2102="10"
+</>
+<0-24>
+	3:2101="95.0";2102="10"
+</>
+<0-25>
+	3:2101="96.0";2102="10"
+</>
+<0-26>
+	3:2101="96.0";2102="10"
+</>
+<0-27>
+	3:2101="111.0";2102="10"
+</>
+<0-28>
+	3:2101="103.0";2102="10"
+</>
+<0-29>
+	3:2101="117.0";2102="10"
+</>
+<0-30>
+	3:2101="97.0";2102="10"
+</>
+<0-31>
+	3:2101="89.0";2102="10"
+</>
+<0-32>
+	3:2102="10";2101="141.0"
+</>
+<0-33>
+	3:2101="174.0"
+</>
+<0-34>
+	3:2102="10"
+</>
+<1-0>
+	3:3101="44.0"
+</>
+<1-1>
+	3:4302="12";4301="宋体";4304=0;4303="-16777216";4306=0;4409="-16777216";4201="1";4305=0;4408="0.75";4202="2";4203="0";4407="4";4401="4";4413="-1";4403="-16777216";4402="0.75"
+</>
+<1-2>
+	1:1
+	2:4401,4403,4402
+</>
+<1-3>
+	1:1
+</>
+<1-4>
+	1:1
+</>
+<1-5>
+	1:1
+</>
+<1-6>
+	1:1
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<1-7>
+	1:1
+	3:4402="0.75";4401="1";4403="-16777216"
+</>
+<1-8>
+	1:1
+	3:4302="22";4304=1;4201="2";4410="1";4103="1,8-1,18";4412="-16777216";4411="0.75";4102="一线用工合同化员工、市场化用工上岗情况"
+</>
+<1-9>
+	1:1
+	2:4102
+</>
+<1-10>
+	1:1
+	2:4301,4303,4306,4305,4202,4203,4413
+</>
+<1-11>
+	1:1
+</>
+<1-12>
+	1:1
+</>
+<1-13>
+	1:1
+</>
+<1-14>
+	1:1
+</>
+<1-15>
+	1:1
+</>
+<1-16>
+	1:1
+</>
+<1-17>
+	1:1
+	2:4302,4304,4201,4410,4412,4411
+</>
+<1-18>
+	1:1
+	3:4302="22";4304=1;4410="1";4201="2";4412="-16777216";4411="0.75"
+</>
+<1-19>
+	1:1
+	2:4103,4302,4304,4410,4201,4412,4411
+</>
+<1-20>
+	1:1
+</>
+<1-21>
+	1:1
+</>
+<1-22>
+	1:1
+</>
+<1-23>
+	1:1
+</>
+<1-24>
+	1:1
+</>
+<1-25>
+	1:1
+</>
+<1-26>
+	1:1
+</>
+<1-27>
+	1:1
+</>
+<1-28>
+	1:1
+</>
+<1-29>
+	1:1
+</>
+<1-30>
+	1:1
+</>
+<1-31>
+	1:1
+</>
+<1-32>
+	1:1
+</>
+<1-33>
+	1:1
+	3:4404="4";4302="12";4301="宋体";4304=0;4303="-16777216";4306=0;4305=0;4201="1";4202="2";4203="0";4413="-1";4412="-16777216";4411="0.75";4410="1"
+</>
+<1-34>
+	1:1
+	2:4302,4301,4304,4303,4306,4305,4201,4202,4203,4413,4412,4411,4410
+	3:4401="4";4407="1";4404="1"
+</>
+<2-0>
+	3:3101="28.0"
+</>
+<2-1>
+	1:0
+	2:4409,4408,4407
+	3:4302="16";4304=1;4201="2";4410="4";4412="-16777216";4411="0.75";4102="年份："
+</>
+<2-2>
+	1:1
+	2:4401,4403,4402,4102
+	3:4302="15";4201="1"
+	4:4102="@year_date"
+</>
+<2-3>
+	1:1
+	3:4302="12";4304=0
+</>
+<2-4>
+	1:1
+</>
+<2-5>
+	1:1
+</>
+<2-6>
+	1:0
+	2:4409,4408,4407
+	3:4410="4";4412="-16777216";4411="0.75"
+</>
+<2-7>
+	1:0
+	2:4409,4408,4407,4405,4404,4406
+	3:4410="4";4412="-16777216";4411="0.75"
+</>
+<2-8>
+	1:1
+	2:4402,4401,4403
+	3:4407="1";4409="-16777216";4408="0.75"
+</>
+<2-9>
+	1:1
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<2-10>
+	1:0
+	2:4302,4304,4201,4103
+	3:4407="1";4410="4"
+</>
+<2-11>
+	1:1
+</>
+<2-12>
+	1:1
+</>
+<2-13>
+	1:1
+</>
+<2-14>
+	1:1
+</>
+<2-15>
+	1:1
+</>
+<2-16>
+	1:1
+</>
+<2-17>
+	1:1
+	2:4409,4408,4407
+</>
+<2-18>
+	1:0
+	2:4103,4302,4304,4201
+	3:4407="1";4410="4"
+</>
+<2-19>
+	1:1
+	2:4407,4409,4408
+</>
+<2-20>
+	1:1
+	3:4106=0
+	4:4102="ds5.select(year_num)"
+</>
+<2-21>
+	1:1
+	2:4106
+</>
+<2-22>
+	1:1
+</>
+<2-23>
+	1:1
+</>
+<2-24>
+	1:1
+</>
+<2-25>
+	1:1
+</>
+<2-26>
+	1:1
+</>
+<2-27>
+	1:1
+</>
+<2-28>
+	1:1
+</>
+<2-29>
+	1:1
+</>
+<2-30>
+	1:1
+</>
+<2-31>
+	1:1
+</>
+<2-32>
+	1:1
+</>
+<2-33>
+	1:0
+	3:4407="1";4410="4"
+</>
+<2-34>
+	1:0
+	2:4409,4408,4407
+</>
+<3-0>
+	3:3101="22.677166"
+</>
+<3-1>
+	1:0
+	3:4407="4";4409="-16777216";4408="0.75";4302="15";4405="0.75";4404="4";4103="3,1-4,1";4406="-16777216";4102="编号"
+</>
+<3-2>
+	1:1
+	3:4103="3,2-4,2";4102="单位"
+</>
+<3-3>
+	1:1
+	3:4103="3,3-4,3";4102="单位subid"
+</>
+<3-4>
+	1:1
+	3:4103="3,4-3,5";4102="一线员工上岗率"
+</>
+<3-5>
+	1:1
+	2:4102
+</>
+<3-6>
+	1:1
+	3:4103="3,6-4,6";4102="小计"
+</>
+<3-7>
+	1:1
+	3:4103="3,7-3,18";4102="一线员工工作天数"
+</>
+<3-8>
+	1:1
+	2:4102
+</>
+<3-9>
+	1:1
+</>
+<3-10>
+	1:1
+	2:4301,4303,4306,4305,4202,4203,4413
+</>
+<3-11>
+	1:1
+</>
+<3-12>
+	1:1
+</>
+<3-13>
+	1:1
+</>
+<3-14>
+	1:1
+</>
+<3-15>
+	1:1
+</>
+<3-16>
+	1:1
+</>
+<3-17>
+	1:1
+	2:4302,4304,4201
+</>
+<3-18>
+	1:1
+	3:4302="15";4304=1;4201="2"
+</>
+<3-19>
+	1:1
+	3:4103="3,19-4,19";4102="小计"
+</>
+<3-20>
+	1:1
+	3:4103="3,20-3,31";4102="一线员工待工天数"
+</>
+<3-21>
+	1:1
+	2:4102
+</>
+<3-22>
+	1:1
+</>
+<3-23>
+	1:1
+</>
+<3-24>
+	1:1
+	2:4302,4304,4201
+</>
+<3-25>
+	1:1
+</>
+<3-26>
+	1:1
+</>
+<3-27>
+	1:1
+</>
+<3-28>
+	1:1
+</>
+<3-29>
+	1:1
+</>
+<3-30>
+	1:1
+</>
+<3-31>
+	1:1
+	3:4302="15";4304=1;4201="2"
+</>
+<3-32>
+	1:1
+	3:4103="3,32-4,32";4102="一直在岗人员"
+</>
+<3-33>
+	1:0
+	3:4407="4";4401="4";4302="15";4304=1;4201="2";4103="3,33-4,33";4102="截止目前未上过岗人员"
+</>
+<3-34>
+	1:0
+</>
+<4-0>
+	3:3101="22.677166"
+</>
+<4-1>
+	1:0
+	2:4102
+</>
+<4-2>
+	1:0
+	2:4102
+</>
+<4-3>
+	1:0
+	2:4102
+</>
+<4-4>
+	1:0
+	2:4103
+	3:4102="一线总人数"
+</>
+<4-5>
+	1:0
+	2:4103
+	3:4102="已上岗人数"
+</>
+<4-6>
+	1:0
+	2:4102
+</>
+<4-7>
+	1:0
+	2:4103
+	3:4102="30天以下"
+</>
+<4-8>
+	1:0
+	2:4103
+	3:4102="31-60天"
+</>
+<4-9>
+	1:0
+	2:4103
+	3:4102="61-90天"
+</>
+<4-10>
+	1:0
+	2:4103
+	3:4102="91-120天"
+</>
+<4-11>
+	1:0
+	2:4103
+	3:4102="121-150天"
+</>
+<4-12>
+	1:0
+	2:4103
+	3:4102="151-180天"
+</>
+<4-13>
+	1:0
+	2:4103
+	3:4102="181-210天"
+</>
+<4-14>
+	1:0
+	2:4103
+	3:4102="211-240天"
+</>
+<4-15>
+	1:0
+	2:4103
+	3:4102="241-270天"
+</>
+<4-16>
+	1:0
+	2:4103
+	3:4102="271-300天"
+</>
+<4-17>
+	1:1
+	3:4302="16";4102="301-330天"
+</>
+<4-18>
+	1:0
+	2:4103
+	3:4102="330天以上"
+</>
+<4-19>
+	1:0
+	2:4102
+</>
+<4-20>
+	1:0
+	2:4103
+	3:4301="宋体";4303="-16777216";4306=0;4305=0;4202="2";4203="0";4413="-1";4102="30天以下"
+</>
+<4-21>
+	1:1
+	3:4102="31-60天"
+</>
+<4-22>
+	1:1
+	3:4102="61-90天"
+</>
+<4-23>
+	1:0
+	2:4103
+	3:4102="91-120天"
+</>
+<4-24>
+	1:1
+	3:4102="121-150天"
+</>
+<4-25>
+	1:1
+	3:4102="151-180天"
+</>
+<4-26>
+	1:1
+	3:4102="181-210天"
+</>
+<4-27>
+	1:1
+	3:4102="211-240天"
+</>
+<4-28>
+	1:1
+	3:4102="241-270天"
+</>
+<4-29>
+	1:1
+	3:4102="271-300天"
+</>
+<4-30>
+	1:1
+	3:4302="16";4102="301-330天"
+</>
+<4-31>
+	1:0
+	2:4103
+	3:4102="330天以上"
+</>
+<4-32>
+	1:0
+	2:4102
+</>
+<4-33>
+	1:0
+	2:4102
+</>
+<4-34>
+	1:0
+</>
+<5-0>
+	3:3101="22.677166"
+</>
+<5-1>
+	1:0
+	2:4103
+	3:4302="12";4304=0;4502="B5"
+	4:4102="row()-4"
+</>
+<5-2>
+	1:1
+	2:4502
+	4:4102="ds4.select(org_name)"
+</>
+<5-3>
+	1:1
+	3:4502="B5"
+	4:4102="ds4.org_subjection_id"
+</>
+<5-4>
+	1:1
+	4:4102="ds1.sum(A1,org_name like B5 +\'*\')";4105="if(@value<=0,\'\',@value)"
+</>
+<5-5>
+	1:1
+	3:4415="-16777216"
+	4:4102="F5";4105="if(@value<=0,\'\',@value)"
+</>
+<5-6>
+	1:1
+	4:4102="G5+H5+I5+J5+K5+L5+M5+N5+O5+P5+R5+Q5";4105="if(@value<=0,\'\',@value)"
+</>
+<5-7>
+	1:1
+	3:4501="3";4503="B5"
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums <=30 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-8>
+	1:1
+	2:4501,4503
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >30  && nums <=60 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-9>
+	1:1
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >60  && nums <=90 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-10>
+	1:1
+	2:4302,4301,4304,4306,4305,4202,4203
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=91  && nums <=120 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-11>
+	1:1
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=121  && nums <=150 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-12>
+	1:1
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=151  && nums <=180 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-13>
+	1:1
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=181  && nums <=210 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-14>
+	1:1
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=211  && nums <=240 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-15>
+	1:1
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=241  && nums <=270 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-16>
+	1:1
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=271  && nums <=300 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-17>
+	1:1
+	2:4502
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=301  && nums <=330 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-18>
+	1:1
+	3:4502="B5"
+	4:4102="ds3.sum(snum,org_name like B5 +\'*\'  && nums >=331 ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-19>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="T5+U5+V5+W5+X5+Y5+Z5+AA5+AB5+AC5+AD5+AE5"
+</>
+<5-20>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub <=30   ) "
+</>
+<5-21>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >30  && numsub <=60  ) "
+</>
+<5-22>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >60  && numsub <=90  ) "
+</>
+<5-23>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=91  && numsub <=120  ) "
+</>
+<5-24>
+	1:1
+	2:4502
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=121  && numsub <=150  ) "
+</>
+<5-25>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=151  && numsub <=180  ) "
+</>
+<5-26>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=181  && numsub <=210  ) "
+</>
+<5-27>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=211  && numsub <=240  ) "
+</>
+<5-28>
+	1:1
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=241  && numsub <=270  ) "
+</>
+<5-29>
+	1:1
+	4:4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=271  && numsub <=300  ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-30>
+	1:1
+	4:4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=301  && numsub <=330  ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-31>
+	1:1
+	3:4502="B5"
+	4:4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub >=331  ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-32>
+	1:0
+	2:4103,4201,4304,4302
+	4:4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub =0  ) ";4105="if(@value<=0,\'\',@value)"
+</>
+<5-33>
+	1:0
+	2:4103
+	3:4302="12";4304=0
+	4:4105="if(@value<=0,\'\',@value)";4102="ds6.sum(subnum,org_name like B5 +\'*\'  && numsub =T2 ) "
+</>
+<5-34>
+	1:0
+	3:4201="2"
+</>
+<6-0>
+	3:3101="25.0"
+</>
+<6-1>
+	1:0
+	2:4502
+	3:4302="16";4304=1;4103="6,1-6,3";4102="合计"
+</>
+<6-2>
+	1:1
+	2:4102
+</>
+<6-3>
+	1:1
+</>
+<6-4>
+	1:0
+	2:4502
+	3:4415="-16777216"
+	4:4102="sum(D5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-5>
+	1:0
+	2:4502
+	4:4102="sum(E5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-6>
+	1:0
+	2:4502
+	4:4102="sum(F5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-7>
+	1:0
+	2:4502,4501,4503
+	4:4102="sum(G5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-8>
+	1:0
+	2:4502
+	4:4102="sum(H5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-9>
+	1:0
+	2:4502
+	4:4102="sum(I5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-10>
+	1:0
+	2:4502
+	4:4102="sum(J5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-11>
+	1:0
+	2:4502
+	4:4102="sum(K5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-12>
+	1:0
+	2:4502
+	4:4102="sum(L5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-13>
+	1:0
+	2:4502
+	4:4102="sum(M5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-14>
+	1:0
+	2:4502
+	4:4102="sum(N5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-15>
+	1:0
+	2:4502
+	4:4102="sum(O5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-16>
+	1:0
+	2:4502
+	4:4102="sum(P5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-17>
+	1:0
+	4:4102="sum(Q5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-18>
+	1:0
+	2:4502
+	4:4102="sum(R5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-19>
+	1:0
+	2:4502
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(S5{})"
+</>
+<6-20>
+	1:0
+	2:4502
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(T5{})"
+</>
+<6-21>
+	1:0
+	2:4502
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(U5{})"
+</>
+<6-22>
+	1:0
+	2:4502
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(V5{})"
+</>
+<6-23>
+	1:0
+	2:4502
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(W5{})"
+</>
+<6-24>
+	1:0
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(X5{})"
+</>
+<6-25>
+	1:0
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(Y5{})"
+</>
+<6-26>
+	1:0
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(Z5{})"
+</>
+<6-27>
+	1:0
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(AA5{})"
+</>
+<6-28>
+	1:0
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(AB5{})"
+</>
+<6-29>
+	1:0
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(AC5{})"
+</>
+<6-30>
+	1:0
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(AD5{})"
+</>
+<6-31>
+	1:0
+	2:4502
+	4:4105="if(@value<=0,\'\',@value)";4102="sum(AE5{})"
+</>
+<6-32>
+	1:1
+	2:4303,4413,4415
+	4:4102="sum(AF5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-33>
+	1:0
+	3:4415="-16777216"
+	4:4102="sum(AG5{})";4105="if(@value<=0,\'\',@value)"
+</>
+<6-34>
+	1:0
+	2:4201
+</>
+<7-0>
+	3:3101="22.677166"
+</>
+<7-1>
+	1:0
+	2:4401,4403,4402,4410,4412,4411,4405,4404,4406,4103,4102
+	3:4302="12";4304=0;4201="1"
+</>
+<7-2>
+	1:1
+</>
+<7-3>
+	1:1
+</>
+<7-4>
+	1:1
+</>
+<7-5>
+	1:1
+</>
+<7-6>
+	1:0
+	2:4401,4403,4402,4410,4412,4411,4415
+	3:4201="1";4404="1"
+</>
+<7-7>
+	1:0
+	2:4410,4412,4411,4405,4404,4406,4415
+	3:4401="1";4201="1"
+</>
+<7-8>
+	1:1
+	2:4401,4403,4402
+</>
+<7-9>
+	1:0
+	2:4401,4403,4402,4410,4412,4411,4415
+	3:4201="1";4404="1"
+</>
+<7-10>
+	1:0
+	2:4303,4201,4413,4410,4412,4411,4415
+	3:4401="1";4404="1"
+</>
+<7-11>
+	1:1
+</>
+<7-12>
+	1:1
+</>
+<7-13>
+	1:1
+</>
+<7-14>
+	1:1
+</>
+<7-15>
+	1:1
+</>
+<7-16>
+	1:1
+</>
+<7-17>
+	1:1
+</>
+<7-18>
+	1:1
+</>
+<7-19>
+	1:1
+</>
+<7-20>
+	1:1
+</>
+<7-21>
+	1:1
+</>
+<7-22>
+	1:1
+</>
+<7-23>
+	1:1
+</>
+<7-24>
+	1:1
+</>
+<7-25>
+	1:1
+</>
+<7-26>
+	1:1
+</>
+<7-27>
+	1:1
+</>
+<7-28>
+	1:1
+</>
+<7-29>
+	1:1
+</>
+<7-30>
+	1:1
+</>
+<7-31>
+	1:1
+</>
+<7-32>
+	1:1
+</>
+<7-33>
+	1:0
+	2:4412,4411,4410,4415
+	3:4401="1";4404="1";4201="1"
+</>
+<7-34>
+	1:1
+	2:4407,4409,4408,4302,4301,4304,4303,4306,4305,4201,4202,4203,4413
+</>
+<8-0>
+	3:3101="22.677166"
+</>
+<8-1>
+	1:0
+	2:4407,4409,4408
+</>
+<8-2>
+	1:0
+	2:4407,4409,4408
+</>
+<8-3>
+	1:0
+	2:4407,4409,4408
+</>
+<8-4>
+	1:0
+	2:4407,4409,4408
+</>
+<8-5>
+	1:0
+	2:4407,4409,4408
+</>
+<8-6>
+	1:0
+	2:4407,4409,4408
+</>
+<8-7>
+	1:0
+	2:4407,4409,4408
+</>
+<8-8>
+	1:0
+	2:4407,4409,4408
+</>
+<8-9>
+	1:0
+	2:4407,4409,4408
+</>
+<8-10>
+	1:0
+	2:4407,4409,4408
+</>
+<8-11>
+	1:0
+	2:4407,4409,4408
+</>
+<8-12>
+	1:0
+	2:4407,4409,4408
+</>
+<8-13>
+	1:0
+	2:4407,4409,4408
+</>
+<8-14>
+	1:0
+	2:4407,4409,4408
+</>
+<8-15>
+	1:0
+	2:4407,4409,4408
+</>
+<8-16>
+	1:0
+	2:4407,4409,4408
+</>
+<8-17>
+	1:0
+	2:4407,4409,4408
+</>
+<8-18>
+	1:0
+	2:4407,4409,4408
+</>
+<8-19>
+	1:0
+	2:4407,4409,4408
+</>
+<8-20>
+	1:0
+	2:4407,4409,4408
+</>
+<8-21>
+	1:0
+	2:4407,4409,4408
+</>
+<8-22>
+	1:0
+	2:4407,4409,4408
+</>
+<8-23>
+	1:0
+	2:4407,4409,4408
+</>
+<8-24>
+	1:0
+	2:4407,4409,4408
+</>
+<8-25>
+	1:0
+	2:4407,4409,4408
+</>
+<8-26>
+	1:0
+	2:4407,4409,4408
+</>
+<8-27>
+	1:0
+	2:4407,4409,4408
+</>
+<8-28>
+	1:0
+	2:4407,4409,4408
+</>
+<8-29>
+	1:0
+	2:4407,4409,4408
+</>
+<8-30>
+	1:0
+	2:4407,4409,4408
+</>
+<8-31>
+	1:0
+	2:4407,4409,4408
+</>
+<8-32>
+	1:0
+	2:4409,4407,4408
+</>
+<8-33>
+	1:0
+	2:4407,4409,4408
+</>
+<8-34>
+	1:0
+</>
+<9-0>
+	3:3101="22.677166"
+</>
+<9-1>
+	1:0
+</>
+<9-2>
+	1:0
+</>
+<9-3>
+	1:0
+</>
+<9-4>
+	1:0
+</>
+<9-5>
+	1:0
+</>
+<9-6>
+	1:0
+</>
+<9-7>
+	1:0
+</>
+<9-8>
+	1:0
+</>
+<9-9>
+	1:0
+</>
+<9-10>
+	1:0
+</>
+<9-11>
+	1:0
+</>
+<9-12>
+	1:0
+</>
+<9-13>
+	1:0
+</>
+<9-14>
+	1:0
+</>
+<9-15>
+	1:0
+</>
+<9-16>
+	1:0
+</>
+<9-17>
+	1:0
+</>
+<9-18>
+	1:0
+</>
+<9-19>
+	1:0
+</>
+<9-20>
+	1:0
+</>
+<9-21>
+	1:0
+</>
+<9-22>
+	1:0
+</>
+<9-23>
+	1:0
+</>
+<9-24>
+	1:0
+</>
+<9-25>
+	1:0
+</>
+<9-26>
+	1:0
+</>
+<9-27>
+	1:0
+</>
+<9-28>
+	1:0
+</>
+<9-29>
+	1:0
+</>
+<9-30>
+	1:0
+</>
+<9-31>
+	1:0
+</>
+<9-32>
+	1:0
+</>
+<9-33>
+	1:0
+</>
+<9-34>
+	1:0
+</>
+<10-0>
+	3:3101="22.677166"
+</>
+<10-1>
+	1:0
+</>
+<10-2>
+	1:0
+</>
+<10-3>
+	1:0
+</>
+<10-4>
+	1:0
+</>
+<10-5>
+	1:0
+</>
+<10-6>
+	1:0
+</>
+<10-7>
+	1:0
+</>
+<10-8>
+	1:0
+</>
+<10-9>
+	1:0
+</>
+<10-10>
+	1:0
+</>
+<10-11>
+	1:0
+</>
+<10-12>
+	1:0
+</>
+<10-13>
+	1:0
+</>
+<10-14>
+	1:0
+</>
+<10-15>
+	1:0
+</>
+<10-16>
+	1:0
+</>
+<10-17>
+	1:0
+</>
+<10-18>
+	1:0
+</>
+<10-19>
+	1:0
+</>
+<10-20>
+	1:0
+</>
+<10-21>
+	1:0
+</>
+<10-22>
+	1:0
+</>
+<10-23>
+	1:0
+</>
+<10-24>
+	1:0
+</>
+<10-25>
+	1:0
+</>
+<10-26>
+	1:0
+</>
+<10-27>
+	1:0
+</>
+<10-28>
+	1:0
+</>
+<10-29>
+	1:0
+</>
+<10-30>
+	1:0
+</>
+<10-31>
+	1:0
+</>
+<10-32>
+	1:0
+</>
+<10-33>
+	1:0
+</>
+<10-34>
+	1:0
+</>

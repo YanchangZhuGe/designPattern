@@ -1,0 +1,67 @@
+BODY {
+FONT-SIZE: 12px; }
+OL LI {
+MARGIN: 8px
+}
+#con {
+FONT-SIZE: 12px; MARGIN: 0px auto; margin-top:5px; WIDTH: auto
+}
+#tags {
+PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; MARGIN: 0px 0px 0px 0px; WIDTH: auto; PADDING-TOP: 0px; HEIGHT: 27px;
+}
+#tags LI {
+/* BACKGROUND: url(../images/tag/tagleft.png) no-repeat left bottom; */ FLOAT: left; MARGIN-RIGHT: 1px; LIST-STYLE-TYPE: none; HEIGHT: 27px; margin-left: 10px;
+}
+#tags LI A {
+PADDING-RIGHT: 12px; PADDING-LEFT: 12px; /* BACKGROUND: url(../images/tag/tagright.png) no-repeat right bottom; */ FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #999;LINE-HEIGHT: 27px; PADDING-TOP: 0px; HEIGHT: 27px; TEXT-DECORATION: none; margin-right: -11px; color:#fff;
+}
+#tags LI.emptyTag {
+BACKGROUND: none transparent scroll repeat 0% 0%; WIDTH: 4px;
+}
+#tags LI.selectTag {
+BACKGROUND-POSITION: left top; MARGIN-BOTTOM: 0px; POSITION: relative; HEIGHT: 27px
+}
+#tags LI.selectTag A {
+BACKGROUND-POSITION: right top; COLOR: #000; LINE-HEIGHT: 27px; HEIGHT: 27px; color:#004676; font-weight:bold;
+}
+#tagContent {
+ PADDING-RIGHT: 0px; BORDER: #aecbd4 0px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP:0px; BACKGROUND-COLOR: #fff
+}
+.tagContent {
+PADDING-RIGHT: 10px; DISPLAY: none; PADDING-LEFT: 10px; BACKGROUND: url(../images/tag/bg.gif) repeat-x; PADDING-BOTTOM: 10px; WIDTH: 450px; COLOR: #474747; PADDING-TOP: 10px; HEIGHT: 290px
+}
+#tagContent DIV.selectTag {
+DISPLAY: block
+}
+#conttt {
+ PADDING-RIGHT: 1px; BORDER: #aecbd4 1px solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; PADDING-TOP:1px; BACKGROUND-COLOR: #fff
+}
+
+#tags1 {
+PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px -30px; WIDTH: 400px; PADDING-TOP: 0px; HEIGHT: 23px
+}
+#tags1 LI {
+BACKGROUND: url(../images/tag/tagleft.png) no-repeat left bottom; FLOAT: left; MARGIN-RIGHT: 1px; LIST-STYLE-TYPE: none; HEIGHT: 23px
+}
+#tags1 LI A {
+PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: url(../images/tag/tagright.png) no-repeat right bottom; FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #999;LINE-HEIGHT: 23px; PADDING-TOP: 0px; HEIGHT: 23px; TEXT-DECORATION: none
+}
+#tags1 LI.emptyTag {
+BACKGROUND: none transparent scroll repeat 0% 0%; WIDTH: 4px
+}
+#tags1 LI.selectTag {
+BACKGROUND-POSITION: left top; MARGIN-BOTTOM: -2px; POSITION: relative; HEIGHT: 25px
+}
+#tags1 LI.selectTag A {
+BACKGROUND-POSITION: right top; COLOR: #000; LINE-HEIGHT: 25px; HEIGHT: 25px
+}
+
+#tagContent1 {
+ PADDING-RIGHT: 1px; BORDER: #aecbd4 1px solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; PADDING-TOP:1px; BACKGROUND-COLOR: #fff
+}
+.tagContent1 {
+PADDING-RIGHT: 10px; DISPLAY: none; PADDING-LEFT: 10px; BACKGROUND: url(../images/tag/bg.gif) repeat-x; PADDING-BOTTOM: 10px; WIDTH: 450px; COLOR: #474747; PADDING-TOP: 10px; HEIGHT: 290px
+}
+#tagContent1 DIV.selectTag {
+DISPLAY: block
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>市场周报</PageTitle>
+  <QuerySQL>
+    <sql></sql>
+    <fields>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+
+  </Buttons>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{xh}'\&gt;"/>
+    <data exp="{weekDate}">周开始日期</data>
+    <data exp="{weekEndDate}">周结束日期</data>
+    <data exp="{orgId}">组织机构ID</data>
+    <data exp="{orgName}">组织机构名称</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+		function page_init(){
+			var titleObj = getObj("cruTitle");
+			if(titleObj!=undefined) titleObj.innerHTML = pageTitle;
+			cdt_init();
+			cruConfig.queryService = "MarketWeeklySrv";
+			cruConfig.queryOp ="queryMarketWeekReport";
+			queryData(1);
+		}
+
+		function queryData(targetPage){
+			cruConfig.currentPage = targetPage;
+			
+			var submitStr = "currentPage="+targetPage+"&amp;pageSize="+cruConfig.pageSize;
+			if(cruConfig.funcCode!='') submitStr += "&amp;EP_DATA_AUTH_funcCode="+cruConfig.funcCode;
+			   
+			 
+			var retObject;
+			if(cruConfig.queryService!=''){
+			    submitStr = submitStr+"&amp;"+cruConfig.cdtStr;
+				submitStr = encodeURI(submitStr);
+				submitStr = encodeURI(submitStr);
+				retObject = jcdpCallService(cruConfig.queryService,cruConfig.queryOp,submitStr);
+			}
+				
+			if (retObject.returnCode != "0") return;	
+			cruConfig.items = retObject.datas;
+			cruConfig.totalRows = retObject.totalRows;
+			renderTable(getObj(cruConfig.queryRetTable_id),cruConfig);
+		
+			cruConfig.currentPageRlIds = '';
+		
+			if(cruConfig.relationedIds!=''){
+				var chxs = document.getElementsByName("chx_entity_id");
+				for(var i=0;i&lt;chxs.length;i++)
+					if(cruConfig.relationedIds.indexOf(chxs[i].value)&gt;=0){
+						 chxs[i].checked = true;
+						 if(cruConfig.currentPageRlIds=='') cruConfig.currentPageRlIds = chxs[i].value;
+						 else cruConfig.currentPageRlIds += ','+chxs[i].value;
+					}
+			}	
+		}
+		
+</JavaScripts>
+</SAIS_EAW_TL>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>劳保用品测算表</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_op_cost_tartet_labormon where bsflag='0' and if_change = '0'   and cost_labormon_id = '$PARAM.id'</sql>
+    <tableName>bgp_op_cost_tartet_labormon</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="cost_labormon_id" isShow="Hide">id</field>
+    <field name="if_change" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">id</field>
+    <field name="apply_team" maxLength="32">工序及班组</field>
+    <field name="post" maxLength="32">岗位名称</field>
+    <field name="person_num" maxLength="12">定员</field>
+    <field name="person_money" maxLength="32">劳保配备标准（元）</field>
+    
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

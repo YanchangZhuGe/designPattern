@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL> 
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>用户</PageTitle>
+  <QuerySQL>
+    <sql>SELECT u.*,oi.org_abbreviation as org_name FROM p_auth_user u left join comm_org_information oi on u.org_id=oi.org_id and oi.bsflag='0' WHERE u.user_id='$PARAM.id'</sql>
+    <tableName>p_auth_user</tableName>
+    <fields>
+      <field name="user_id" type="TEXT"></field>
+      <field name="org_id" type="TEXT"></field>
+      <field name="user_pwd" type="TEXT"></field>
+      <field name="user_name" type="TEXT"></field>
+      <field name="login_id" type="TEXT"></field>
+      <field name="user_status" type="TEXT"></field>
+      <field name="email" type="TEXT"></field>
+      <field name="last_login_time" type="D"></field>
+      <field name="this_login_time" type="D"></field>
+      <field name="login_ip" type="TEXT"></field>
+      <field name="user_domain" type="TEXT"></field>
+      <field name="emp_id" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="userStatus">
+      <option value="0">有效</option>
+      <option value="1">禁用</option>
+      <option value="2">作废</option>
+    </Select>
+    <Select name="domain">
+      <option value="">无</option>
+      <option value="cnpc.com.cn">cnpc.com.cn</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="emp_id" type="FK" isUnique="true" selValue="/common/selectEmployee.jsp,getEmpInfo" action="C" nonEmpty="true">名称</field>
+    <field name="user_name" isShow="ReadOnly" action="U,R">名称</field>
+    <field name="login_id" isShow="ReadOnly" action="U,R">登陆ID</field>
+    <field name="login_id" isUnique="true" nonEmpty="true" action="C">登陆ID</field>
+    <field name="user_name" isShow="Hide">名称</field>
+    <field name="org_id" isShow="Hide">组织机构ID</field>
+    <field name="org_name" isShow="ReadOnly">组织机构</field>
+    <field name="email" type="EMAIL">EMail</field>
+    <field name="user_status" type="SEL_OPs" isShow="Edit" selValue="userStatus" action="R,U">状态</field>
+    <field name="user_status" isShow="Hide" defaultValue="0" action="C">user_status</field>
+    <field name="login_ip" isShow="ReadOnly" action="R,U">最近登陆IP</field>
+    <field name="this_login_time" isShow="ReadOnly" action="R,U">最近登陆时间</field>
+  </EntityFields>
+  <JavaScripts> 
+    <CRU>
+	    function getEmpInfo(){
+			
+	        var emp_id = getObj("emp_id").fkValue; 
+	        //if(emp_id=='')return;
+			getObj('user_name').value = getObj("emp_id").value;
+		    var querySql = "SELECT t.org_id,nvl(t.mail_address,'')as email,oi.org_abbreviation as org_name FROM comm_human_employee t left join comm_org_information oi on t.org_id=oi.org_id and oi.bsflag='0' where t.employee_id='"+emp_id+"'"; 
+		    var queryOrgRet = syncRequest('Post',cruConfig.contextPath+appConfig.queryListAction,'querySql='+querySql); 
+		    getObj('org_id').value = queryOrgRet.datas[0].org_id;
+		    getObj('org_name').value = queryOrgRet.datas[0].org_name;
+			var email = queryOrgRet.datas[0].email;
+			if(email!=''){
+				if(getObj('login_id').value==''){
+					getObj('email').value = email;
+				}
+				if(getObj('login_id').value==''){
+					getObj('login_id').value = email.substr(0,email.indexOf('@'));
+				}
+			}
+			
+		}
+	</CRU> 
+  </JavaScripts> 
+</SAIS_EAW_TL>

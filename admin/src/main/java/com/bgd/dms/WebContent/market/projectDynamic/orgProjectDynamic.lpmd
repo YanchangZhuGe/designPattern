@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select t.PROJECT_DYNAMIC_ID,
+       t.record_year,
+       t.VALUE_WORKLOAD,
+       t.PROJECT_NAME,
+       t.TEAM_NO,
+       t.TRUSTER,
+       t.PROJECT_TYPE,
+       t.PROJECT_STATUS,
+       to_char(t.MODIFY_DATE, 'yyyy-MM-dd') as MODIFY_DATE
+  from MM_PROJECT_DYNAMIC t
+ where t.bsflag='0'
+ order by t.record_year desc, t.modify_date desc
+</sql>
+    <fields>
+      <field name="modify_date" type="TEXT"></field>
+      <field name="project_dynamic_id" type="TEXT"></field>
+      <field name="project_name" type="TEXT"></field>
+      <field name="project_status" type="TEXT"></field>
+      <field name="project_type" type="TEXT"></field>
+      <field name="record_year" type="TEXT"></field>
+      <field name="team_no" type="TEXT"></field>
+      <field name="truster" type="TEXT"></field>
+      <field name="value_workload" type=""></field>
+    </fields>
+  </QuerySQL>
+ <Buttons>
+    <Button Type="Add" funCode="" Label=""></Button>
+    <Button Type="Edit" funCode="" Label=""></Button>
+    <Button Type="Delete" funCode="" Label="">update MM_PROJECT_DYNAMIC set bsflag='1' where project_dynamic_id='{id}'</Button>
+    <Button Type="sql" funCode="" Label="调整人员位置"></Button>
+  </Buttons>
+  <Options/>
+  <Codes/>
+  <DataList>
+  	<data exp="&lt;input type='radio' name='chx_entity_id' value='{project_dynamic_id}'&gt;"/>
+    <data exp="&lt;a href=javascript:viewLink('{project_dynamic_id}') &gt;{project_name}&lt;/a&gt;">>项目名称</data>
+    <data exp="{team_no}">施工队号</data>
+    <data exp="{truster}">委托方</data>
+    <data exp="{value_workload}">落实价值工作量(万元)</data>
+    <data exp="{project_type}">项目类型</data>
+    <data exp="{project_status}">项目状态</data>
+    <data exp="{modify_date}">修改时间</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="project_name">项目名称</field>
+      <field name="record_year">记录年度</field>
+      <field name="team_no">施工队号</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+	  function toAdd(){
+	  		editUrl = "/market/projectDynamic/addProjectDynamic.jsp";
+			window.location=cruConfig.contextPath+editUrl;
+		}
+  	function toEdit(){
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+	    	editUrl = "/market/editProjectDynamic.srq?button=edit&amp;projectDynamicId="+ids; 
+	    	window.location=cruConfig.contextPath+editUrl; 
+	}
+	
+	function viewLink(project_dynamic_id){
+	    	editUrl = "/market/viewProjectDynamic.srq?button=view&amp;projectDynamicId="+project_dynamic_id;
+	    	window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+		}
+  </JavaScripts>
+</SAIS_EAW_TL>

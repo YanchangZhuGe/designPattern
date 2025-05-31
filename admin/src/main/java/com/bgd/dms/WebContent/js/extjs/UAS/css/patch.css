@@ -1,0 +1,22 @@
+.ext-ie7 .x-menu-item-icon,.ext-ie6 .x-menu-item-icon {
+	left: -24px;
+}
+
+.ext-ie8 .x-menu-item-icon,.ext-ie7 .x-menu-item-icon,.ext-ie6 .x-menu-item-icon
+	{
+	left: -24px;
+}
+.iButton2 {
+ 	BORDER-RIGHT: #0032c9 1px solid;
+	BORDER-TOP: #0032c9 1px solid;
+	BORDER-LEFT: #0032c9 1px solid;
+	BORDER-BOTTOM: #0032c9 1px solid;
+	FONT-SIZE: 12px;
+	FILTER:  progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#83dbe7, EndColorStr=#1170ae); 				
+	CURSOR:  hand;
+	COLOR: #ffffff;	
+	padding-top: 2px;
+	padding-left: 2px;
+	padding-right: 2px;
+	height:22px;
+} 

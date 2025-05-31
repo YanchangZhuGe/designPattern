@@ -1,0 +1,850 @@
+version=1.0
+11,22
+<0-0>
+	3:1206="19.0";1216=1;1205="19.0";1202="2";1201="4";1220="100";1105="en=\"org_sub_id\",ch=\"参数1\",tp=6,w=,fmt=\"\",val=\"C105\";en=\"end_date\",ch=\"参数2\",tp=6,w=,fmt=\"\",val=\"20131228\";en=\"start_date\",ch=\"参数3\",tp=6,w=,fmt=\"\",val=\"20130101\";";1102="name=ds1,sql=\"select   hrtemp.employee_id,\\r\\n                         hrtemp.employee_name,\\r\\n                         hrtemp.employee_gender,\\r\\n                         decode(hrtemp.employee_gender, \\\'0\\\', \\\'女\\\', \\\'1\\\', \\\'男\\\') employee_gender_name,\\r\\n                         decode(hrtemp.person_status,\\r\\n                                \\\'0\\\',\\r\\n                                \\\'\\\',\\r\\n                                \\\'1\\\',\\r\\n                                i1.org_abbreviation,\\r\\n                                \\\'\\\') relief_org_name,  \\r\\n                         hrtemp.relief_org,\\r\\n                         (to_char(sysdate, \\\'yyyy\\\') -\\r\\n                         to_char(hrtemp.employee_birth_date, \\\'yyyy\\\')) age,\\r\\n                         hrtemp.org_id,\\r\\n                         i.org_abbreviation,\\r\\n                         i.org_name,\\r\\n                         hrtemp.post,\\r\\n                         hrtemp.spare2,\\r\\n                         hrtemp.employee_cd,\\r\\n                         decode((to_char(sysdate, \\\'yyyy\\\') -\\r\\n                                to_char(hrtemp.work_date, \\\'yyyy\\\')),\\r\\n                                \\\'0\\\',\\r\\n                                \\\'1\\\',\\r\\n                                (to_char(sysdate, \\\'yyyy\\\') -\\r\\n                                to_char(hrtemp.work_date, \\\'yyyy\\\'))) work_age,\\r\\n                         s.org_subjection_id,\\r\\n                         decode(nvl(hrtemp.deploy_status, \\\'0\\\'),\\r\\n                                \\\'0\\\',\\r\\n                                \\\'\\\',\\r\\n                                \\\'1\\\',\\r\\n                                \\\'调配中\\\',\\r\\n                                \\\'2\\\',\\r\\n                                \\\'已调配\\\',\\r\\n                                \\\'\\\') deploy_status_name,\\r\\n                         nvl(hrtemp.deploy_status, \\\'0\\\') deploy_status,\\r\\n                         hrtemp.person_status,\\r\\n                         decode(hrtemp.person_status,\\r\\n                                \\\'0\\\',\\r\\n                                \\\'不在项目\\\',\\r\\n                                \\\'1\\\',\\r\\n                                \\\'在项目\\\',\\r\\n                                \\\'不在项目\\\') person_status_name,\\r\\n                         decode(hrtemp.spare6, \\\'0\\\', \\\'否\\\', \\\'1\\\', \\\'是\\\', \\\'\\\') report_status,\\r\\n                         decode(hrtemp.person_status,\\r\\n                                \\\'0\\\',\\r\\n                                \\\'\\\',\\r\\n                                \\\'1\\\',\\r\\n                                to_char(t2.plan_end_date, \\\'yyyy-MM-dd\\\'),\\r\\n                                \\\'\\\') plan_end_date,\\r\\n                         t2.team,\\r\\n                         t2.work_post,\\r\\n                         decode(hrtemp.person_status,\\r\\n                                \\\'0\\\',\\r\\n                                \\\'\\\',\\r\\n                                \\\'1\\\',\\r\\n                                t2.project_name_now,\\r\\n                                \\\'\\\') project_name_now,\\r\\n                         to_char( t4.actual_start_date, \\\'yyyy-MM-dd\\\') actual_start_date,\\r\\n                         to_char( t4.actual_end_date, \\\'yyyy-MM-dd\\\') actual_end_date,\\r\\n                         t4.project_name,\\r\\n                         d1.coding_code_id set_team,\\r\\n                         d2.coding_code_id set_post,\\r\\n                         d1.coding_name set_team_name,\\r\\n                         d2.coding_name set_post_name\\r\\n                    from (select distinct c.employee_cd,\\r\\n                                          c.employee_id,\\r\\n                                          c.org_id,\\r\\n                                          c.relief_org,\\r\\n                                          c.employee_name,\\r\\n                                          c.employee_birth_date,\\r\\n                                          c.employee_gender,\\r\\n                                          c.work_date,\\r\\n                                          c.post,\\r\\n                                          c.post_level,\\r\\n                                          c.employee_education_level,\\r\\n                                          c.spare2,\\r\\n                                          c.person_status,\\r\\n                                          c.deploy_status,\\r\\n                                          c.set_team,\\r\\n                                          c.set_post,\\r\\n                                          c.spare6\\r\\n                            from (select a.employee_cd,\\r\\n                                         a.employee_id,\\r\\n                                         a.org_id,\\r\\n                                         a.relief_org,\\r\\n                                         a.employee_name,\\r\\n                                         a.employee_birth_date,\\r\\n                                         a.employee_gender,\\r\\n                                         a.work_date,\\r\\n                                         a.post,\\r\\n                                         a.post_level,\\r\\n                                         a.employee_education_level,\\r\\n                                         a.spare2,\\r\\n                                         a.set_team,\\r\\n                                         a.person_status,\\r\\n                                         a.deploy_status,\\r\\n                                         a.set_post,\\r\\n                                         a.spare6\\r\\n                                    from ( select hr.employee_cd,\\r\\n                                                         e.employee_id,\\r\\n                                                         e.org_id,\\r\\n                                                         hr.relief_org,\\r\\n                                                         e.employee_name,\\r\\n                                                         e.employee_birth_date,\\r\\n                                                         e.employee_gender,\\r\\n                                                         hr.work_date,\\r\\n                                                         hr.post,\\r\\n                                                         hr.post_level,\\r\\n                                                         e.employee_education_level,\\r\\n                                                         hr.spare2,\\r\\n                                                         hr.person_status,\\r\\n                                                         hr.deploy_status,\\r\\n                                                         hr.set_team,\\r\\n                                                         hr.set_post,\\r\\n                                                         hr.spare6\\r\\n                                                    from comm_human_employee e\\r\\n                                                   inner join comm_human_employee_hr hr\\r\\n                                                      on e.employee_id =\\r\\n                                                         hr.employee_id\\r\\n                                                    left join comm_org_subjection s\\r\\n                                                      on e.org_id = s.org_id\\r\\n                                                     and s.bsflag = \\\'0\\\'\\r\\n                                                   where e.bsflag = \\\'0\\\'   and hr.spare7 is not null and  hr.spare7 =\\\'0\\\' \\r\\n                                                     and (1 = 1 and org_subjection_id like\\r\\n                                                         ? || \\\'%\\\') ) a\\r\\n                                ) c) hrtemp\\r\\n                    left join comm_coding_sort_detail d1\\r\\n                      on hrtemp.set_team = d1.coding_code_id\\r\\n                    left join comm_coding_sort_detail d2\\r\\n                      on hrtemp.set_post = d2.coding_code_id\\r\\n                    left join comm_org_subjection s\\r\\n                      on hrtemp.org_id = s.org_id\\r\\n                     and s.bsflag = \\\'0\\\'\\r\\n                    left join comm_org_information i\\r\\n                      on hrtemp.org_id = i.org_id\\r\\n                     and i.bsflag = \\\'0\\\'\\r\\n                    left join comm_org_information i1\\r\\n                      on hrtemp.relief_org = i1.org_id\\r\\n                     and i1.bsflag = \\\'0\\\'\\r\\n                    left join (select t1.*, t4.project_name project_name_now\\r\\n                                from (select prepare_no,\\r\\n                                             employee_id,\\r\\n                                             team,\\r\\n                                             work_post,\\r\\n                                             plan_end_date,\\r\\n                                             spare1,\\r\\n                                             row_number() over(partition by employee_id order by plan_end_date desc) r\\r\\n                                        from bgp_human_prepare_human_detail) t1\\r\\n                                left join bgp_human_prepare t3\\r\\n                                  on t1.prepare_no = t3.prepare_no\\r\\n                                left join gp_task_project t4\\r\\n                                  on t3.project_info_no = t4.project_info_no\\r\\n                               where t1.r = 1) t2\\r\\n                      on hrtemp.employee_id = t2.employee_id\\r\\n                    left join (select t3.*, p1.project_name\\r\\n                                from (select employee_id,\\r\\n                                             project_info_no,\\r\\n                                             actual_start_date,\\r\\n                                             actual_end_date,\\r\\n                                             row_number() over(partition by employee_id order by actual_start_date desc) r\\r\\n                                        from bgp_project_human_relation\\r\\n                                       where bsflag = \\\'0\\\'\\r\\n                                         and locked_if = \\\'1\\\') t3\\r\\n                                left join gp_task_project p1\\r\\n                                  on t3.project_info_no = p1.project_info_no\\r\\n                               where t3.r = 1) t4\\r\\n                      on hrtemp.employee_id = t4.employee_id\\r\\n                   order by      hrtemp.employee_name   asc\",type=normal,param=\"org_sub_id:6\",cached=0,,indexSorted=false,indexIsUnique=false;name=ds2,sql=\"select   d.employee_id,\\r\\n                                st.org_subjection_id,\\r\\n                                st.org_id,\\r\\n                                  trunc((nvl(d.actual_end_date, sysdate) -\\r\\n                                d.actual_start_date + 1)  )nums \\r\\n                  from bgp_human_prepare_human_detail d\\r\\n                 inner join bgp_human_prepare p\\r\\n                    on d.prepare_no = p.prepare_no\\r\\n                   and p.prepare_status = \\\'2\\\'\\r\\n                  left join bgp_project_human_relation r\\r\\n                    on d.employee_id = r.employee_id\\r\\n                   and p.project_info_no = r.project_info_no\\r\\n                   and r.team = d.team\\r\\n                   and r.work_post = d.work_post\\r\\n                  left join common_busi_wf_middle te\\r\\n                    on te.business_id = p.prepare_no\\r\\n                   and te.bsflag = \\\'0\\\'\\r\\n                  left join bgp_project_human_profess pr1\\r\\n                    on pr1.profess_no = p.profess_no\\r\\n                   and p.profess_no is not null\\r\\n                   and pr1.bsflag = \\\'0\\\'\\r\\n                  left join bgp_project_human_requirement pr\\r\\n                    on pr.requirement_no = p.requirement_no\\r\\n                   and p.requirement_no is not null\\r\\n                   and pr.bsflag = \\\'0\\\'\\r\\n                  left join bgp_project_human_relief re\\r\\n                    on re.human_relief_no = p.human_relief_no\\r\\n                   and p.human_relief_no is not null\\r\\n                   and re.bsflag = \\\'0\\\'\\r\\n                  left join comm_human_employee e\\r\\n                    on d.employee_id = e.employee_id\\r\\n                  left join comm_human_employee_hr h\\r\\n                    on d.employee_id = h.employee_id\\r\\n                  left join gp_task_project t\\r\\n                    on p.project_info_no = t.project_info_no\\r\\n                  left join comm_org_subjection st\\r\\n                    on e.org_id = st.org_id\\r\\n                   and st.bsflag = \\\'0\\\'\\r\\n                \\r\\n                 where p.bsflag = \\\'0\\\'\\r\\n                   and d.between_param is null\\r\\n                   and d.bsflag = \\\'0\\\'\\r\\n                   and (te.business_id is null or te.proc_status = \\\'3\\\')\\r\\n                   and (d.spare1 is null or d.spare1 = \\\'1\\\')\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds3,sql=\"select to_date(?,\\\'yyyymmdd\\\') - to_date(?,\\\'yyyymmdd\\\') + 1  as year_num from dual\",type=normal,param=\"end_date:6;start_date:6\",cached=0,,indexSorted=false,indexIsUnique=false;";1208="25.0";1207="25.0";1101="2";1209="2"
+</>
+<0-1>
+	3:2101="43.0";2102="10"
+</>
+<0-2>
+	3:2101="113.0"
+</>
+<0-3>
+	3:4106=0;2101="71.0";2102="10"
+</>
+<0-4>
+	3:2101="98.0"
+</>
+<0-5>
+	3:2101="47.0"
+</>
+<0-6>
+	3:2101="48.0"
+</>
+<0-7>
+	3:2101="91.0"
+</>
+<0-8>
+	3:2101="81.0"
+</>
+<0-9>
+	3:2101="70.86614"
+</>
+<0-10>
+	3:2101="70.86614"
+</>
+<0-11>
+	3:2101="70.0"
+</>
+<0-12>
+	3:2101="77.0";2102="10"
+</>
+<0-13>
+	3:2101="129.0";2102="10"
+</>
+<0-14>
+	3:2101="138.0";2102="10"
+</>
+<0-15>
+	3:2101="109.0";2102="10"
+</>
+<0-16>
+	3:2101="175.0";2102="10"
+</>
+<0-17>
+	3:2101="175.0";2102="10"
+</>
+<0-18>
+	3:2101="171.0";2102="10"
+</>
+<0-19>
+	3:2101="74.0";2102="10"
+</>
+<0-20>
+	3:2102="10";4106=1
+</>
+<0-21>
+	3:2101="78.0"
+</>
+<1-0>
+	3:3101="35.0"
+</>
+<1-1>
+	3:4410="4";4409="-16777216";4408="0.75";4405="0.75";4404="1";4407="4";4406="-16777216";4401="4";4412="-16777216";4403="-16777216";4411="0.75";4402="0.75"
+</>
+<1-2>
+	1:1
+	3:4401="1";4302="12";4301="宋体";4304=0;4303="-16777216";4306=0;4305=0;4201="1";4202="2";4203="0";4413="-1"
+</>
+<1-3>
+	1:1
+	2:4302,4301,4304,4303,4306,4305,4202,4203,4413
+	3:4201="2"
+</>
+<1-4>
+	1:1
+	2:4405,4404,4406
+	3:4201="1";4302="12";4301="宋体";4304=0;4303="-16777216";4306=0;4305=0;4202="2";4203="0";4413="-1"
+</>
+<1-5>
+	1:1
+	2:4402,4401,4403
+</>
+<1-6>
+	1:1
+</>
+<1-7>
+	1:1
+</>
+<1-8>
+	1:1
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<1-9>
+	1:1
+	3:4402="0.75";4401="1";4403="-16777216";4201="2";4302="22";4304=1;4103="1,9-1,13";4102="人员项目动态情况"
+</>
+<1-10>
+	1:1
+	2:4405,4404,4406,4102
+</>
+<1-11>
+	1:1
+	2:4402,4401,4403
+	3:4405="0.75";4404="1";4406="-16777216"
+</>
+<1-12>
+	1:1
+	2:4301,4303,4306,4305,4202,4203,4413
+	3:4402="0.75";4401="1";4403="-16777216"
+</>
+<1-13>
+	1:1
+</>
+<1-14>
+	1:1
+	2:4201,4302,4304,4103
+</>
+<1-15>
+	1:1
+</>
+<1-16>
+	1:1
+</>
+<1-17>
+	1:1
+</>
+<1-18>
+	1:1
+	3:4106=0
+	4:4102="ds3.select(year_num)"
+</>
+<1-19>
+	1:1
+	2:4106
+</>
+<1-20>
+	1:1
+</>
+<1-21>
+	1:1
+	3:4404="4";4302="12";4301="宋体";4304=0;4303="-16777216";4306=0;4201="1";4305=0;4202="2";4203="0";4413="-1"
+</>
+<2-0>
+	3:3101="22.677166"
+</>
+<2-1>
+	1:0
+	3:4404="4";4302="15";4304=1;4201="2";4102="序号"
+</>
+<2-2>
+	1:0
+	3:4401="4";4404="4";4302="14";4304=1;4201="2";4102="员工编号"
+</>
+<2-3>
+	1:1
+	2:4301,4303,4306,4305,4202,4203,4413
+	3:4302="15";4102="人员id"
+</>
+<2-4>
+	1:0
+	3:4401="4";4201="2";4302="14";4304=1;4405="0.75";4404="4";4406="-16777216";4102="姓名"
+</>
+<2-5>
+	1:1
+	3:4102="性别"
+</>
+<2-6>
+	1:1
+	3:4102="年龄"
+</>
+<2-7>
+	1:1
+	3:4102="组织机构"
+</>
+<2-8>
+	1:1
+	3:4102="HR岗位"
+</>
+<2-9>
+	1:1
+	3:4102="设置班组"
+</>
+<2-10>
+	1:1
+	3:4102="设置岗位"
+</>
+<2-11>
+	1:1
+	3:4102="工作年限"
+</>
+<2-12>
+	1:1
+	3:4102="人员状态"
+</>
+<2-13>
+	1:1
+	2:4301,4303,4306,4305,4202,4203,4413
+	3:4102="所在项目名称"
+</>
+<2-14>
+	1:1
+	3:4102="预计离开项目时间"
+</>
+<2-15>
+	1:1
+	3:4102="调配状态"
+</>
+<2-16>
+	1:1
+	3:4102="最近一次进入项目时间"
+</>
+<2-17>
+	1:1
+	3:4102="最近一次离开项目时间"
+</>
+<2-18>
+	1:1
+	3:4102="最近一次上岗项目名称"
+</>
+<2-19>
+	1:1
+	3:4102="出工"
+</>
+<2-20>
+	1:1
+	3:4102="出工"
+</>
+<2-21>
+	1:0
+	3:4401="4";4302="14";4304=1;4201="2";4102="待工天数"
+</>
+<3-0>
+	3:3101="22.677166"
+</>
+<3-1>
+	1:0
+	2:4302,4304,4102
+	3:4502="B3"
+	4:4102="row()-2"
+</>
+<3-2>
+	1:0
+	2:4102
+	3:4302="12";4304=0
+	4:4102="ds1.select(employee_cd)"
+</>
+<3-3>
+	1:1
+	2:4302,4301,4304,4306,4305,4202,4203
+	3:4502="B3";4415="-16777216"
+	4:4102="ds1.employee_id"
+</>
+<3-4>
+	1:0
+	2:4102
+	3:4302="12";4304=0;4502="B3";4415="-16777216";4109="1"
+	4:4102="ds1.employee_name"
+</>
+<3-5>
+	1:1
+	2:4109
+	4:4102="ds1.employee_gender_name"
+</>
+<3-6>
+	1:1
+	4:4102="ds1.age"
+</>
+<3-7>
+	1:1
+	3:4109="1"
+	4:4102="ds1.org_abbreviation"
+</>
+<3-8>
+	1:1
+	4:4102="ds1.post"
+</>
+<3-9>
+	1:1
+	4:4102="ds1.set_team_name"
+</>
+<3-10>
+	1:1
+	4:4102="ds1.set_post_name"
+</>
+<3-11>
+	1:1
+	2:4109
+	4:4102="ds1.work_age"
+</>
+<3-12>
+	1:1
+	2:4302,4301,4304,4306,4305,4202,4203
+	4:4102="ds1.person_status_name"
+</>
+<3-13>
+	1:1
+	3:4109="1"
+	4:4102="ds1.project_name_now"
+</>
+<3-14>
+	1:1
+	2:4109
+	4:4102="ds1.plan_end_date"
+</>
+<3-15>
+	1:1
+	4:4102="ds1.deploy_status_name"
+</>
+<3-16>
+	1:1
+	4:4102="ds1.actual_start_date"
+</>
+<3-17>
+	1:1
+	4:4102="ds1.actual_end_date"
+</>
+<3-18>
+	1:1
+	3:4109="1"
+	4:4102="ds1.project_name"
+</>
+<3-19>
+	1:1
+	2:4109
+	4:4102="ds2.sum(nums,employee_id=C3)";4105="if(@value<=0,\'\',@value)"
+</>
+<3-20>
+	1:1
+	4:4102="ds2.sum(nums,employee_id=C3)";4105="if(@value<=0,R1,@value)"
+</>
+<3-21>
+	1:0
+	2:4102
+	3:4302="12";4304=0;4502="B3";4415="-16777216"
+	4:4105="if(@value<=0,\'\',@value)";4102="R1-T3"
+</>
+<4-0>
+	3:3101="22.677166"
+</>
+<4-1>
+	1:0
+	2:4410,4412,4411,4201,4502
+	3:4404="1";4401="1"
+</>
+<4-2>
+	1:0
+	2:4410,4412,4411
+	3:4401="1";4404="1";4201="1"
+</>
+<4-3>
+	1:1
+	2:4302,4301,4304,4303,4306,4305,4202,4203,4413
+	3:4201="2"
+</>
+<4-4>
+	1:0
+	2:4410,4412,4411,4405,4404,4406,4502,4415,4109
+	3:4401="1";4201="1"
+</>
+<4-5>
+	1:1
+	2:4402,4401,4403
+</>
+<4-6>
+	1:1
+</>
+<4-7>
+	1:1
+</>
+<4-8>
+	1:1
+</>
+<4-9>
+	1:1
+</>
+<4-10>
+	1:1
+</>
+<4-11>
+	1:0
+	2:4402,4401,4403,4410,4412,4411,4502,4415
+	3:4201="1";4404="1"
+</>
+<4-12>
+	1:0
+	2:4410,4412,4411,4201,4303,4413,4502,4415
+	3:4401="1";4404="1"
+</>
+<4-13>
+	1:1
+</>
+<4-14>
+	1:1
+</>
+<4-15>
+	1:1
+</>
+<4-16>
+	1:1
+</>
+<4-17>
+	1:1
+</>
+<4-18>
+	1:1
+</>
+<4-19>
+	1:1
+</>
+<4-20>
+	1:0
+	2:4201,4303,4413,4502,4415
+	3:4401="1";4404="1";4410="1"
+</>
+<4-21>
+	1:0
+	2:4410,4412,4411,4502,4415
+	3:4401="1";4404="1";4201="1"
+</>
+<5-0>
+	3:3101="22.677166"
+</>
+<5-1>
+	1:0
+	2:4407,4409,4408
+</>
+<5-2>
+	1:0
+	2:4409,4408,4407
+</>
+<5-3>
+	1:0
+	2:4409,4408,4407
+</>
+<5-4>
+	1:0
+	2:4409,4408,4407
+</>
+<5-5>
+	1:0
+	2:4409,4408,4407
+</>
+<5-6>
+	1:0
+	2:4409,4408,4407
+</>
+<5-7>
+	1:0
+	2:4409,4408,4407
+</>
+<5-8>
+	1:0
+	2:4409,4408,4407
+</>
+<5-9>
+	1:0
+	2:4409,4408,4407
+</>
+<5-10>
+	1:0
+	2:4409,4408,4407
+</>
+<5-11>
+	1:0
+	2:4409,4408,4407
+</>
+<5-12>
+	1:0
+	2:4409,4408,4407
+</>
+<5-13>
+	1:0
+	2:4409,4408,4407
+</>
+<5-14>
+	1:0
+	2:4409,4408,4407
+</>
+<5-15>
+	1:0
+	2:4409,4408,4407
+</>
+<5-16>
+	1:0
+	2:4409,4408,4407
+</>
+<5-17>
+	1:0
+	2:4409,4408,4407
+</>
+<5-18>
+	1:0
+	2:4409,4408,4407
+</>
+<5-19>
+	1:0
+	2:4409,4408,4407
+</>
+<5-20>
+	1:0
+	2:4409,4408,4407
+</>
+<5-21>
+	1:0
+	2:4409,4408,4407
+</>
+<6-0>
+	3:3101="22.677166"
+</>
+<6-1>
+	1:0
+</>
+<6-2>
+	1:0
+</>
+<6-3>
+	1:0
+</>
+<6-4>
+	1:0
+</>
+<6-5>
+	1:0
+</>
+<6-6>
+	1:0
+</>
+<6-7>
+	1:0
+</>
+<6-8>
+	1:0
+</>
+<6-9>
+	1:0
+</>
+<6-10>
+	1:0
+</>
+<6-11>
+	1:0
+</>
+<6-12>
+	1:0
+</>
+<6-13>
+	1:0
+</>
+<6-14>
+	1:0
+</>
+<6-15>
+	1:0
+</>
+<6-16>
+	1:0
+</>
+<6-17>
+	1:0
+</>
+<6-18>
+	1:0
+</>
+<6-19>
+	1:0
+</>
+<6-20>
+	1:0
+	2:4410,4411,4412
+</>
+<6-21>
+	1:0
+</>
+<7-0>
+	3:3101="22.677166"
+</>
+<7-1>
+	1:0
+</>
+<7-2>
+	1:0
+</>
+<7-3>
+	1:0
+</>
+<7-4>
+	1:0
+</>
+<7-5>
+	1:0
+</>
+<7-6>
+	1:0
+</>
+<7-7>
+	1:0
+</>
+<7-8>
+	1:0
+</>
+<7-9>
+	1:0
+</>
+<7-10>
+	1:0
+</>
+<7-11>
+	1:0
+</>
+<7-12>
+	1:0
+</>
+<7-13>
+	1:0
+</>
+<7-14>
+	1:0
+</>
+<7-15>
+	1:0
+</>
+<7-16>
+	1:0
+</>
+<7-17>
+	1:0
+</>
+<7-18>
+	1:0
+</>
+<7-19>
+	1:0
+</>
+<7-20>
+	1:0
+	3:4407="1";4408="0.75";4409="-16777216";4410="1";4411="0.75";4412="-16777216"
+</>
+<7-21>
+	1:0
+</>
+<8-0>
+	3:3101="22.677166"
+</>
+<8-1>
+	1:0
+</>
+<8-2>
+	1:0
+</>
+<8-3>
+	1:0
+</>
+<8-4>
+	1:0
+</>
+<8-5>
+	1:0
+</>
+<8-6>
+	1:0
+</>
+<8-7>
+	1:0
+</>
+<8-8>
+	1:0
+</>
+<8-9>
+	1:0
+</>
+<8-10>
+	1:0
+</>
+<8-11>
+	1:0
+</>
+<8-12>
+	1:0
+</>
+<8-13>
+	1:0
+</>
+<8-14>
+	1:0
+</>
+<8-15>
+	1:0
+</>
+<8-16>
+	1:0
+</>
+<8-17>
+	1:0
+</>
+<8-18>
+	1:0
+</>
+<8-19>
+	1:0
+</>
+<8-20>
+	1:0
+	2:4407,4408,4409
+</>
+<8-21>
+	1:0
+</>
+<9-0>
+	3:3101="22.677166"
+</>
+<9-1>
+	1:0
+</>
+<9-2>
+	1:0
+</>
+<9-3>
+	1:0
+</>
+<9-4>
+	1:0
+</>
+<9-5>
+	1:0
+</>
+<9-6>
+	1:0
+</>
+<9-7>
+	1:0
+</>
+<9-8>
+	1:0
+</>
+<9-9>
+	1:0
+</>
+<9-10>
+	1:0
+</>
+<9-11>
+	1:0
+</>
+<9-12>
+	1:0
+</>
+<9-13>
+	1:0
+</>
+<9-14>
+	1:0
+</>
+<9-15>
+	1:0
+</>
+<9-16>
+	1:0
+</>
+<9-17>
+	1:0
+</>
+<9-18>
+	1:0
+</>
+<9-19>
+	1:0
+</>
+<9-20>
+	1:0
+</>
+<9-21>
+	1:0
+</>
+<10-0>
+	3:3101="22.677166"
+</>
+<10-1>
+	1:0
+</>
+<10-2>
+	1:0
+</>
+<10-3>
+	1:0
+</>
+<10-4>
+	1:0
+</>
+<10-5>
+	1:0
+</>
+<10-6>
+	1:0
+</>
+<10-7>
+	1:0
+</>
+<10-8>
+	1:0
+</>
+<10-9>
+	1:0
+</>
+<10-10>
+	1:0
+</>
+<10-11>
+	1:0
+</>
+<10-12>
+	1:0
+</>
+<10-13>
+	1:0
+</>
+<10-14>
+	1:0
+</>
+<10-15>
+	1:0
+</>
+<10-16>
+	1:0
+</>
+<10-17>
+	1:0
+</>
+<10-18>
+	1:0
+</>
+<10-19>
+	1:0
+</>
+<10-20>
+	1:0
+	2:4410,4411,4412
+</>
+<10-21>
+	1:0
+</>

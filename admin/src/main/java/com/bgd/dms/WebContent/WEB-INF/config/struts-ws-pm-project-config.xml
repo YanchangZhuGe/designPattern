@@ -1,0 +1,40 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!-- 井中 计划日效保存 -->
+		<action path="/ws/pm/dailyPlan/saveOrUpdateDailyPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="WsDailyReportPlanSrv"
+				operationName="saveOrUpdateDailyPlan" />
+			<forward name="success" path="/ws/pm/plan/singlePlan/workload/dailyPlanList.jsp"/>
+		</action>
+		
+		<!-- 技术管理 单项目 设计井中施工方法保存 -->
+		<action path="/ws/pm/plan/singlePlan/projectSchedule/saveWsWorkMethod" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WsWorkMethodSrv"
+				operationName="saveWsWorkMethod" />
+			<forward name="success" path="/ws/pm/plan/singlePlan/projectSchedule/wellmethod.jsp"/>
+		</action>
+		<!-- 技术管理 单项目 设计井中施工方法保存 -->
+		<action path="/ws/pm/plan/singlePlan/projectSchedule/saveWsWorkMethodUsed" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WsWorkMethodSrv"
+				operationName="saveWsWorkMethod" />
+			<forward name="success" path="/ws/pm/plan/singlePlan/projectSchedule/wellmethodUsed.jsp"/>
+		</action>
+		
+		<!-- 编制计划 单项目 工作量保存 -->
+		<action path="/ws/pm/plan/singlePlan/workload/updateWorkload" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="WorkloadSrv"
+				operationName="updateWorkload" />
+			<forward name="success" path="/ws/pm/plan/singlePlan/workload/forward.jsp"/>
+		</action>
+		
+   
+	</action-mappings>
+</struts-config>

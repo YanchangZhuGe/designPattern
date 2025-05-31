@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_TL>
+  <PagerAction>Add</PagerAction>
+  <PageTitle>服务</PageTitle>
+  <QuerySQL>
+    <tableName>sys_config_service_dms</tableName>
+    <fields>
+      <field name="service_id" type="TEXT">service_id</field>
+      <field name="service_name" type="TEXT">service_name</field>
+      <field name="cn_name" type="TEXT">cn_name</field>
+      <field name="is_log" type="TEXT">is_log</field>
+      <field name="is_monitor" type="TEXT">is_monitor</field>
+      <field name="domain" type="TEXT">domain</field>
+      <field name="create_time" type="D">create_time</field>
+      <field name="creator" type="TEXT">creator</field>
+      <field name="memo" type="TEXT">memo</field>
+      <field name="sub_sys_id" type="TEXT">sub_sys_id</field>
+      <field name="module_id" type="TEXT">module_id</field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="isOps">
+      <option value="0">否</option>
+      <option value="1">是</option>
+    </Select>
+  </Options>
+  <Codes>
+    <Code name="subSyses" sql="SELECT entity_id AS value,name AS label FROM  ew_module WHERE flag='00'">子系统</Code>
+    <Code name="modules" sql="SELECT entity_id AS value,name AS label FROM  ew_module WHERE flag='11' AND parent_id='{fdValue}'" fdName="sub_sys_id">模块</Code>
+  </Codes>
+  <EntityFields>
+    <field name="service_name" isUnique="true" nonEmpty="true">服务名</field>
+    <field name="cn_name">中文名称</field>
+    <field name="is_log" type="SEL_OPs" selValue="isOps">记录日志</field>
+    <field name="is_monitor" type="SEL_OPs" selValue="isOps">监控服务</field>
+    <field name="create_time" type="D" isShow="Hide" defaultValue="CURRENT_DATE_TIME">创建时间</field>
+    <field name="creator" isShow="Hide" defaultValue="$USER.userId">创建人</field>
+    <field name="memo" type="MEMO">备注</field>
+    <field name="sub_sys_id" type="SEL_Codes" selValue="subSyses">子系统</field>
+    <field name="module_id" type="SEL_Codes" selValue="modules">模块</field>
+  </EntityFields>
+</SAIS_EAW_TL>

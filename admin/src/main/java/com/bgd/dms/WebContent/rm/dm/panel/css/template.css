@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+.bg{ background-color:#f3f3f3; width:960px; margin:0 auto;}
+
+.iframe_footer{ width:100%; height:60px;}
+
+.header{ height:60px;}
+.header_logo{ vertical-align:middle;}
+.header_companyName{ font-family:"黑体"; font-size:24px; font-weight:bold; margin-top:18px;}
+
+.footer{ width:100%; border-top:#ccc 1px solid; padding-bottom:10px;}
+.footer_copyright{ color:#aaa;}
+.footer_link{ color:#666;}
+.footer_link a{ color:#666;}
+
+.input_search{ margin-top:20px;}
+
+.nav{ height:36px;}
+.nav ul.navLv1{ float:left; width:100%; background:url(../img/nav_bg.png) repeat-x;}
+.nav ul.navLv1 li{ float:left;}
+.nav ul.navLv1 li a{ display:block; width:130px; height:36px; line-height:36px; text-align:center; color:#fff; background:url(../img/nav_clip_bg.png) right no-repeat;}
+.nav ul.navLv2{ float:left; position:absolute; display:none;}
+.nav ul.navLv2 li{ float:none; width:130px; text-align:center; background:#333; height:30px; line-height:30px;}
+.nav ul.navLv2 li a{ display:block; width:110px; height:24px; line-height:24px; text-align:center; color:#fff; background:none;}
+.nav ul.navLv2 li a:hover{ background:#900; }
+
+.path{ height:28px; line-height:28px; border-top:#dfdfdf 1px solid; border-bottom:#dfdfdf 1px solid; margin:20px 0; color:#999; font-weight:bold; text-indent:1em;}
+
+.wrap{ box-shadow:2px 2px 3px #ccc; border-radius:5px; margin-bottom:20px;}
+.wrap_tt{ background:#f6f6f6; border:#eee 1px solid; height:33px; line-height:33px; color:#333; font-weight:bold; text-indent:1em; border-radius:5px 5px 0 0;}
+.wrap_ctt{ background:#fcfcfc; border:#eee 1px solid; border-top:none; text-align:center; padding:10px; border-radius:0 0 5px 5px;}
+
+
+

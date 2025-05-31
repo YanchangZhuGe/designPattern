@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>  
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{			
+				var ctt = top.frames('list');
+				if(ctt.frames.length == 0){
+					ctt.refreshData();
+				}else{
+					if(ctt.frames[0].length == 0){
+						ctt.frames["targetbreak"].location.reload();
+					}else{
+						ctt.frames[1].frames["targetbreak"].location.reload();
+					}
+				}
+				newClose();
+			}
+		}
+    </CRU> 
+  </JavaScripts> 
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>增加编辑目标分解</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_risk_target d where d.bsflag ='0' and d.target_id = '$PARAM.id'</sql>
+    <tableName>bgp_risk_target</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+   </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="target_id" isShow="Hide">ID</field>
+    <field name="target_break_name">内容</field>
+    <field name="relation_id" isShow="Hide" defaultValue="$PARAM.relationid" action="C">关联主键</field>
+    <field name="target_break_desc" type="MEMO">描述</field>
+    <field name="target_break_remark" type="MEMO">备注</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$USER.projectInfoNo">项目编号</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0" action="C">文件状态</field>
+    <field name="is_target_break" isShow="Hide" defaultValue="1" action="C">是否目标分解</field>
+    <field name="creator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="C">创建人</field>
+    <field name="updator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="C,U">修改人</field>
+    <field name="create_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C">创建时间</field>
+    <field name="modifi_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C,U">修改时间</field>
+    <field name="org_id" isShow="Hide" defaultValue="$USER.codeAffordOrgID">org_id</field>
+    <field name="org_subjection_id" isShow="Hide" defaultValue="$USER.subOrgIDofAffordOrg">org_subjection_id</field>
+  </EntityFields>
+</SAIS_EAW_TL>

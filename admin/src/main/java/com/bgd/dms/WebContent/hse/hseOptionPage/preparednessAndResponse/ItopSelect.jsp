@@ -1,0 +1,296 @@
+<%@ page language="java" contentType="text/html; charset=GBK"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.cnpc.jcdp.common.UserToken"%>
+<%@ page import="com.bgp.gms.service.rm.em.pojo.*"%>
+<%@ page import="com.cnpc.jcdp.soa.msg.ISrvMsg"%>
+<%@ page import="com.cnpc.jcdp.webapp.util.OMSMVCUtil"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.cnpc.jcdp.soa.msg.MsgElement"%>
+<%@ taglib uri="code" prefix="code"%> 
+<%@page import="com.cnpc.jcdp.webapp.util.JcdpMVCUtil" %>
+<%
+String contextPath = request.getContextPath();
+UserToken user = OMSMVCUtil.getUserToken(request);
+String userName = (user==null)?"":user.getEmpId();
+SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+String curDate = format.format(new Date());
+ 
+ 
+%>
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<link href="<%=contextPath%>/styles/style.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/styles/SpryTabbedPanels3.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/cn/style.css" /> 
+<link href="<%=contextPath%>/css/common.css" rel="stylesheet" type="text/css" /> 
+<link href="<%=contextPath%>/css/main.css" rel="stylesheet" type="text/css" /> 
+<link href="<%=contextPath%>/css/rt_cru.css" rel="stylesheet" type="text/css" /> 
+<link rel="stylesheet" href="<%=contextPath%>/skin/cute/style/style.css" type="text/css" /> 
+<link rel="stylesheet" type="text/css" media="all" href="<%=contextPath%>/css/calendar-blue.css" /> 
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/cn/jquery_ui/jquery.ui.all.css" /> 
+<script type="text/javascript" src="<%=contextPath%>/js/jquery-1.7.1.min.js"></script> 
+<script type="text/javascript" src="<%=contextPath%>/js/dialog_open.js"></script> 
+<script type="text/javascript" src="<%=contextPath%>/js/table.js"></script> 
+<script type="text/javascript" src="<%=contextPath%>/js/ui/jquery.ui.core.js"></script> 
+<script type="text/javascript" src="<%=contextPath%>/js/ui/jquery.ui.widget.js"></script> 
+<script type="text/javascript" src="<%=contextPath%>/js/ui/jquery.ui.mouse.js"></script> 
+<script type="text/javascript" src="<%=contextPath%>/js/ui/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/calendar.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/cn/calendar_lan.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/calendar-setup.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/rt_base.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/rt_cru.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/cn/rt_cru_lan.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/proc_base.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/fujian.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/rt_validate.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/cn/rt_validate_lan.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/rt_edit.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/json.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/rt/ui_dyAdd.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/gms_list.js"></script>
+
+<script type="text/javascript">
+cruConfig.contextPath='<%=contextPath%>';
+cruConfig.cdtType = 'form';
+var currentCount=parseInt('0');
+var deviceCount = parseInt('0');
+ 
+function sucess11(){
+
+	var deviceCount = document.getElementById("equipmentSize").value;
+	alert(deviceCount);
+	var isCheck=true;
+	for(var i=0;i<deviceCount;i++){
+		if(document.getElementById("fy"+i+"check").checked == true){
+			isCheck=false;
+		}
+	}
+	if(isCheck){
+		alert("请选择一条记录");
+		return false;
+	}else{
+		var form = document.getElementById("CheckForm");
+		form.action = "<%=contextPath%>/rm/em/toSaveHumanRequired.srq";
+		form.submit();
+		alert('保存成功');
+		newClose();
+		return true;
+	}
+	
+ 
+}
+
+ 
+function sucess(){
+	if(checkForm()){
+		var form = document.getElementById("CheckForm");
+		form.action = "<%=contextPath%>/rm/em/toSaveHumanRequired.srq";
+		form.submit();
+		alert('保存成功');
+		newClose();
+	}
+}
+
+function checkForm(){
+	var deviceCount = document.getElementById("equipmentSize").value;
+	var isCheck=true;
+	for(var i=0;i<deviceCount;i++){
+		if(document.getElementById("fy"+i+"check").checked == true){
+			isCheck=false;
+		}
+	}
+	if(isCheck){
+		alert("请选择一条记录");
+		return false;
+	}else{
+		return true;
+	}
+	
+
+}
+	
+
+ 
+
+function notNullForCheck(filedName,fieldInfo){
+
+	if(document.getElementById(filedName).value==null||document.getElementById(filedName).value==""){
+		alert(fieldInfo+"不能为空");
+		document.getElementById(filedName).onfocus="true";
+		return false;
+	}else{
+		return true;
+	}
+}
+function isNumberForCheck(filedName,fieldInfo){
+	var valNumber = document.getElementById(filedName).value;
+	var re=/^[1-9]+[0-9]*]*$/;
+	if(valNumber!=null&&valNumber!=""){
+		if(!re.test(valNumber)){
+			alert(fieldInfo+"格式不正确,请重新输入");
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return true;
+	}
+}
+
+ 
+function selectOrg(){
+    var teamInfo = {
+        fkValue:"",
+        value:""
+    };
+    window.showModalDialog('<%=contextPath%>/common/selectOrgSub.jsp',teamInfo);
+    if(teamInfo.fkValue!=""){
+    	document.getElementById("org_sub_id").value = teamInfo.fkValue;
+        document.getElementById("org_name").value = teamInfo.value;
+    }
+}
+
+function selectOrg2(){
+    var teamInfo = {
+        fkValue:"",
+        value:""
+    };
+    var second = document.getElementById("org_sub_id").value;
+	var org_id="";
+		var checkSql="select t.org_id from comm_org_subjection t where t.bsflag='0' and t.org_subjection_id='"+second+"'";
+	   	var queryRet = syncRequest('Post','<%=request.getContextPath()%>'+appConfig.queryListAction,'querySql='+checkSql);
+		var datas = queryRet.datas;
+		if(datas==null||datas==""){
+		}else{
+			org_id = datas[0].org_id; 
+	    }
+		    window.showModalDialog('<%=contextPath%>/common/selectOrgSub.jsp?orgId='+org_id,teamInfo);
+		    if(teamInfo.fkValue!=""){
+		    	 document.getElementById("second_org").value = teamInfo.fkValue; 
+		        document.getElementById("second_org_name").value = teamInfo.value;
+			}
+   
+}
+
+ 
+function clearQueryText(){
+	 document.getElementsByName("org_sub_id")[0].value="";
+	 document.getElementsByName("org_name")[0].value="";
+	 document.getElementsByName("second_org")[0].value="";	
+	 document.getElementsByName("second_org_name")[0].value="";	
+ 
+    document.getElementsByName("supplies_name")[0].value="";
+	document.getElementsByName("supplies_category")[0].value="";	
+	document.getElementsByName("acquisition_time")[0].value="";			
+ 
+}
+
+function simpleSearch(){
+	var arrayObj = new Array();
+	var t=document.getElementById("table1").childNodes.item(0);
+		for(var i=0;i< t.childNodes.length;i++)
+	{
+		for(var j=1;j<t.childNodes(i).childNodes.length;j=j+2)
+      {
+      	arrayObj.push({"label":t.childNodes(i).childNodes[j].firstChild.name,"value":t.childNodes(i).childNodes[j].firstChild.value}); 
+      }
+   		//arrayObj.push(t.childNodes(i).childNodes[1].firstChild.value);
+  		//arrayObj.push(t.childNodes(i).childNodes[3].firstChild.value);  
+	}
+	 var ctt = self.parent.frames["leftframe"];
+     ctt.deleteTableTr("queryRetTable");
+     ctt.refreshData(arrayObj); 
+  //  self.parent.frames["leftframe"].location="<%=contextPath %>/hse/notConforMcorrectiveAction/rectificationProblem/leftPage.jsp?arrayObj="+arrayObj;
+}
+
+</script>
+<title>应急物资台账查询</title>
+</head>
+<body  onload="getHazardBig();" >
+<form id="CheckForm" name="Form0" action="" method="post"  target="list">
+<table border="0" cellpadding="0" cellspacing="0" class="tab_line_height"   id="table1" width="1000px">
+ 
+	<tr  >
+		  <td class="inquire_item6">单位：</td>
+	  	<td class="inquire_form6"> 
+	    	<input type="text" id="org_name" name="org_name" class="input_width"  style="width:180px;"    <%if(!JcdpMVCUtil.hasPermission("F_HSE_ORG_001", request)||!JcdpMVCUtil.hasPermission("F_HSE_ORG_002", request)||!JcdpMVCUtil.hasPermission("F_HSE_ORG_003", request)){ %> readonly="readonly"<%} %> onkeydown="return noEdit(event)"/>
+	  	<%if(JcdpMVCUtil.hasPermission("F_HSE_ORG_001", request)&&JcdpMVCUtil.hasPermission("F_HSE_ORG_002", request)&&JcdpMVCUtil.hasPermission("F_HSE_ORG_003", request)){ %>
+	  	<img src="<%=contextPath%>/images/magnifier.gif" width="16" height="16" style="cursor:hand;" onclick="selectOrg()"/>
+	  	<%} %>	  
+	  	   <input type="hidden" id="org_sub_id" name="org_sub_id" class="input_width" />	
+	  	</td>
+	    	<td class="inquire_item6">二级单位：</td>
+	  	<td class="inquire_form6"> 
+	  	  <input type="text" id="second_org_name" name="second_org_name" class="input_width"   style="width:180px;"  <%if(!JcdpMVCUtil.hasPermission("F_HSE_ORG_001", request)||!JcdpMVCUtil.hasPermission("F_HSE_ORG_002", request)){ %>readonly="readonly"<%} %> onkeydown="return noEdit(event)"/>
+	  	<%if(JcdpMVCUtil.hasPermission("F_HSE_ORG_001", request)&&JcdpMVCUtil.hasPermission("F_HSE_ORG_002", request)){ %>
+	  	<img src="<%=contextPath%>/images/magnifier.gif" width="16" height="16" style="cursor:hand;" onclick="selectOrg2()"/>
+	  	<%} %>
+	  	 <input type="hidden" id="second_org" name="second_org" class="input_width" />
+	  	</td>    		    
+	    <td class="inquire_item4">物资类别：</td> 
+	 	<td class="inquire_form4">	 
+	 	 <select id="supplies_category" name="supplies_category" class="select_width"  style="width:180px;">
+	 	  <option value="" >请选择</option>
+	       <option value="1" >人身防护</option>
+	       <option value="2" >医疗急救</option>
+	       <option value="3" >消防救援</option>
+	       <option value="4" >防洪防汛</option>
+	       <option value="5" >应急照明</option>
+	       <option value="6" >交通运输</option>
+	       <option value="7" >通讯联络</option>
+	       <option value="8" >检测监测</option>
+	       <option value="9" >工程抢险</option>
+	       <option value="10" >剪切破拆</option>
+	       <option value="11" >电力抢修</option>
+	       <option value="12" >其他</option>
+	 	</select> 
+	     </td>	
+	</tr>
+	<tr  >
+	 
+	<td  class="inquire_item4"><font color=red></font>&nbsp;物资名称：</td>
+	<td class="inquire_form4">	 
+	<input type="text" id="supplies_name" name="supplies_name" class="input_width"    style="width:180px;" />
+  	</td>
+	
+	<td  class="inquire_item4"><font color=red></font>&nbsp;购置时间：</td>
+	<td class="inquire_form4">	 
+    <input type="text" id="acquisition_time" name="acquisition_time" class="input_width"   style="width:180px;"  /> (日期格式为：yyyy-MM-dd)
+    <div style="display:none"> <img src="<%=contextPath%>/images/calendar.gif" id="tributton1" width="16" height="16" style="cursor: hand;" onmouseover="calDateSelector(acquisition_time,tributton1);" />&nbsp;
+    </div>
+    </td> 
+	</tr>
+</table>
+ <br>
+<table  width="1000px;" border="0" cellspacing="0" cellpadding="0"   >
+<tr> 
+  <td background="<%=contextPath%>/images/list_15.png" >
+  <table width="1000px" border="0" cellspacing="0" cellpadding="0">
+<tr align="right">
+
+	<td class="ali_query"></td>
+	<td class="ali_query"></td>
+	<td class="ali_query"></td>
+	<td class="ali_query"></td>
+	<td class="ali_query">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	<td class="ali_query">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  <td class="ali_query">
+  <span class="cx"><a href="#" onclick="simpleSearch()" title="JCDP_btn_query"></a></span>
+ 
+  <span class="qc"><a href="#" onclick="clearQueryText()" title="JCDP_btn_clear"></a></span>
+  </td>
+</tr>
+</table>
+</td>
+ 
+</tr>
+</table>
+
+</form>
+</body>
+</html>

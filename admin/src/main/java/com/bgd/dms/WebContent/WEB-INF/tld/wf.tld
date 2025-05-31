@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>wftag</shortname>
+	<tag>
+		<name>getProcessInfo</name>
+		<tagclass>com.bgp.mcs.service.pm.bpm.workFlow.srv.ProcessGetInfoTag</tagclass>
+		<attribute>
+			<name>userId</name>
+		</attribute>
+		<attribute>
+			<name>businessType</name>
+		</attribute>
+		<attribute>
+			<name>procinstId</name>
+		</attribute>
+		<attribute>
+			<name>examineinstId</name>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>startProcessInfo</name>
+		<tagclass>com.bgp.mcs.service.pm.bpm.workFlow.srv.ProcessStartInfoTag</tagclass>
+		<attribute>
+			<name>buttonFunctionId</name>
+		</attribute>
+		<attribute>
+			<name>title</name>
+		</attribute>
+	</tag>
+</taglib>
+

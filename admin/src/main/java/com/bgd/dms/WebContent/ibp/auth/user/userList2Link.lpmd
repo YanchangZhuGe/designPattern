@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_TL>
+  <PageTitle>用户选择</PageTitle>
+  <PagerAction>List2Link</PagerAction>
+  <QuerySQL>
+    <sql>select u.* from p_auth_user u where u.user_status&lt;'5' and (u.user_id in (select user_id from (select t.user_id,(select v.org_id from comm_org_subjection v where v.bsflag='0' and rownum=1 and v.org_id in (select distinct org_id from p_auth_user where if_admin='1') start with v.org_id=t.org_id and v.bsflag='0' connect by v.org_subjection_id = prior v.father_org_id ) as admin_org from p_auth_user t) where admin_org='$USER.orgId') or u.user_id in (select t.user_id from p_auth_user t join view_comm_org_information oi on t.org_id=oi.org_id where t.if_admin='1' and oi.org_code like '$USER.orgSubjectionId%'))</sql>
+    <fields>
+      <field name="user_id" type="TEXT"></field>
+      <field name="org_id" type="TEXT"></field>
+      <field name="user_pwd" type="TEXT"></field>
+      <field name="user_name" type="TEXT"></field>
+      <field name="login_id" type="TEXT"></field>
+      <field name="user_status" type="TEXT"></field>
+      <field name="email" type="TEXT"></field>
+      <field name="last_login_time" type="D"></field>
+      <field name="this_login_time" type="D"></field>
+      <field name="login_ip" type="TEXT"></field>
+      <field name="user_domain" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="userStatus">
+      <option value="0">有效</option>
+      <option value="1">禁用</option>
+      <option value="2">作废</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <DataList>
+    <data exp="{user_id}" isShow="TextHide"/>
+    <data exp="{user_name}">名称</data>
+    <data exp="{login_id}">登录名</data>
+    <data exp="{email}">email</data>
+    <data func="getOpValue,userStatus" exp="{user_status}">状态</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="user_name" valueType="SEL_Ops" selValue="ddd">名称</field>
+    </cdt_fields>
+  </QueryCondition>
+</SAIS_EAW_TL>

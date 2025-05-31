@@ -1,0 +1,6 @@
+<config>
+  <chart>
+    <verticalAxis label="(单位:台)"  x="13" y="36"  fontFamily="宋体" fontSize="12" interval="20" maximum="100"/>
+  </chart>
+  
+</config>

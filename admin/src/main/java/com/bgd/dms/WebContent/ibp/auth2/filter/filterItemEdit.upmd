@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>JCDP_dataItemAuth</PageTitle>
+  <QuerySQL>
+    <sql>SELECT f.*,case f.filter_type when '0' then u.user_name else '' end as user_name,case f.filter_type when '1' then r.role_c_name else '' end as role_name FROM p_auth_filter_item f left join p_auth_user u on u.user_id = f.user_id left join p_auth_role_dms r on f.role_id=r.role_id WHERE f.entity_id='$PARAM.id'</sql>
+    <tableName>P_AUTH_FILTER_ITEM</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+    <Select name="filter_type">
+    	<option value="0">JCDP_user</option>
+      	<option value="1">JCDP_role</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="entity_id" isShow="Hide" maxLength="32">数据项编号</field>
+    <field name="filter_id" isShow="Hide" maxLength="32" defaultValue="$PARAM.filter_id" action="C">数据权限编号</field>
+    <field name="filter_type" type="SEL_OPs" selValue="filter_type" nonEmpty="true">JCDP_filterType</field>
+    <field name="user_id" type="FK" maxLength="32" defaultValue="$ENTITY.user_id:$ENTITY.user_name" selValue="/ibp/auth2/user/userList2Link.lpmd">JCDP_user</field>
+    <field name="role_id" type="FK" maxLength="32" defaultValue="$ENTITY.role_id:$ENTITY.role_name" selValue="/ibp/auth2/role/roleList2Link.lpmd">JCDP_role</field>
+    <field name="anti_filter_di" type="MEMO" maxLength="512" size="64:2">JCDP_antiFilter</field>
+    <field name="remark" type="MEMO" maxLength="512" size="64:4">JCDP_remark</field>
+  </EntityFields>
+  <JavaScripts>
+    <CRU>  
+		
+  		function submitFunc(){
+  			if(getElementByTypeAndName('SELECT','filter_type').value=='0'){
+  				if(getObj('user_id').value==''){
+	  				alert('JCDP_alert_chooseUser!');
+	  				return;
+	  			}
+	  			/*getObj('role_id').value='';*/
+  			}else{
+  				if(getObj('role_id').value==''){
+	  				alert('JCDP_alert_chooseRole!');
+	  				return;
+	  			}
+	  			/*getObj('user_id').value='';*/
+  			}
+	  		var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			afterSubmit(retObject);
+		}   
+  	</CRU>
+  </JavaScripts>
+</SAIS_EAW_TL>

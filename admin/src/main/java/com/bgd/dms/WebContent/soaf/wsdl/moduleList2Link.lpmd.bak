@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>SELECT ss.name AS subSysName,ss.entity_id AS ssId,ss.* from sys_wsdl_metadata ss where ss.mt_type ='s'</sql>
+    <fields>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="is_leaf" type="TEXT"></field>
+      <field name="mt_cn_name" type="TEXT"></field>
+      <field name="mt_en_name" type="TEXT"></field>
+      <field name="mt_type" type="TEXT"></field>
+      <field name="mt_type_id" type="TEXT"></field>
+      <field name="order_num" type="TEXT"></field>
+      <field name="parent_id" type="TEXT"></field>
+      <field name="remark" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{entity_id}">ID</data>
+    <data exp="{mt_cn_name}">中文名称</data>
+    <data exp="{mt_en_name}">英文名称</data>
+    <data exp="{mt_type}">类型</data>
+    <data exp="{mt_type_id}">类型id</data>
+    <data exp="{remark}">描述</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="entity_id">ID</field>
+      <field name="mt_cn_name">中文名称</field>
+      <field name="mt_en_name">英文名称</field>
+      <field name="mt_type_id">类型ID</field>
+      <field name="parent_id">父ID</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

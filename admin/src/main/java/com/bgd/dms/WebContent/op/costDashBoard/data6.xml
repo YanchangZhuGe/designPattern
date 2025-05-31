@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart   showValues='0' numberPrefix='$'>
+	<categories>
+		<category label='新疆' />
+		<category label='青海' />
+		<category label='吐哈' />
+		<category label='塔里木' />
+		<category label='华北' />
+		<category label='新兴' />
+		<category label='长庆' />
+		<category label='物化探' />
+		<category label='大港' />
+		<category label='辽河' />
+		<category label='研究院' />
+	</categories>
+	<dataset seriesName='项目直接成本'>
+		<set value='7400' />
+		<set value='9800' />
+		<set value='5800' />
+		<set value='6800' />
+		<set value='9600' />
+		<set value='2600' />
+		<set value='1800' />
+		<set value='6700' />
+		<set value='9700' />
+		<set value='1900' />
+		<set value='800' />
+	</dataset>
+	<dataset seriesName='机关及辅助生产费用'>
+		<set value='2000' />
+		<set value='1500' />
+		<set value='2500' />
+		<set value='5000' />
+		<set value='1000' />
+		<set value='800' />
+		<set value='1800' />
+		<set value='9700' />
+		<set value='1700' />
+		<set value='1900' />
+		<set value='2900' />
+	</dataset>
+	<trendlines>
+		<line startValue='26000' color='91C728' displayValue='Target' />
+	</trendlines>
+</chart>

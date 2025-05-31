@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>分类码</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_p6_code where bsflag='0' and object_id='$PARAM.id'</sql>
+    <tableName>bgp_p6_code</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="parent_object_id" isShow="Hide" defaultValue="$PARAM.parentId">id</field>
+    <field name="code_type_object_id" isShow="Hide" defaultValue="$PARAM.codeTypeObjectId">id</field>
+    <field name="owner" isShow="Hide" defaultValue="$PARAM.owner">id</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="name" maxLength="100"  nonEmpty="true">名称</field>
+    <field name="note" maxLength="500">描述</field>
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+'/pm/projectCode/saveProjectCode.srq';
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshTree();
+			newClose();
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

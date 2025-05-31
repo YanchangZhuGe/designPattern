@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select * from ci_person t where t.person_id='$PARAM.id'</sql>
+    <tableName>ci_person</tableName>
+    <fields>
+      <field name="person_id" type="TEXT"></field>
+      <field name="corp_id" type="TEXT"></field>
+      <field name="dept_id" type="TEXT"></field>
+      <field name="name" type="TEXT"></field>
+      <field name="sex" type="TEXT"></field>
+      <field name="birthday" type="D"></field>
+      <field name="nationality" type="TEXT"></field>
+      <field name="political_status" type="TEXT"></field>
+      <field name="duty" type="TEXT"></field>
+      <field name="fax" type="TEXT"></field>
+      <field name="birth_place" type="TEXT"></field>
+      <field name="mobile_phone" type="TEXT"></field>
+      <field name="office_phone" type="TEXT"></field>
+      <field name="home_phone" type="TEXT"></field>
+      <field name="email" type="TEXT"></field>
+      <field name="work_place" type="TEXT"></field>
+      <field name="graduate_from" type="TEXT"></field>
+      <field name="graduate_date" type="TEXT"></field>
+      <field name="home_address" type="TEXT"></field>
+      <field name="education_level" type="TEXT"></field>
+      <field name="study_experience" type="TEXT"></field>
+      <field name="in_charge_of" type="TEXT"></field>
+      <field name="home_memo" type="TEXT"></field>
+      <field name="hobby" type="TEXT"></field>
+      <field name="good_at" type="TEXT"></field>
+      <field name="person_type" type="TEXT"></field>
+      <field name="memo" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="modify_date" type="D"></field>
+      <field name="modifier" type="TEXT"></field>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="major_subject" type="TEXT"></field>
+      <field name="relationship" type="TEXT"></field>
+      <field name="app_status" type="TEXT"></field>
+      <field name="order_no" type="TEXT"></field>
+    
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select sais_select_name="sexId" name="sexId"/>
+    <Select sais_select_name="nationId" name="nationId"/>
+    <Select sais_select_name="polId" name="polId"/>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="person_id" isShow="Hide"/>
+    <field name="corp_id" isShow="Hide"/>
+    <field name="dept_id" isShow="Hide"/>
+    <field name="name" nonEmpty="true">人员姓名</field>
+    <field name="sex" type="SEL_OPs" selValue="sexId">性别</field>
+    <field name="birthday" type="D">出生日期</field>
+    <field name="nationality" type="SEL_OPs" selValue="nationId">民族</field>
+    <field name="political_status" type="SEL_OPs" selValue="polId">政治面貌</field>
+    <field name="duty">职务</field>
+    <field name="mobile_phone">手机</field>
+    <field name="office_phone">办公电话</field>
+    <field name="home_phone">家庭电话</field>
+    <field name="fax">传真</field>
+    <field name="email">电子邮箱</field>
+    <field name="in_charge_of">主管业务</field>
+    <field name="major_subject">所学专业</field>
+    <field name="education_level">最高学历</field>
+    <field name="birth_place">籍贯</field>
+    <field name="hobby">个人爱好</field>
+    <field name="home_address">家庭住址</field>
+    <field name="work_place">工作地点</field>
+    <field name="relationship">与公司关系</field>
+    <field name="graduate_from">毕业院校</field>
+    <field name="graduate_date" type="D">毕业日期</field>
+    <field name="good_at">特长领域</field>
+    <field name="study_experience" type="MEMO">学习经历</field>
+    <field name="home_memo" type="MEMO">家庭成员情况</field>
+    <field name="memo" type="MEMO">个人简介</field>
+	<field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+  </EntityFields>
+</SAIS_EAW_TL>

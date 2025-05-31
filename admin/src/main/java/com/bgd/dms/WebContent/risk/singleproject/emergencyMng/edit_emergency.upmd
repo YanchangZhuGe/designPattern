@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>  
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{			
+				var ctt = top.frames('list');
+				if(ctt.frames.length == 0){
+					ctt.refreshData();
+				}else{
+					if(ctt.frames[0].length == 0){
+						ctt.frames("riskdeal").location.reload();
+					}else{
+						ctt.frames[1].frames("riskdeal").location.reload();
+					}
+				}
+				newClose();
+			}
+		}
+		
+		function setValues(){
+			alert("set values");
+		}
+    </CRU> 
+  </JavaScripts> 
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>增加编辑风险应急</PageTitle>
+  <QuerySQL>
+    <sql>select t.emergency_id,t.emergency_status,t.emergency_problem,t.res_person,t.risk_id,t.create_date,t.project_info_no,t.creator_id,i.risk_name,e.employee_name from bgp_risk_emergency t left outer join bgp_risk_evaluate_base i on t.risk_id = i.risk_id left outer join comm_human_employee e 
+		 on t.res_person = e.employee_id where t.bsflag = '0' and i.bsflag = '0'  and t.emergency_id = '$PARAM.id'</sql>
+    <tableName>bgp_risk_emergency</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+
+   </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="emergency_id" isShow="Hide">应急ID</field>
+    <field name="risk_id" type="FK" defaultValue="$ENTITY.risk_id:$ENTITY.risk_name" selValue="/risk/singleproject/riskIdentify/select_evaluatebase.jsp" isShow="ReadOnly">风险</field>
+    <field name="emergency_problem">问题</field>
+    <field name="emergency_status">状态</field>    
+    <field name="responsible_person" type="FK" defaultValue="$ENTITY.res_person:$ENTITY.employee_name" selValue="/common/selectEmployee.jsp" isShow="ReadOnly">责任人</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$USER.projectInfoNo">项目编号</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0" action="C,U">文件状态</field>
+    <field name="creator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="C">创建人</field>
+    <field name="updator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="C,U">修改人</field>
+    <field name="create_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C">创建时间</field>
+    <field name="modifi_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C,U">修改时间</field>
+    <field name="org_id" isShow="Hide" defaultValue="$USER.codeAffordOrgID">org_id</field>
+    <field name="org_subjection_id" isShow="Hide" defaultValue="$USER.subOrgIDofAffordOrg">org_subjection_id</field>
+  </EntityFields>
+</SAIS_EAW_TL>

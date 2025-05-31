@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>市场及项目运作情况</PageTitle>
+  <QuerySQL>
+    <sql>select distinct i.week_date,i.week_end_date,i.org_id,i.subflag,oi.org_name from bgp_wr_martandproject_info i join comm_org_information oi on oi.org_id = i.org_id where i.bsflag='0' and i.org_id = 'C6000000000025' order by i.week_date desc</sql>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">martSelectWeek.jsp</Button>
+    <Button Type="Edit" funCode="" Label=""></Button>
+    <Button Type="Delete" funCode="" Label=""></Button>
+    <Button Type="sql" funCode="" Label="提交">提交</Button>
+  </Buttons>
+  <Options>
+  <Select name="subflags">
+  <option value="0">未提交</option>
+  <option value="1">已提交</option>
+  </Select>
+  </Options>
+  <Codes/>
+  <DataList>
+  <data exp="&lt;input type='radio' name='chx_entity_id' value='{org_id},{week_date},{week_end_date},{subflag}' &gt;"/>
+    <data exp="{org_name}">单位名称</data>
+    <data exp="&lt;a href=javascript:popWindow('wrMartandprojectInfoModify.jsp?org_id={org_id}&amp;week_date={week_date}&amp;week_end_date={week_end_date}&amp;action=view&amp;isSecond=false')&gt;{week_date}&lt;/a&gt;">周报开始日期</data>
+    <data exp="{week_end_date}">周报结束日期</data>
+    <data exp="{subflag}" func="getOpValue,subflags">状态</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+    <field name="week_date" type="D">周报日期</field>
+    <field name="subflag" selType="SEL_OPs" selValue="subflags">提交状态</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+  function toEdit(){
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+	    var tempa = ids.split(',');
+
+	    var org_id = tempa[0];
+	    var week_date = tempa[1];
+	    var week_end_date = tempa[2];
+	    var subflag = tempa[3];
+
+	   	if(subflag == '0'){
+	    	window.location = "wrMartandprojectInfoModify.jsp?org_id="+org_id+"&amp;week_date="+week_date+"&amp;week_end_date="+week_end_date+"&amp;action=edit&amp;isSecond=false";
+	    }else{
+	    	alert("该记录已经提交，不能修改!"); 
+	    	return; 
+	    }
+	}
+	
+	function toDelete(){
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+	    var tempa = ids.split(',');
+	    var org_id = tempa[0];
+	    var week_date = tempa[1];
+	    var week_end_date = tempa[2];
+	    var subflag = tempa[3];
+	    
+	    if(subflag == '0'){
+	    	var sql = "update bgp_wr_martandproject_info set bsflag='1' where org_id='" + org_id + "' and to_char(week_date,'yyyy-MM-dd')='" + week_date + "'";
+			deleteEntities(sql);
+	    }else{
+	    	alert("该记录已经提交，不能删除!"); 
+	    	return; 
+	    }
+	   
+	}
+	function JcdpButton3OnClick(){
+		var ids = getSelIds("chx_entity_id");
+		if(ids==""){
+			alert("请先选中一条记录!");
+			return;
+		}
+	        var tempa = ids.split(',');
+		    var org_id = tempa[0];
+		    var week_date = tempa[1];
+		    var week_end_date = tempa[2];
+		    var subflag = tempa[3];
+		    
+		    if(subflag == '0'){
+		    	var sql = "update bgp_wr_martandproject_info set subflag='1' where org_id='" + org_id + "' and to_char(week_date,'yyyy-MM-dd')='" + week_date + "'";
+				var submitStr=updateEntitiesBySql(sql,"提交");
+			    if(submitStr == null) return;
+		        afterSubmit(retObject);
+		    }else{
+		    	alert("该记录已经提交，不能再次提交!"); 
+		    	return; 
+		    }
+	}  	
+	function afterSubmit(retObject,successHint,failHint){
+		if(successHint==undefined) successHint = '提交成功';
+		if(failHint==undefined) failHint = '提交失败';
+		if (retObject.returnCode != "0") alert(failHint);
+		else{
+			alert(successHint);
+			refreshData();
+		}
+	}  
+  </JavaScripts>
+</SAIS_EAW_TL>

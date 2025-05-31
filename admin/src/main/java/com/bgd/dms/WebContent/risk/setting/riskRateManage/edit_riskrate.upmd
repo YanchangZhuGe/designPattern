@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>编辑风险评级</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_risk_evaluate_base where bsflag='0' and risk_id='$PARAM.id'</sql>
+    <tableName>bgp_risk_evaluate_base</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="risk_id" isShow="Hide">风险ID</field>
+    <field name="risk_name" nonEmpty="true">名称</field>
+    <field name="risk_desc" nonEmpty="true">描述</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0" action="C,U">文件状态</field>
+    <field name="creator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="C">创建人</field>
+    <field name="updator_id" isShow="Hide" defaultValue="$USER.userId" selValue="NONE" action="U">修改人</field>
+    <field name="create_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C">创建时间</field>
+    <field name="modifi_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="U">修改时间</field>
+  	<field name="org_id" isShow="Hide" defaultValue="$USER.codeAffordOrgID">org_id</field>
+    <field name="org_subjection_id" isShow="Hide" defaultValue="$USER.subOrgIDofAffordOrg">org_subjection_id</field>
+    <field name="parent_risk_id" isShow="Hide" defaultValue="$PARAM.parentId">父目录</field>
+    <field name="order_num" isShow="Hide">排序编号</field>
+  </EntityFields>
+  <JavaScripts>
+       <CRU>  
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				top.frames('list').refreshTree();
+				newClose();
+			}
+		}
+    </CRU> 
+  </JavaScripts>
+</SAIS_EAW_TL>

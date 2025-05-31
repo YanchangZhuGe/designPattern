@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>动迁、运输费测算表</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_op_cost_tartet_transport where bsflag='0' and  if_change = '0'    and cost_transport_id = '$PARAM.id'</sql>
+    <tableName>bgp_op_cost_tartet_transport</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="cost_transport_id" isShow="Hide">id</field>
+    <field name="if_change" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="transport_type" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">id</field>
+    <field name="transport_name" maxLength="32">设备及物资名称</field>
+    <field name="start_loc" maxLength="32">起运地点</field>
+    <field name="end_loc" maxLength="12">到达地点</field>
+    <field name="tonnage" maxLength="32">吨位</field>
+    <field name="transport_count" maxLength="32">数量</field>
+    <field name="start_meter" maxLength="32">起运运输里程</field>
+    <field name="back_loc" maxLength="32">交还地点</field>
+    <field name="back_meter" maxLength="32">交还运输里程</field>
+    <field name="transport_unit" maxLength="32">运输单价(元/Km)</field>
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

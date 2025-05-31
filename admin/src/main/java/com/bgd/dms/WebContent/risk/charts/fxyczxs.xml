@@ -1,0 +1,41 @@
+<chart
+    yAxisNameWidth="16"
+    xAxisNameWidth="16"
+    rotateYAxisName ='0'
+    rotateXAxisName ='0'
+    bgColor="F3F5F4,DEE6EB"
+    showBorder="0"
+    palette="2"
+    xAxisName="落在区间内的百分比"
+    yAxisName="发生概率" 
+    numdivlines="10"   
+    baseFontSize ="12"
+    plotGradientColor =''
+    yAxisMaxValue='1.00'>
+
+    <set
+        label="极高风险"
+        value="0.15"
+        color="FF0000" />
+
+    <set
+        label="高度风险"
+        value="0.1"
+        color="f5aa32" />
+
+    <set
+        label="中度风险"
+        value="0.25"
+        color="FFFF00" />
+
+    <set
+        label="较低风险"
+        value="0.125"
+        color="84c24a" />
+
+    <set
+        label="低度风险"
+        value="0.375"
+        color="00FF00" />
+
+</chart>

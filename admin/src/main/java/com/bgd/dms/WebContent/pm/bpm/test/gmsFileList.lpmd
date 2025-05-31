@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>选择页面</PageTitle>
+  <QuerySQL>
+    <sql>select gfile.file_id,
+       gfile.file_name,
+       gfile.ucm_id,
+       gfile.project_info_no,
+       workflow.middle_id,
+       workflow.busi_table_name,
+       workflow.proc_id,
+       workflow.proc_inst_id,
+       workflow.proc_status,
+       decode( workflow.proc_status,'1','审批中','3','审批通过','4','审批不通过','未提交') record_status
+  from BGP_DOC_GMS_FILE gfile
+  left outer join common_busi_wf_middle workflow
+    on gfile.file_id = workflow.business_id
+   and workflow.busi_table_name = 'GMS_FILE'
+ where is_file = '1'
+   and  gfile.bsflag = '0'
+</sql>
+    <fields>
+      <field name="file_id" type="TEXT"></field>
+      <field name="file_name" type="TEXT"></field>
+      <field name="ucm_id" type="TEXT"></field>
+      <field name="project_info_no" type="TEXT"></field>
+      <field name="middle_id" type="TEXT"></field>
+      <field name="busi_table_name" type="TEXT"></field>
+      <field name="proc_id" type="TEXT"></field>
+      <field name="proc_inst_id" type="TEXT"></field>
+      <field name="proc_status" type="TEXT"></field>
+      <field name="record_status" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="sql" funCode="F_DM_004" Label="提交"></Button>
+  </Buttons>
+  <Options/>
+  <Codes/>
+  <DataList>
+  	<data exp="&lt;input type='radio' name='chx_entity_id' value='{file_id},{file_name},{ucm_id},{project_info_no},{file_name}'&gt;">选择</data>
+    <data exp="{file_name}">文件名</data>
+    <data exp="{ucm_id}">UCM ID</data>
+    <data exp="{project_info_no}">项目名称</data>
+    <data exp="{record_status}">流程状态</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="file_name">文件名</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+  		function JcdpButton0OnClick(){
+  			ids = getSelIds('chx_entity_id');
+		    if(ids==''){ alert("请先选中一条记录!");
+		     return;
+		    }
+
+		    var tempa = ids.split(',');
+
+			var businessTableName='BGP_DOC_GMS_FILE';
+			var businessType='8ad8b60c335dd16201335dd610340002';
+			var projectName='';
+			var applicantDate='';
+		    var businessId = tempa[0];
+		    var wfVar_fileName = tempa[1];
+		    var wfVar_ucmId = tempa[2];
+		    var wfVar_projectInfoNo = tempa[3];
+		    var businessInfo=tempa[4];
+
+			var submitStr="businessInfo="+businessInfo+"&amp;businessTableName="+businessTableName+"&amp;businessType="+businessType+"&amp;projectName="+projectName+"&amp;applicantDate="+applicantDate+"&amp;businessId="+businessId+"&amp;wfVar_fileName="+wfVar_fileName+"&amp;wfVar_ucmid="+wfVar_ucmId+"&amp;wfVar_projectInfoNo="+wfVar_projectInfoNo;
+			submitStr = encodeURI(submitStr);
+			submitStr = encodeURI(submitStr);
+			editUrl = "/bpm/common/toStartProcess.srq?"+submitStr;
+		    window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+  		}
+  </JavaScripts>
+</SAIS_EAW_TL>

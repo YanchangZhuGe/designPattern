@@ -1,0 +1,1267 @@
+/*页面样式*/
+body {
+	margin-left:auto;
+	margin-top: 0px;
+	margin-right:auto;
+	margin-bottom: 0px;
+	text-align:center;
+}
+/*head
+#headphoto{
+	width:1020px;
+	height:85px;
+	background-image:url(../images/index_000.gif);
+	position:absolute;
+	background-repeat:no-repeat;
+	}*/
+
+/*普通字体*/
+.text {
+	font-size: 12px;
+	color: #333;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: normal;
+}
+
+
+/*"新增"表头样式*/
+.Tab_Header {
+	FONT-SIZE: 12px;
+	COLOR:#006699;
+	FONT-FAMILY: "宋体";
+	font-weight:normal;
+	background-image:url(../images/head_bg.gif);
+	background-repeat: repeat;
+	/*background-color:#70BAFE;*/
+	background-position: left top;
+	/*border: #718da6 1px solid;*/
+	vertical-align: middle;
+	padding-top:2px;
+	width:100%;
+	text-align:left;
+
+}
+/*二级标题表格*/
+.Tab_page_title{
+	width:100%;
+	height:20px;
+}
+
+/*物探菜单下标题样式*/
+.tab_menu_wt{
+	width:100%;
+	height:20px;
+	background-color:#dceff5;
+	padding-left:5px;
+}
+
+/*物探菜单下标题文字样式*/
+.tab_menu_text_wt{
+	font-size:12px;
+	color:#006699;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: normal;
+}
+
+/*奇数行/列样式*/
+.odd {
+	FONT-SIZE: 12px;
+	FONT-FAMILY:"宋体";
+	text-align: center;
+	height:28px;
+	line-height:28px;
+	BACKGROUND-COLOR: #eff4f9;
+
+}
+/*偶数行/列样式*/
+.even{
+	FONT-SIZE: 12px;
+	FONT-FAMILY: "宋体";
+	text-align: center;
+	height:28px;
+	line-height:28px;
+	background-color: #FFFFFF;
+}
+
+/*查询结果的主表和带一个子表的表头样式*/
+
+.bt_info {
+	FONT-SIZE: 12px;
+	COLOR: #296184;
+	FONT-FAMILY:"宋体";
+	font-weight:normal;
+	text-align: center;
+	vertical-align: middle;
+	background-image: url(../images/bg00.gif);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 20px;
+
+}
+/*生产日报表头样式(分行)*/
+
+.bt_scrb_info {
+	FONT-SIZE: 12px;
+	COLOR: #fafafa;
+	FONT-FAMILY:"宋体";
+	font-weight:normal;
+	text-align: center;
+	vertical-align: middle;
+	background-image: url(../images/bg11.gif);
+	background-repeat: repeat-x;
+}
+/*查询后主表格和带一格子表格的样式*/
+.tab_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 20px;
+	width:100%;
+	margin-top:2px;	
+
+}
+.tab_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 20px;
+
+}
+/*查询结果表内容过多时的样式*/
+.ltab_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 20px;
+	width:120%;
+	
+}
+.ltab_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 20px;
+
+}
+
+
+/*增删改等按钮所在表格样式*/
+.Tab_new_mod_del {
+	FONT-SIZE: 12px;
+	COLOR: #333;
+	FONT-FAMILY: "宋体";
+	font-weight:normal;
+	background-repeat: repeat;
+	background-position: left top;
+	border: #c3ddee 1px solid;
+	vertical-align: middle;
+	width:100%;
+	line-height: 20px;
+	margin-bottom: 1px;
+	padding-left: 20px;
+	}
+
+/*查询表格样式*/
+.form_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 18px;
+	vertical-align: middle;
+	height:20px;
+	background-color: #EFF4F9;	
+	width: 100%;
+
+}
+.form_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 18px;
+	vertical-align: middle;
+	height:20px;
+	
+}
+/*查询表格垂直不居中样式*/
+.form_info1 {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 18px;
+
+	height:20px;
+	background-color: #EFF4F9;	
+	width: 100%;
+
+}
+.form_info1 TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 18px;
+
+	height:20px;
+	
+}
+/*两个子表格中每个子表格样式*/
+.tab_child_info {
+	FONT-SIZE: 12px;
+	color: #333333;
+	BORDER-TOP: #89c6ef 1px dashed;
+	BORDER-LEFT: #89c6ef 1px dashed;
+	background-color: #EFF4F9;
+	width: 98%;
+	vertical-align: top;
+	table-layout:fixed;
+
+}
+.tab_child_info TD {
+	FONT-SIZE: 12px;
+	color: #333333;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px dashed;
+	BORDER-RIGHT: #89c6ef 1px dashed;
+	line-height: 18px;
+	word-break : break-all; 
+
+}
+
+/*SELECT项样式*/
+SELECT {
+	FONT-SIZE: 12px;
+	FONT-FAMILY: "宋体";
+	line-height: 20px;
+	margin-bottom:1px;
+	margin-top:1px;
+	border:0;
+	color: #333333;
+}
+
+/*多选SELECT项样式*/
+.mulselect {
+	FONT-SIZE: 12px;
+	FONT-FAMILY: "宋体";
+	line-height: 20px;
+	margin-bottom:1px;
+	margin-top:1px;
+	height:50px;
+	border:0;
+	color: #333333;
+	width:82%;
+}
+/*不限制高度多选SELECT项样式*/
+.mulselect1 {
+	FONT-SIZE: 12px;
+	FONT-FAMILY: "宋体";
+	line-height: 20px;
+	margin-bottom:1px;
+	margin-top:1px;
+	border:0;
+	color: #333333;
+	width:82%;
+}
+/*INPUT项样式*/
+INPUT {
+	FONT-SIZE: 12px;
+	COLOR: #333333;
+	FONT-FAMILY: "宋体";
+	line-height: 12px;
+
+}
+INPUT.readonly {
+	FONT-SIZE: 12px;
+	COLOR: #333333;
+	FONT-FAMILY: "宋体";
+	line-height: 12px;
+	background:#f2f2f2;
+	border:1px #336699 solid;
+	width:80%;
+	readonly:expression(this.readOnly=true);
+}
+
+INPUT.readonly1 {
+
+	readonly:expression(this.readOnly=true);
+}
+.radiobtn{
+width:40px;}
+
+/*TEXTAREA项样式*/
+TEXTAREA {
+	FONT-SIZE: 12px;
+	COLOR: #333333;
+	FONT-FAMILY:"宋体";
+	BACKGROUND-COLOR: #fafafa;
+	line-height: 20px;
+	border: 1px solid #52a5c4;
+	height: 80px;
+	width: 99%;
+	word-break:break-all;
+	}
+/*分页表格样式*/
+.fy
+{	background-color:#F2F2F2;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #333333;
+	border:#CCCCCC dashed 1px;
+	margin-top: 2px;
+	font-family:"宋体";
+	margin-bottom: 2px;
+	vertical-align: middle;
+	padding-top: 3px;
+	width:100%;
+
+}
+/*查询表格中查询条件项的宽度和对齐,统一采用右对齐方式*/
+.inquire_item{
+	text-align:right;
+	width:15%;
+	padding-right:5px;
+}
+.tab_input{
+	border: 0px;
+	width:100%;
+}
+
+/*让列中表格距离上、下、右都有5px的边距*/
+.td_padding{
+	text-align:left;
+	width:35%;
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+/*查询表格中各种表单项的宽度和对齐,统一采用左对齐方式*/
+.inquire_form{
+	text-align:left;
+	width:35%;
+	padding-left:5px;
+}
+/*6列查询表格中查询条件项的宽度和对齐,统一采用右对齐方式*/
+.inquire_item6{
+	text-align:right;
+	width:10%;
+	padding-right:5px;
+}
+
+/*6列查询表格中各种表单项的宽度和对齐,统一采用左对齐方式*/
+.inquire_form6{
+	text-align:left;
+	width:23.3%;
+	padding-left:5px;
+}
+/* 人力支持平台人员基本信息页面使用*/
+.inquire_item8_m {
+	text-align:right;
+	padding-right:5px;
+	color:#254a8e;
+ filter:progid:DXImageTransform.Microsoft.Gradient (startColorStr=#ffffff, endColorStr=#b9ddf3, gradientType=1);
+}
+/*查询表格中各种表单项的宽度和对齐,统一采用左对齐方式*/
+.inquire_form8_m {
+	text-align:left;
+	padding-left:5px;
+}
+
+/*右对齐*/
+.ali1{
+	text-align:right;
+	
+}
+.ali3{ text-align:right;
+		margin-top:3px;
+	
+}
+/*带宽度和边距的右对齐*/
+.ali4{
+	text-align:right;
+	margin-top:3px;
+	background-color:#eff4f9;
+	width:18%;
+	padding-right:5px;
+	color: #333333;
+	
+}
+/*带宽度及边距的左对齐*/
+.ali5{
+	text-align:left;
+	margin-top:3px;
+	background-color:#eff4f9;
+	width:32%;
+	padding-left:5px;
+	
+}
+/*居中对齐*/
+.ali6{
+	width:100%;
+	text-align:center;
+	
+}
+/*左对齐*/
+.ali7{
+	text-align:left;
+	
+}
+/*带文本缩进的左对齐*/
+.ali8{
+	text-align:left;
+	text-indent:25px;
+	
+}
+/*带宽度及边距的居中对齐*/
+.ali9{
+	text-align:center;
+	margin-top:3px;
+	background-color:#eff4f9;
+	width:32%;
+	padding-left:5px;
+	
+}
+/*垂直顶端对齐*/
+.vali1{ vertical-align:top;
+	
+}
+/*input附加属性*/
+.input_width{width:80%;}
+/*修改、查看时的文本域样式*/
+.textarea_u_color{background:#EFF4F9;}
+/*input时间附加属性*/
+.input_width_date{width:78%;}
+/*select附加属性*/
+.select_width{width:80%;}
+/*文件域附加属性*/
+.filearea_width{width:69%;}
+/*统计表中查询input宽*/
+.input_width_compile{width:40%;}
+/*统计表中条件input宽*/
+.input_width_compile{width:25%;}
+
+
+/*缺省连接风格*/
+A {
+	COLOR: #3366ff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+A:link {
+	COLOR: #3366ff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+A:visited {
+	COLOR: #3366ff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+A:hover {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+A:active {
+	COLOR: #3366ff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+	
+/*查询结果内部链接*/
+.tabinner:link {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family:"宋体";; font-size: 12px; line-height: 20px;
+}
+.tabinner:link{
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family:"宋体";; font-size: 12px; line-height: 20px;
+}
+.tabinner:link {
+	COLOR: #0099cc; TEXT-DECORATION: none; font-family:"宋体";; font-size: 12px; line-height: 20px;
+}
+.tabinner:link {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family:"宋体";; font-size: 12px; line-height: 20px;
+}	
+/*文档审批链接*/
+.a9:link {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.a9:visited {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.a9:hover {
+	COLOR: #000000; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.a9:active {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+
+/*背景样式*/
+.bg {
+	FONT-SIZE: 12px;
+	COLOR: #FFFFFF;
+	FONT-FAMILY:"宋体";
+	font-weight:normal;
+	text-align: center;
+	vertical-align: middle;
+	background-image: url(../images/ar1.gif);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height:20px;
+	line-height: 20px;
+}
+/*"新增"表格样式*/
+.rtab_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 20px;
+	width: 100%;
+}
+.rtab_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 20px;
+}
+/*service表格样式*/
+.wutab_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 30px;
+
+}
+.wutab_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 30px;
+}
+/*service1表格样式*/
+.wu1tab_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 30px;
+
+
+}
+.wu1tab_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 30px;
+}
+/*物探页面标题表格及图表样式*/
+.Tab_page_title_wt {
+	border:#CCCCCC dashed 1px;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	vertical-align: middle;
+	width:100%;
+	height:20px;
+	background-image: url(../images/wt.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+
+}
+/*钻井页面标题表格及图表样式*/
+.Tab_page_title_zj {
+	border:#CCCCCC dashed 1px;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	vertical-align: middle;
+	width:100%;
+	height:20px;
+	background-image: url(../images/zj.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+
+}
+/*测井页面标题表格及图表样式*/
+.Tab_page_title_cj {
+	border:#CCCCCC dashed 1px;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	vertical-align: middle;
+	width:100%;
+	height:20px;
+	background-image: url(../images/cj.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+
+}
+/*录井页面标题表格及图表样式*/
+.Tab_page_title_lj {
+	border:#CCCCCC dashed 1px;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	vertical-align: middle;
+	width:100%;
+	height:20px;
+	background-image: url(../images/lj.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+
+}
+/*井下页面标题表格及图表样式*/
+.Tab_page_title_jx {
+	border:#CCCCCC dashed 1px;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	vertical-align: middle;
+	width:100%;
+	height:20px;
+	background-image: url(../images/jx.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+
+}
+/*局机关页面标题表格及图表样式*/
+.Tab_page_title_jjg {
+	border:#CCCCCC dashed 1px;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	vertical-align: middle;
+	width:100%;
+	height:20px;
+	background-image: url(../images/jjg.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+
+}
+/*页面标题样式*/
+.Tab_page_title_text {
+	font-family: "宋体";
+	font-size: 14px;
+	font-weight:bold;
+	color:#006699;	
+	text-align:left;
+	text-indent:220px;
+}
+/*带两个子表格的表格样式
+.Tab_2child{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight:normal;
+	word-break:break-all;
+	margin-top: 2px;
+	margin-bottom: 1px;
+	vertical-align:top;
+	width:50%;
+	padding-top:5px;
+	text-align: center;
+}*/
+
+/*2个子表所在的表格的背景色*/
+.tab_2child_bg{
+	background-color:#D3EFED;
+	width:100%;
+	vertical-align: top;
+}
+
+
+/*除首页注销外所有按钮风格*/
+ 
+ .iButton2 {
+ 	BORDER-RIGHT: #3399ff 1px solid;
+	BORDER-TOP: #3399ff 1px solid;
+	BORDER-LEFT: #3399ff 1px solid;
+	BORDER-BOTTOM: #3399ff 1px solid;
+	FONT-SIZE: 12px;
+	FILTER:  progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#89c6ef, EndColorStr=#347699); 				
+	CURSOR:  hand;
+	COLOR: #fafafa;	
+	padding-top: 2px;
+	padding-left: 2px;
+	padding-right: 2px;
+	height:20px;
+} 
+/*统计样式*/
+.tab_compile {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 20px;
+	width:100%;
+	
+}
+.tab_compile TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 20px;
+
+}
+/*图表显示所在表格样式*/
+.Tab_gph_show {
+	FONT-SIZE: 12px;
+	COLOR: #333333;
+	FONT-FAMILY: "宋体";
+	font-weight:normal;
+	background-repeat: repeat;
+	background-position: left top;
+	border: #89c6ef 1px solid;
+	vertical-align: middle;
+	width:100%;
+	line-height: 20px;
+	margin-bottom: 1px;
+	padding-left: 20px;
+	margin-top:2px;
+	}
+/*统计册表格样式*/
+.compile_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	line-height: 18px;
+	height:20px;
+	background-color: #EFF4F9;
+	vertical-align:center;
+	align:center;	
+	width: 99%;
+
+}
+.compile_info TD {
+	FONT-SIZE:12px;
+	height:20px;
+	line-height: 18px;
+	vertical-align:center;
+	align:center;
+	height:20px;
+	
+}
+/*统计内secelt*/
+.select_compile{
+	width:160px;
+	height:120px;
+}
+/*表中表*/
+.tab_info_in {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #a0c1f7 1px solid;
+	BORDER-LEFT: #a0c1f7 1px solid;
+	line-height: 20px;
+	width:99%;
+	margin:2px;	
+}
+.tab_info_in TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #699cf3 1px solid;
+	BORDER-RIGHT: #699cf3 1px solid;
+	line-height: 20px;
+
+}
+/*表中表头*/
+.tab_info_in_title
+{	background-image: url(../images/bg01.gif);
+	background-repeat: repeat-x;
+	background-position: left top;
+	color:#5685d8;
+}
+/*解决form边框过大*/
+.formstyle{margin:0
+}
+form{margin:0}
+/*出错页面字体*/
+.text11 {
+	font-size: 12px;
+	color: #333;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight:bold;
+	letter-spacing:2px;
+}
+.text12 {
+	font-size: 12px;
+	color: #333;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: normal;
+	letter-spacing:2px;
+}
+
+/*TEXTAREA项样式*/
+.TEXTAREA1 {
+	FONT-SIZE: 12px;
+	COLOR: #333333;
+	FONT-FAMILY: "宋体";
+	BACKGROUND-COLOR: #F5F5F8;
+	line-height: 20px;
+	border: 1px dashed #69CDF2;
+	height: 180px;
+	width: 99%;
+	word-break:break-all;
+}
+/*---------------------局机关--------------------*/
+
+/*日期字体*/
+.datatext{
+	font-size: 12px;
+	color: #fff;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: normal;
+}
+/*栏目表头字体*/
+.columntext{
+	font-size: 12px;
+	color: #fff;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: bold;
+}
+/*注册/登录字体*/
+.dltext{
+	font-size: 12px;
+	color: #006699;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: normal;
+}
+
+/*---------------------出错页面--------------------*/
+
+/*标题字体*/
+.errtiltext{
+	font-size: 12px;
+	color: #fff;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: bold;
+	text-align:center;
+}
+
+/*页面内字体*/
+.errintext{
+	font-size: 12px;
+	color: #006699;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight: normal;
+	line-height:1.5;
+}
+/*---------------------报表页面--------------------*/
+
+/*tool*/
+.tooltj{width:28%;
+	text-align:left;
+	text-indent:20px;
+}
+.toolfy{width:32%;
+	text-align:center;
+}
+.toolgn{width:40%;
+	text-align:center;
+}
+/*查询后主表格和带一格子表格的样式*/
+.tab_bb_info {
+	FONT-SIZE: 12px;
+	height:30px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 30px;
+	width:100%;
+	margin-top:2px;	
+
+}
+.tab_bb_info TD {
+	FONT-SIZE: 12px;
+	height:30px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 20px;
+
+}
+/*---------------------登录页面--------------------*/
+.logintext{
+	font-family:"宋体";
+	font-size:12px;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+/*---------------------权限管理页面--------------------*/
+/*查询后主表格和带一格子表格的样式*/
+.tab_qx_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 20px;
+	width:100%;
+	text-align:center;
+
+}
+.tab_qx_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 20px;
+	text-align:center;
+
+}
+
+/*---------------------页面内子项过多 采用超链接时的背景--------------------*/
+.indiv {
+background-color:#e3edf2;
+
+}
+
+
+/*---------------------上传文件--------------------*/
+a.addfile {
+background-image:url(../images/f1.gif);
+background-repeat:no-repeat;
+display:block;
+height:20px;
+position:relative;
+text-decoration:none;
+width:80px;
+}
+
+input.addfile {
+/*left:-18px;*/
+}
+
+input.addfile {
+cursor:pointer !important;
+height:30px;
+left:-6px;
+filter:alpha(opacity=0); 
+position:absolute;
+top:-9px;
+width:10px;
+z-index: -1;
+}
+
+/*---------------------捞油报表管理--------------------*/
+.tab_lybb_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #89c6ef 1px solid;
+	BORDER-LEFT: #89c6ef 1px solid;
+	line-height: 20px;
+	width:600px;
+	margin-top:2px;	
+
+}
+.tab_lybb_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #89c6ef 1px solid;
+	BORDER-RIGHT: #89c6ef 1px solid;
+	line-height: 20px;
+
+}
+
+/*-----------------8月24日局级新页面-----------------*/
+
+.chkbox{
+	border:1px #999999 solid;
+	width:132px;
+	color:#333333;
+	vertical-align:middle;
+	font:"宋体";
+	font-weight: normal;
+	font-size:12px;
+
+}
+
+.chkboxyou{
+	border:1px #999999 solid;
+	width:105px;
+	color:#333333;
+	vertical-align:middle;
+	font:"宋体";
+	font-weight: normal;
+	font-size:12px;
+
+}
+.tztext{	
+	
+	color:#006699;
+	font:"宋体";
+	font-weight: bold;
+	font-size:12px;
+
+}
+.newtext{
+	font:"宋体";
+	font-size:12px;
+	color:#006699;
+}
+.A7:link {
+	COLOR: #006699; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A7:visited {
+	COLOR: #006699; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A7:hover {
+	COLOR: #000000; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A7:active {
+	COLOR: #006699; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+
+
+.showlisttext{
+	color:#ff0000;
+}
+
+/*ectable上信息提示字体*/
+.infostext{
+	color:#e93a3a;
+	font:"宋体";
+	font-weight: normal;
+	font-size:12px;
+}
+/*10.14局首页导航文字连接*/
+.A8:link {
+	COLOR: #ffffff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A8:visited {
+	COLOR: #ffffff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A8:hover {
+	COLOR: #5acfe0; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A8:active {
+	COLOR: #ffffff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+/*10.24局首页突发事件文字连接*/
+.A11:link {
+	COLOR: #006699; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A11:visited {
+	COLOR: #006699; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A11:hover {
+	COLOR: #5acfe0; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A11:active {
+	COLOR: #006699; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+/*10.19局首页待办事宜文字连接*/
+.A12:link {
+	COLOR: #ff0000; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A12:visited {
+	COLOR: #ff0000; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A12:hover {
+	COLOR: #5acfe0; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A12:active {
+	COLOR: #ff0000; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+/*版权*/
+.ctext{
+	font-size: 14px;
+	color: #ffffff;
+	text-decoration: none;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight: normal;
+}
+/*10.14局版权英文*/
+.A10:link {
+	COLOR: #ffffff; TEXT-DECORATION: none; font-family:Arial, Helvetica, sans-serif; font-size: 11px; line-height: 20px;
+}
+.A10:visited {
+	COLOR: #ffffff; TEXT-DECORATION: none; font-family:Arial, Helvetica, sans-serif; font-size: 11px; line-height: 20px;
+}
+.A10:hover {
+	COLOR: #5acfe0; TEXT-DECORATION: none; font-family: Arial, Helvetica, sans-serif; font-size: 11px; line-height: 20px;
+}
+.A10:active {
+	COLOR: #ffffff; TEXT-DECORATION: none; font-family:Arial, Helvetica, sans-serif; font-size: 11px; line-height: 20px;
+}
+
+/*10.22数据表格的样式*/
+.datatab_info {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-TOP: #53bbe0 1px solid;
+	BORDER-LEFT: #53bbe0 1px solid;
+	line-height: 20px;
+	margin-top:2px;	
+
+}
+.datatab_info TD {
+	FONT-SIZE: 12px;
+	height:20px;
+	BORDER-BOTTOM: #53bbe0 1px solid;
+	BORDER-RIGHT: #53bbe0 1px solid;
+	line-height: 20px;
+
+}
+/*-----------------11.17局首页--------------*/
+/*欢迎信息文字*/
+.wel_ntext{
+	font:"宋体";
+	font-size:12px;
+	color:#333333;
+	text-decoration: none;
+}
+.A15:link {
+	COLOR: #333333; TEXT-DECORATION: none; font-family:"宋体"; font-size: 12px; line-height: 20px;
+}
+.A15:visited {
+	COLOR: #333333; TEXT-DECORATION: none; font-family:"宋体"; font-size: 12px; line-height: 20px;
+}
+.A15:hover {
+	COLOR: #5acfe0; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.A15:active {
+	COLOR: #333333; TEXT-DECORATION: none; font-family:"宋体"; font-size: 12px; line-height: 20px;
+}
+/*物探小队链接*/
+.awt:link {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.awt:visited {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.awt:hover {
+	COLOR: #3366ff; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+.awt:active {
+	COLOR: #FFA100; TEXT-DECORATION: none; font-family: "宋体"; font-size: 12px; line-height: 20px;
+}
+/*待办事宜*/
+.db_ntext{
+	font:"宋体";
+	font-size:12px;
+	color:#333333;
+	text-decoration: none;
+}
+/*重点井三色文字*/
+.zdj_rtext{
+	font:"宋体";
+	font-size:12px;
+	color:#ff0000;
+	text-decoration: none;
+}
+.zdj_rtext a:link{font:"宋体";
+	font-size:12px;
+	color:#ff0000;
+	text-decoration: none;
+}
+.zdj_rtext a:visited{font:"宋体";
+	font-size:12px;
+	color:#ff0000;
+	text-decoration: none;
+}
+.zdj_rtext a:hover{font:"宋体";
+	font-size:12px;
+	color:#ff0000;
+	text-decoration:underline;
+}
+.zdj_rtext a:active{font:"宋体";
+	font-size:12px;
+	color:#ff0000;
+	text-decoration: none;
+}
+
+.zdj_otext{
+	font:"宋体";
+	font-size:12px;
+	color:#ff924a;
+	text-decoration: none;
+}
+.zdj_otext a:link{font:"宋体";
+	font-size:12px;
+	color:#ff924a;
+	text-decoration: none;
+}
+.zdj_otext a:visited{font:"宋体";
+	font-size:12px;
+	color:#ff924a;
+	text-decoration: none;
+}
+.zdj_otext a:hover{font:"宋体";
+	font-size:12px;
+	color:#ff924a;
+	text-decoration:underline;
+}
+.zdj_otext a:active{font:"宋体";
+	font-size:12px;
+	color:#ff924a;
+	text-decoration: none;
+}
+
+.zdj_gtext{
+	font:"宋体";
+	font-size:12px;
+	color:#369a37;
+	text-decoration: none;
+}
+.zdj_gtext a:link{font:"宋体";
+	font-size:12px;
+	color:#369a37;
+	text-decoration: none;
+}
+.zdj_gtext a:visited{font:"宋体";
+	font-size:12px;
+	color:#369a37;
+	text-decoration: none;
+}
+.zdj_gtext a:hover{font:"宋体";
+	font-size:12px;
+	color:#369a37;
+	text-decoration:underline;
+}
+.zdj_gtext a:active{font:"宋体";
+	font-size:12px;
+	color:#369a37;
+	text-decoration: none;
+}
+
+/*生产调度*/
+.scdd_btext{
+	font:"宋体";
+	font-size:12px;
+	font-weight:bold;
+	color:#016599;
+	text-decoration: none;
+}
+/*局级黑色字体*/
+.ju_btext{
+	font-size: 12px;
+	color: #333;
+	text-decoration: none;
+	font-family: "宋体";
+	font-weight:bold;
+}
+.ju_btext a:link{font:"宋体";
+	font-size:12px;
+	color:#333;
+	text-decoration: none;
+}
+.ju_btext a:visited{font:"宋体";
+	font-size:12px;
+	color:#333;
+	text-decoration: none;
+}
+.ju_btext a:hover{font:"宋体";
+	font-size:12px;
+	color:#333;
+	text-decoration:none;
+	background:#66CCFF;
+}
+.ju_btext a:active{font:"宋体";
+	font-size:12px;
+	color:#333;
+	text-decoration: none;
+}

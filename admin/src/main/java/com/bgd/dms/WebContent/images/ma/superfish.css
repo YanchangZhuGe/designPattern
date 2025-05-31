@@ -1,0 +1,52 @@
+
+ul#topnav li .sub {
+	position: absolute;
+	top: 41px;
+	left: 0;
+	background: #17ab3e url(sub_bg.png) repeat-x;
+	padding: 5px 2px;
+	float: left;
+	/*--Bottom right rounded corner--*/
+	-moz-border-radius-bottomright: 5px;
+	-khtml-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	/*--Bottom left rounded corner--*/
+	-moz-border-radius-bottomleft: 5px;
+	-khtml-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	display: none;
+}
+ul#topnav li .row {
+	clear: both;
+	float: left;
+	width: 100%;
+	margin-bottom: 10px;
+}
+ul#topnav li .sub ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 120px;
+	float: left;
+}
+ul#topnav .sub ul li {
+	width: 100%;
+	color: #fff;
+}
+ul#topnav .sub ul li a {
+	float: none;
+	text-indent: 0; /*--Reset text indent--*/
+	height: auto;
+	/*	background: url(navlist_arrow.png) no-repeat 5px 12px;*/
+	padding: 4px 0;
+	display: block;
+	text-decoration: none;
+	color: #fff;
+	font:normal 12px/20px "ËÎÌו";
+	border-bottom:1px #f2f2f2 solid;
+}
+ul#topnav .sub ul li a:hover {
+	display: block;
+	color:#000;
+	border-bottom:1px #f2f2f2 solid;
+}

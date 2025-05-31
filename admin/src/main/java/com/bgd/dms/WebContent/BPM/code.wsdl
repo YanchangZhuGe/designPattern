@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CBCCodeMng" targetNamespace="http://www.cnpc.com/SAIS/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:cnpc_tns="http://www.cnpc.com/SAIS/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+<xsd:schema targetNamespace="http://www.cnpc.com/SAIS/wsdl/"><xsd:element name="queryProcType"><xsd:complexType/></xsd:element><xsd:complexType name="queryProcType_null_map"><xsd:sequence><xsd:element name="itemId" type="xsd:string"/><xsd:element name="itemEName" type="xsd:string"/><xsd:element name="itemCName" type="xsd:string"/><xsd:element name="itemRName" type="xsd:string"/><xsd:element name="showSeq" type="xsd:string"/><xsd:element name="remark" type="xsd:string"/><xsd:element name="parentId" type="xsd:string"/></xsd:sequence></xsd:complexType><xsd:complexType name="queryProcType_null"><xsd:sequence><xsd:element maxOccurs="unbounded" name="queryProcType_null_map" type="cnpc_tns:queryProcType_null_map"/></xsd:sequence></xsd:complexType><xsd:complexType name="ReturnCodeMsg"><xsd:sequence><xsd:element name="retCode" type="xsd:string"/><xsd:element name="retMsg" type="xsd:string"/></xsd:sequence></xsd:complexType><xsd:element name="queryProcType_response"><xsd:complexType><xsd:sequence><xsd:element name="queryProcType_null" type="cnpc_tns:queryProcType_null"/><xsd:element name="totalRows" type="xsd:string"/><xsd:element name="ReturnCodeMsg" type="cnpc_tns:ReturnCodeMsg"/></xsd:sequence></xsd:complexType></xsd:element></xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="msg_queryProcType_resp">
+    <wsdl:part name="response" element="cnpc_tns:queryProcType_response"/>
+  </wsdl:message>
+  <wsdl:message name="msg_queryProcType">
+    <wsdl:part name="request" element="cnpc_tns:queryProcType"/>
+  </wsdl:message>
+  <wsdl:portType name="CBCCodeMngSoap">
+    <wsdl:operation name="queryProcType">
+      <wsdl:input message="cnpc_tns:msg_queryProcType"/>
+      <wsdl:output message="cnpc_tns:msg_queryProcType_resp"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CBCCodeMng" type="cnpc_tns:CBCCodeMngSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="queryProcType">
+      <soap:operation soapAction="CBCCodeMng/queryProcType"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CBCCodeMng">
+    <wsdl:port name="CBCCodeMng" binding="cnpc_tns:CBCCodeMng">
+      <soap:address location="/DMS/WSDLEngine/CBCCodeMng"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

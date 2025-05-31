@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_TL>
+<PagerAction>List</PagerAction>
+
+<PageTitle>消息定义</PageTitle>
+
+<Buttons>
+	<Button Type="Add" funCode="">editMsg.upmd</Button>
+	<Button Type="Edit" funCode="">editMsg.upmd?id={id}</Button>	
+	<Button Type="Delete" funCode="">DELETE FROM sys_config_message_dms WHERE msg_id='{id}'</Button>		
+</Buttons>
+
+<QuerySQL>
+  <sql>SELECT msg.*,ss.name AS subSys_name,m.name AS module_name FROM sys_config_message_dms msg LEFT JOIN ew_module ss ON msg.sub_sys_id=ss.entity_id LEFT JOIN ew_module m ON msg.module_id=m.entity_id</sql>
+</QuerySQL>
+
+<Codes>
+  <Code name="subSyses" sql="SELECT name as value,name as label FROM ew_module WHERE flag='00'">子系统</Code>
+</Codes>
+
+<QueryCondition>
+  <cdt_fields>
+    <field name="CN_msg">中文名称</field>
+    <field name="msg_code">编码</field>
+    <field name="subSys_name" selType="SEL_Codes" selValue="subSyses">子系统</field>
+  </cdt_fields>
+</QueryCondition>
+
+<DataList>
+  <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{msg_id}'\&gt;"></data>
+  <data exp="&lt;a href=javascript:popWindow('editMsg.upmd?id={msg_id}')>{msg_code}&lt;/a>">编码</data>
+  <data exp="{cn_msg}">中文名称</data>
+  <data exp="{en_msg}">英文名称</data> 
+  <data exp="{subsys_name}">子系统</data>  
+  <data exp="{module_name}">模块</data>         
+</DataList>
+</SAIS_EAW_TL>

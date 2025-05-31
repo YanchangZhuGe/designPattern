@@ -1,0 +1,8 @@
+﻿<config>
+  <chart percentWidth="100" percentHeight="80" innerRadius="0.7" paddingLeft="0">
+    <PieSeries fills="0xFF6633,0x8CDD1D,0x00BFE9"/>
+    <Caption label="更新率" fontFamily="宋体" fontSize="12" paddingLeft="0"/>
+    <SubCaption label="72.00%" fontSize="30" paddingLeft="0" color="0x8CDD1D"/>
+    <Legend left="30" bottom="-40" width="280" height="40"  color="#ADACAC" fontFamily="宋体"/>
+  </chart>
+</config>

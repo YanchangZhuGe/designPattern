@@ -1,0 +1,31 @@
+﻿[
+    {
+        "Name": "HSE月报",
+        "Id": 1,
+        "leaf": false,
+        "expanded": true,
+        "children": [
+            {
+                "Name": "HSE管理基本信息",
+                "parentId": 1,
+                "Id": 101,
+                "leaf": true,
+                "url":"one.jsp"
+            },
+            {
+                "Name": "隐患识别统计",
+                "parentId": 1,
+                "Id": 102,
+                "leaf": true,
+                "url":"two.jsp"
+            },
+            {
+                "Name": "安全观察与沟通统计月报",
+                "parentId": 1,
+                "Id": 103,
+                "leaf": true,
+                "url":"three.jsp"
+            } 
+        ]
+    }
+]

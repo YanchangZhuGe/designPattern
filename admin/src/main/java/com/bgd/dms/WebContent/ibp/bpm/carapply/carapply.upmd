@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>
+     function openProc_SelectList(){
+           window.showModalDialog("pro1SelectList2Link.lpmd", window, "dialogHeight:500px; dialogLeft:200px;");
+        }
+     function openUser_SelectList(){
+           window.showModalDialog("userList2Select.jsp", window, "dialogHeight:500px; dialogLeft:200px;");
+		}
+     function initWsObj(){
+		  var arrays=new Array('INPUT','textarea');
+		  var fields=new Array('module','title','usedate','from_address','to_address');
+		  //自定义对象
+		  var wsObj = {};
+		  wsObj.htmlType=arrays;
+		  wsObj.procENameId='procEName';
+		  wsObj.procVersionId='procVersion';
+		  wsObj.ccUsersId='ccUserId';
+		  wsObj.procInstId='procinstid';
+		  wsObj.srvName='WFMgr';
+		  wsObj.opName='startUpProcess';
+		  wsObj.fields=fields;
+		  return wsObj;
+		}
+    function submitFunc(){
+           callStartProcInst();
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			afterSubmit(retObject);
+    }
+    function afterSubmit(retObject,successHint,failHint){
+		if(successHint==undefined) successHint = '提交成功';
+		if(failHint==undefined) failHint = '提交失败';
+		if (retObject.returnCode != "0") alert(failHint);
+		else{
+			alert(successHint);
+			//window.dialogArguments.refreshData();
+			//window.opener.refreshData();
+			window.close();
+		}
+}
+     </CRU>
+  </JavaScripts>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>编辑页面</PageTitle>
+  <QuerySQL>
+    <sql>select * from wf_test</sql>
+    <tableName>wf_test</tableName>
+    <fields>
+      <field name="id" type="TEXT"></field>
+      <field name="title" type="TEXT"></field>
+      <field name="createdate" type="TEXT"></field>
+      <field name="createusername" type="TEXT"></field>
+      <field name="procinstid" type="TEXT"></field>
+      <field name="procid" type="TEXT"></field>
+      <field name="from_address" type="TEXT"></field>
+      <field name="to_address" type="TEXT"></field>
+      <field name="usedate" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="id" isShow="Hide"/>
+    <field name="title">申请标题</field>
+    <field name="createdate" type="D" isShow="Hide" defaultValue="CURRENT_DATE_TIME">申请时间</field>
+    <field name="module" type="FK" selValue="openProc_SelectList()">流程模板选择</field>
+    <field name="from_address">发车地点</field>
+    <field name="to_address">目的地</field>
+    <field name="usedate" type="D">使用时间</field>
+    <field name="ccUserName" type="FK" selValue="openUser_SelectList()">抄送者</field>
+    <field name="mobile">电话号码</field>
+    <field name="procEName" isShow="Hide"/>
+    <field name="procVersion" isShow="Hide"/>
+    <field name="procinstid" isShow="Hide"/>
+    <field name="procid" isShow="Hide"/>
+    <field name="ccUserId" isShow="Hide"/>
+  </EntityFields>
+</SAIS_EAW_TL>

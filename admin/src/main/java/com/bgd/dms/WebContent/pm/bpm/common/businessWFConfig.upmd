@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>业务类型匹配参数配置</PageTitle>
+  <QuerySQL>
+    <sql>select  * from common_busi_wf_config where bsflag='0' and config_id='$PARAM.id'</sql>
+    <tableName>common_busi_wf_config</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes>
+  	  <Code name="procType" sql="SELECT t.coding_code_id AS value,t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id='5110000004' and t.bsflag='0' order by t.coding_show_id">流程类型</Code>
+  </Codes>
+  <EntityFields>
+    <field name="config_id" isShow="Hide">id</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="business_type" isShow="Hide" defaultValue="$PARAM.businessType">业务名称</field>
+    <field name="query_builder" maxLength="500">查询条件</field>
+    <field name="query_builder_mean" maxLength="500">查询条件语义</field>
+    <field name="list_builder" maxLength="500">列表项</field>
+    <field name="list_builder_mean" maxLength="500">列表项语义</field>
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+  	var $parent = parent.$; 
+		function setCruTitle(){
+			top.setDialogTitle(window,cruTitle);
+		}
+	  	function submitFunc(){
+
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+
+			var querySql = "select config_id from common_busi_wf_config t1 where  t1.bsflag = '0' and  t1.business_type='"+getObj('business_type').value+"'";
+    		var queryRet = syncRequest('Post',cruConfig.contextPath+appConfig.queryListAction,'querySql='+querySql);
+	  		if(queryRet.returnCode=='0' &amp;&amp; queryRet.datas.length>0){
+	  			if(confirm('该业务的流程已经配置，是否覆盖？')){
+	  				getObj('config_id').value=queryRet.datas[0].config_id;
+	  			}else{
+	  				return;
+	  			}
+	  		}
+		  	submitStr = getSubmitStr();
+			var retObject = syncRequest('Post',path,submitStr);
+			afterSubmit(retObject);
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

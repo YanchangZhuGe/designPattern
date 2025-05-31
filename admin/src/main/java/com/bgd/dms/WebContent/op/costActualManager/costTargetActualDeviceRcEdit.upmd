@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>设备折旧费管理</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_op_tartet_device_depre where bsflag='0' and record_type ='0'   and target_depre_id = '$PARAM.id'</sql>
+    <tableName>bgp_op_tartet_device_depre</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+  	<Select name="oilType">
+      <option value="1">汽油</option>
+      <option value="2">柴油</option>
+    </Select>
+  </Options>
+  <Codes>
+    <Code name="teamOps" sql="SELECT coding_code_id AS value,t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id='0110000001' and t.bsflag='0' and length(t.coding_code)=2 and t.spare1='0' order by t.coding_show_id">班组</Code>
+  </Codes>
+  <EntityFields>
+    <field name="target_depre_id" isShow="Hide">id</field>
+   <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="if_change" isShow="Hide" >if_change</field>
+    <field name="record_type" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">id</field>
+    <field name="dev_name" maxLength="32">设备名称</field>
+    <field name="dev_team" maxLength="32" type="SEL_Codes" selValue="teamOps">班组</field>
+    <field name="device_count" maxLength="32">数量</field>
+    <field name="dev_model" maxLength="32">规格型号</field>
+    <field name="actual_start_date" type="D">实际进入时间</field>
+    <field name="actual_end_date" type="D">实际离开时间</field>
+    <field name="asset_value"  maxLength="12">设备原值</field>
+    <field name="depreciation_value" maxLength="12">设备折旧年限</field>
+  </EntityFields>
+  <SavedParams>id,projectInfoNo</SavedParams>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+	  		submitStr = getSubmitStr();
+			submitStr+='&amp;tableId=target_depre_id';
+			if(submitStr == null) return;
+			var retObject = jcdpCallService("OPCostSrv", "saveTargetActualInfo", submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+		function page_init(){
+			var target_depre_id = jcdpPageParams['id'];
+			setCruTitle();  
+			cruConfig.contextPath = "/gms3";  
+			cruConfig.querySql = "select * from bgp_op_tartet_device_depre where bsflag='0' and record_type ='0' and target_depre_id = '"+target_depre_id+"'";  
+			cru_init(); 
+			if(target_depre_id!=null &amp; target_depre_id!=''){
+				document.getElementsByName("dev_model")[0].disabled = 'disabled';
+				document.getElementsByName("asset_value")[0].disabled = 'disabled';
+			}
+	    }
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

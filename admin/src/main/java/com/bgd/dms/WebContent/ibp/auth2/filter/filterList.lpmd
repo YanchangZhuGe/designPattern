@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>JCDP_menu_dataAuth</PageTitle>
+  <QuerySQL>
+    <sql>select t.*,p.func_code,p.func_c_name from p_auth_func_filter_dms t join p_auth_function_dms p on t.func_id=p.func_id ORDER BY p.func_code</sql>
+    <fields>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="filter_column_name" type="TEXT"></field>
+      <field name="filter_data_item" type="TEXT"></field>
+      <field name="filter_type" type="TEXT"></field>
+      <field name="func_id" type="TEXT"></field>
+      <field name="remark" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">filterEdit.upmd</Button>
+    <Button Type="Edit" funCode="" Label="">filterEdit.upmd?id={id}</Button>
+    <Button Type="Delete" funCode="" Label="">DELETE FROM p_auth_func_filter_dms WHERE entity_id='{id}';DELETE FROM p_auth_filter_scope_dms WHERE filter_id='{id}';DELETE FROM p_auth_filter_item WHERE filter_id='{id}'</Button>
+  </Buttons>
+  <Options>
+    <Select name="filter_type">
+      <option value="0">JCDP_byOrg</option>
+      <!--
+      <option value="1">JCDP_byPrj</option>
+      -->
+      <option value="2">JCDP_byCreator</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{entity_id}'&gt;"></data>
+    <data exp="&lt;a href=javascript:popWindow('filterEdit.upmd?id={entity_id}')&gt;{func_code}&lt;/a&gt;">JCDP_funcCode</data>
+    <data exp="{func_c_name}">JCDP_funcName</data>
+    <data func="getOpValue, filter_type" exp="{filter_type}">JCDP_filterType</data>
+    <data exp="{filter_column_name}">JCDP_filerCol</data>
+    <data exp="&lt;a href='filterScopeList.cpmd?id={entity_id}'&gt;JCDP_filterScope&lt;/a&gt;">JCDP_filterScope</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="func_code">JCDP_funcCode</field>
+      <field name="func_c_name">JCDP_funcName</field>
+      <field name="filter_type" selType="SEL_OPs" selValue="filter_type">JCDP_filterType</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

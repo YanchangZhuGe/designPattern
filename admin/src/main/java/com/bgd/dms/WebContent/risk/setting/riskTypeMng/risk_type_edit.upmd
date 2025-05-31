@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+     <CRU>  
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				top.frames('list').reloadNeed();
+				newClose();
+			}
+		}
+    </CRU> 
+  </JavaScripts> 
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>风险类型维护</PageTitle>
+  <QuerySQL>
+    <sql>Select b.risk_type_id,b.risk_type_name,b.risk_type_desc,b.create_date FROM bgp_risk_type b WHERE b.risk_type_id = '$PARAM.id' and b.bsflag='0'</sql>
+    <tableName>bgp_risk_type</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="risk_type_id" isShow="Hide">风险分类编号</field>
+    <field name="risk_type_name" nonEmpty="true">风险分类名称</field>
+    <field name="risk_type_desc">风险分类描述</field>
+    <field name="parent_id" isShow="Hide" defaultValue="$PARAM.id" action = "C">父节点</field>
+    <field name="updator_id" isShow="Hide" defaultValue="$USER.userId">修改人</field>
+    <field name="modifi_date" isShow="Hide" defaultValue="CURRENT_DATE_TIME">修改时间</field>
+  	<field name="org_id" isShow="Hide" defaultValue="$USER.codeAffordOrgID">org_id</field>
+    <field name="org_subjection_id" isShow="Hide" defaultValue="$USER.subOrgIDofAffordOrg">org_subjection_id</field>
+  </EntityFields>
+</SAIS_EAW_TL>

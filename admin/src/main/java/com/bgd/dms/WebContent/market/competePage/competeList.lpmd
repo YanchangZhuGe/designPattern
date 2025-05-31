@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select p.corp_id, p.duty, p.PERSON_ID, p.NAME, p.OFFICE_PHONE, p.order_no,sm.org_name from ci_person p,sm_org sm where p.corp_id = sm.org_id and sm.bgp_infomation_type_id like '106%' and p.bsflag='0' order by sm.org_name ,to_number(p.order_no)</sql>
+    <fields>
+      <field name="corp_id" type="TEXT"></field>
+      <field name="duty" type="TEXT"></field>
+      <field name="name" type="TEXT"></field>
+      <field name="office_phone" type="TEXT"></field>
+      <field name="order_no" type="TEXT"></field>
+      <field name="org_name" type="TEXT"></field>
+      <field name="person_id" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">addCompete.upmd</Button>
+    <Button Type="Edit" funCode="" Label="">addCompete.upmd</Button>
+    <Button Type="Delete" funCode="" Label="">update ci_person set bsflag='1' where person_id='{id}'</Button>
+    <Button Type="sql" funCode="" Label="调整人员位置"></Button>
+  </Buttons>
+  <Options>
+    <Select sais_select_name="wtgsOrgId" name="wtgsOrgId"/>
+  </Options>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{person_id},{name}'&gt;">选择</data>
+    <data exp="&lt;a href=javascript:viewLink('{person_id}') &gt;{name}&lt;/a&gt;">姓名</data>
+    <data exp="{duty}">职务</data>
+    <data exp="{org_name}">组织机构</data>
+    <data exp="{office_phone}">办公室电话</data>
+  </DataList>
+ <QueryCondition>
+    <cdt_fields>
+      <field name="duty">职务</field>
+      <field name="corp_id" selType="SEL_OPs" selValue="wtgsOrgId">组织机构</field>
+      <field name="name">姓名</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+    function toAdd(){
+		editUrl="/market/competePage/addPerson.jsp";
+		window.location=cruConfig.contextPath+editUrl;
+	}
+ 
+	function toEdit(){
+		ids = getSelIds('chx_entity_id');
+		if(ids==''){
+			alert("请先选中一条记录!");
+			return;
+		}
+		selId = ids.split(',')[0];
+		editUrl = "/market/editWuTanPerson.srq?personId={id}&amp;button=edit";
+		editUrl = editUrl.replace('{id}',selId);
+		editUrl += '&amp;pagerAction=edit2Edit';
+		window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+	}
+	
+	function viewLink(person_id){  			
+		    	editUrl = "/market/viewWuTanPerson.srq?button=view&amp;personId="+person_id;
+		    	window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+			}
+  
+ 	function JcdpButton3OnClick(){
+  	  			ids = getSelIds('chx_entity_id');
+			    if(ids==''){ alert("请先选中一条记录!");
+			     return;
+			    } 
+			    var tempa = ids.split(',');
+			    var person_id = tempa[0];
+			    editUrl = "/market/wtPersonOrder.srq?person_id="+person_id; 
+			    var returnVlue=window.showModalDialog(cruConfig.contextPath+editUrl,window,'dialogHeight:200px,;dialogWidth:600px');
+			    
+  	  }
+  </JavaScripts>
+</SAIS_EAW_TL>

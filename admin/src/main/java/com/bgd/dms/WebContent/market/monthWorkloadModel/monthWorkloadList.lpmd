@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>数据维护</PageTitle>
+  <QuerySQL>
+    <sql>select mq.value_quantity_id,
+       mq.corp_id,
+       mq.record_year,
+       mq.record_month,
+       mq.record_year || '-' || decode(length(mq.record_month), 1, '0' || mq.record_month, mq.record_month) record_date,
+       mq.impl_value,
+       mq.total_value,
+       mq.plan_value,
+       to_char(mq.create_date,'yyyy-MM-dd') create_date,
+       so.org_name,
+	   so.bgp_org_id org_id
+  from mm_value_quantity mq
+ inner join sm_org so
+    on mq.corp_id = so.org_id
+   and mq.bsflag = '0'
+   and so.bsflag = '0'
+  order by record_date desc
+   </sql>
+   <funcCode></funcCode>
+    <fields>
+      <field name="value_quantity_id" type="TEXT"></field>
+      <field name="corp_id" type="TEXT"></field>
+      <field name="record_year" type="TEXT"></field>
+      <field name="record_month" type="TEXT"></field>
+      <field name="record_date" type="TEXT"></field>
+      <field name="impl_value" type="TEXT"></field>
+      <field name="total_value" type="TEXT"></field>
+      <field name="plan_value" type="TEXT"></field>
+      <field name="create_date" type="TEXT"></field>
+      <field name="org_name" type="TEXT"></field>
+      <field name="org_id" type=""></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="新增" >monthWorkloadInfo.upmd</Button>
+    <Button Type="Edit" funCode="" Label="修改">monthWorkloadInfo.upmd</Button>
+    <Button Type="Delete" funCode="" Label="删除">update MM_VALUE_QUANTITY set bsflag='1' where value_quantity_id='{id}'</Button>
+  </Buttons>
+<Options>
+    <Select name="auditStatus">
+      <option value="未提交">未提交</option>
+      <option value="待审批">待审批</option>
+      <option value="审批通过">审批通过</option>
+      <option value="审批不通过">审批不通过</option>
+    </Select>
+  </Options>
+  <Codes>
+    <Code name="SworkflowType" sais_code_name="SworkflowType">流程类型</Code>
+  </Codes>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{value_quantity_id}'&gt;">选择</data>
+    <data exp="{record_year}" >记录年度</data>
+    <data exp="{record_month}">记录月份</data>
+	<data  exp="{plan_value}" >预算指标(万元)</data>
+    <data exp="{impl_value}" >落实价值工作量(万元)</data>
+    <data exp="{total_value}" >累计完成价值工作量(万元)</data>
+    <data exp="{org_name}" >单位名称</data>
+	<data exp="{create_date}" >创建时间</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="record_year">记录年度</field>
+      <field name="record_month">记录月份</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+  </JavaScripts>
+</SAIS_EAW_TL>

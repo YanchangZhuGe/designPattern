@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>功能</PageTitle>
+  <QuerySQL>
+    <sql>SELECT * FROM ic_user_favorite_dms WHERE entity_id='$PARAM.id'</sql>
+    <tableName>ic_user_favorite_dms</tableName>
+    <fields>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="user_id" type="TEXT"></field>
+      <field name="object_id" type="TEXT"></field>
+      <field name="object_type" type="TEXT"></field>
+      <field name="show_order" type=""></field>
+      <field name="spare1" type="TEXT"></field>
+      <field name="spare2" type="TEXT"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="updator" type="TEXT"></field>
+      <field name="modifi_date" type="D"></field>
+      <field name="bsflag" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options/>
+  <EntityFields>
+    <field name="user_id" isShow="Hide" defaultValue="$USER.userId" action="C">用户</field>
+    <field name="object_type" isShow="Hide" defaultValue="$PARAM.objectType" action="C">类型</field>
+    <field name="spare2" isShow="Hide" defaultValue="$PARAM.parentId" action="C">类型</field><field name="create_date" type="D" isShow="Hide" defaultValue="CURRENT_DATE_TIME" action="C">录入日期</field>
+    <field name="creator" isShow="Hide" defaultValue="$USER.userId" action="C">录入人</field>
+    <field name="updator" isShow="Hide" defaultValue="$USER.userId">修改人</field>
+    <field name="modifi_date" type="D" isShow="Hide" defaultValue="CURRENT_DATE_TIME">修改时间</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0"/>
+    
+    <field name="spare1">名称</field>
+  </EntityFields>
+  <JavaScripts> 
+    <U>
+	  function afterSubmit(retObject,successHint,failHint){
+		if (retObject.returnCode != "0") alert( '提交失败');
+		else{
+			window.parent.selectedNode.setText(getObj('spare1').value);
+			window.location = cruConfig.contextPath + "/blank.htm";
+		}
+	  }
+	</U>
+	<C>
+	  function afterSubmit(retObject,successHint,failHint){
+		if (retObject.returnCode != "0") alert( '提交失败');
+		else{
+			window.parent.selectedNode.reload();
+			window.location = cruConfig.contextPath + "/blank.htm";
+		}
+	  }
+	</C>
+  </JavaScripts>  
+</SAIS_EAW_TL>

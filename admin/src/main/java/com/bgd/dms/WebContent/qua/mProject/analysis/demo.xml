@@ -1,0 +1,25 @@
+<!-- <Chart bgColor='AEC0CA,FFFFFF' upperLimit='100' lowerLimit='95' majorTMNumber='5' 
+	majorTMHeight='8' showGaugeBorder='0' gaugeOuterRadius='85' gaugeOriginX='140' gaugeOriginY='130' 
+	gaugeInnerRadius='25' formatNumberScale='1' numberSuffix='%25' displayValueDistance='20' 
+	decimalPrecision='2' tickMarkDecimalPrecision='1' pivotRadius='17' showPivotBorder='1' 
+	pivotBorderColor='000000' pivotBorderThickness='5' pivotFillMix='FFFFFF,000000'>
+
+	<colorRange>
+		<color minValue='95' maxValue='98' code='FF654F'/>
+      <color minValue='98' maxValue='100' code='8BBA00'/>
+	</colorRange>
+	<dials>
+		<dial value='99' borderAlpha='0' bgColor='000000' baseWidth='28' topWidth='1' radius='80' rearExtension='1'/>
+	</dials>
+	<annotations>
+		Draw the background arcs
+		<annotationGroup xPos='140' yPos='131.5'>
+			<annotation type='circle' xPos='0' yPos='2.5' radius='95' startAngle='0' endAngle='180' fillPattern='linear' fillAsGradient='1' fillColor='dddddd,666666' fillAlpha='100,100'  fillRatio='50,50' fillDegree='0' showBorder='1' borderColor='444444' borderThickness='2'/>
+			 <annotation type='circle' xPos='0' yPos='0' radius='90' startAngle='0' endAngle='180' fillPattern='linear' fillAsGradient='1' fillColor='666666,ffffff' fillAlpha='100,100'  fillRatio='50,50' fillDegree='0' />
+		</annotationGroup>
+	</annotations>
+</Chart>
+ -->
+ 
+ <Chart bgColor='AEC0CA,FFFFFF' upperLimit='100' lowerLimit='97' majorTMNumber='5' majorTMHeight='8' showGaugeBorder='0' gaugeOuterRadius='105'  gaugeOriginX='140' gaugeOriginY='130' gaugeInnerRadius='25' formatNumberScale='1' numberSuffix='%25' displayValueDistance='20' decimalPrecision='2' tickMarkDecimalPrecision='1' pivotRadius='17' showPivotBorder='1'  pivotBorderColor='000000' pivotBorderThickness='5' pivotFillMix='FFFFFF,000000'> <colorRange><color minValue='97' maxValue='98.0' code='FF654F'/> <color minValue='98.0' maxValue='100' code='8BBA00'/></colorRange> <dials><dial value='100.0' borderAlpha='0' bgColor='000000' baseWidth='28' topWidth='1' radius='100' rearExtension='1'/> </dials><annotations> <annotationGroup xPos='140' yPos='131.5'> <annotation type='circle' xPos='0' yPos='2.5' radius='115' startAngle='0'  endAngle='180' fillPattern='linear' fillAsGradient='1' fillColor='dddddd,666666' fillAlpha='100,100'  fillRatio='50,50' fillDegree='0'  showBorder='1' borderColor='444444' borderThickness='2'/><annotation type='circle' xPos='0' yPos='0' radius='110' startAngle='0' endAngle='180' fillPattern='linear' fillAsGradient='1' fillColor='666666,ffffff' fillAlpha='100,100'  fillRatio='50,50' fillDegree='0' /> </annotationGroup> </annotations></Chart>
+ 

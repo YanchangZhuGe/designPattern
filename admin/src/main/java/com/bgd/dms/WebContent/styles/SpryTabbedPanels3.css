@@ -1,0 +1,38 @@
+BODY {
+FONT-SIZE: 12px; }
+OL LI {
+MARGIN: 8px
+}
+#con {
+FONT-SIZE: 12px; MARGIN: 0px auto; margin-top:5px; WIDTH: auto
+}
+#tags {
+PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px 0px;  PADDING-TOP: 0px; HEIGHT: 25px
+}
+#tags LI {
+BACKGROUND: url(../images/tag/tagleft3.png) no-repeat left bottom; FLOAT: left; MARGIN-RIGHT: 1px; LIST-STYLE-TYPE: none; HEIGHT: 25px;  margin-left: 15px;
+}
+#tags LI A {
+PADDING-RIGHT: 12px; PADDING-LEFT: 12px; BACKGROUND: url(../images/tag/tagright3.png) no-repeat right bottom; FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #6c6c6c;LINE-HEIGHT: 25px; PADDING-TOP: 0px; HEIGHT: 25px; TEXT-DECORATION: none;  margin-right: -14px;
+}
+#tags LI.emptyTag {
+BACKGROUND: none transparent scroll repeat 0% 0%; WIDTH: 4px
+}
+#tags LI.selectTag {
+BACKGROUND-POSITION: left top; MARGIN-BOTTOM: -2px; POSITION: relative; HEIGHT: 25px
+}
+#tags LI.selectTag A {
+BACKGROUND-POSITION: right top; COLOR: #6c6c6c; LINE-HEIGHT: 25px; HEIGHT: 25px;
+}
+#tagContent {
+ PADDING-RIGHT: 1px; BORDER: #aecbd4 1px solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; PADDING-TOP:1px; BACKGROUND-COLOR: #fff
+}
+.tagContent {
+PADDING-RIGHT: 10px; DISPLAY: none; PADDING-LEFT: 10px; BACKGROUND: url(../images/bg.gif) repeat-x; PADDING-BOTTOM: 10px; WIDTH: 100%; COLOR: #474747; PADDING-TOP: 10px
+}
+#tagContent DIV.selectTag {
+DISPLAY: block
+}
+#conttt {
+ PADDING-RIGHT: 1px; BORDER: #aecbd4 1px solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; PADDING-TOP:1px; BACKGROUND-COLOR: #fff
+}

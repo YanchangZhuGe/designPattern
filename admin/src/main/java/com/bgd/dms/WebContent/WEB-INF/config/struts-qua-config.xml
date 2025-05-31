@@ -1,0 +1,157 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!-- 不合格项编码 -->
+		 <action path="/qua/setting/getQualityCodes" type="com.bgp.mcs.web.qua.action.QualityItemsAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="getQualityCodes" />
+		</action> 
+		<!-- 单炮评价编码 -->
+		<action path="/qua/setting/getSingleShot" type="com.bgp.mcs.web.qua.action.SingleShotAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="getSingleShot" />
+		</action>
+		<!-- 文档树 - 物探处-->
+		<action path="/qua/sProject/quaFiles/getFileTree" type="com.bgp.mcs.web.qua.action.FileTreeAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="getFileTree" />
+		</action>
+		<!-- 文档树 - 小队-->
+		<action path="/qua/sProject/quaFiles/getFileTeam" type="com.bgp.mcs.web.qua.action.FileTreeAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="getFileTeam" />
+		</action>
+		<!-- 项目树 -->
+		<action path="/qua/sProject/getProjectTree" type="com.bgp.mcs.web.qua.action.FileTreeAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="getProjectTree" />
+		</action>
+		<!-- eps树  东方-物探处-项目-->
+		<action path="/qua/common/getProjectTreeEps" type="com.bgp.mcs.web.qua.action.FileTreeAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="getProjectTreeEps" />
+		</action>
+		<!-- 修改不合格项纪录(修改页面) -->
+		<action path="/qua/sProject/editQualityItems" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="editQualityItems" />
+			<forward name="success" path="/qua/sProject/control/close_page.jsp" />
+		</action>
+		<!-- 修改不合格项纪录(列表页面-详细展示) -->
+		<!-- <action path="/qua/sProject/saveQualityItems" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="editQualityItems" />
+		    <forward name="success" path="/qua/sProject/control/recordItemList.jsp" />
+		</action> -->
+		<!-- 检查项汇总(列表页面-详细展示) -->
+		<action path="/qua/sProject/summary/saveSummaryDetail" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="saveSummaryDetail" />
+			<forward name="success" path="/qua/sProject/summary/summaryList.jsp" />
+		</action>
+		<!-- 检查项汇总(修改页面) -->
+		<action path="/qua/sProject/summary/saveCheckSummary" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="saveSummaryDetail" />
+			<forward name="success" path="/qua/sProject/summary/close_page.jsp" />
+		</action>
+		<!-- 质量事故上报  保存 -->
+		<action path="/qua/sProject/accident/saveAccident" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="saveAccident" />
+			<forward name="success" path="/qua/common/close_page.jsp" />
+		</action>
+		<!-- 质量事故报告单  保存 -->
+		<action path="/qua/sProject/accident/saveAccidentReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="saveAccidentReport" />
+			<forward name="success" path="/qua/common/close_page.jsp" />
+		</action>
+		<!-- 计量设备检测  保存 -->
+		<action path="/qua/sProject/equipment/saveEquipment" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="saveEquipment" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 质量分析会  保存 -->
+		<action path="/qua/sProject/meeting/saveMeeting" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="saveMeeting" />
+			<forward name="success" path="/qua/common/close_page.jsp" />
+		</action>
+		<!-- QC活动  保存 -->
+		<action path="/qua/sProject/QC/saveQC" type="com.cnpc.jcdp.mvc.action.WSAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualityItemsSrv" operationName="saveQC" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 仪表盘 -->
+		<!-- <action path="/qua/common/qualityChart" type="com.bgp.mcs.web.qua.action.QualityChartAction" scope="request">
+			<serviceCall serviceName="QualityChartSrv" operationName="qualityChart" />
+		</action> -->
+		<!-- 仪表盘 -->
+		<action path="/qua/common/qualityChart" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="QualityChartSrv" operationName="qualityChart" />
+		</action>
+		<!-- 仪表盘 -->
+		<action path="/qua/common/wellChart" type="com.bgp.mcs.web.qua.action.QualityChartAction" scope="request">
+			<serviceCall serviceName="QualityChartSrv" operationName="wellChart" />
+		</action>
+		<!-- 仪表盘 -->
+		<action path="/qua/common/lineChart" type="com.bgp.mcs.web.qua.action.QualityChartAction" scope="request">
+			<serviceCall serviceName="QualityChartSrv" operationName="lineChart" />
+		</action>
+		<!-- 仪表盘 -->
+		<action path="/qua/common/shotChart" type="com.bgp.mcs.web.qua.action.QualityChartAction" scope="request">
+			<serviceCall serviceName="QualityChartSrv" operationName="shotChart" />
+		</action>
+		
+		<!-- 项目的WBS树 2012-10-27-->
+		<action path="/qua/common/getProjectWbsOnly" type="com.bgp.mcs.web.qua.action.SingleShotAction" name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualitySrv" operationName="getProjectWbsOnly" />
+		</action>
+		<!-- 项目的Activity树 2012-11-07-->
+		<action path="/qua/common/getProjectActivity" type="com.bgp.mcs.web.qua.action.SingleShotAction" name="dynamicForm" scope="request">
+			<serviceCall serviceName="QualitySrv" operationName="getProjectActivity" />
+		</action>
+		<!-- QC 上传文档，发起流程 2012-10-27 -->
+		<action path="/qua/uploadFile" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="QualitySrv" operationName="uploadFile" />
+			<forward name="success" path="/qua/sProject/QC/qc_activity.jsp" />
+		</action>
+		<!-- 上传文档-->
+		<action path="/qua/common/uploadFile" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="QualitySrv" operationName="uploadFileCommon" />
+			<forward name="success" path="/qua/common/close_page.jsp"/>
+		</action>
+		<!-- QC 上传文档，发起流程 2012-10-27 -->
+		<action path="/qua/equipment/excelImport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="QualitySrv" operationName="importExcel" />
+			<forward name="success" path="/qua/sProject/quaFile/excel.jsp" />
+		</action>
+		<action path="/qua/saveOrUpdateCheckPlanWs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="QualitySrv" operationName="saveOrUpdateCheckPlanWs" />
+			<forward name="success" path="/qua/wsProject/plan/control_plan.jsp" />
+		</action>		
+		
+		<action path="/qua/doc/commonSaveOrUpdateFile" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+				<serviceCall serviceName="ucmSrvNew" operationName="commonSaveOrUpdateFile" />
+				<forward name="success" path="/qua/wsProject/meeting/commonFilePage.jsp" />
+		</action>
+				
+		<!-- 质量会议记录 -->
+	    <action path="/qua/meeting/saveOrUpdateMeetingRecord" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+				<serviceCall serviceName="QualitySrv" operationName="saveOrUpdateMeetingRecord" />
+				<forward name="success" path="/qua/sProject/quaFile/recordList.jsp" />
+		</action>	
+		<!-- 质量分析报告 -->
+		<action path="/qua/meeting/saveOrUpdateQualityanalysisreport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+				<serviceCall serviceName="QualitySrv" operationName="saveOrUpdateQualityanalysisreport" />
+				<forward name="success" path="/qua/sProject/quaFile/meeting.jsp" />
+		</action>	
+		
+	</action-mappings>
+</struts-config>

@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!-- 利用FOP将FO文件转换成RTF,解决word的下载问题 -->
+		<action path="/fop/convertFop" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request">
+			<serviceCall serviceName="ConvertFoToRTFSrv" operationName="convertFop" />
+		</action>
+		<action path="/fop/printFop" type="com.bgp.mcs.web.common.action.PrintServiceGenedFileAction"
+			scope="request">
+			<serviceCall serviceName="ConvertFoToRTFSrv" operationName="convertFop" />
+		</action>
+	</action-mappings>
+</struts-config>

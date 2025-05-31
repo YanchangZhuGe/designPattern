@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+   
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>设备</PageTitle>
+  <QuerySQL>
+    <sql>SELECT * FROM GMS_DEVICE_ACCOUNT WHERE dev_acc_id='$PARAM.id'</sql>
+    <tableName>GMS_DEVICE_ACCOUNT</tableName>
+    <fields>
+      <field name="dev_acc_id" type="TEXT">DEV_ACC_ID</field>
+      <field name="dev_coding" type="TEXT">DEV_CODING</field>
+      <field name="dev_name" type="TEXT">DEV_NAME</field>
+      <field name="asset_stat" type="TEXT">ASSET_STAT</field>
+      <field name="dev_model" type="TEXT">DEV_MODEL</field>
+      <field name="self_num" type="TEXT">SELF_NUM</field>
+      <field name="dev_sign" type="TEXT">DEV_SIGN</field>
+      <field name="dev_type" type="TEXT">DEV_TYPE</field>
+      <field name="dev_unit" type="TEXT">DEV_UNIT</field>
+      <field name="asset_coding" type="TEXT">ASSET_CODING</field>
+      <field name="turn_num" type="TEXT">TURN_NUM</field>
+      <field name="order_num" type="TEXT">ORDER_NUM</field>
+      <field name="requ_num" type="TEXT">REQU_NUM</field>
+      <field name="asset_value" type="">ASSET_VALUE</field>
+      <field name="net_value" type="">NET_VALUE</field>
+      <field name="cont_num" type="TEXT">CONT_NUM</field>
+      <field name="currency" type="TEXT">CURRENCY</field>
+      <field name="tech_stat" type="TEXT">TECH_STAT</field>
+      <field name="using_stat" type="TEXT">USING_STAT</field>
+      <field name="capital_source" type="TEXT">CAPITAL_SOURCE</field>
+      <field name="owning_org_id" type="TEXT">OWNING_ORG_ID</field>
+      <field name="owning_org_name" type="TEXT">OWNING_ORG_NAME</field>
+      <field name="owning_sub_id" type="TEXT">OWNING_SUB_ID</field>
+      <field name="usage_org_id" type="TEXT">USAGE_ORG_ID</field>
+      <field name="usage_org_name" type="TEXT">USAGE_ORG_NAME</field>
+      <field name="usage_sub_id" type="TEXT">USAGE_SUB_ID</field>
+      <field name="dev_position" type="TEXT">DEV_POSITION</field>
+      <field name="manu_factur" type="TEXT">MANU_FACTUR</field>
+      <field name="producting_date" type="D">PRODUCTING_DATE</field>
+      <field name="account_stat" type="TEXT">ACCOUNT_STAT</field>
+      <field name="dev_photo" type="">DEV_PHOTO</field>
+      <field name="license_num" type="TEXT">LICENSE_NUM</field>
+      <field name="chassis_num" type="TEXT">CHASSIS_NUM</field>
+      <field name="engine_num" type="TEXT">ENGINE_NUM</field>
+      <field name="bsflag" type="TEXT">BSFLAG</field>
+      <field name="remark" type="TEXT">REMARK</field>
+      <field name="creator" type="TEXT">CREATOR</field>
+      <field name="create_date" type="D">CREATE_DATE</field>
+      <field name="modifier" type="TEXT">MODIFIER</field>
+      <field name="modifi_date" type="D">MODIFI_DATE</field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="accStatOps">
+      <option value="1">账外</option>
+      <option value="2">外租</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="dev_name" nonEmpty="true" type="FK" defaultValue="$ENTITY.dev_name:$ENTITY.dev_name" selValue="selectDeviceTree.jsp">设备名称</field>
+    <field name="account_stat" type="SEL_OPs" selValue="accStatOps" nonEmpty="true">在账状态</field>
+    <field name="dev_sign">实物标识号</field>
+    <field name="dev_model">设备类型</field>
+    <field name="self_num">自编号</field>
+    <field name="license_num">牌照号</field>
+    <field name="asset_coding">资产编码</field>
+    <field name="owning_org_name">所属单位</field>
+    <field name="usage_org_name">所在单位</field>
+    <field name="dev_position">所在地</field>
+    <field name="using_stat">使用情况</field>
+    <field name="tech_stat">技术状况</field>
+    <field name="asset_value">固定资产原值</field>
+    <field name="net_value">固定资产净值</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0"/>
+  </EntityFields>
+</SAIS_EAW_TL>

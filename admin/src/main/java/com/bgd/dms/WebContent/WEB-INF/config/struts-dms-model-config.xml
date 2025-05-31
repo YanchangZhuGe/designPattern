@@ -1,0 +1,106 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!-- 申请选型-新增 -->
+		<action path="/dmsManager/modelSelection/addModelChange" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addModelChange" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 申请选型-新增 -->
+		<action path="/dmsManager/modelSelection/equipmentSelectionApply" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addEquipmentSeleApp" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- 选型评审信息 -->
+		<action path="/dmsManager/modelSelection/saveReview" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="saveSelectionReview" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- 添加主要人员 -->
+		<action path="/dmsManager/modelSelection/mainMember" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addMainApply" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- 添加主要设备名称 -->
+		<action path="/dmsManager/modelSelection/mainEquipment" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addMainEquipment" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- 保存企业信息 -->
+		<action path="/dmsManager/modelSelection/equipmentInfo" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addEquipmentInfo" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 供应商打分保存 -->
+		<action path="/dmsManager/modelSelection/companyscore" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addCompanyScore" />
+	  		<forward name="success"	path="/dmsManager/common/easyui_close_page.jsp" redirect="false" />
+		</action>
+		<!-- 附件处理 -->
+		<action path="/dmsManager/modelSelection/uploadFile" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="uploadFile" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+
+		<!-- 设备参数增加 -->
+		<action path="/dmsManager/modelSelection/equipmentParAdd" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentParMan" operationName="addEquipmentPreAdd" />
+	  		<forward name="success"	path="/dmsManager/equipment/close_page.jsp" redirect="false" />
+		</action>
+
+		<!-- 勘探名录增加 -->
+		<action path="/dmsManager/modelSelection/equipmentList" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentParMan" operationName="addEquipmentList" />
+	  		<forward name="success"	path="/dmsManager/equipment/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- ZTree -增加节点 -->									 
+		<action path="/dmsManager/modelSelection/addZtree" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentParMan" operationName="addZtree" />
+	  		<forward name="success"	path="/dmsManager/equipment/close_page2.jsp" redirect="false" />
+		</action>
+		
+		<!-- 下拉列表 -->
+		<action path="/dmsManager/modelSelection/toGetJsonDevList" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentParMan" operationName="getParameterList" />
+		</action>
+		
+		<!-- 保存转资信息 -->
+		<action path="/dmsManager/modelSelection/transferFundsInfo" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addTransferFundsInfo" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--自定义转资申请审批操作 -->
+		<action path="/dmsManager/scrape/checkZzApplyInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WFCommonSrv" operationName="getWFProcessInfo" />
+			<forward name="success"	path="/dmsManager/zhuanzi/zzApproval.jsp" redirect="false"/>
+		</action>
+
+		<!-- 保存增值信息 -->
+		<action path="/dmsManager/modelSelection/transferAddedInfo" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addTransferAddedInfo" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--自定义增值申请审批操作 -->
+		<action path="/dmsManager/scrape/checkZengzApplyInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WFCommonSrv" operationName="getWFProcessInfo" />
+			<forward name="success"	path="/dmsManager/zengzhi/zengzApproval.jsp" redirect="false"/>
+		</action>
+		
+		<!-- 保存消息 -->
+		<action path="/dmsManager/modelSelection/addMsgInfo" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="EquipmentSelectionApply" operationName="addmsgInfo" />
+	  		<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+	</action-mappings>
+</struts-config>

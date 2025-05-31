@@ -1,0 +1,43 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+
+<struts-config>
+  
+  <action-mappings>
+
+	<!-- 构造单元管理信息查询 -->
+    <action path="/gpe/queryStructureUnit"
+    		type="com.cnpc.oms.webapp.gpe.projectmgr.action.StructureUnitQueryAction">
+    	<forward name="success" path="/pm/structureUnit/structureunitlist.jsp" /> 
+    	<serviceCall serviceName="StuctureUnitInfoSrv" 
+      		       operationName="queryStructureUnit"/>	    		
+    </action>
+    <action path="/gpe/insertStructureUnit"
+    		type="com.cnpc.jcdp.mvc.action.WSAction">
+    	    <forward name="success" path="/pm/structureUnit/close_page.jsp" redirect="true"/> 
+    	    <serviceCall serviceName="StuctureUnitInfoSrv" 
+      		             operationName="addStuctureUnit"/>
+    </action>
+    <!-- 工区信息新增 -->
+      <action path="/gpe/insertWorkArea"
+    		type="com.cnpc.jcdp.mvc.action.WSAction">
+    	    <forward name="success" path="/pm/structureUnit/close_page.jsp" redirect="true"/> 
+    	    <serviceCall serviceName="WorkAreaSrv" 
+      		             operationName="addWorkArea"/>
+    </action>
+    <!-- 工区信息修改 -->
+    <action path="/gpe/updateWorkArea"
+    		type="com.cnpc.jcdp.mvc.action.WSAction">
+    	    <forward name="success" path="/pm/structureUnit/close_page.jsp" redirect="true"/> 
+    	    <serviceCall serviceName="WorkAreaSrv" 
+      		             operationName="updateWorkArea"/>
+    </action>
+    <!-- 工区信息修改 -->
+    <action path="/gpe/saveOrUpdateWorkarea"
+    		type="com.cnpc.jcdp.mvc.action.WSAction">
+    	    <forward name="success" path="/pm/project/queryProject.srq" redirect="true"/> 
+    	    <serviceCall serviceName="WorkAreaSrv" 
+      		             operationName="saveOrUpdateWorkarea"/>
+    </action>
+    
+  </action-mappings>
+</struts-config>

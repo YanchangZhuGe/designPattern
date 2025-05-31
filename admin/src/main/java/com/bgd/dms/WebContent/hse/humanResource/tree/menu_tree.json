@@ -1,0 +1,73 @@
+﻿[
+    {
+        "Name": "人力资源",
+        "Id": 1,
+        "leaf": false,
+        "expanded": true,
+        "children": [
+            {
+                "Name": "HSE专业人员",
+                "parentId": 1,
+                "Id": 101,
+                "leaf": true,
+               "url":"/hse/humanResource/hseProfessional/professional_list.jsp"
+             },
+             {
+             	"Name": "特种作业人员",
+                "parentId": 1,
+                "Id": 102,
+                "leaf": true,
+               "url":"/hse/humanResource/hseSpecialWork/specialWork_list.jsp"
+             },
+              {
+             	"Name": "司驾人员",
+                "parentId": 1,
+                "Id": 103,
+                "leaf": true,
+               "url":"/hse/humanResource/hseDriver/driver_list.jsp" 
+             },
+              {
+             	"Name": "应急人员",
+                "parentId": 1,
+                "Id": 104,
+                "leaf": true,
+               "url":"/hse/humanResource/hseStrainPerson/strain_list.jsp" 
+             },
+              {
+             	"Name": "餐饮从业人员",
+                "parentId": 1,
+                "Id": 105,
+                "leaf": true,
+               "url":"/hse/humanResource/hseCater/cater_list.jsp" 
+             },
+              {
+             	"Name": "涉爆人员",
+                "parentId": 1,
+                "Id": 106,
+                "leaf": true,
+               "url":"/hse/humanResource/hseBlast/blast_list.jsp" 
+             },
+             /* {
+             	"Name": "职业健康人员",
+                "parentId": 1,
+                "Id": 107,
+                "leaf": true,
+               "url":"/hse/humanResource/hseHealth/health_list.jsp" 
+             },*/
+              {
+             	"Name": "医护人员",
+                "parentId": 1,
+                "Id": 108,
+                "leaf": true,
+               "url":"/hse/humanResource/hseMedical/medical_list.jsp" 
+             },
+              {
+             	"Name": "水域施工人员",
+                "parentId": 1,
+                "Id": 109,
+                "leaf": true,
+               "url":"/hse/humanResource/hseWaterPerson/water_list.jsp" 
+             }
+        ]
+    }
+]

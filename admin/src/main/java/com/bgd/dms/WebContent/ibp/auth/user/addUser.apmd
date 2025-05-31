@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_TL>
+  <PagerAction>Add</PagerAction>
+  <PageTitle>用户</PageTitle>
+  <QuerySQL>
+    <tableName>p_auth_user</tableName>
+    <fields>
+      <field name="user_id" type="TEXT">user_id</field>
+      <field name="org_id" type="TEXT">org_id</field>
+      <field name="user_pwd" type="TEXT">user_pwd</field>
+      <field name="user_name" type="TEXT">user_name</field>
+      <field name="login_id" type="TEXT">login_id</field>
+      <field name="user_status" type="TEXT">user_status</field>
+      <field name="email" type="TEXT">email</field>
+      <field name="last_login_time" type="D">last_login_time</field>
+      <field name="this_login_time" type="D">this_login_time</field>
+      <field name="login_ip" type="TEXT">login_ip</field>
+      <field name="user_domain" type="TEXT">user_domain</field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="userStatus">
+      <option value="0">有效</option>
+      <option value="1">禁用</option>
+      <option value="2">作废</option>
+    </Select>
+    <Select name="domain">
+      <option value=""></option>
+      <option value="cnpc.com.cn">cnpc.com.cn</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="login_id" isUnique="true" nonEmpty="true">登陆ID</field>
+    <field name="user_domain" type="SEL_OPs" selValue="domain">域</field>
+    <field name="user_pwd">密码</field>
+    <field name="user_name">用户名称</field>
+    <field name="email" type="EMAIL">EMail</field>
+    <field name="user_status" type="SEL_OPs" selValue="userStatus">状态</field>
+  </EntityFields>
+</SAIS_EAW_TL>

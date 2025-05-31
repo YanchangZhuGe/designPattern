@@ -1,0 +1,73 @@
+﻿[
+    {
+        "Name": "HSE周报",
+        "Id": 1,
+        "leaf": false,
+        "expanded": true,
+        "children": [
+            {
+                "Name": "百万工时统计",
+                "parentId": 1,
+                "Id": 101,
+                "leaf": true,
+                "url":"workHour/hourMenu.jsp"
+            },
+            {
+                "Name": "隐患数量",
+                "parentId": 1,
+                "Id": 102,
+                "leaf": true,
+                "url":"weekDan/danMenu.jsp"
+            },
+            {
+                "Name": "重大级以上和未整改隐患明细",
+                "parentId": 1,
+                "Id": 103,
+                "leaf": true,
+                "url":"danDetail/danMenu.jsp"
+            },
+            {
+                "Name": "违章行为统计",
+                "parentId": 1,
+                "Id": 104,
+                "leaf": true,
+                "url":"weekRule/ruleMenu.jsp"
+            },
+            {
+                "Name": "重大级以上违章行为明细",
+                "parentId": 1,
+                "Id": 105,
+                "leaf": true,
+                "url":"ruleDetail/ruleMenu.jsp"
+            },
+            {
+                "Name": "HSE事件",
+                "parentId": 1,
+                "Id": 106,
+                "leaf": true,
+                "url":"weekEvent/eventMenu.jsp"
+            },
+            {
+                "Name": "公司GPS监控",
+                "parentId": 1,
+                "Id": 107,
+                "leaf": true,
+                "url":"GPS/gpsMenu.jsp"
+            },
+            {
+                "Name": "承包商GPS监控",
+                "parentId": 1,
+                "Id": 108,
+                "leaf": true,
+                "url":"outGPS/gpsMenu.jsp"
+            },
+            {
+                "Name": "安全沟通统计",
+                "parentId": 1,
+                "Id": 109,
+                "leaf": true,
+                "url":"weekSafe/safeMenu.jsp"
+            }
+        ]
+    }
+]

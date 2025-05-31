@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+<!-- 
+	<bean class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref bean="scheduleSynTask" />
+			</list>
+		</property>
+	</bean>
+-->
+	
+	<!-- P6-GMS 在线系统 同步  服务器启动延迟5分钟执行，间隔10分钟
+	<bean id="scheduleSynTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="timerTask" ref="synTimerTask" />
+		<property name="period">
+			<value>300000</value>
+		</property>
+		<property name="delay">
+			<value>60000</value>
+		</property>
+	</bean>
+	<bean id="synTimerTask" class="com.bgp.mcs.service.pm.service.p6.util.SynTimerTask"></bean>
+	-->
+</beans>

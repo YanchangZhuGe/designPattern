@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<cfg>
+	<service_call>
+		<!--OO或WebService-->
+	    <call_type>OO</call_type>
+	    <srvManagerCls>com.cnpc.jcdp.soa.srvMng.ServiceManager</srvManagerCls>
+		<connect_timeout>600</connect_timeout>
+		<read_timeout>600</read_timeout>
+		<defaultSrvUrl>http://127.0.0.1:9081/DMS/SOAPEngine/</defaultSrvUrl>
+		<!--DiskFile或MQ-->
+		<file_transfer_type>DiskFile</file_transfer_type>
+		<file_queue>jcdp.filemq</file_queue>		
+	</service_call>
+	
+	<mq_call>
+		<mqUtil_class>com.cnpc.jcdp.mq.JcdpMQUtil</mqUtil_class>
+	</mq_call>
+	
+	<userProperties>userId,userName,orgId,orgName,empId,orgSubjectionId,codeAffordOrgID,subOrgIDofAffordOrg,projectInfoNo,projectName,projectObjectId,projectId</userProperties>
+	<!--  
+	<app_config>
+		<default_tmp_code>ePlanet</default_tmp_code>
+	</app_config>
+	
+	-->
+	<app_config>
+		<default_tmp_code>CUTE</default_tmp_code>
+		<Templete>
+			<EntityAndItems>
+				<HeightOffset>30</HeightOffset>
+			</EntityAndItems>
+		</Templete>
+		<root_org_id>C6000000000001</root_org_id>
+	</app_config>
+	
+	<auto_run_bean>
+		<bean>SrvCfgInitBean</bean>
+		<bean>AuthInitBean</bean>
+		<bean>BusiCodeInitBean</bean>		
+		<bean>CodeSelectOptionsSrv</bean>			
+	</auto_run_bean>
+	
+	<pagination>
+		<pageSize>10</pageSize>
+	</pagination>
+
+	<file_transfer>
+		<file_queue>jcdp.filemq</file_queue>
+	</file_transfer>	
+	
+	<wsdl_info>
+     <endpoint>http://127.0.0.1:9080/epDemo4.2/WSDLEngine/</endpoint>
+    </wsdl_info>
+    
+    <!-- ws-security -->
+    <ep_service>
+    	<Security status="close"><!-- open/close -->
+    		<WSS_UserToken><!-- 已授权的UserToken -->
+    		  <User password="111" ip="127.0.0.1">user1</User>
+	          <User password="111" ip="10.79.108.38">user3</User>
+	      	  <User password="222">user2</User>
+      		</WSS_UserToken>
+      		<DBD_IP><!-- 已授权的消费方IP -->
+      		    <IP>127.0.0.1</IP><!-- always -->
+	            <IP>10.79.108.38</IP>
+      		</DBD_IP>
+    	</Security>
+    </ep_service>
+    
+	<!-- 与P6系统集成的属性 -->
+	<p6>
+		<!-- 是否打开P6集成功能，1-打开，0-关闭 -->
+		<p6_open>1</p6_open>
+		
+		<!-- P6系统 -->
+		<p6_url>http://10.88.2.246:8203/p6</p6_url>
+		
+		<!-- P6 ws系统 -->
+		<p6_ws_url>http://10.88.2.246:9406</p6_ws_url>
+		<!-- 涿州246的ucm -->
+
+		<ucm>
+			<ucm_url>idc://10.88.2.246:9999</ucm_url>
+			<ucm_user>weblogic</ucm_user>
+			<ucm_pwd>abcd1234</ucm_pwd>
+		</ucm>
+	
+		<!-- 本机ucm -->
+		<!-- 
+	  <ucm>
+			<ucm_url>idc://10.88.2.244:9999</ucm_url>
+			<ucm_user>admin</ucm_user>
+			<ucm_pwd>abcd1234</ucm_pwd>
+		</ucm>
+		-->
+	</p6>	
+	
+	<!-- 系统引用的外部地址 -->
+    <external_url>
+    	<bireport>http://dss.bgp.cnpc:7001/richfit</bireport>
+    	<p6>http://10.88.2.246:8203/p6</p6>
+    	<redis>
+    		<host>10.88.2.241</host>
+    		<port>6379</port>
+    		<enable>0</enable>
+    	</redis>
+    </external_url>
+    
+    <!-- 文档模块的一些常量 -->
+    <doc>
+        <!-- 其他模板编号 -->
+        <template_id>8ad891f738e0c89c0138e0e94d5a0004</template_id>
+         <!-- 井中模板编号 -->
+        <zj_template_id>8ad8915847566a82014756801b280002</zj_template_id>
+        <!-- 文档编号规则 -->
+        <number_format>8ad8913d382176330138226e8e3f00fe</number_format>
+        <!-- 1风险模块ID -->
+        <risk_module_id>8ad891f738e022910138e02560000002</risk_module_id>
+        <!-- 2hse模块ID -->
+        <hse_module_id>8ad891d8380783e6013807edd9d00003</hse_module_id>
+        <!-- 3经营模块ID -->
+        <op_module_id>8ad8916d37d4641f0137d559d8f30002</op_module_id>
+        <!-- 4人力模块ID -->
+        <em_module_id>8ad889ec37c46d760137c480f1a60002</em_module_id>
+        <!-- 5生产模块ID -->
+        <pm_module_id>8ad8892637c5af3d0137c5b365140001</pm_module_id>
+        <!-- 6设备模块ID -->
+        <dm_module_id>40288a8137fd4bd00137fda969cc0003</dm_module_id>
+        <!-- 7市场模块ID -->
+        <market_module_id>8ad889c437c0f7c60137c101da250003</market_module_id>
+        <!-- 8物资模块ID -->
+        <mat_module_id>8ad889bd37cabe080137cac1698e0002</mat_module_id>
+        <!-- 9质量模块ID -->
+        <qua_module_id>8ad8897037bf52290137bf59caa20001</qua_module_id>
+        <!-- 10技术模块ID -->
+        <tech_module_id>8ad8913639d33c0a0139d3e1af560016</tech_module_id>
+    </doc>
+</cfg>

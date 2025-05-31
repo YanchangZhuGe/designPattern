@@ -1,0 +1,5 @@
+﻿var cruConfig = {
+	contextPath:'',
+	CURRENT_DATE:'CURRENT_DATE',
+	CURRENT_DATE_TIME:'CURRENT_DATE_TIME'
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>JCDP_busiCdtList</PageTitle>
+  <QuerySQL>
+    <sql>select csst.*, fun.func_code,fun.func_c_name from p_auth_csst_dms csst left join p_auth_function_dms fun on csst.func_id =fun.func_id order by fun.func_code </sql>
+    <fields>
+      <field name="cdt_sql" type="TEXT"></field>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="func_id" type="TEXT"></field>
+      <field name="hint" type="TEXT"></field>
+      <field name="remark" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">busiCdt.upmd</Button>
+    <Button Type="Edit" funCode="" Label="">busiCdt.upmd</Button>
+    <Button Type="Delete" funCode="" Label="">DELETE FROM  p_auth_csst_dms where entity_id ='{id}'</Button>
+  </Buttons>
+  <QueryService name="">
+    <opName></opName>
+  </QueryService>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{entity_id}'&gt;"/>
+    <data exp="&lt;a href=javascript:popWindow('busiCdt.upmd?id={entity_id}')&gt;{func_code}&lt;/a&gt;">JCDP_code</data>
+    <data exp="{func_c_name}">JCDP_funcCName</data>
+    <data exp="{remark}">JCDP_gjh_remark</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="func_code">JCDP_funcCode</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

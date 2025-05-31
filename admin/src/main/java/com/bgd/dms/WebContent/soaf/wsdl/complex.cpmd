@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PageTitle>数据类型的主从页面</PageTitle>
+  <PagerAction>EntityAndItems</PagerAction>
+  <Buttons>
+    <Button Type="Add" funCode="">complex_child_add.upmd?parent_id=$PARAM.parent_id</Button>
+    <Button Type="Edit" funCode="">complex_child_edit.upmd?id={id}</Button>
+    <Button Type="Delete" funCode="">delete from sys_wsdl_metadata where entity_id='{id}'</Button>
+  </Buttons>
+  <QuerySQL>
+    <sql>select * from sys_wsdl_metadata where parent_id='$PARAM.parent_id'</sql>
+    <fields>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="mt_en_name" type="TEXT"></field>
+      <field name="mt_cn_name" type="TEXT"></field>
+      <field name="mt_type" type="TEXT"></field>
+      <field name="mt_type_id" type="TEXT"></field>
+      <field name="parent_id" type="TEXT"></field>
+      <field name="remark" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{entity_id}'&gt;"/>
+    <data exp="{mt_en_name}">英文名称</data>
+    <data exp="{mt_cn_name}">中文名称</data>
+    <data exp="{mt_type}">类型</data>
+    <data exp="{mt_type_id}">类型ID</data>
+    <data exp="{parent_id}">父ID</data>
+    <data exp="{remark}">描述</data>
+    <data exp="{is_leaf}">叶子节点</data>
+  </DataList>
+  <MainEntity>
+    <PageTitle>组合类型</PageTitle>
+    <EditPMD>complex_fuction.upmd</EditPMD>
+    <EditPMD_Height>100</EditPMD_Height>
+  </MainEntity>
+</SAIS_EAW_TL>

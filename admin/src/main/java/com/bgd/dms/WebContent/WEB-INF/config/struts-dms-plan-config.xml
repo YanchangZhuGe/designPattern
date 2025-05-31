@@ -1,0 +1,129 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!--年度计划需求报表保存修改操作 -->
+		<action path="/dms/plan/yearPlan/saveOrUpdateRequireReportInfo"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateRequireReportInfo" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/supp_data.jsp" redirect="false" />
+		</action>
+		<!--物探市场预测及分布表保存修改操作 -->
+		<action path="/dms/plan/yearPlan/saveOrUpdateMarketInfo"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateMarketInfo" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/supp_data_market.jsp" redirect="false" />
+		</action>
+		<!--跳转到物探市场预测及分布表页面 -->
+		<action path="/dms/plan/yearPlan/forwardMarket"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="querySuppData" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/supp_data_market.jsp" redirect="false" />
+		</action>
+		<!--物探市场预测及分布表-设备信息表保存修改操作 -->
+		<action path="/dms/plan/yearPlan/saveOrUpdateMarketDeviceInfo"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateMarketDeviceInfo" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/market_device_close.jsp" redirect="false" />
+		</action>
+		<!--设备现状分析表保存修改操作 -->
+		<action path="/dms/plan/yearPlan/saveOrUpdateDeviceAnalInfo"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateDeviceAnalInfo" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/supp_data_deviceanal.jsp" redirect="false" />
+		</action>
+		<!--跳转到设备现状分析表页面 -->
+		<action path="/dms/plan/yearPlan/forwardDeviceAnal"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="querySuppData" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/supp_data_deviceanal.jsp" redirect="false" />
+		</action>
+		<!--项目投资效益评价表保存修改操作-->
+		<action path="/dms/plan/yearPlan/saveOrUpdateSuppDataFile" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateSuppDataFile"/>
+			<forward name="success" path="/dmsManager/plan/yearPlan/file_close.jsp"/>
+		</action>
+		<!--跳转到其他说明页面 -->
+		<action path="/dms/plan/yearPlan/forwardRemark"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="querySuppData" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/supp_data_remark.jsp" redirect="false" />
+		</action>
+		<!--其他说明表保存修改操作-->
+		<action path="/dms/plan/yearPlan/saveOrUpdateRemarkInfo" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateRemarkInfo"/>
+			<forward name="success" path="/dmsManager/plan/yearPlan/supp_data_remark.jsp"/>
+		</action>
+		<!--年度投资建议计划审批信息 -->
+		<action path="/dms/plan/yearPlan/getYearPlanApprovalInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WFCommonSrv" operationName="getWFProcessInfo" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/approval.jsp" redirect="false" />
+		</action>
+		<!--非安装设备投资建议计划表保存修改操作 -->
+		<action path="/dms/plan/yearPlan/saveOrUpdateAppNonInfo"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateAppNonInfo" />
+			<forward name="success"	path="/dmsManager/plan/yearPlan/noninstall_approval_close.jsp" redirect="false" />
+		</action>
+		<!--非安装设备投资建议计划表保存修改操作 -->
+		<action path="/dms/plan/devManager/saveOrUpdateConfigDevInfo"  type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="YearPlanSrv" operationName="saveOrUpdateConfigDevInfo" />
+			<forward name="success"	path="/dmsManager/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--季度执行计划审批信息 -->
+		<action path="/dms/plan/exePlan/getQuarterExePlanApprovalInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WFCommonSrv" operationName="getWFProcessInfo" />
+			<forward name="success"	path="/dmsManager/plan/exePlan/approval.jsp" redirect="false" />
+		</action>
+		<!--零星计划审批信息 -->
+		<action path="/dms/plan/exePlan/getSporadicPlanApprovalInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WFCommonSrv" operationName="getWFProcessInfo" />
+			<forward name="success"	path="/dmsManager/plan/exePlan/approval.jsp" redirect="false" />
+		</action>
+		<!--专项计划审批信息 -->
+		<action path="/dms/plan/exePlan/getSpecialPlanApprovalInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="WFCommonSrv" operationName="getWFProcessInfo" />
+			<forward name="success"	path="/dmsManager/plan/exePlan/approval.jsp" redirect="false" />
+		</action>
+		
+		<!--获取存量图表数据 -->
+		<action path="/dms/plan/statAnal/getStockChartData" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DeviceStockSrv" operationName="getStockChartData" />
+		</action>
+		<!-- 设备分布分析start -->
+		<action path="/dms/plan/devDistribute/getDistribute" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DeviceDistributeSrv" operationName="getVibroseis" />
+		</action>
+		<!-- 野外采集单位资产原值占比 -->
+		<action path="/dms/plan/devDistribute/getDeviceFieldCapital" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DeviceDistributeSrv" operationName="getDeviceFieldCapital" />
+		</action>
+		<!-- 生产设备占比 -->
+		<action path="/dms/plan/devDistribute/getDeviceProduceRate" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DeviceDistributeSrv" operationName="getDeviceProduceRate" />
+		</action>
+		<!-- 公司设备占比 -->
+		<action path="/dms/plan/devDistribute/getDeviceCompanyRate" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DeviceDistributeSrv" operationName="getDeviceCompanyRate" />
+		</action>
+		<!-- 设备资产配置情况 -->
+		<action path="/dms/plan/devDistribute/getDeviceCapitalConfig" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DeviceDistributeSrv" operationName="getDeviceCapitalConfig" />
+		</action>
+		<!-- 设备分布分析end -->
+		<!--获取设备结构信息数据 -->
+		<action path="/dms/plan/struAnal/getDevStruInfoData" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DeviceStruAnalSrv" operationName="getDevStruInfoData" />
+		</action>
+		<!--获取设备结构子节点信息数据 -->
+		<action path="/dms/plan/struAnal/getDevStruCNodeInfoData" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DeviceStruAnalSrv" operationName="getDevStruCNodeInfoData" />
+		</action>
+	</action-mappings>
+</struts-config>

@@ -1,0 +1,16 @@
+<chart yAxisMaxValue='0.9' yAxisNameWidth="16" yAxisName="风险值" showvalues='0' rotateYAxisName = '0' showBorder='0' lineAlpha='1' baseFontSize ="12" bgColor='F3F5F4,DEE6EB' anchorSides = '4' anchorRadius = '5' > 
+<set label='' value='' />
+<set label='财务风险' value='0.3' /> 
+<set label='HSE风险' value='0.5' /> 
+<set label='企业声誉风险' value='0.2' /> 
+<set label='法律风险' value='0.7' /> 
+<set label='市场风险' value='0.4' /> 
+<set label='' value='' />
+
+<trendlines> 
+<line startvalue='0' endValue='0.3' displayValue='良好' color='00FF00' isTrendZone='1' showOnTop='0' alpha='50' valueOnRight='1'/>
+<line startvalue='0.3' endValue='0.6' displayValue='注意' color='EF9B46' isTrendZone='1' showOnTop='0' alpha='80' valueOnRight='1'/>
+<line startvalue='0.6' endValue='0.9' displayValue='紧急' color='FF0000' isTrendZone='1' showOnTop='0' alpha='50' valueOnRight='1'/> 
+</trendlines>
+
+</chart>

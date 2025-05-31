@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html><!-- InstanceBegin template="/Templates/template1.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/template.css">
+<link rel="stylesheet" type="text/css" href="../css/page_ctt.css">
+<script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../js/nav.js"></script>
+<script type="text/javascript" src="../js/swfobject.js"></script>
+<script type="text/javascript">
+            <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
+            var swfVersionStr = "10.0.0";
+            <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
+            var xiSwfUrlStr = "../charts/playerProductInstall.swf";
+            
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#ffffff";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            params.wmode = "transparent";
+            //加载技术状态
+            var flashvars = {configXml:"../charts/flashStyle/pieChart.xml",getDataMethod:"getPieChartData"};    
+            var attributes = {};
+            attributes.id = "pieChart";
+            attributes.name = "pieChart";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "../charts/pieChart.swf", "pieDiv", 
+                "100%", "200", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+            //加载使用状态
+            var flashvars = {configXml:"../charts/flashStyle/usePieChart.xml",getDataMethod:"getColumnChartData"};    
+            var attributes = {};
+            attributes.id = "usePieChar";
+            attributes.name = "usePieChar";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "../charts/pieChart.swf", "usePieDiv", 
+                "100%", "200", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+			<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
+		     //加载columnChart    
+            var attributes = {};
+            attributes.id = "columnChart";
+            attributes.name = "columnChart";
+            attributes.align = "middle";
+            flashvars = {configXml:"../charts/flashStyle/columnChart.xml",getDataMethod:"getBarChartData"};
+			      swfobject.embedSWF(
+                "../charts/columnChart.swf", "columnDiv", 
+                "100%", "200", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+           //加载lineChart
+           var attributes = {};
+            attributes.id = "lineChart";
+            attributes.name = "lineChart";
+            attributes.align = "middle";
+           flashvars = {configXml:"../charts/flashStyle/lineChart.xml",getDataMethod:"getLineChartData"};
+           swfobject.embedSWF(
+                "../charts/lineChart.swf", "lineDiv", 
+                "100%", "200", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+                
+                
+         function getPieChartData(){
+         	var str = "{\"param\":[{\"label\":\"完好\",\"data\":\"85\",\"isshow\":\"true\"},{\"label\":\"待报废\",\"data\":\"2\",\"isshow\":\"false\"},{\"label\":\"待修\",\"data\":\"8\",\"isshow\":\"false\"},{\"label\":\"在修\",\"data\":\"5\",\"isshow\":\"false\"}]}";
+         	return str;
+        }
+        function getColumnChartData(){
+         	var str = "{\"param\":[{\"label\":\"在用\",\"data\":\"80\",\"isshow\":\"true\"},{\"label\":\"闲置\",\"data\":\"5\",\"isshow\":\"false\"},{\"label\":\"其他\",\"data\":\"15\",\"isshow\":\"false\"}]}";
+         	return str;
+        }
+        function getBarChartData(){
+         	var str = "{\"param\":[{\"label\":\"新疆\",\"data\":\"70\"},{\"label\":\"大庆\",\"data\":\"70\"},{\"label\":\"华东\",\"data\":\"80\"},{\"label\":\"大连\",\"data\":\"80\"},{\"label\":\"辽河\",\"data\":\"90\"},{\"label\":\"北京\",\"data\":\"90\"}]}";
+         	return str;
+        }
+        function getLineChartData(){
+         	var str = "{\"param\":[{\"label\":\"2012-06-06\",\"data\":\"70\"},{\"label\":\"2012-06-07\",\"data\":\"70\"},{\"label\":\"2012-06-08\",\"data\":\"80\"},{\"label\":\"2012-06-09\",\"data\":\"80\"},{\"label\":\"2012-06-10\",\"data\":\"90\"},{\"label\":\"2012-06-11\",\"data\":\"90\"}]}";
+         	return str;
+        }
+        </script>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>register</title>
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+</head>
+
+<body class="bg">
+<div class="page_ctt">
+  <!-- InstanceBeginEditable name="site_page_ctt" -->
+  <div class="register_percent wrap fl">
+    <div class="wrap_tt">
+      设备台账技术状态统计
+    </div>
+    <div class="wrap_ctt">
+      <img id="pieDiv" src="" class="flash" />
+    </div>
+  </div>
+  <div class="register_situation wrap fl">
+    <div class="wrap_tt">
+      设备台账使用状态统计
+    </div>
+    <div class="wrap_ctt">
+      <img id="usePieDiv" src="" class="flash" />
+    </div>
+  </div>
+  <div class="register_top10 wrap fl">
+    <div class="wrap_tt">
+      XXX统计
+    </div>
+    <div class="wrap_ctt">
+      <img id="columnDiv" src="" class="flash" />
+    </div>
+  </div>
+  <div class="register_trend wrap fl">
+    <div class="wrap_tt">
+      XXX统计
+    </div>
+    <div class="wrap_ctt">
+      <img id="lineDiv" src="" class="flash" />
+    </div>
+  </div>
+  <div class="clear"></div>
+  <!-- InstanceEndEditable -->
+</div>
+</body>
+<!-- InstanceEnd --></html>

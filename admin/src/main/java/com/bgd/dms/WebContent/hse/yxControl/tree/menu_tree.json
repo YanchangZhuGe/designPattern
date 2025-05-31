@@ -1,0 +1,79 @@
+﻿[
+    {
+        "Name": "安全管理",
+        "Id": 1,
+        "leaf": false,
+        "expanded": true,
+        "children": [
+            {
+                "Name": "交通管理",
+                "parentId": 1,
+                "Id": 101,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "车辆信息",
+                        "parentId": 101,
+                        "Id": 10101,
+                        "leaf": true,
+                        "url":"/blank.htm"
+                    },
+                    {
+                        "Name": "准驾证管理",
+                        "parentId": 101,
+                        "Id": 10102,
+                        "leaf": true,
+                        "url":"/hse/yxControl/safeManage/jiazheng/driving_list.jsp"
+                    }
+                ]
+            },
+            {
+                "Name": "危险品管理",
+                "parentId": 1,
+                "Id": 102,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "民爆物品",
+                        "parentId": 102,
+                        "Id": 10201,
+                        "leaf": true,
+                        "url":"/blank.htm"
+                    },
+                    {
+                        "Name": "油品",
+                        "parentId": 102,
+                        "Id": 10202,
+                        "leaf": true,
+                        "url":"/blank.htm"
+                    }
+                ]
+            },
+            {
+                "Name": "消防管理",
+                "parentId": 1,
+                "Id": 103,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "消防设施配备",
+                        "parentId": 103,
+                        "Id": 10301,
+                        "leaf": true,
+                        "url":"/blank.htm"
+                    },
+                    {
+                        "Name": "消防人员",
+                        "parentId": 103,
+                        "Id": 10301,
+                        "leaf": true,
+                        "url":"/blank.htm"
+                    }
+                ]
+            }
+        ]
+    }
+]

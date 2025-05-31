@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>工作履历</PageTitle>
+  <QuerySQL>
+    <sql>select rownum,
+       r.record_no,
+       r.employee_id,
+       to_char(r.start_date, 'yyyy-MM-dd') start_date,
+       decode(to_char(r.end_date, 'yyyy'),
+              '9999',
+              '至今',
+              to_char(r.end_date, 'yyyy-MM-dd')) end_date,
+       r.company,
+       r.administration,
+       r.technology,
+       r.skill,
+       r.post,
+       d1.coding_name skillname
+  from bgp_comm_human_record r
+  left join comm_coding_sort_detail d1 on r.skill = d1.coding_code_id
+ where r.bsflag = '0'
+   and r.employee_id = '$PARAM.employee_id'
+ order by r.start_date desc</sql>
+  </QuerySQL>
+  <Buttons>
+  </Buttons>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{record_no}'&gt;"/>
+    <data exp="{employee_name}">JCDP_em_employee_name</data>
+    <data exp="{start_date}">start_date</data>
+    <data exp="{end_date}">end_date</data>
+    <data exp="{company}">company</data>
+    <data exp="{administration}">administration</data>
+    <data exp="{technology}">technology</data>
+    <data exp="{skill}">skill</data>
+    <data exp="{post}">post</data>
+    <data exp="{skillname}">skillname</data>
+  </DataList>
+  <QueryCondition/>
+  <JavaScripts>
+  function JcdpButton0OnClick(){
+  	var ids = getSelIds("chx_entity_id");
+  	if(ids==""){
+  		 ids = getObj("chx_entity_id").value;
+  	}
+
+    editUrl = "/rm/em/getCommInfo.srq?employeeId="+ids; 
+    window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl; 
+
+  }
+
+  </JavaScripts>
+</SAIS_EAW_TL>

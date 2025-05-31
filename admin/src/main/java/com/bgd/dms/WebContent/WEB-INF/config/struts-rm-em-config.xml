@@ -1,0 +1,980 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+
+	<action-mappings>	
+	<!-- 操作证申请信息保存 -->
+		<action path="/dmsManager/opcard/saveOrUdateOp_cardApply" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			 scope="request" name="dynamicForm" >
+			<serviceCall serviceName="DevInsSrv"
+				operationName="saveOrUdateOp_cardApply" />
+			<forward name="success"
+				path="/dmsManager/opcard/OperationCardList.jsp" redirect="false"/>
+		</action>
+		<!-- 操作证人员申请信息 -->
+		<action path="/dmsManager/opcard/loadEmployeeInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="DevInsSrv"
+				operationName="loadEmployeeInfo" />
+			<forward name="success"
+				path="/rm/em/humanChart/searchHumanProjectList.jsp" redirect="false"/>
+		</action>
+		<!-- 查询基础检查 -->
+		<action path="/rm/em/queryHumanProjectList" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryHumanProjectList" />
+			<forward name="success"
+				path="/rm/em/humanChart/searchHumanProjectList.jsp" redirect="false"/>
+		</action>
+		
+		<!-- 查询基础检查 -->
+		<action path="/rm/em/queryHumanProjectView" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryHumanProjectView" />
+			<forward name="success"
+				path="/rm/em/humanChart/searchHumanProject.jsp" redirect="false"/>
+		</action>
+		<!-- 人工成本计划导入保存 -->
+		<action path="/rm/em/toSaveHumanCostActualExcle" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="saveHumanCostActualExcle" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanCostPlan/humanCostActualManager.jsp" redirect="false"/>
+		</action>
+	
+		<!-- 人工成本计划导入保存 -->
+		<action path="/rm/em/toSaveHumanCostExcle" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="saveHumanCostPlanExcle" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanCostPlan/humanCostPlanManager.jsp" redirect="false"/>
+		</action>
+			<!-- 人工成本补充计划导入保存 -->
+		<action path="/rm/em/toSaveHumanCostExcleTwo" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="saveHumanCostPlanExcleTwo" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanCostPlanTwo/humanCostPlanManager.jsp" redirect="false"/>
+		</action>
+		<!-- 人工成本计划导入保存 综合-->
+		<action path="/rm/em/saveHumanCostExcleZh" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="saveHumanCostExcleZh" />
+			<forward name="success"
+				path="/rm/em/humanCostPlan/humanCostPlanFrame.jsp"  />
+		</action>
+		 <!-- 人工成本计划导入保存 综合补充-->
+		<action path="/rm/em/saveHumanExcleZhsupply" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="saveHumanExcleZhsupply" />
+			<forward name="success"
+				path="/rm/em/humanCostPlan/humanCostPlanFrame.jsp"  />
+		</action>
+		
+			<!-- 人员调剂调配保存 -->
+		<action path="/rm/em/toSaveHumanCostReport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveHumanCostReport" />
+			<forward name="success"
+				path="/rm/em/humanChart/humanCostReportList.jsp"
+				redirect="true" />
+		</action>
+		<action path="/rm/em/toHumanCostReportEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" >
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="humanCostReportView" />
+			<forward name="success"
+				path="/rm/em/humanChart/humanCostReportUpdate.jsp" />
+		</action>
+		
+		  <!--正式工人员信息数据导出 -->
+		<action path="/rm/em/exportHummanList" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request"  name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="exportHummanList" />
+		</action>
+		
+		  <!--临时工人员信息数据导出 -->
+		<action path="/rm/em/exportLaborList" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request"  name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="exportLaborList" />
+		</action>
+		
+		<!-- 资格证书保存-->
+		<action path="/rm/em/toSaveCommHumanCertificate" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveCommHumanCertificate" />
+			<forward name="success" path="/rm/em/commCertificate/commCertificateList.jsp" />
+		</action>
+		
+		<action path="/rm/em/getCostPlanCodes"
+   		type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+   	    <serviceCall serviceName="HumanCommInfoSrv" 
+     		             operationName="getCostPlanCodes"/>
+     	</action>
+      	
+      	<action path="/rm/em/getCostActCodes"
+   		type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+   	    <serviceCall serviceName="HumanCommInfoSrv" 
+     		             operationName="getCostActCodes"/>
+     	</action>
+     		             
+		<!-- 企业分类码 -->
+		<action path="/rm/em/queryTeamCode"
+    		type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+    	    <serviceCall serviceName="HumanCommInfoSrv" 
+      		             operationName="getTeamCodes"/>
+      		             </action>
+
+		<action path="/rm/em/getChart1" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart1" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart2" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart2" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart3" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart3" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart4" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart4" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart41" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart41" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart5" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart5" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart6" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart6" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart7" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart7" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart8" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart8" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart9" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart9" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart10" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart10" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart11" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart11" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart12" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart12" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart13" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart13" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart14" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart14" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart15" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart15" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChartPost15" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChartPost15" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart16" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart16" />
+			<forward name="success" path="/rm/em/humanChart/humanCostReportUpdate.jsp" />
+		</action>
+		<action path="/rm/em/getChart17" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart17" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart18" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart18" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		 <action path="/rm/em/getChartPost18" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChartPost18" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart19" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart19" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart20" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart20" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart21" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart21" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart22" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart22" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getChart23" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart23" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/rm/em/getAddChart23" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryAddViewChart23" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/rm/em/getChart24" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanChartServiceSrv"
+				operationName="queryViewChart24" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<!-- 人员需求计划工作流审核 -->		
+		<action path="/rm/em/toHumanPlanEdit" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv" operationName="humanPlanViewwfpg"  />
+			<forward name="success" redirect="false"  path="/rm/em/humanPlan/add_artificialCostModify.jsp" />
+		</action>
+		<action path="/rm/em/toSaveHumanPlanwfpa" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="saveHumanPlanwfpa"  />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+			<!-- 人员调剂调配查看 -->
+		<action path="/rm/em/updateP6Accept" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="updateP6Accept" />
+			<forward name="success"
+				path="" />
+		</action>
+		
+		<!-- 人员调剂调配查看 -->
+		<action path="/rm/em/toReliefPrepareEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="reliefPrepareView" />
+			<forward name="success"
+				path="/rm/em/reliefPrepare/add_reliefPrepareModify.jsp" />
+		</action>
+
+		<!-- 人员调剂调配保存 -->
+		<action path="/rm/em/toSaveReliefRequestPrepare" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveReliefPrepare" />
+			<forward name="success"
+				path="/rm/em/reliefPrepare/reliefPrefareList.jsp"
+				redirect="true" />
+		</action>
+			<!-- 人员调剂审核调配查看 -->
+		<action path="/rm/em/toReliefAuditEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="reliefAuditViewwfpg" />
+			<forward name="success"
+				path="/rm/em/reliefAudit/add_reliefAuditModify.jsp" />
+		</action>
+
+		<!-- 人员调剂审核调配保存 -->
+		<action path="/rm/em/toSaveReliefAudit" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveReliefAuditwfpa" />
+		 
+		</action>
+		<!-- 人员调剂申请修改 -->
+		<action path="/rm/em/toReliefRequiredEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="reliefApplyView" />
+			<forward name="success"
+				path="/rm/em/singleHuman/reliefRequest/add_reliefRequestModify.jsp" />
+		</action>
+
+		<!-- 人员调剂申请保存 -->
+		<action path="/rm/em/toSaveReliefRequired" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveReliefHumanApply" />
+			<forward name="success"
+				path="/rm/em/singleHuman/reliefRequest/reliefRequestList.jsp"
+				redirect="true" />
+		</action>
+				<!-- 人员返还导入保存 -->
+		<action path="/rm/em/toSaveHumanReturnExcle" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveHumanReturnExcle" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanReturn/humanReturnList.jsp" redirect="false"/>
+		</action>
+		
+		<!-- 专业化人员返还导入保存 -->
+		<action path="/rm/em/toSaveZHumanReturnExcle" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveZHumanReturnExcle" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanReturnZ/humanReturnList.jsp" redirect="false"/>
+		</action>
+		
+		
+		<!-- 人员接收导入保存 -->
+		<action path="/rm/em/toSaveHumanLaborDeployExcle" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveHumanLaborAcceptExcle" />
+			<forward name="success"
+				path="/rm/em/singleHuman/laborAccept/laborAcceptList.jsp" redirect="false"/>
+		</action>
+		
+		<!-- 人员返还导入保存 -->
+		<action path="/rm/em/toSaveHumanLaborReturnExcle" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveHumanLaborReturnExcle" />
+			<forward name="success"
+				path="/rm/em/singleHuman/laborReturn/laborReturnList.jsp" redirect="false"/>
+		</action>
+		
+				<!-- 临时工返还保存 -->
+		<action path="/rm/em/toLaborReturnEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveLaborReturn" />
+			<forward name="success"
+				path="/rm/em/singleHuman/laborReturn/laborReturnList.jsp" redirect="false"/>
+		</action>
+		
+		<!-- 临时工接收保存 -->
+		<action path="/rm/em/toLaborAcceptEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveLaborAccept" />
+			<forward name="success"
+				path="/rm/em/singleHuman/laborAccept/laborAcceptList.jsp" redirect="false"/>
+		</action>
+		
+		<!-- 人员接收保存 -->
+		<action path="/rm/em/toHumanAcceptEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveHumanAccept" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanAccept/humanAcceptList.jsp" />
+		</action>
+			<!-- 专业化人员接收保存 -->
+		<action path="/rm/em/toZHumanAcceptEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveZHumanAccept" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanAcceptZ/humanAcceptList.jsp" />
+		</action>
+		
+				
+		<!-- 人员返还保存 -->
+		<action path="/rm/em/saveHumanReturn" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveHumanReturn" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanReturn/humanReturnList.jsp"/>
+		</action>
+				<!-- 专业化人员返还保存 -->
+		<action path="/rm/em/saveZHumanReturn" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveZHumanReturn" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanReturnZ/humanReturnList.jsp"/>
+		</action>
+		
+		<!-- 人员接收查询 -->
+		<action path="/rm/em/queryHumanAccept" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="queryHumanAcceptReturnList" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanAccept/humanAcceptEdit.jsp"
+				redirect="false" />
+		</action>
+			<!-- 专业化人员接收查询 -->
+		<action path="/rm/em/queryZHumanAccept" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="queryZHumanAcceptReturnList" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanAcceptZ/humanAcceptEdit.jsp"
+				redirect="false" />
+		</action>
+		
+		
+		<!-- 人员返还查询 -->
+		<action path="/rm/em/queryHumanReturn" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="queryHumanAcceptReturnList" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanReturn/humanReturnEdit.jsp"
+				redirect="false" />
+		</action>
+		
+		<!-- 专业化人员返还查询 -->
+		<action path="/rm/em/queryZHumanReturn" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="queryZHumanAcceptReturnList" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanReturnZ/humanReturnEdit.jsp"
+				redirect="false" />
+		</action>
+		
+		
+		<!-- 临时工接收查询 -->
+		<action path="/rm/em/queryLaborAcceptNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="queryLaborAcceptReturnList" />
+			<forward name="success"
+				path="/rm/em/singleHuman/laborAccept/laborAcceptEdit.jsp"
+				redirect="false" />
+		</action>
+		<!-- 临时工接收分配任务保存 -->
+		<action path="/rm/em/toLaborAcceptEditNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveLaborAcceptNew" />
+			<forward name="success"
+				path="/rm/em/singleHuman/laborAccept/laborAcceptList.jsp" />
+		</action>
+		
+		<!-- 专业人员调配查看 -->
+		<action path="/rm/em/humanPlanTreeView" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="planTreeView" />
+			<forward name="success"
+				path="/p6/showTree.srq" redirect="false" />
+		</action>
+			<!-- 专业人员调配查看 -->
+		<action path="/rm/em/toProfessionPrepareEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="professPrepareView" />
+			<forward name="success"
+				path="/rm/em/professPrepare/add_professPrepareModify.jsp" />
+		</action>
+
+		<!-- 专业人员调配保存 -->
+		<action path="/rm/em/toSaveProfessionPrepare" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveProfessPrepare" />
+			<forward name="success"
+				path="/rm/em/professPrepare/professPrefareList.jsp"
+				redirect="true" />
+		</action>
+		
+		<!-- 专业人员调配任务分配查看 -->
+		<action path="/rm/em/toProfessionAllocateEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="humanAllocateView" />
+			<forward name="success"
+				path="/rm/em/professAllocateTask/add_professAllocateModify.jsp" />
+		</action>
+
+		<!-- 专业人员调配任务分配保存 -->
+		<action path="/rm/em/toSaveProfessionAllocate" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveHumanAllocate" />
+			<forward name="success"
+				path="/rm/em/professAllocateTask/professAllocateList.jsp"
+				redirect="true" />
+		</action>
+		
+		<!-- 专业人员审核调配查看 -->
+		<action path="/rm/em/toProfessionAuditEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="professAuditViewwfpg" />
+			<forward name="success"
+				path="/rm/em/professAudit/add_professAuditModify.jsp" />
+		</action>
+
+		<!-- 专业人员审核调配保存 -->
+		<action path="/rm/em/toSaveProfessionAudit" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveProfessAuditwfpa" />
+			 
+		</action>
+		
+	
+		<!-- 专业人员申请修改 -->
+		<action path="/rm/em/toProfessionRequiredEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="professApplyView" />
+			<forward name="success"
+				path="/rm/em/singleHuman/professRequest/add_professRequestModify.jsp" />
+		</action>
+
+		<!-- 专业人员申请保存 -->
+		<action path="/rm/em/toSaveProfessionRequired" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="saveProfessHumanApply" />
+			<forward name="success"
+				path="/rm/em/singleHuman/professRequest/professRequestList.jsp"
+				redirect="true" />
+		</action>
+				
+		<!-- 人员信息查看 -->
+		<action path="/rm/em/getCommInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<forward name="success" path="/rm/em/commHumanInfo/comm_human_Info.jsp" />
+			<serviceCall serviceName="HumanCommInfoSrv" operationName="getCommInfo" />
+		</action>
+		
+		 <!-- 临时工查询 -->
+		<action path="/rm/em/getLaborInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<forward name="success" path="/rm/em/humanLabor/doc_list2.jsp" />
+			<serviceCall serviceName="HumanLaborMessageSrv" operationName="getLaborInfo" />
+		</action>
+				<!-- 人员项目经历新增 -->
+		<action path="/rm/em/tohumanProjectRelatSave" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="humanRelatView" />
+			<forward name="success"
+				path="/rm/em/humanProjectRelation/humanProjectRelationInsert.jsp"
+				redirect="false" />
+		</action>
+		<!-- 人员项目经历保存 -->
+		<action path="/rm/em/savehumanProjectRelat" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="savehumanRelat" />
+              <forward name="success"
+				path="/rm/em/humanProjectRelation/humanProjectInfoList.jsp"  redirect="false"/>
+		</action>
+		<!-- 人员基本信息查询 -->
+		<action path="/rm/em/humanCommInfoAction" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<forward name="success"
+				path="/rm/em/humanPlant/commHumanInfo/comm_human_Info.jsp" />
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="getCommInfo" />
+		</action>
+		<!-- 人员项目经历修改 -->
+		<action path="/rm/em/tohumanProjectRelatEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="humanRelatView" />
+			<forward name="success"
+				path="/rm/em/humanProjectRelation/humanProjectRelationEdit.jsp"/>
+		</action>
+		
+		<!-- 新增人员 -->
+		<action path="/rm/em/toProjectHumanRelatSave" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="humanRelatView" />
+			<forward name="success"
+				path="/rm/em/humanProjectRelation/projectHumanRelationInsert.jsp"
+				redirect="false" />
+		</action>
+		<!-- 人员经历保存 -->
+		<action path="/rm/em/saveProjectHumanRelat" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="savehumanRela" />
+		  <forward name="success"
+				path="/rm/em/humanProjectRelation/humanProjectInfoList.jsp"  redirect="false"/>
+		</action>
+			  <!-- 人员申请修改 -->
+	    <action path="/rm/em/toHumanRequiredEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="getHumanApplyInfo" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanRequired/humanRequiredInsert.jsp" />
+	    </action>
+	    
+	     <!-- 物探处人员申请流程 -->
+	    <action path="/rm/em/toHumanRequiredEditwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="getHumanApplyInfowfpg" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanRequired/humanRequiredInsertwfpg.jsp" />
+	    </action>
+	    
+	    
+	      <!-- 人员申请保存 -->
+	    <action path="/rm/em/toSaveHumanRequired" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+	      scope="request"  name="dynamicForm" >
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="saveHumanRequired" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanRequired/humanRequiredList.jsp"
+	        redirect="true" />
+	    </action>
+	       <!-- 物探处人员申请流程保存 -->
+	    <action path="/rm/em/toSaveHumanRequiredwfpa" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+	      scope="request"  name="dynamicForm" >
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="saveHumanRequiredwfpa" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanRequired/humanRequiredList.jsp"
+	        redirect="true" />
+	    </action>
+		<!-- 自有人员调配修改 -->
+		<action path="/rm/em/toHumanPrepareEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="humanPrepareView" />
+			<forward name="success"
+				path="/rm/em/humanRequest/humanPrepareEdit.jsp" />
+		</action>
+		<!-- 自有人员调配工作流 -->
+		<action path="/rm/em/toHumanPrepareEditwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="humanPrepareViewwfpg" />
+			<forward name="success"
+				path="/rm/em/humanRequest/humanPrepareEditwfpg.jsp" />
+		</action>
+		<!-- 自有人员调配查看 -->
+		<action path="/rm/em/toHumanPrepareView" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="humanPrepareView" />
+			<forward name="success"
+				path="/rm/em/humanPlant/humanPrepare/humanPrepareView.jsp" redirect="false" />
+		</action>
+		
+		
+		<!-- 自有人员调配保存 -->
+		<action path="/rm/em/toSaveReliefPrepare" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="humanPrepareSave" />
+			<forward name="success"
+				path="/rm/em/humanRequest/humanRequestDeploy.jsp"
+				redirect="true" />
+		</action>
+		<!-- 人员调配保存 -->
+		<action path="/rm/em/toSaveHumanPrepare" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="humanPrepareSave" />
+			<forward name="success"
+				path="/rm/em/humanRequest/humanRequestDeploy.jsp" redirect="true" />
+		</action>
+		<!-- 自有人员调配保存流程 -->
+		<action path="/rm/em/toSaveReliefPreparewfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="humanPrepareSavewfpa" />
+			<forward name="success"
+				path="/rm/em/humanRequest/humanRequestDeploy.jsp"
+				redirect="true" />
+		</action>
+		<!-- 人员调配保存流程 -->
+		<action path="/rm/em/toSaveHumanPreparewfpa" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="humanPrepareSavewfpa" />
+			<forward name="success"
+				path="/rm/em/humanRequest/humanRequestDeploy.jsp" redirect="true" />
+		</action>
+		
+		  <!-- 人员培训计划修改 -->
+	    <action path="/rm/em/toHumanTrainingPlanEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="getHumanPlanInfo" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanTrainingPlan/humanTrainingPlanInsert.jsp" />
+	    </action>
+	     <!-- 灵活添加人员培训计划信息-->
+	    <action path="/rm/em/toTrainingPlanMessage" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="getHumanPlanInfo" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanTrainingRecord/humanTrainingPlanInsert.jsp" />
+	    </action>
+	    
+	    
+	       <!-- 人员培训计划保存 -->
+	    <action path="/rm/em/toSaveHumanTrainingPlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="saveHumanPlan" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanTrainingPlan/humanTrainingPlanList.jsp"
+	        redirect="true" />
+	    </action>
+	      <!-- 人员培训记录保存 -->
+	    <action path="/rm/em/toSaveHumanTrainingDetail" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="saveHumanPlanDetail" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanTrainingRecord/humanTrainingRecordList.jsp"
+	        redirect="true" />
+	    </action>
+	     
+	    
+	      <!-- 人员培训记录添加 -->
+	    <action path="/rm/em/toHumanRecordEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="getHumanRecordInfo" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanTrainingRecord/humanTrainManageModify.jsp" />
+	    </action>
+	    
+	       <!-- 人员培训记录保存 -->
+	    <action path="/rm/em/toSaveHumanPlans" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="saveHumanRecord" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanTrainingRecord/humanTrainingRecordList.jsp"
+	        redirect="true" />
+	    </action>
+	     <!-- 人员培训记录信息导入-->
+		<action path="/rm/em/importExcelTemplateHuman" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request"  name="dynamicForm" >
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="importExcelTemplateHuman" />
+				 <forward name="success" path="/rm/em/singleHuman/humanTrainingRecord/humanTrainManageModify.jsp"/>
+		</action>
+			     <!-- 人员培训记录修改信息导入-->
+		<action path="/rm/em/importExcelTemplateHumanEdit" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request"  name="dynamicForm">
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="importExcelTemplateHuman" />
+				 <forward name="success" path="/rm/em/singleHuman/humanTrainingRecord/humanTrainManageUpdate.jsp"/>
+		</action>
+		<!-- 人员培训记录信息修改-->
+		<action path="/rm/em/toHumanPlanInfoEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" >
+			<serviceCall serviceName="HumanRequiredSrv"
+				operationName="getHumanRecordInfo" />
+			<forward name="success"
+				path="/rm/em/singleHuman/humanTrainingRecord/humanTrainManageUpdate.jsp" />
+		</action>
+		   <!-- 岗位变更 -->
+	    <action path="/rm/em/toHumanPositionEdit" type="com.cnpc.jcdp.mvc.action.WSAction"
+	      scope="request">
+	      <serviceCall serviceName="HumanRequiredSrv"
+	        operationName="getHumanPositionInfo" />
+	      <forward name="success"
+	        path="/rm/em/singleHuman/humanPositionChange/humanPositionChangeEdit.jsp" />
+	    </action>
+	    
+	    <!-- 境外岗位编码 -->
+	     <action path="/rm/em/queryOverseasCode"
+    		type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+    	    <serviceCall serviceName="HumanLaborMessageSrv" 
+      		             operationName="getOverseasCodes"/>
+      	 </action>
+      	 <!-- 临时工信息导入-->
+		<action path="/rm/em/importExcelTemplate" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="importExcelTemplate" />
+				  <forward name="success"
+	        path="/rm/em/humanLabor/humanImportFile.jsp" />
+		</action>
+		
+		 <!-- 临时工国际部信息导入-->
+		<action path="/rm/em/importExcelTemplateG" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="importExcelTemplateG" />
+				  <forward name="success"
+	        path="/rm/em/humanLabor/humanImportFileG.jsp" />
+		</action>
+		
+		
+			 <!-- 考勤信息导入-->
+		<action path="/rm/em/importExcelAttendance" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="importExcelAttendance" />
+				  <forward name="success"
+	        path="/rm/em/humanAttendance/humanImportFile.jsp" />
+		</action>
+		
+		 <!-- 正式工信息导入-->
+		<action path="/rm/em/importExcelHuman" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="importExcelHuman" />
+				  <forward name="success"
+	        path="/rm/em/commHumanInfo/humanImportFile.jsp" />
+		</action>
+		 <!-- 正式工国际部信息导入-->
+		<action path="/rm/em/importExcelHumanG" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv"
+				operationName="importExcelHumanG" />
+				  <forward name="success"
+	        path="/rm/em/commHumanInfo/humanImportFileG.jsp" />
+		</action>
+		
+			<!-- 人员考勤信息导入 -->
+		<action path="/rm/em/importExcelAttendanceKQ" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv" operationName="saveKQExcel" />
+			<forward name="success" path="/rm/em/singleHuman/humanAttendance/humanImportFile.jsp" />
+		</action>
+		     <!--人员考勤提交信息 -->
+		<action path="/rm/em/addAttendancePage" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HumanLaborMessageSrv" operationName="savekq" />
+			<forward name="success"	path="/rm/em/singleHuman/humanAttendance/addKq.jsp" redirect="false" />
+		</action>
+		     <!--单项目人力需求计划班组柱状图 -->
+		<action path="/rm/em/chart/queryBanzu" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv" operationName="queryBanzu" />
+		    <forward name="success" path="/blank.htm" />
+		</action>
+		 <!--单项目人力需求计划岗位柱状图 -->
+		<action path="/rm/em/chart/queryBanPost" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HumanCommInfoSrv" operationName="queryBanPost" />
+		    <forward name="success" path="/blank.htm" />
+		</action>
+		 <!--单项目人力需求计划审批流程数据导出 -->
+		<action path="/rm/em/exportHumanPlanM" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request"  name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="exportHumanPlanM" />
+		</action>
+		
+		 <!--单项目人力物探处人员申请审批流程数据导出 -->
+		<action path="/rm/em/exportHumanShenqM" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request"  name="dynamicForm">
+			<serviceCall serviceName="HumanCommInfoSrv"
+				operationName="exportHumanShenqM" />
+		</action>
+		
+		
+		<!-- 企业分类码  人工成本计划树-->
+		<action path="/rm/em/queryHumanCostPlanCode" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+    	    <serviceCall serviceName="HumanCommInfoSrv" operationName="getHumanCostPlanCodes"/>
+    	</action>   
+    	<!-- 人工成本计划、人工成本补充计划加载树 -->
+		<action path="/rm/em/getHumanCodingSortDetail" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+   	    	<serviceCall serviceName="HumanCommInfoSrv" operationName="getHumanCodingSortDetail"/>
+     	</action>
+     	
+     			
+		<action path="/rm/em/getHumanCodingSortDetailZh"
+   		type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+   	    <serviceCall serviceName="HumanCommInfoSrv" 
+     		             operationName="getHumanCodingSortDetail"/>
+     	</action>
+     	
+     		<!-- 综合人工成本实际、加载树 -->
+     	 <action path="/rm/em/zhGetCostActCodes"
+   		type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction">
+   	    <serviceCall serviceName="HumanCommInfoSrv" 
+     		             operationName="zhGetCostActCodes"/>
+     	</action>
+     	
+	</action-mappings>
+</struts-config>

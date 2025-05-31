@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>仪器租赁费管理</PageTitle>
+  <QuerySQL>
+    <sql>select * from BGP_OP_TARGET_DEVICE_MATARE where bsflag='0'  and (if_change!='2' and if_delete_change is null ) and TARGET_MATARE_ID = '$PARAM.id'</sql>
+    <tableName>BGP_OP_TARGET_DEVICE_MATARE</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+  	<Select name="mataxiType">
+      <option value="1">仪器</option>
+      <option value="2">运载设备</option>
+      <option value="3">专用工具</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="target_matare_id" isShow="Hide">id</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="if_change" isShow="Hide">bsflag</field>
+     <field name="mataxi_type" isShow="Hide" defaultValue="0">类型</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">id</field>
+    <field name="dev_name" maxLength="32">名称</field>
+    <field name="dev_model" maxLength="32">型号</field>
+    <field name="dev_count" maxLength="12">数量</field>
+    <field name="taxi_unit" maxLength="12">修理单价(元)</field>
+    <field name="change_date" type="D" defaultValue="CURRENT_DATE">变更时间</field>
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+			submitStr = getSubmitStr();
+			submitStr+='&amp;tableId=target_matare_id';
+			if(submitStr == null) return;
+			var retObject = jcdpCallService("OPCostSrv", "saveTargetAdjustInfo", submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

@@ -1,0 +1,88 @@
+<chart bgColor="F3F5F4,DEE6EB" xAxisMaxValue='5.0' legendPosition = 'right' legendIconScale = '1' xAxisName="发生可能性" yAxisName="影响程度" yAxisMaxValue='5.0' showValues='0' showLabels='1' showValues='0' baseFontSize ="12" yAxisNameWidth="16" rotateYAxisName="0" labelDisplay = 'NONE' plotFillAlpha='70' numVDivLines='5' plotGradientColor=''>
+<categories>
+<category label='0' x= '0.0' showVerticalLine='1'/>
+<category label='0.5' x='0.5' showVerticalLine='1'/>
+<category label='1' x='1.0' showVerticalLine='1'/> 
+<category label='1.5' x='1.5' showVerticalLine='1'/>
+<category label='2' x='2.0' showVerticalLine='1'/>
+<category label='2.5' x='2.5' showVerticalLine='1'/>
+<category label='3' x='3.0' showVerticalLine='1'/>
+<category label='3.5' x='3.5' showVerticalLine='1'/> 
+<category label='4' x='4.0' showVerticalLine='1'/>
+<category label='4.5' x='4.5' showVerticalLine='1'/> 
+<category label='5' x='5.0' showVerticalLine='1'/>
+</categories>
+
+<dataset seriesName='高度' color='FF0000'> 
+<set value='5'/> 
+<set value='5' />
+<set value='5' />
+<set value='5' /> 
+<set value='5' />
+<set value='5' />
+<set value='5' />
+<set value='5' />
+<set value='5' /> 
+<set value='5' />
+<set value='5' />
+</dataset>
+
+<dataset seriesName='中度' color='FFFF00'> 
+<set value='5'/> 
+<set value='5'/>
+<set value='5'/>
+<set value='5'/> 
+<set value='5' />
+<set value='5' />
+<set value='5'/>
+<set value='5'/>
+<set value='5'/> 
+<set value='4.3' />
+<set value='4' />
+</dataset>
+
+<dataset seriesName='低度' color='57C43C'> 
+<set value='5'/> 
+<set value='5'/>
+<set value='5'/>
+<set value='5'/> 
+<set value='4.3' />
+<set value='3.7' />
+<set value='3.1'/>
+<set value='2.7'/>
+<set value='2.4'/> 
+<set value='2.2' />
+<set value='2' />
+<set x='3.0' y='3.5' tooltext='5'/>
+</dataset>
+
+<dataset seriesName='极低' color='33FF00'> 
+<set value='5'/> 
+<set value='5'/>
+<set value='3'/>
+<set value='1.7'/> 
+<set value='1.1' />
+<set value='0.8' />
+<set value='0.6'/>
+<set value='0.5'/>
+<set value='0.4'/> 
+<set value='0.4' />
+<set value='0.4' />
+</dataset>
+
+<dataset anchorBgColor='FFFFFF' drawAnchors='1' anchorRadius='5' renderAs='Line' alpha='1' anchorSides ='3' showValues='1'> 
+<set /> 
+<set />
+<set />
+<set value='3'/> 
+<set />
+<set />
+<set value='4'/>
+<set />
+<set /> 
+<set value='4'/>
+<set />
+</dataset>
+
+
+</chart> 

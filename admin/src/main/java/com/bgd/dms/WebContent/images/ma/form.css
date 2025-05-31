@@ -1,0 +1,72 @@
+﻿@charset "utf-8";
+/*页面样式*/
+body {
+	margin-left:auto;
+	margin-top: 0px;
+	margin-right:auto;
+	margin-bottom: 0px;
+	text-align:center;
+}
+div, h1, h2, h3, h4, p, form, label, input, textarea, img, span, dl, dt, dd {
+	margin:0;
+	padding:0;
+}
+
+/*查询表格中查询条件项的宽度和对齐,统一采用右对齐方式*/
+.inquire_item {
+	text-align:left;
+	width:7%;
+	padding-right:5px;
+	color:block;
+ filter:progid:DXImageTransform.Microsoft.Gradient (startColorStr=#f2f2f2, endColorStr=#ffffff, gradientType=1);
+}
+/*查询表格中各种表单项的宽度和对齐,统一采用左对齐方式*/
+.inquire_form {
+	text-align:left;
+	width:43%;
+	background:#ffffff;
+	padding-left:5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*奇数行/列样式*/
+.odd {
+	FONT-SIZE: 13px;
+	FONT-FAMILY:"宋体";
+	text-align: center;
+	BACKGROUND-COLOR: #eff4f9;
+	height:28px;
+	line-height:28px;
+}
+/*偶数行/列样式*/
+.even {
+	FONT-SIZE: 13px;
+	FONT-FAMILY: "宋体";
+	text-align: center;
+	background-color: #FFFFFF;
+	height:28px;
+	line-height:28px;
+}

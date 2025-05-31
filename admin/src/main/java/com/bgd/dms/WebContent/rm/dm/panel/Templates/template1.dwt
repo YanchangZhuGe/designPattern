@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/template.css">
+<link rel="stylesheet" type="text/css" href="../css/page_ctt.css">
+<script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../js/nav.js"></script>
+<!-- TemplateBeginEditable name="doctitle" -->
+<title></title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+</head>
+
+<body class="bg">
+<div id="header" class="header">
+  <img class="header_logo fl" src="../img/logo.png" />
+  <span class="header_companyName fl">中石油信息技术中心</span>
+  <div class="clear"></div>
+</div>
+<div id="nav" class="nav">
+  <ul class="navLv1">
+    <li><a>首页</a></li>
+    <li><a>资产管理</a>
+      <ul class="navLv2">
+        <li><a href="../asset/register.html">实名注册率</a></li>
+        <li><a href="../asset/anti_virus.html">防病毒软件安装率</a></li>
+        <li><a href="../asset/hardware.html">计算机硬件</a></li>
+        <li><a href="../asset/software.html">计算机软件</a></li>
+      </ul>
+    </li>
+    <li><a>安全监察</a>
+      <ul class="navLv2">
+        <li><a href="../monitor/virus_monitor.html">杀毒软件使用情况</a></li>
+        <li><a href="../monitor/virus_base.html">病毒库更新情况</a></li>
+        <li><a href="../monitor/rising.html">瑞星监控数据</a></li>
+        <li><a href="../monitor/trouble_link.html">违规外联</a></li>
+        <li><a href="../monitor/trouble_software.html">违规软件</a></li>
+        <li><a href="../monitor/weekness_sysPort.html">系统弱口令</a></li>
+        <li><a href="../monitor/equipment_change.html">设备变化</a></li>
+        <li><a href="../monitor/IP_bind.html">IP绑定变化</a></li>
+        <li><a href="../monitor/dataflow.html">流量监控</a></li>
+        <li><a href="../monitor/sensitive_info.html">敏感信息</a></li>
+        <li><a href="../monitor/patch.html">补丁发布</a></li>
+        <li><a href="../monitor/strategy.html">策略下发</a></li>
+        <li><a href="../monitor/black_list.html">黑白名单</a></li>
+      </ul>
+    </li>
+    <li><a>安全预警</a>
+      <ul class="navLv2">
+        <li><a href="../warning/virus.html">病毒报警</a></li>
+        <li><a href="../warning/dataflow.html">流量报警</a></li>
+        <li><a href="../warning/trouble_link.html">违规外联</a></li>
+        <li><a href="../warning/reglist.html">注册表报警</a></li>
+        <li><a href="../warning/weekness_sysPort.html">系统弱口令</a></li>
+        <li><a href="../warning/user_right.html">用户权限报警</a></li>
+        <li><a href="../warning/sys_user.html">系统用户报警</a></li>
+      </ul>
+    </li>
+  </ul>
+  <div class="clear"></div>
+</div>
+<div id="path" class="path">
+  您所在的位置：
+  <!-- TemplateBeginEditable name="site_path" -->
+   》 
+  <!-- TemplateEndEditable -->
+</div>
+<div class="page_ctt">
+  <!-- TemplateBeginEditable name="site_page_ctt" -->
+  <!-- TemplateEndEditable -->
+</div>
+<iframe src="../footer.html" frameborder="0" class="iframe_footer"></iframe>
+</body>
+</html>

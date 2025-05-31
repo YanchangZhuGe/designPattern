@@ -1,0 +1,8 @@
+/* CSS file */
+Canvas.Balloon {
+	borderSkin: Embed(source="assets/img/ui/balloon.png",scaleGridLeft="21",scaleGridTop="1",scaleGridRight="24",scaleGridBottom="79");
+}
+Canvas.Balloon2
+{
+	borderSkin: Embed(source="assets/img/ui/balloon-no-edge.png",scaleGridLeft="32",scaleGridTop="18",scaleGridRight="42",scaleGridBottom="21");
+}

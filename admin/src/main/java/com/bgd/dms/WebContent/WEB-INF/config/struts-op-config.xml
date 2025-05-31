@@ -1,0 +1,609 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<action path="/op/OpCostSrv/getCostTemplate" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostTemplate" />
+		</action>
+		<action path="/op/OpCostSrv/getCostTemplateOther" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostTemplateOther" />
+		</action>
+		<action path="/op/OpCostSrv/getCostProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostProject" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostTemplateOrder" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostTemplateOrder" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostTemplateOrderOther" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostTemplateOrderOther" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostTemplateData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostTemplateData" />
+		</action>
+		
+		<action path="/op/OpCostSrv/saveCostTemplateOtherData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostTemplateOtherData" />
+		</action>
+		
+		<action path="/op/OpCostSrv/saveCostProjectOrder" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostProjectOrder" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostProjectData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostProjectData" />
+		</action>
+		
+		<action path="/op/OpCostSrv/saveCostProjectVersionData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostProjectVersionData" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostAssistInfo" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostAssistInfo" />
+		</action>
+		
+		<action path="/op/OpCostSrv/saveCostAssistTargetInfo" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostAssistTargetInfo" />
+		</action>
+		
+		<action path="/op/OpCostSrv/saveProjectCostByExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" 
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="saveProjectCostByExcel" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		
+		
+		<action path="/op/OpCostSrv/saveCostProjectEditionData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostProjectEditionData" />
+		</action>
+		
+		<!-- 目标成本管理 -->
+		<action path="/op/OpCostSrv/getCostTargetProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostTargetProject" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCostAssistProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostAssistProject" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCostTargetVersionDetail" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostTargetVersionDetail" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCostTargetNFormulaProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostTargetNFormulaProject" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostTargetProjectOrder" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostTargetProjectOrder" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostTargetProjectData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="saveCostTargetProjectData" />
+		</action>
+		<action path="/op/OpCostSrv/getCostPlanCodes" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="getCostPlanCodes" />
+		</action>
+		
+		<!-- 一体化方案论证审核 -->
+		
+		<action path="/op/OpCostSrv/getCostSchemaInfo" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="getCostSchemaInfowfpg"  />
+			<forward name="success" path="/op/costMangerVersion/costManagerVersionBanlanceConfirm.jsp" />
+		</action>
+		<action path="/op/OpCostSrv/doCostSchemaInfo" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="doCostSchemaInfowfpa"  />
+			<forward name="success" path="/pm/bpm/common/close_page.jsp"  redirect="true"/>
+		</action>
+		
+		<!-- 目标费用预算调整管理 -->
+		
+		<action path="/op/OpCostSrv/getCostTargetChangeProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostTargetChangeProject" />
+		</action>
+		<action path="/op/OpCostSrv/getCostTargetNFormulaChangeProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostTargetNFormulaChangeProject" />
+		</action>
+		<!-- 项目实际成本管理 -->
+		<action path="/op/OpCostSrv/getCostActualProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostActualProject" />
+		</action>
+		<action path="/op/OpCostSrv/getCostNFormulaActualProject" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostNFormulaActualProject" />
+		</action>
+		<!-- 实际成本预警 -->
+		<action path="/op/OpCostSrv/getPlanActualCompareData" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getPlanActualCompareData" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCostPriceTemplate" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostPriceTemplate" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostPriceTemplateData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostPriceTemplateData" />
+		</action>
+		
+		
+		<action path="/op/OpCostSrv/getCostPricePrjTemplate" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostPricePrjTemplate" />
+		</action>
+		<action path="/op/OpCostSrv/getCostPricePrjAdjustTemplate" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostPricePrjAdjustTemplate" />
+		</action>
+		<action path="/op/OpCostSrv/saveCostPricePrjTemplateData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveCostPricePrjTemplateData" />
+		</action>
+		
+		<action path="/op/OpCostSrv/saveNStructReportFile" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="saveNStructReportFile" />
+		</action>
+		
+		
+		<action path="/op/OpCostSrv/getCostFormulaData" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostFormulaData" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCostFormulaProjectData" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCostFormulaProjectData" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getjzMoney" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getjzMoney" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<!-- 仪表盘 -->
+		
+		<action path="/op/OpCostSrv/getIncomeCompareYearInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getIncomeCompareYearInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getIncomeCompareTwoTreePieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getIncomeCompareTwoTreePieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getIncomeCompareProjectInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getIncomeCompareProjectInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompanyOutcomeWeekInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyOutcomeWeekInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionTeamOutcomeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionTeamOutcomeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompanyWeekProfitInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyWeekProfitInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionTeamProfitInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionTeamProfitInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getOutcomeCompareYearInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getOutcomeCompareYearInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getTeamIncomeWeekInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getTeamIncomeWeekInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getTeamIncomeWeekDayInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getTeamIncomeWeekDayInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		
+		<action path="/op/OpCostSrv/getCompareSectionLirunTwoThreeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompareSectionLirunTwoThreeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompareSectionOutcomeTwoThreeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompareSectionOutcomeTwoThreeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompareSectionIncomeTwoThreeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompareSectionIncomeTwoThreeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompanyCompareCountryLirunInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyCompareCountryLirunInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompareTwoTreeLirunPieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompareTwoTreeLirunPieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompareTargetActualInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompareTargetActualInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getOutcomeCompareTwoTreePieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getOutcomeCompareTwoTreePieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getOutcomeCompareProjectInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getOutcomeCompareProjectInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getAllcomeCompareYearInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getAllcomeCompareYearInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCompanyIncomeWeekInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyIncomeWeekInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCompanyIncomeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyIncomeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompanyProfitInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyProfitInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		
+		
+		<action path="/op/OpCostSrv/getCompanyIncomeRatioInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyIncomeRatioInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCompanyCompareCountryInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyCompareCountryInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCompanyCompareSeaInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyCompareSeaInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCompanyCompareTwoThreeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyCompareTwoThreeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCompanyCompareSectionInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyCompareSectionInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionProfitInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionProfitInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompanyOutcomeCompareTwoTreePieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyOutcomeCompareTwoTreePieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompanyOutcomeCompareSeaPieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyOutcomeCompareSeaPieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getCompanyOutcomeCompareSectionInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyOutcomeCompareSectionInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getCompanyCompareCountryOutInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getCompanyCompareCountryOutInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<action path="/op/OpCostSrv/getSectionIncomeRatioInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionIncomeRatioInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionIncomeWeekInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionIncomeWeekInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionIncomeTwoTreePieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionIncomeTwoTreePieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionOutcomeTwoTreePieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionOutcomeTwoTreePieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionCompareTeamInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionCompareTeamInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionCompareTeamIncomeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionCompareTeamIncomeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getSectionRatioTwoThreeInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getSectionRatioTwoThreeInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getTeamTargetPieInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getTeamTargetPieInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		<action path="/op/OpCostSrv/getTeamTargetActualInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getTeamTargetActualInfo" />
+			<forward name="success" path="/blank.htm" />
+		</action>
+		
+		<!-- 报表科目模板管理 -->
+		<action path="/op/OpCostSrv/getReportTemplate" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="getReportTemplate" />
+		</action>
+		<action path="/op/OpCostSrv/saveReportTemplateData" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveReportTemplateData" />
+		</action>
+		<action path="/op/OpCostSrv/saveReportTemplateOrder" type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="saveReportTemplateOrder" />
+		</action>
+		
+		<!-- excel导入导出 -->
+		<action path="/op/OpCostSrv/exportDeviceInfoForCost" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="exportDeviceInfoForCost" />
+		</action>
+		
+		<action path="/op/OpCostSrv/exportDeviceInfoForCostRc" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="exportDeviceInfoForCostRc" />
+		</action>
+		
+		<action path="/op/OpCostSrv/exportDeviceInfoForCostRp" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request">
+			<serviceCall serviceName="OPCostSrv"
+				operationName="exportDeviceInfoForCostRp" />
+		</action>
+		
+		
+	<action path="/op/OpCostSrv/saveOrUpdateTargetCostPlan" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="saveOrUpdateTargetCostPlan" />
+			<forward name="success" path="/op/wsProject/costTargetManager/targetCostplanList.jsp" />
+	</action>	
+	
+
+	<action path="/op/OpCostSrv/saveConfirmRecrdWs" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="saveConfirmRecrdWs" />
+			<forward name="success" path="/op/wsProject/contractsSignedMoney.jsp"/>
+	</action>	
+	<action path="/op/OpCostSrv/saveCarrayOverProjectWs" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="saveCarrayOverProjectWs" />
+			<forward name="success" path="/op/wsProject/contractsSignedMoney.jsp"/>
+	</action>
+		
+		<action path="/op/OpCostSrv/exportCostVersionInfo" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="exportCostVersionInfo" />
+		</action>
+		
+		<action path="/op/OpCostSrv/importDeviceInfoForCost" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="importDeviceInfoForCost" />
+			<forward name="success" path="/op/common/ExcelImport.jsp?path=/op/OpCostSrv/importDeviceInfoForCost.srq" />
+		</action>
+		<!-- 项目评价的各项指标树 -->
+		<action path="/op/evaluation/getTemplateTree" type="com.bgp.mcs.web.qua.action.FileTreeAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="ProjectEvaluationSrv" operationName="getTemplateTree" />
+		</action>
+		<!-- 项目评价的各项指标树 -->
+		<action path="/op/evaluation/getProjectTemplateTree" type="com.bgp.mcs.web.qua.action.FileTreeAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="ProjectEvaluationSrv" operationName="getProjectTemplateTree" />
+		</action>
+		<!-- 项目评价的各项指标树 -->
+		<action path="/op/evaluation/initTemplateToProject" type="com.cnpc.jcdp.mvc.action.WSAction" 
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="ProjectEvaluationSrv" operationName="initTemplateToProject" />
+			<forward name="success" path="/op/projectEvaluation/projectEvaluation.jsp" />
+		</action>
+		
+		<!-- 项目的单价库树 -->
+		<action path="/op/OPCostSrv/getPriceTree" type="com.bgp.mcs.web.qua.action.FileTreeAction" name="dynamicForm" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="getPriceTree" />
+		</action>
+		
+		<!-- 单价库excel导出 -->
+		<action path="/op/OPCostSrv/exportPrice" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="exportPrice" />
+		</action>
+		<!-- 单价库excel导入 -->
+		<action path="/op/OPCostSrv/importPrice" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="importPrice" />
+			<forward name="success" path="/op/costPriceBank/import_excel.jsp" />
+		</action>
+		
+		<!-- 技术方案编制excel导入 -->
+		<action path="/op/OPCostSrv/importProjectSchema" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="importProjectSchema" />
+			<forward name="success" path="/op/common/ExcelImport.jsp?path=/op/OPCostSrv/importProjectSchema.srq" />
+		</action>
+		<!-- 技术方案编制excel导出 -->
+		<action path="/op/OPCostSrv/exportProjectSchema" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="exportProjectSchema" />
+		</action>
+		
+		<!-- 技术方案费用excel导出 -->
+		<action path="/op/OPCostSrv/exportCostSchema" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="exportCostSchema" />
+		</action>
+		
+		<!--公共 excel导出 -->
+		<action path="/op/OPCostSrv/commExportExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="commExportExcel" />
+		</action>
+		
+		<!--公共 excel导入 -->
+		<action path="/op/OPCostSrv/commImportExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="commImportExcel" />
+			<forward name="success" path="/op/ExcelImport.jsp?path=/op/OPCostSrv/commImportExcel.srq" />
+		</action>
+		
+		<!--公共 excel导入 解决top.frames['list'].length >=1的情况 -->
+		<action path="/op/OPCostSrv/mProjectImportExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="OPCostSrv" operationName="commImportExcel" />
+			<forward name="success" path="/op/mProject/ExcelImport.jsp?path=/op/OPCostSrv/mProjectImportExcel.srq" />
+		</action>
+		
+		<!-- eps树  东方-物探处-项目 夏秋雨添加-->
+		<action path="/op/common/getProjectTreeEps" type="com.bgp.mcs.web.qua.action.FileTreeAction"
+			name="dynamicForm" scope="request">
+			<serviceCall serviceName="OPCostSrv" operationName="getProjectTreeEps" />
+		</action>
+	</action-mappings>
+</struts-config>

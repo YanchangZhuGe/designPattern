@@ -1,0 +1,217 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+
+		<!-- 使用extjs控件生成树--><!-- 依赖列表 -->
+		<action path="/p6/resourceAssignment/getDependencies" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetDependenciesAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="getDependencies" />
+		</action>
+		<!-- 使用extjs控件生成树--><!-- 任务列表 -->
+		<action path="/p6/resourceAssignment/getTasks" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="getTaskTreeAjax" />
+		</action>
+		
+		<!-- 查看甘特图 -->
+		<action path="/p6/resourceAssignment/getTasksGannt" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="getTasksAjax" />
+		</action>
+		
+		<!-- 使用extjs控件生成树--><!-- 任务列表 --><!-- 带基线信息的任务列表 -->
+		<action path="/p6/resourceAssignment/getTasksWithBaseline" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="getTasksWithBaselineAjax" />
+		</action>
+		<!-- 使用extjs控件生成树--><!-- 任务列表 --><!-- wbs不计算时间 -->
+		<action path="/p6/resourceAssignment/getTasksWithoutWbsDate" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="getTaskTreeAjaxForPlan" />
+		</action>
+<!-- 生产计划树 -->		
+		<action path="/p6/resourceAssignment/getTaskTreeForPlan" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="getTaskTreeForPlan" />
+		</action>		
+		
+<!-- 生成WBS -->
+		<action path="/p6/resourceAssignment/getWbsTreeFroPlan" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="getWbsTreeFroPlan" />
+		</action>
+<!-- WBS排序 -->
+		<action path="/p6/resourceAssignment/saveP6ProjectWbsOrder" type="com.bgp.mcs.web.pm.p6.resource.resourceAssignment.GetTaskAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="saveP6ProjectWbsOrder" />
+		</action>
+		
+		<!-- 引用extjs控件生成甘特图的方法 -->
+		<action path="/p6/showGantt" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="showGantt" />
+			<forward name="success" path="/p6/gantt/index.jsp"/>
+		</action>
+		
+		<!-- 引用extjs控件生成甘特图的方法 -->
+		<action path="/p6/showTree" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="showTree" />
+			<forward name="success" path="/p6/tree/index.jsp"/>
+		</action>
+		
+		<!-- 根据任务主键查询任务信息 -->
+		<action path="/p6/queryResourceAssignment" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="queryResourceAssignment" />
+			<forward name="success" path="/p6/projectTask/activityInfo.jsp"/>
+		</action>
+		
+		
+		<action path="/p6/queryProject" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectSrv"
+				operationName="queryProject" />
+			<forward name="success" path="/p6/projectTask/projectList.jsp"/>
+		</action>
+		
+		
+	<!--滩浅海-->
+	<!-- <action path="/p6/queryProject" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectSrv"
+				operationName="queryProject" />
+			<forward name="success" path="/p6/projectTask/projectList.jsp"/>
+		</action> -->
+	<!--滩浅海-->
+		<action path="/p6/queryBaselineProject" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectSrv"
+				operationName="queryBaselineProject" />
+			<forward name="success" path="/p6/projectTask/baselineProjectList.jsp"/>
+		</action>
+		
+		<!-- 反馈本期进度-->
+		<action path="/p6/saveOrUpdateResourceAssignment" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="saveOrUpdateResourceAssignment" />
+			<forward name="success" path="/pm/dailyReport/singleProject/saveResourceAssignmentforward.jsp"/>
+		</action>
+		
+		<!-- 深海 反馈本期进度-->
+		<action path="/p6/saveOrUpdateResourceAssignmentSh" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ResourceAssignmentSrv"
+				operationName="saveOrUpdateResourceAssignmentSh" />
+			<forward name="success" path="/pm/dailyReport/singleProject/sh/saveResourceAssignmentforward.jsp"/>
+		</action>
+		
+		<action path="/pm/workload/updateWorkload" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="WorkloadSrv"
+				operationName="updateWorkload" />
+			<forward name="success" path="/pm/workload/forward.jsp"/>
+		</action>
+		
+		<!-- 物化探工作量添加 -->
+		<action path="/wt/pm/workload/updateWorkload" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="WorkloadSrv"
+				operationName="updateWorkload" />
+			<forward name="success" path="/wt/pm/planManager/singlePlan/planning/forward.jsp"/>
+		</action>
+	<!-- 增加WBS -->
+		<action path="/pm/p6/addWBS" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="addWBS" />
+				<!-- 
+			<forward name="success" path="/p6/editProjectPlan/closePage.jsp"/>
+			 -->
+		</action>
+		
+		<!-- 修改WBS -->
+		<action path="/pm/p6/updateWBS" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="updateWBS" />
+			<forward name="success" path=""/>
+		</action>
+		
+		<!-- 删除WBS -->
+		<action path="/pm/p6/deleteWBS" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="deleteWBS" />
+			<forward name="success" path="/p6/editProjectPlan/index.jsp"/>
+		</action>
+		
+		<!-- 增加作业 -->
+		<action path="/pm/p6/addTask" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="addTask" />
+				<!-- 
+			<forward name="success" path="/p6/editProjectPlan/closePage.jsp"/>
+			 -->
+		</action>
+		
+		<!-- 修改作业 -->
+		<action path="/pm/p6/updateTask" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="updateTask" />
+			<forward name="success" path=""/>
+		</action>
+		
+		<!-- 删除作业 -->
+		<action path="/pm/p6/deleteTask" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="deleteTask" />
+			<forward name="success" path="/p6/editProjectPlan/index.jsp"/>
+		</action>
+		
+		<!-- 增加作业关系 -->
+		<action path="/pm/p6/addTaskRelationShip" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="addTaskRelationShip" />
+				<!-- 
+			<forward name="success" path="/p6/editProjectPlan/index.jsp"/>
+			 -->
+		</action>
+		
+		<!-- 修改作业关系-->
+		<action path="/pm/p6/updateTaskRelationShip" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="updateTaskRelationShip" />
+			<forward name="success" path="/p6/editProjectPlan/index.jsp"/>
+		</action>
+		
+		<!-- 删除作业关系 -->
+		<action path="/pm/p6/deleteTaskRelationShip" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="P6ProjectPlanSrv"
+				operationName="deleteTaskRelationShip" />
+			<forward name="success" path="/p6/editProjectPlan/index.jsp"/>
+		</action>
+		
+	</action-mappings>
+</struts-config>

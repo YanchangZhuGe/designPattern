@@ -1,0 +1,1546 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<action-mappings>
+		<!-- 声明周期占比 -->
+		<action path="/rm/dm/getDeviceleftRate" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDeviceleftRate" />
+		</action>
+		<!-- 获取自定义列表数据-->
+		<action path="/rm/dm/getListDataBySrvAndMethod" type="com.bgp.gms.service.rm.dm.action.EasyUIDataGridAction" 
+			scope="request">
+		</action>
+		<!-- 异步保存  -->
+		<action path="/rm/dm/ajaxSaveBySrvAndMethod" type="com.bgp.gms.service.rm.dm.action.AjaxSaveFormAction" 
+			scope="request">
+		</action>
+		<!-- 异步获取map数据  -->
+		<action path="/rm/dm/ajaxRetMapBySrvAndMethod" type="com.bgp.gms.service.rm.dm.action.AjaxRetMapAction" 
+			scope="request">
+		</action>
+		<!-- 执行传入的方法获取list数据并转化为json格式数据(echarts图表使用) -->
+		<action path="/rm/dm/ajaxRetListBySrvAndMethod" type="com.bgp.gms.service.rm.dm.action.DevListToJSONAction" 
+			scope="request">
+		</action>
+		<!--批量设备调配申请的明细数据审批保存 new -->
+		<action path="/rm/dm/toSaveCollDevAppAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollDevAppAuditInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true"/>
+		</action>
+		<!--批量设备调配申请的修改审批数量的查询 -->
+		<action path="/rm/dm/getCollDevAppInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollDevAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/collDevmixPlan/collMixPlanDetailsForProc.jsp" redirect="false" />
+		</action>
+		<!--大港专业化设备调配申请的修改审批数量的查询 -->
+		<action path="/rm/dm/getCollDevAppInfosForProcwfpgDsDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollDevAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/collDevmixPlan/collMixPlanDetailsForProcDs_dg.jsp" redirect="false" />
+		</action>
+		<!--设备验收检查单信息保存 -->
+		<action path="/rm/dm/saveCheckInfo" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCheckInfo" />
+			<forward name="success"	path="/dmsManager/common/easyui_close_page.jsp" redirect="false" />
+		</action>
+		<!--设备验收检查单信息保存new -->
+		<action path="/rm/dm/saveCheckInfoNew" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCheckInfoNew" />
+			<forward name="success"	path="/dmsManager/common/easyui_close_page.jsp" redirect="false" />
+		</action>
+		<!--保存仪器附属设备出库单的信息 (仪器附属设备单独申请) -->
+		<action path="/rm/dm/toSaveInsEquOutFormDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveInsEquOutFormDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!--大港专业化设备调配申请的修改审批数量的查询 -->
+		<action path="/rm/dm/getCollDevAppInfosForProcwfpgDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollDevAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/collDevmixPlan/collMixPlanDetailsForProc_dg.jsp" redirect="false" />
+		</action>
+		
+		
+		<!-- 打印调配单单，导出excel -->
+		<action path="/rm/dm/common/DmDocToExcel" type="com.bgp.gms.service.rm.dm.action.DMDocToExcelAction"
+			scope="request">
+		</action>
+		<!--装备内部送修、返还保存<只适用于送修，返还单写> new -->
+		<action path="/rm/dm/toSaveCollAccRepairInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollAccRepairInfowfpa" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--装备内部送修查询new  -->
+		<action path="/rm/dm/getCollAccRepairInfoForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollAccRepairInfoForProcwfpg" />
+			<forward name="success"	path="/rm/dm/collectTransfer/collectAccDetailListReadonly.jsp" redirect="false" />
+		</action>
+		<!--保存内部送修的信息 new -->
+		<action path="/rm/dm/saveTransforRepCollectAppInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveTransforRepCollectAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--修改内部返还的信息 new -->
+		<action path="/rm/dm/modefyTransforRepCollectAppInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveTransforRepBackCollectAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--装备内部返还查询new  -->
+		<action path="/rm/dm/getCollBackRepairInfoForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollAccRepairInfoForProcwfpg" />
+			<forward name="success"	path="/rm/dm/collectTransferBack/collectBackDetailListReadonly.jsp" redirect="false" />
+		</action>
+		<!--装备内部返还保存 new -->
+		<action path="/rm/dm/toSaveCollAccRepairBackInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollAccRepairBackInfowfpa" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 设备现场管理的excel导入功能 -->
+		<action path="/rm/dm/saveDMExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDMExcel" />
+			<forward name="success" path="/rm/dm/common/close_page.jsp" />
+		</action>
+		<!--查询主要设备新度系数钻取 new -->
+		<action path="/rm/dm/getCompLVDrillInfo" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompLVDrillInfo" />
+		</action>
+		<!--查询主要设备新度系数钻取 new -->
+		<action path="/rm/dm/getComXinduDisDrillInfo" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getComXinduDisDrillInfo" />
+		</action>
+		<!--查询主要设备新度系数 new -->
+		<action path="/rm/dm/getComXindu" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getComXindu" />
+		</action>
+		<!--保存装备设备的调配单的信息 new -->
+		<action path="/rm/dm/toSaveEQMixFormAllInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveEQMixFormAllInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存返还调配单的信息 new -->
+		<action path="/rm/dm/toSaveBackMDFInfoNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveBackMDFInfoNew" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--调剂计划基本信息 new -->
+		<action path="/rm/dm/toSaveDisAppBaseInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DispensingDevSrv" operationName="saveDisAppBaseInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--调剂计划明细信息 new -->
+		<action path="/rm/dm/toSaveDisAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DispensingDevSrv" operationName="saveDisAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--调剂申请 new -->
+		<action path="/rm/dm/toSaveSelfDisMixFormAllInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DispensingDevSrv" operationName="saveSelfDisMixFormAllInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--大港调剂申请 -->
+		<action path="/rm/dm/toSaveSelfDisMixFormAllInfoDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DispensingDevSrv" operationName="saveSelfDisMixFormAllInfoDg" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--调剂计划数据审批保存 new -->
+		<action path="/rm/dm/toSaveDisAppModifyInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DispensingDevSrv" operationName="saveDisAppModifyInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--调剂计划数据审批情况查询 -->
+		<action path="/rm/dm/getDisAppModifyForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDisAppModifyForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devdis/disPlanDetailListForProc_m.jsp" redirect="false" />
+		</action>
+		<!--报停计划数据审批保存 new -->
+		<action path="/rm/dm/toSaveDevOSAppAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevOSAppAuditInfowfpa" />
+		</action>
+		<!--报停计划审批情况查询 -->
+		<action path="/rm/dm/getDevOSAppInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevOSAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devoutservice/osModifyApplyForProc.jsp" redirect="false" />
+		</action>
+		<!--保存报停计划申请单的信息 new -->
+		<action path="/rm/dm/toSaveOsAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveOsAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存装备按量设备调配单的信息 new -->
+		<action path="/rm/dm/toSaveEQBatchMixFormDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveEQBatchMixFormDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存装备按量设备调配单的信息 大港自有地震仪器保存 -->
+		<action path="/rm/dm/toSaveEQBatchMixFormDetailInfoDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveEQBatchMixFormDetailInfoDg" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存物探自有设备调配单的信息 new -->
+		<action path="/rm/dm/toSaveEquOutFormDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveEquOutFormDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存物探自有设备调配单的信息 new -->
+		<action path="/rm/dm/toSaveSelfMixFormAllInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveSelfMixFormAllInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存综合物化探自有设备调配单的信息 -->
+		<action path="/rm/dm/toZHSaveSelfMixFormAllInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveZHSelfMixFormAllInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存物探检波器调配单的信息 new -->
+		<action path="/rm/dm/toSaveSelfMixJBQAllInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveSelfMixJBQAllInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--修改出库的信息 new -->
+		<action path="/rm/dm/toModifyOutFormDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="modifyOutFormDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存出库的信息(批量出库) new -->
+		<action path="/rm/dm/toSaveOutFormDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveOutFormDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存出库的信息(大港批量出库) -->
+		<action path="/rm/dm/toSaveOutFormDetailInfoDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveOutFormDetailInfoDg" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存模板的信息 new -->
+		<action path="/rm/dm/toSaveModelInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveModelInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置调配申请(采集设备)明细数据保存 new -->
+		<action path="/rm/dm/toSaveCollMixAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollMixAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置调配申请(采集设备)基本数据保存 new -->
+		<action path="/rm/dm/toSaveCollMixAppBaseInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollMixAppBaseInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置维修返还调配单的信息 new -->
+		<action path="/rm/dm/toSaveRIFBackInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRIFBackInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置维修调配单的信息 new -->
+		<action path="/rm/dm/toSaveRIFInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRIFInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置配置计划明细数据审批保存 new -->
+		<action path="/rm/dm/toSaveDevAllAppAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAppAuditInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--保存配置计划审批修改审批数量的查询 -->
+		<action path="/rm/dm/getDevAllAppInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevAllAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devPlan/devPlanDetailsForProc.jsp" redirect="false" />
+		</action>
+		<!-- 井中设备分中心设备申请 -->
+		<action path="/rm/dm/getDevAllAppInfosForProcwfpgWells" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevAllAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/wellsDevCenterPlan/devPlanDetailsForProcWells.jsp" redirect="false" />
+		</action>
+		<!-- 大港计划申请审批修改数量查询 -->
+		<action path="/rm/dm/getDevAllAppInfosForProcwfpgDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevAllAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devPlan/devPlanDetailsForProc_dg.jsp" redirect="false" />
+		</action>
+		
+		<!-- 大港计划申请审批修改数量查询(自有) -->
+		<action path="/rm/dm/getDevAllAppInfosForProcwfpgDgOwn" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevAllAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devPlan/devPlanDetailsForProcOwn_dg.jsp" redirect="false" />
+		</action>
+		
+		
+		<!--保存返还调配单的信息 -->
+		<action path="/rm/dm/toSaveBackMDFInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveBackMDFInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--外租离场保存 new -->
+		<action path="/rm/dm/toSaveRentDevLeftInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRentDevLeftInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--外租申请验收保存 new -->
+		<action path="/rm/dm/toSaveHireFillDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveHireFillDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--外租申请明细数据保存 new -->
+		<action path="/rm/dm/toSaveHireAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveHireAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--外租申请基本数据保存 new -->
+		<action path="/rm/dm/toSaveHireAppBaseInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveHireAppBaseInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 查询仪表板设备周报状态数据 new-->
+		<action path="/rm/dm/tree/getDevRootStatData" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevRootStatData" />
+		</action>
+		<!-- 查询物探处主要设备完好率和利用率 new-->
+		<action path="/rm/dm/tree/getWutanLiyongWanHao" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getWutanLiyongWanHaoInfos" />
+		</action>
+		<!-- 查询物探处主要设备项目分布 物探处级 new-->
+		<action path="/rm/dm/tree/getWutanTeamProDevInfos" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getWutanTeamProDevInfos" />
+		</action>
+		<!-- 查询物探处采集设备项目分布 物探处级 new-->
+		<action path="/rm/dm/tree/getWutanTeamCaijiDevInfos" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getWutanTeamCaijiDevInfos" />
+		</action>
+		<!-- 查询物探处各项目主要设备完好率、利用率 new-->
+		<action path="/rm/dm/tree/getWutanTeamLiyongWanhaoInfos" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getWutanTeamLiyongWanhaoInfos" />
+		</action>
+		<!-- 查询物探处各项目主要费用统计 new-->
+		<action path="/rm/dm/tree/getWutanTeamCostInfos" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getWutanTeamCostInfos" />
+		</action>
+		<!-- 查询地震队 主要设备完好率和利用率 new-->
+		<action path="/rm/dm/tree/geDeviceLiyongWanhaoStatistics" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="EarthquakeTeamStatistics" operationName="geDeviceLiyongWanhaoStatistics" />
+		</action>
+		<!-- 查询使用状态数据 物探处级 new-->
+		<action path="/rm/dm/tree/getDevUseStatusData" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevUseStatusData" />
+		</action>
+		<!-- 查询技术状态数据 物探处级 new-->
+		<action path="/rm/dm/tree/getDevTechStatusData" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevTechStatusData" />
+		</action>
+		<!-- 保存设备归属信息 new -->
+		<action path="/rm/dm/toSaveDevOwnershipInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevOwnershipInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--返还申请明细数据保存 new -->
+		<action path="/rm/dm/toSaveBackAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveBackAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>		
+		
+		<!--井中设备转移明细数据保存 -->
+		<action path="/rm/dm/toSaveBackWellsDevDetInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveBackWellsDevDetInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--返还申请基本数据保存 new -->
+		<action path="/rm/dm/toSaveBackBaseAppInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveBackBaseAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存调配调剂数量的信息  new-->
+		<action path="/rm/dm/toSaveDevMixNumInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevMixNumInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置调配申请明细数据保存 new -->
+		<action path="/rm/dm/toSaveMixAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveMixAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置调配申请明细数据保存 _大港首先成调配申请单然后再生成调配申请明细单 -->
+		<action path="/rm/dm/toSaveMixAppDetailInfoDg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveMixAppBaseInfoDg" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置调配申请明细数据保存 _综合物化探首先成调配申请单然后再生成调配申请明细单 -->
+		<action path="/rm/dm/toSaveMixAppDetailInfoZh" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveMixAppBaseInfoZh" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置调配申请基本数据保存 new -->
+		<action path="/rm/dm/toSaveMixAppBaseInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveMixAppBaseInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置补充计划明细数据审批保存 new -->
+		<action path="/rm/dm/toSaveDevAllAddAppAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAddAppAuditInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--配置补充计划审批数据的查询 new -->
+		<action path="/rm/dm/getDevAllAddAppInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevAllAddAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devplanadd/devPlanAddDetailsForProc.jsp" redirect="false" />
+		</action>
+		<!--配置计划补充计划明细数据保存 new -->
+		<action path="/rm/dm/toSaveDevAllAddAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAddAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置计划补充计划基本数据保存 new -->
+		<action path="/rm/dm/toSaveDevAllAddAppBaseInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAddAppBaseInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置计划补充计划基本数据保存 new生产综合 -->
+		<action path="/rm/dm/toSaveDevAllAddAppBaseInfoZh" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAddAppBaseInfoZh" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置大计划明细数据保存 new -->
+		<action path="/rm/dm/toSaveDevAllAppDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/toSaveDevAppLeInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAppDetailInfo" />
+			<forward name="success"	path="/pm/project/multiProject/wt/close_page.jsp" redirect="false" />
+		</action>
+		<!--配置大计划基本数据保存 new -->
+		<action path="/rm/dm/toSaveDevAllAppBaseInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAppBaseInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/toSaveDevAllAppBaseInfoM" type="com.cnpc.jcdp.mvc.action.Action"
+			scope="request" >
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAllAppBaseInfo" />
+		</action>
+		
+		<!--保存调配调剂明细的信息 -->
+		<action path="/rm/dm/toSaveDevMixDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevMixDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存转出调配单的信息 -->
+		<action path="/rm/dm/toSaveMDFInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveMDFInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备编码树 异步 -->
+		<action path="/rm/dm/tree/getDeviceTreeAjax" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDeviceTreeAjax" />
+		</action>
+		<!--设备台账明细数据保存-->
+		<action path="/rm/dm/toSaveDevInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevInfo" />
+			<forward name="success"	path="/rm/dm/devPlan/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备类型树 支持同异步-->
+		<action path="/rm/dm/collectTree/collectTreeManager" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollectDeviceInfo" />
+		</action>
+		<!--检波器类型树-->
+		<action path="/rm/dm/collectTree/collectJBQTreeManager" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getJBQCollectDeviceInfo" />
+		</action>
+		<!--采集设备类型树(电源站、采集站、交叉站)-->
+		<action path="/rm/dm/collectTree/collectCJDTreeManager" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCJDCollectDeviceInfo" />
+		</action>
+		<!--设备编码树 异步 -->
+		<action path="/rm/dm/collectTree/getCollDeviceTreeAjax" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollectDeviceInfoNew" />
+		</action>
+		<!--采集设备类型树 保存操作 new -->
+		<action path="/rm/dm/toSaveCollectDeviceNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollectDeviceNew" />
+			<forward name="success"	path="/rm/dm/collectTree/colldev_closepage.jsp" redirect="false" />
+		</action>
+		<!--采集设备类型保存信息-->
+		<action path="/rm/dm/toSaveCollectMapping" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollectMapping" />
+			<forward name="success"	path="/rm/dm/collectTree/colldev_closepage.jsp" redirect="false" />
+		</action>
+		<!--采集设备类型保存信息-->
+		<action path="/rm/dm/collectTree/saveCollectDevAccount" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollectDevAccount" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备类型修改信息-->
+		<action path="/rm/dm/collectTree/updateCollectDevAccount" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="updateCollectDevAccount" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备调配单信息保存-->
+		<action path="/rm/dm/collectTree/saveCollectDevMixForm" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollectDevMixForm" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--井中设备维修提交信息 -->
+		<action path="/rm/dm/saveWellsDevRepairInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveWellsDevRepairInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--维修保养提交信息 -->
+		<action path="/rm/dm/saveDeviceRepairInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDeviceRepairInfo" />
+			<forward name="success"	path="/rm/dm/common/xd_close_page.jsp" redirect="false" />
+		</action>
+			<!--维修保养提交信息装备震源专用 -->
+		<action path="/rm/dm/saveDeviceRepairInfozb" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDeviceRepairInfozb" />
+			<forward name="success"	path="/rm/dm/common/xd_close_page.jsp" redirect="false" />
+		</action>
+		<!--设备考勤提交信息 -->
+		<action path="/rm/dm/bgpCommDeviceTimeSheet" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="savekq" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--事故记录提交信息 -->
+		<action path="/rm/dm/bgpCommDeviceAccidentInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveSg" />
+			<forward name="success"	path="/rm/dm/common/xd_close_page.jsp" redirect="false" />
+		</action>
+		<!--设备检查提交信息 -->
+		<action path="/rm/dm/bgpCommDeviceInspection"  type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveJc" />
+			<forward name="success"	path="/rm/dm/common/xd_close_page.jsp" redirect="false" />
+		</action>
+		<!--油品记录提交信息 -->
+		<action path="/rm/dm/bgpCommDeviceOilInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveYp" />
+			<forward name="success"	path="/rm/dm/common/xd_close_page.jsp" redirect="false" />
+		</action>
+		<!--定人定机提交信息 -->
+		<action path="/rm/dm/toDevOperator" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveDj" />
+			<forward name="success"	path="/rm/dm/common/xd_close_page.jsp" redirect="false" />
+		</action>
+		<!--综合物化探定人定机提交信息 -->
+		<action path="/rm/dm/toZHDevOperator" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveZHDj" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--多项目定人定机提交信息 -->
+		<action path="/rm/dm/saveDE" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDj" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--运转记录提交信息 -->
+		<action path="/rm/dm/bgpCommDeviceOperationInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveYz" />
+			<forward name="success"	path="/rm/dm/common/xd_close_page.jsp" redirect="false" />
+		</action>
+		<!--设备台帐提交信息zjt -->
+		<action path="/rm/dm/toSubmitAccount" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAccount" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--特种设备电梯维保提交信息 -->
+		<action path="/rm/dm/toSubmitdtbywx" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevSDtbywxInfo" />
+			<forward name="success"	path="/dmsManager/common/easyui_close_page.jsp" redirect="false" />
+		</action>
+		<!--特种设备审验提交信息 -->
+		<action path="/rm/dm/toSubmitCheck" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevSCheckInfo" />
+			<forward name="success"	path="/dmsManager/common/easyui_close_page.jsp" redirect="false" />
+		</action>
+		<!--特种设备台帐提交信息 -->
+		<action path="/rm/dm/toSubmitAccount_S" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevAccount_S" />
+			<forward name="success"	path="/dmsManager/common/easyui_close_page.jsp" redirect="false" />
+		</action>
+		<!-- 设备重新接收，修改接收时间和保养计划 -->
+		<action path="/rm/dm/toReSubmitReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevReReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--井中设备分中心设备接收明细提交信息 -->
+		<action path="/rm/dm/toSubmitWellsReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveWellsDevReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备接收明细提交信息 zjt-->
+		<action path="/rm/dm/toSubmitReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备接收明细提交信息 -综合物化探专用-->
+		<action path="/rm/dm/toZHSubmitReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveZHDevReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备批量接收明细提交信息 zjt-->
+		<action path="/rm/dm/toSavePLReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="toSavePLReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备入库明细提交信息zjt -->
+		<action path="/rm/dm/toSubmitStock" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevRStock" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--装备设备入库明细提交信息ljb -->
+		<action path="/rm/dm/toSubmitEqStock" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveEqDevRStock" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备返还申请基本数据保存 zjt -->
+		<action path="/rm/dm/saveBackCollectAppInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveBackCollectAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备返还申请明细数据保存 zjt -->
+		<action path="/rm/dm/toSaveCollBackDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollBackDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备收工验收明细提交信息zjt -->
+		<action path="/rm/dm/toSubmitCollectStock" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="submitCollectStock" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 大港设备手工验收提叫信息 wangzheqin 2014-7-17 -->
+		<action path="/rm/dm/toSubmitDgCollectStock" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="submitDgCollectStock" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!--检波器收工验收明细提交信息zjt -->
+		<action path="/rm/dm/toSubmitJbqStock" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="submitJbqStock" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--大港检波器收工验收明细提交信息 -->
+		<action path="/rm/dm/toSubmitDgJbqStock" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="submitDgJbqStock" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备接收明细提交信息zjt -->
+		<action path="/rm/dm/toSubmitCollectReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="submitCollectReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--装备设备接收明细提交信息 zjt-->
+		<action path="/rm/dm/toSubmitAddedEqReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="toSubmitAddedEqReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--装备设备重新接收 修改接收时间和保养计划-->
+		<action path="/rm/dm/toReSubmitEqReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="toSubmitEqReReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 更换操作员(综合物化探) -->
+		<action path="/rm/dm/toModifyDevOperator" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveModifyDevOperator" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--装备设备接收明细提交信息 zjt-->
+		<action path="/rm/dm/toSubmitEqReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="toSubmitEqReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--行驶证提交信息zjt -->
+		<action path="/rm/dm/toSubmitLicense" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="toSubmitLicense" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--公司地震仪器基本情况统计表zjt -->
+		<action path="/rm/dm/getCompEqChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompEqChart" />
+		</action>
+		<!-- 查询公司级完好率利用率的对比图 new-->
+		<action path="/rm/dm/getCompDevRatioChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompDevRatioChart" />
+		</action>
+		<!--公司各单位主要设备完好率　利用率统计(按月横向对比) new -->
+		<action path="/rm/dm/getCompLVMonthForDuibi" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompLVMonthForDuibi" />
+		</action>
+		<!-- 公司各单位主要设备完好率　利用率统计(按月) new-->
+		<action path="/rm/dm/getCompLVMonth" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompLVMonth" />
+		</action>
+		<!-- 公司各单位主要设备完好率　利用率统计 zjt-->
+		<action path="/rm/dm/getCompLV" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompLV" />
+		</action>
+		<!-- 查询地震仪器在用分布 公司级 new-->
+		<action path="/rm/dm/getEQUseComDistribute" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getEqUseComDistribute" />
+		</action>
+		<!-- 查询地震仪器完好闲置分布 公司级 new-->
+		<action path="/rm/dm/getEQUnuseComDistribute" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getEqUnuseComDistribute" />
+		</action>
+		<!-- 设备获取设备类型编码 -->
+		<action path="/rm/dm/getSBTypeCode" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request">
+			<serviceCall serviceName="DBDataSrv"
+				operationName="getJsonCode" />
+		</action>
+		<!--装备设备批量接收明细提交信息 zjt-->
+		<action path="/rm/dm/toSaveEQPLReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="toSaveEQPLReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备技术状况修改 zjt-->
+		<action path="/rm/dm/toEditColTech" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="toEditColTech" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 查询物探级完好率利用率的对比图 整合 new-->
+		<action path="/rm/dm/getCompDevRatioChartWTNew" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompDevRatioChartWTNew" />
+		</action>
+		<!-- 查询物探级完好率利用率的对比图 new-->
+		<action path="/rm/dm/getCompDevRatioChartWT" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCompDevRatioChartWT" />
+		</action>
+		<!-- 查询物探级完好率利用率的对比图 new-->
+		<action path="/rm/dm/getWutanLiyongWanHaoWT" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getWutanLiyongWanHaoWT" />
+		</action>
+		<!-- 设备台账管理的excel导入功能 -->
+		<action path="/rm/dm/deviceAccount/saveDevExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevExcel" />
+			<forward name="success" path="/rm/dm/common/close_page.jsp" />
+		</action>
+		<!-- 特种设备管理的excel导入功能 -->
+		<action path="/rm/dm/devSpecial/saveDevExcel" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevSpecialExcel" />
+			<forward name="success" path="/dmsManager/common/easyui_close_page.jsp" />
+		</action>
+		<!--设备模板明细数据保存 new -->
+		<action path="/rm/dm/devModel/toSaveModelDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveModelDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备返还调剂数据保存 new -->
+		<action path="/rm/dm/toSaveBackMIXInfoNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="SaveBackMIXInfoNew" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存批量设备返还调配单的信息 new -->
+		<action path="/rm/dm/toSaveBackCollInfoNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveBackCollInfoNew" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存物探检波器接收单的信息 new -->
+		<action path="/rm/dm/toSubmitJBQReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="submitJBQReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存井中子项目接受父项目信息 new -->
+		<action path="/rm/dm/devReceive/szDevReceiveList" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevReceiveList" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--综合物化探外租申请明细数据保存 new -->
+		<action path="/rm/dm/devhireapply/hireApp_new_apply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveHireAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备送修申请明细数据保存 new liug-->
+		<action path="/rm/dm/devRepair/repairNewApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRepairAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备送外维修申请明细数据保存 new liug-->
+		<action path="/rm/dm/devRepair/repairSendNewApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRepairSendAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备送外维修返回单申请明细数据保存 new liug-->
+		<action path="/rm/dm/devRepair/repairSendRtnNewApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRepairSendRtnAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备送外维修返回单申请明细数据保存 new liug-->
+		<action path="/rm/dm/devRepair/repairRtnNewApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRepairRtnAppInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备整单接收    new  liug -->
+		<action path="/rm/dm/devRepair/repairReceiveAll" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="repairReceiveAll" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备整单拒收    new  liug -->
+		<action path="/rm/dm/devRepair/repairUnReceiveAll" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="repairUnReceiveAll" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集设备整单拒收    new  liug -->
+		<action path="/rm/dm/devRepair/repairDispatchDetail" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveTeamAssignInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 维修结果登记信息保存   new  liug -->
+		<action path="/rm/dm/devRepair/repairResultRegister" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRepairResultInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备编码树 异步   new liug 采集站 -->
+		<action path="/rm/dm/devRepair/getCollDeviceTreeOnlyUnit" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getCollDeviceTreeOnlyUnit" />
+		</action>
+		<!--配件编码树 异步   new liug 采集站 -->
+		<action path="/rm/dm/devRepair/getRepartPartTreeOnlyUnit" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRepartPartTreeOnlyUnit" />
+		</action>
+		<!--采集设备送修申请明细数据保存 new liug-->
+		<action path="/rm/dm/devRepair/repairPartNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRepairPartClassInfo" />
+		</action>
+		<!--配件明细数据保存 new liug-->
+		<action path="/rm/dm/devRepair/repairPartDetailNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRepairPartDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--送内设备动态表保存  liug -->
+		<action path="/rm/dm/devRepair/repairListSubmit" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="repairListSubmit" />
+		</action>
+		<!--送外设备动态表保存  liug -->
+		<action path="/rm/dm/devRepair/repairSendListSubmit" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="repairSendListSubmit" />
+		</action>
+		<!--送内返还设备动态表保存  liug -->
+		<action path="/rm/dm/devRepair/repairReturnListSubmit" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="repairReturnListSubmit" />
+		</action>
+		<!--送外返还设备动态表保存  liug -->
+		<action path="/rm/dm/devRepair/repairSendReturnListSubmit" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="repairSendReturnListSubmit" />
+		</action>
+		<!--综合物化探外租申请验收保存 new -->
+		<action path="/rm/dm/toSaveHireDevlDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveHireDevDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--综合物化探外租返还-保存 new -->
+		<action path="/rm/dm/devhireout/hireOut_new_apply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveHireOutDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存综合物化探外租返还审批的查询 -->
+		<action path="/rm/dm/getDevHireBackInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevAllAppInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devhireout/devHireBackDetailsForProc.jsp" redirect="false" />
+		</action>
+		<!--保存综合物化探设备返还信息 -->
+		<action path="/rm/dm/tosaveDevHireBackInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevHireBackInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--转移申请明细数据保存 new -->
+		<action path="/rm/dm/devmove/devMoveNewApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveMoveAppDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--查询设备转移审批数据 -->
+		<action path="/rm/dm/getDevMoveInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevMoveInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/devmove/devMoveDetailsForProc.jsp" redirect="false" />
+		</action>
+		<!--设备转移数据审批保存 new -->
+		<action path="/rm/dm/toSaveDevMoveAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveDevMoveAuditInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--井中设备分中心设备转移保存 -->
+		<action path="/rm/dm/wellsDevCenterPlan/wellsCenDevMoveApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveWellsCenMoveDetailInfo" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--井中设备转移保存 -->
+		<action path="/rm/dm/devmove/wellsDevMoveNewApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveWellsMoveAppDetailInfo" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!-- 单据表更新状态 -->
+		<action path="/rm/dm/toUpStateInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="upStateInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--采集设备批量转移数据保存 new -->
+		<action path="/rm/dm/devmove/collMoveNewApply" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollMoveAppDetailInfo" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!--查询采集设备转移审批数据 -->
+		<action path="/rm/dm/getCollMoveInfosForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getDevMoveInfosForProcwfpg" />
+			<forward name="success"	path="/rm/dm/collMove/collMoveDetailsForProc.jsp" redirect="false" />
+		</action>
+		<!--采集设备转移数据审批保存 new -->
+		<action path="/rm/dm/toSaveCollMoveAuditInfowfpa" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveCollMoveAuditInfowfpa" />
+			<forward name="success"	path="/pm/bpm/common/close_page.jsp"  redirect="true" />
+		</action>
+		<!-- RFID配置开始 -->
+		<!--RFID设备编码树 异步 -->
+		<action path="/rm/dm/tree/getRFIDDeviceTreeAjax" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDDeviceTreeAjax" />
+		</action>
+		<!--RFID设备台帐保存 -->
+		<action path="/rm/dm/saveRFIDDevAccount" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRFIDDevAccount" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存RFID基本信息 -->
+		<action path="/rm/dm/saveRFIDInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveRFIDInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存出库子表信息 -->
+		<action path="/rm/dm/saveOutFormSubInfo" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="saveOutFormSubInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--修改出库子表信息 -->
+		<action path="/rm/dm/updateOutFormDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="updateOutFormDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集站设备接收 -->
+		<action path="/rm/dm/rfidCollDevReceive" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="rfidCollDevReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--采集站收工验收 -->
+		<action path="/rm/dm/rfidCollDevIn" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="rfidCollDevIn" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--下拉列表保存 -->
+		<action path="/rm/dm/rfidCommSelectAdd" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="rfidCommSelectAdd" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--下拉列表更新 -->
+		<action path="/rm/dm/rfidCommSelectUpdate" type="com.cnpc.jcdp.mvc.action.WSAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="rfidCommSelectUpdate" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--下拉列表删除 -->
+		<action path="/rm/dm/rfidCommSelectDel" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="rfidCommSelectDel" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 采集站使用情况统计 -->
+		<action path="/rm/dm/getRFIDUsingChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDUsingChart" />
+		</action>
+		<!-- 采集站使用时间统计 -->
+		<action path="/rm/dm/getRFIDCollect" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDCollect" />
+		</action>
+		<!-- 采集站综合利用率分析 -->
+		<action path="/rm/dm/getRFIDUsedChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDUsedChart" />
+		</action>
+		<!-- 采集站综合完好率分析 -->
+		<action path="/rm/dm/getRFIDGoodChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDGoodChart" />
+		</action>
+		<!-- 采集站损坏率分析 -->
+		<action path="/rm/dm/getRFIDDestoryChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDDestoryChart" />
+		</action>
+		<!-- 采集站投产年限 -->
+		<action path="/rm/dm/getRFIDDevAgeChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDDevAgeChart" />
+		</action>
+		<!-- 采集站维修类型 -->
+		<action path="/rm/dm/getRFIDDevRepairTypeChart" type="com.bgp.gms.service.rm.dm.action.DevFusionChartsDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCommInfoSrv" operationName="getRFIDDevRepairTypeChart" />
+		</action>
+		<!--设备检查保存修改操作 -->
+		<action path="/rm/dm/saveOrUpdateDevInsInfo"  type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveOrUpdateDevInsInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 综合分析，导出excel -->
+		<action path="/rm/dm/common/DmZhfxToExcel" type="com.bgp.gms.service.rm.dm.action.DMZhfxToExcelAction"
+			scope="request">
+		</action>
+				<!--将设备台账中设备信息导入到非生产单位现场管理 -->
+		<action path="/rm/dm/copyToUnPro"  type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="copyToUnPro" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--非生产单位维修保养提交信息 -->
+		<action path="/rm/dm/saveDeviceRepairUnProInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveDeviceRepairUnProInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+			<!--非生产单位保养计划制定 -->
+		<action path="/rm/dm/savebyjhUnProInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="savebyjhUnProInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--运转记录提交信息 -->
+		<action path="/rm/dm/bgpCommDeviceOperationUnInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveYz" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+			<!--导入页面关闭刷新运行管理页面 -->
+		<action path="/rm/dm/closeAddUnProDevice" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="closeAddUnProDevice" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--外租检波器验收 -->
+		<action path="/rm/dm/toSaveHireFillDetailJBQInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveHireFillDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		
+			<!--外租离场-检波器保存 new -->
+		<action path="/rm/dm/toSaveRentDevLeftJBQInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveRentDevLeftInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+			<!--外租离场-检波器修改 new -->
+		<action path="/rm/dm/toModifyRentDevLeftJBQInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="updateRentDevLeftInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+	    <!--备件管理 新增单项目 -->
+		<action path="/rm/dm/toSaveSparePartsAllInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveOrUpdateBJ" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+			    <!--备件管理 新增多项目 -->
+		<action path="/rm/dm/toSaveSparePartsAllInfos" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveOrUpdateBJs" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 备件excel导入单项目-->
+		<action path="/rm/dm/saveExcelBJ" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveExcelBJ" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+		<!-- 备件excel导入多项目-->
+		<action path="/rm/dm/saveExcelBJs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveExcelBJs" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+			<!-- 施工履历信息录入-->
+		<action path="/rm/dm/saveSgllInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveSgllInfo" />
+			<forward name="success" path="/rm/dm/kkzy/sgli_zy.jsp" />
+		</action>
+		
+			<!-- 可控震源月报表录入-->
+		<action path="/rm/dm/saveMonthInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveMonthInfo" />
+			<forward name="success" path="/rm/dm/kkzy/kkzyMonth_zy.jsp" />
+		</action>
+		
+		
+			<!-- 总成件维修九路录入信息录入-->
+		<action path="/rm/dm/saveZcjwxInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveZcjwxInfo" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+			<!-- 保养维修信息录入-->
+		<action path="/rm/dm/saveBywxInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveBywxInfo" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+				<!-- 保养维修信息录入-->
+		<action path="/rm/dm/saveBywxInfos" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveBywxInfos" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+			<!-- 保养维修用料信息录入单项目-->
+		<action path="/rm/dm/saveBywxMatInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveBywxMatInfo" />
+			<forward name="success" path="/rm/dm/kkzy/selectAcceptListJZ.jsp" />
+		</action>
+			<!-- 可控震源物资excel导入-->
+		<action path="/rm/dm/saveExcelRepMat" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveExcelRepMat" />
+			<forward name="success"  path="/rm/dm/kkzy/mutiPorject/close_page_excel.jsp"/>
+		</action>
+		
+			<!-- 保养维修excel导入-->
+		<action path="/rm/dm/saveExcelBywx" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveExcelBywx" />
+				<forward name="success"  path="/rm/dm/kkzy/mutiPorject/close_page_excel.jsp"/>
+		</action>
+			<!-- 多项目保养维修excel导入-->
+		<action path="/rm/dm/saveExcelBywxs" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveExcelBywxs" />
+				<forward name="success"  path="/rm/dm/kkzy/mutiPorject/close_page_excel.jsp"/>
+		</action>
+				<!-- 可控震源物资excel导入-->
+		<action path="/rm/dm/saveExcelRepMats" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveExcelRepMats" />
+			<forward name="success" path="/rm/dm/kkzy/mutiPorject/close_page_excel.jsp" />
+		</action>
+		<!--强制保养提交信息 -->
+		<action path="/rm/dm/saveDeviceAccountRepairInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveDeviceAccountRepairInfo" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备维修提交信息 -->
+		<action path="/rm/dm/saveNewDeviceAccountRepairInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveNewDeviceAccountRepairInfo" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!--闲置设备调剂录入 -->
+		<action path="/rm/dm/saveXZTJInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveXZTJInfo" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+	<!--设备接收明细提交信息 zjt-->
+		<action path="/rm/dm/toSubmitXZReceive" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveDevXZReceive" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/zytj/zytj" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DevInsSrv" operationName="getKkzyTJ" />
+		</action>
+		
+		<action path="/rm/dm/zytj/zyDevTj" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DevInsSrv" operationName="getKkzyDevTJ" />
+		</action>
+		<action path="/rm/dm/getDeviceLieOne_coll" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getDeviceLieOne_coll" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/getDevReoaProjectsWUTAN" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getDevReoaProjectsWUTAN" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/getDevReoaProjects" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getDevReoaProjects" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/getDevReoaOrgs" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getDevReoaOrgs" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/getDevReoaOrgsWUTAN" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getDevReoaOrgsWUTAN" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/getDevOnProjectInfo" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getDevOnProjectInfo" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/colljbqgetDeviceLieOne" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getcolljbqDeviceLieOne" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/rm/dm/getDeviceLieOne" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="getDeviceLieOne" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--闲置设备调剂录入 -->
+		<action path="/rm/dm/saveXZTJInfoAccount" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveXZTJInfo" />
+			<forward name="success"	path="/rm/dm/deviceXZAccount/close_page.jsp" redirect="false" />
+		</action>
+			<!--闲置设备调剂审批 -->
+		<action path="/rm/dm/approvalXZ" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="approvalXZ" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- RFID配置结束 -->
+		<!--设备保养计划保存  -->
+		<action path="/rm/dm/saveDeviceMaintenancePlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveDeviceMaintenancePlan" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--多项目设备保养计划保存  -->
+		<action path="/rm/dm/saveDeviceAccMaintenancePlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="saveDeviceAccMaintenancePlan" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--项目设备保养计划修改  -->
+		<action path="/rm/dm/updateDeviceAccMaintenancePlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevInsSrv" operationName="updateDeviceAccMaintenancePlan" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--检波器设备编码树 异步 -->
+		<action path="/rm/dm/collectTree/getColljbqDeviceTreeAjax" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="getCollectjbqDeviceInfoNew" />
+		</action>
+			<!--地震仪器设备编码树 异步 -->
+		<action path="/rm/dm/collectTree/getColldzyqDeviceTreeAjax" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="getCollectdzyqDeviceInfoNew" />
+		</action>
+			<!--采集设备收工验收明细提交信息zjt -->
+		<action path="/rm/dm/toSubmitCollectStocknew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="submitCollectStock" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 测量单台设备返还saveOrUpdate -->
+		<action path="/rm/dm/saveOrUpdateDevBackApp" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveOrUpdateDevBackApp" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 装备单台验收 -->
+		<action path="/rm/dm/pro/saveEqDevRStock" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveEqDevRStock" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+			<!--采集设备收工验收明细更新信息-->
+		<action path="/rm/dm/toSubmitCollectStockUpdate" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="submitCollectStockUpdate" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--更新返还验收单位-->
+		<action path="/rm/dm/toUpdateReviceOrgId" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="toUpdateReviceOrgId" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+			<!--保存出库的信息(批量出库) new -->
+		<action path="/rm/dm/toSaveOutFormDetailInfoNew" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveOutFormDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+			<!--批量验收修改接收单位 new -->
+		<action path="/rm/dm/toSaveStockinMain" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveStockinMain" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--获取各单位主要设备基本统计数据 -->
+		<action path="/rm/dm/getDevOrgChartData" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DevInsSrv" operationName="getDevOrgChartData" />
+		</action>
+		<!--获取主要设备基本情况统计数据 -->
+		<action path="/rm/dm/getMainEquiBaseChartData" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DevInsSrv" operationName="getMainEquiBaseChartData" />
+		</action>
+		<!--设备变更申请单保存 -->
+		<action path="/rm/dm/savemoveInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="savemoveInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备变更申请单接收 -->
+		<action path="/rm/dm/receivemoveInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="receivemoveInfo" />
+			<forward name="success"	path="/rm/dm/dev_work/close_page.jsp" redirect="false" />
+		</action>
+		<!--新增或修改班组检查信息 -->
+		<action path="/rm/dm/saveOrUpdateDevTeamCheckInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevTeamCheckSrv" operationName="saveOrUpdateDevTeamCheckInfo" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--新增单机检查信息 -->
+		<action path="/rm/dm/saveInspectionInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevTeamCheckSrv" operationName="saveInspectionInfo" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--修改保存单台设备变更信息 -->
+		<action path="/rm/dm/saveOrUpdateSinDevMoveInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="saveOrUpdateSinDevMoveInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--修改单台设备转移变更记录 -->
+		<action path="/rm/dm/updateMoveappDetailInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevProSrv" operationName="updateMoveappDetailInfo" />
+			<forward name="success"	path="/rm/dm/common/close_page.jsp" redirect="false" />
+		</action>
+		<!--可控震源编码树 异步 -->
+		<action path="/rm/dm/zcjByItem/getKkzyTreeAjax" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="getKkzyTreeAjax" />
+		</action>
+		<!--可控震源编码树 异步 -->
+		<action path="/rm/dm/zcjByItem/getZcjTreeAjax" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="getZcjTreeAjax" />
+		</action>
+		<!-- 保存总成件型号-->
+		<action path="/rm/dm/zcjByItem/savezcjModel" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="savezcjModel" />
+			<forward name="success" path="/rm/dm/common/close_page.jsp" />
+		</action>
+		<!-- 保存总成件型号-->
+		<action path="/rm/dm/zcjByItem/deletezcjModel" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="deletezcjModel" />
+			<forward name="success" path="/rm/dm/common/close_page.jsp" />
+		</action>
+		<!-- 可控震源设备与总成件关联设置-->
+		<action path="/rm/dm/zcjByItem/saveDevZcjModel" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="saveDevZcjModel" />
+			<forward name="success" path="/common/close_page.jsp" />
+		</action>
+			<!-- 强制保养excel导入-->
+		<action path="/rm/dm/saveExcelQzby" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="saveExcelQzby" />
+			<forward name="success"	 path="/rm/dm/dev_work/close_page_excel.jsp"/>
+		</action>
+			<!-- 设备维修excel导入-->
+		<action path="/rm/dm/saveExcelSbwx" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="saveExcelSbwx" />
+			<forward name="success"	 path="/rm/dm/dev_work/close_page_excel.jsp"/>
+		</action>
+		<!-- 外租设备excel导入-->
+		<action path="/rm/dm/saveExcelWzsb" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="saveExcelWzsb" />
+			<forward name="success"	 path="/rm/dm/dev_work/close_page_excel.jsp"/>
+		</action>
+		<!-- 大港设备台账管理的excel导入功能 -->
+		<action path="/rm/dm/saveDevExcelDg" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevZcjByItemSrv" operationName="saveDevExcelDg" />
+			<forward name="success" path="/rm/dm/dev_work/close_page_excel.jsp" />
+		</action>
+		<!-- 获得可控震源数量分析 -->
+		<action path="/rm/dm/kkzy/getKkzyAmountAnal" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="DevCommSrv" operationName="getKkzyAmountAnal" />
+		</action>
+	</action-mappings>
+</struts-config>

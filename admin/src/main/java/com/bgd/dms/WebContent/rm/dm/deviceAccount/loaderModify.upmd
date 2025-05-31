@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>设备</PageTitle>
+  <QuerySQL>
+    <sql>SELECT t.*,(select org_name from comm_org_information org where t.owning_org_id=org.org_id) as owning_org_name_desc FROM GMS_DEVICE_ACCOUNT t WHERE dev_acc_id='$PARAM.id'</sql>
+    <tableName>GMS_DEVICE_ACCOUNT</tableName>
+    <fields>
+      <field name="dev_acc_id" type="TEXT">DEV_ACC_ID</field>
+      <field name="dev_coding" type="TEXT">DEV_CODING</field>
+      <field name="dev_name" type="TEXT">DEV_NAME</field>
+      <field name="asset_stat" type="TEXT">ASSET_STAT</field>
+      <field name="dev_model" type="TEXT">DEV_MODEL</field>
+      <field name="self_num" type="TEXT">SELF_NUM</field>
+      <field name="dev_sign" type="TEXT">DEV_SIGN</field>
+      <field name="dev_type" type="TEXT">DEV_TYPE</field>
+      <field name="dev_unit" type="TEXT">DEV_UNIT</field>
+      <field name="asset_coding" type="TEXT">ASSET_CODING</field>
+      <field name="turn_num" type="TEXT">TURN_NUM</field>
+      <field name="order_num" type="TEXT">ORDER_NUM</field>
+      <field name="requ_num" type="TEXT">REQU_NUM</field>
+      <field name="asset_value" type="">ASSET_VALUE</field>
+      <field name="net_value" type="">NET_VALUE</field>
+      <field name="cont_num" type="TEXT">CONT_NUM</field>
+      <field name="currency" type="TEXT">CURRENCY</field>
+      <field name="tech_stat" type="TEXT">TECH_STAT</field>
+      <field name="using_stat" type="TEXT">USING_STAT</field>
+      <field name="capital_source" type="TEXT">CAPITAL_SOURCE</field>
+      <field name="owning_org_id" type="TEXT">OWNING_ORG_ID</field>
+      <field name="owning_org_name" type="TEXT">OWNING_ORG_NAME</field>
+      <field name="owning_sub_id" type="TEXT">OWNING_SUB_ID</field>
+      <field name="usage_org_id" type="TEXT">USAGE_ORG_ID</field>
+      <field name="usage_org_name" type="TEXT">USAGE_ORG_NAME</field>
+      <field name="usage_sub_id" type="TEXT">USAGE_SUB_ID</field>
+      <field name="dev_position" type="TEXT">DEV_POSITION</field>
+      <field name="manu_factur" type="TEXT">MANU_FACTUR</field>
+      <field name="producting_date" type="D">PRODUCTING_DATE</field>
+      <field name="account_stat" type="TEXT">ACCOUNT_STAT</field>
+      <field name="dev_photo" type="">DEV_PHOTO</field>
+      <field name="license_num" type="TEXT">LICENSE_NUM</field>
+      <field name="chassis_num" type="TEXT">CHASSIS_NUM</field>
+      <field name="engine_num" type="TEXT">ENGINE_NUM</field>
+      <field name="bsflag" type="TEXT">BSFLAG</field>
+      <field name="remark" type="TEXT">REMARK</field>
+      <field name="creator" type="TEXT">CREATOR</field>
+      <field name="create_date" type="D">CREATE_DATE</field>
+      <field name="modifier" type="TEXT">MODIFIER</field>
+      <field name="modifi_date" type="D">MODIFI_DATE</field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="accStatOps">
+      <option value="0">账内</option>
+      <option value="1">账外</option>
+      <option value="2">外租</option>
+    </Select>
+  </Options>
+  <Codes>
+    <Code name="usingOps" sql="SELECT t.coding_code_id AS value, t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id = '0110000007' order by t.coding_show_id">使用状况</Code>
+   <Code name="techOps" sql="SELECT t.coding_code_id AS value, t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id = '0110000006' order by t.coding_show_id">技术状况</Code>
+  </Codes>
+  <EntityFields>
+  <field name="dev_name" type="FK" defaultValue="$ENTITY.dev_name:$ENTITY.dev_name" selValue="selectDeviceTree.jsp" nonEmpty="true">设备名称</field>
+    <field name="account_stat" type="SEL_OPs" selValue="accStatOps" nonEmpty="true">资产状况</field>
+    <field name="dev_model" nonEmpty="true">规格型号</field>
+    <field name="dev_sign" nonEmpty="true">实物标识号</field>
+    <field name="asset_coding">资产编号</field>
+    <field name="self_num">自编号</field>
+    <field name="license_num">牌照号</field>
+    
+    <field name="">主机序列号</field>
+    <field name="">出厂编号</field>
+    <field name="producting_date">出厂日期</field>
+    
+    <field name="engine_num">发动机号</field>
+    <field name="chassis_num">底盘号</field>
+    
+    
+    <field name="owning_org_id" type="FK" defaultValue="$ENTITY.owning_org_id:$ENTITY.owning_org_name_desc" selValue="selectOrg.jsp?codingSortId=0110000001">所属单位</field>
+    
+    
+    <field name="using_stat" type="SEL_Codes" selValue="usingOps">使用情况</field>
+    <field name="tech_stat" type="SEL_Codes" selValue="techOps">技术状况</field>
+    
+    <field name="bsflag" isShow="Hide" defaultValue="0"/>
+    <field name="dev_type" isShow="Hide"/>
+    <field name="owning_org_name" isShow="Hide">所属单位名称</field>
+  
+  
+    
+  </EntityFields>
+</SAIS_EAW_TL>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+	<tlibversion>2.3</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>eTab</shortname>
+	<uri>http://fckeditor.net/eTab</uri>
+	<info>eTab</info>
+	<tag>
+		<name>tabs</name>
+		<tagclass>com.bgp.mcs.web.common.tag.ExtTabsTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>标签卡容器标签-eRedUI公共标签</info>
+		<attribute>
+			<name>tabsId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>activeTab</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>autoScroll</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>toolbar</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+   <tag>
+		<name>tab</name>
+		<tagclass>com.bgp.mcs.web.common.tag.ExtTabTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>标签卡标签-eRedUI公共标签</info>
+		<attribute>
+			<name>tabId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select d.* from sm_org sm ,ci_department d where d.corp_id =sm.org_id and sm.bgp_infomation_type_id ='$PARAM.typeId' order by d.ORDER_NO</sql>
+    <fields>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="corp_id" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="dept_function" type="TEXT"></field>
+      <field name="dept_id" type="TEXT"></field>
+      <field name="dept_name" type="TEXT"></field>
+      <field name="memo" type="TEXT"></field>
+      <field name="modifier" type="TEXT"></field>
+      <field name="modify_date" type="D"></field>
+      <field name="order_no" type=""></field>
+    </fields>
+  </QuerySQL>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{dept_id}'&gt;">选择</data>
+    <data exp="{dept_name}">部门名称</data>
+    <data exp="&lt;a href=javascript:viewLink('{dept_id}') &gt;查看部门人员&lt;/a&gt;">人员</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields/>
+  </QueryCondition>
+ <JavaScripts>
+  
+	function viewLink(dept_id){
+	    	editUrl = "/market/showModel/showPerson.lpmd?id="+dept_id;
+	    	url=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+	    	window.showModalDialog(url);
+		}
+  </JavaScripts>
+</SAIS_EAW_TL>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>{CRU}年度信息</PageTitle>
+  <QuerySQL>
+    <sql>select y.budget_id, y.org_id, y.org_subjection_id, y.year, y.budget_money, y.notes, y.week_date, y.create_date, y.mondify_date, y.mondify_user, y.bsflag, y.subflag from BGP_WR_BUDGET_YEAR y where y.budget_id='$PARAM_id'</sql>
+    <tableName>BGP_WR_BUDGET_YEAR</tableName>
+    <fields>
+      <field name="budget_id" type="TEXT"></field>
+      <field name="org_id" type="TEXT"></field>
+      <field name="org_subjection_id" type="TEXT"></field>
+      <field name="year" type="TEXT"></field>
+      <field name="budget_money" type=""></field>
+      <field name="notes" type="TEXT"></field>
+      <field name="week_date" type="D"></field>
+      <field name="create_date" type="D"></field>
+      <field name="mondify_date" type="D"></field>
+      <field name="mondify_user" type="TEXT"></field>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="subflag" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+    <field name="budget_id" isShow="Hide"/>
+    <field name="org_id" isShow="Hide" defaultValue="$USER.codeAffordOrgID">单位</field>
+    <field name="org_subjection_id" isShow="Hide" defaultValue="$USER.subOrgIDofAffordOrg">隶属</field>
+    <field name="budget_money" type="NN">预算收入</field>
+    <field name="year" type="N">年度</field>
+    <field name="notes" type="MEMO" maxLength="500" size="48:8">备注</field>
+    <field name="create_date" type="D" isShow="Hide" defaultValue="CURRENT_DATE" action="C"/>
+    <field name="mondify_date" type="D" isShow="Hide" defaultValue="CURRENT_DATE" action="C,U"/>
+    <field name="mondify_user" isShow="Hide" defaultValue="$USER.userId" action="C,U"/>
+    <field name="subflag" isShow="Hide" defaultValue="0" action="C"/>
+    <field name="bsflag" isShow="Hide" defaultValue="0" action="C"/>
+  </EntityFields>
+</SAIS_EAW_TL>

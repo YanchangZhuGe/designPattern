@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart   showValues='0' numberPrefix='$'>
+	<categories>
+		<category label='21周' />
+		<category label='22周' />
+		<category label='23周' />
+		<category label='24周' />
+		<category label='25周' />
+		<category label='26周' />
+		<category label='27周' />
+		<category label='28周' />
+		<category label='29周' />
+		<category label='30周' />
+		<category label='31周' />
+		<category label='32周' />
+	</categories>
+	<dataset seriesName='本年收入'>
+		<set value='27400' />
+		<set value='29800' />
+		<set value='25800' />
+		<set value='26800' />
+		<set value='29600' />
+		<set value='32600' />
+		<set value='31800' />
+		<set value='36700' />
+		<set value='29700' />
+		<set value='31900' />
+		<set value='34800' />
+		<set value='24800' />
+	</dataset>
+	<dataset seriesName='往年收入'>
+		<set value='10000' />
+		<set value='11500' />
+		<set value='12500' />
+		<set value='15000' />
+		<set value='11000' />
+		<set value='9800' />
+		<set value='11800' />
+		<set value='19700' />
+		<set value='21700' />
+		<set value='21900' />
+		<set value='22900' />
+		<set value='20800' />
+	</dataset>
+	<styles>
+		<definition>
+			<style name='CanvasAnim' type='animation' param='_xScale'
+				start='0' duration='1' />
+		</definition>
+		<application>
+			<apply toObject='Canvas' styles='CanvasAnim' />
+		</application>
+	</styles>
+</chart>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>设备材料费用管理</PageTitle>
+  <QuerySQL>
+    <sql>select * from bgp_op_tartet_device_material where bsflag='0' and if_change!='2' and if_delete_change is null   and target_material_id = '$PARAM.id'</sql>
+    <tableName>bgp_op_tartet_device_material</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+  	<Select name="oilType">
+      <option value="1">汽油</option>
+      <option value="2">柴油</option>
+    </Select>
+  </Options>
+  <Codes>
+    <Code name="teamOps" sql="SELECT coding_code_id AS value,t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id='0110000001' and t.bsflag='0' and length(t.coding_code)=2 and t.spare1='0' order by t.coding_show_id">班组</Code>
+  </Codes>
+  <EntityFields>
+    <field name="target_material_id" isShow="Hide">id</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="if_change" isShow="Hide">if_change</field>
+    <field name="project_info_no" isShow="Hide" defaultValue="$PARAM.projectInfoNo">project_info_no</field>
+    <field name="dev_name" maxLength="32">设备名称</field>
+        <field name="dev_team" maxLength="32" type="SEL_Codes" selValue="teamOps">班组</field>
+     <field name="device_count" maxLength="32">数量</field>
+    <field name="dev_model" maxLength="32">规格型号</field>
+    <field name="plan_start_date" type="D">计划进入时间</field>
+    <field name="plan_end_date" type="D">计划离开时间</field>
+    <field name="change_date" type="D" defaultValue="CURRENT_DATE">变更时间</field>
+    <field name="vehicle_daily_material"  maxLength="12">车辆日消耗材料（元）</field>
+    <field name="drilling_daily_material" maxLength="12">钻机日消耗材料（元）</field>
+    <field name="restore_repails" maxLength="12">本项目恢复性修理费(元)</field>
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+			submitStr = getSubmitStr();
+			submitStr+='&amp;tableId=target_material_id';
+			if(submitStr == null) return;
+			var retObject = jcdpCallService("OPCostSrv", "saveTargetAdjustInfo", submitStr);
+			top.frames('list').refreshData();
+			afterSubmit(retObject);
+		}
+		
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

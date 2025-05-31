@@ -1,0 +1,127 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+
+  <action-mappings>       
+	
+    <action path="/queryMenus"
+    		type="com.cnpc.jcdp.web.auth2.action.DyncLoadMenuAction">
+      <serviceCall serviceName="IBPLoginAndMenuTree" 
+      		       operationName="query4ChildrenMenus"/>
+    </action>
+ 
+  	<action path="/ibp/auth2/deleteMenu"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPAuthEntitySrv" 
+      		       operationName="deleteMenu"/>
+    </action>     
+
+   <action path="/ibp/auth2/deleteOrg"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPAuthEntitySrv" 
+      		       operationName="deleteOrg"/>
+    </action>    
+    <action path="/ibp/auth2/addOrUpdateUser"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPAuthEntitySrv" 
+      		       operationName="addOrUpdateUser"/>
+    </action>   
+    <action path="/ibp/auth2/modifyPwd"
+	    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+	    		scope="request">
+	      <serviceCall serviceName="IBPAuthEntitySrv" 
+	      		       operationName="updatePassWord"/>
+    </action>  
+    <action path="/ibp/auth2/queryUsers"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPAuthEntitySrv" 
+      		       operationName="queryUsers"/>
+    </action>   
+        
+	<action path="/auth/reloadCache"
+    		type="com.cnpc.jcdp.mvc.action.WSAction"
+    		scope="request">
+      <serviceCall serviceName="IBPLoginAndMenuTree" 
+      		       operationName="reloadCache"/>
+      <forward name="success" path="/rad/cacheMng.jsp" />
+    </action>      
+    <action path="/auth/reloadInterCache"
+    		type="com.cnpc.sais.web.inter.action.InterAction"
+    		scope="request">
+      <forward name="success" path="/rad/cacheMng.jsp" />
+    </action>     
+    <action path="/ibp/auth2/deleteFunc"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPAuthEntitySrv" 
+      		       operationName="deleteFunc"/>
+    </action>  
+    
+    <action path="/ibp/auth2/setManager"
+	    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+	    		scope="request">
+	      <serviceCall serviceName="IBPAuthEntitySrv" 
+	      		       operationName="setManager"/>
+    </action> 
+    
+    <action path="/ibp/auth2/cancelManager"
+	    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+	    		scope="request">
+	      <serviceCall serviceName="IBPAuthEntitySrv" 
+	      		       operationName="cancelManager"/>
+    </action> 
+    <action path="/ibp/auth2/getMenuTreeData"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPMenuTreeSrv" 
+      		       operationName="getMenuTreeData"/>
+    </action>
+    
+    <action path="/ibp/auth2/saveMenuTreeData"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPMenuTreeSrv" 
+      		       operationName="saveMenuTreeData"/>
+    </action>
+    <action path="/ibp/auth2/queryCommUsersByOrg"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPAuthEntitySrv" 
+      		       operationName="queryCommUsersByOrg"/>
+    </action>
+    <!-- 收藏夹 -->
+    <action path="/ibp/auth2/getCollMenuTreeData"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPMenuTreeSrv" 
+      		       operationName="getCollMenuTreeData"/>
+    </action>
+    <action path="/ibp/auth2/saveCollMenuTreeData"
+    		type="com.cnpc.jcdp.web.tcg.ajax.action.AjaxCallAction"
+    		scope="request">
+      <serviceCall serviceName="IBPMenuTreeSrv" 
+      		       operationName="saveCollMenuTreeData"/>
+    </action>
+    
+    <action path="/ibp/auth2/dmsCollMenu"
+	    		type="com.cnpc.jcdp.mvc.action.WSAction">
+	      <serviceCall serviceName="IBPMenuTreeSrv" 
+	      		       operationName="query4CollLinks"/>
+	      <forward name="success" path="/dms_info/collectinfo.jsp" />
+	</action>
+	<!-- 添加系统登录用户 -->
+   <action path="/ibp/auth2/toSaveOrUpdateUserInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+		scope="request" name="dynamicForm">
+		<serviceCall serviceName="AuthEntitySrv" operationName="saveOrUpdateUserInfo" />
+		<forward name="success"	path="/dmsManager/common/easyui_close_page.jsp" redirect="false" />
+	</action>
+	<!-- 给用户添加角色
+   <action path="/ibp/auth2/toSaveUserRoleInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+		scope="request" name="dynamicForm">
+		<serviceCall serviceName="AuthEntitySrv" operationName="saveUserRoleInfo" />
+	</action> -->
+  </action-mappings>  
+</struts-config>

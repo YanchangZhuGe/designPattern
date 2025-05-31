@@ -1,0 +1,639 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		
+		<action path="/hse/addDanger" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addDanger" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/addDangerModify" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addDangerModify" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/addDangerReward" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addDangerReward" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/deleteDanger" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="deleteDanger" />
+			<forward name="success" path="/hse/danger/danger_list.jsp" />
+		</action>
+		<action path="/hse/viewDanger" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="viewDanger" />
+			<forward name="success" path="/hse/danger/editDanger.jsp" />
+		</action>
+		<action path="/hse/editDanger" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="editDanger" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/editDangerInfo" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="editDangerInfo" />
+			<forward name="success" path="/hse/danger/danger_list.jsp" />
+		</action>
+		<action path="/hse/editDangerModify" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="editDangerModify" />
+			<forward name="success" path="/hse/danger/danger_list.jsp" />
+		</action>
+		<action path="/hse/editDangerReward" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="editDangerReward" />
+			<forward name="success" path="/hse/danger/danger_list.jsp"  />
+		</action>
+		<!-- hse 事故快报 -->
+		<action path="/hse/viewAccident" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="viewAccident" />
+			<forward name="success" path="/hse/accidentNews/editAccident.jsp" />
+		</action>
+		
+		<action path="/hse/accident/addNewsInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addNewsInfo" />
+			<forward name="success" path="/hse/accidentNews/addAccident.jsp" />
+		</action>
+		<action path="/hse/accident/addNewsInfo2" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addNewsInfo" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/accident/editNewsInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addNewsInfo" />
+			<forward name="success" path="/hse/accidentNews/editAccident.jsp" />
+		</action>
+		<action path="/hse/accident/updateNewsInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addNewsInfo" />
+			<forward name="success" path="/hse/accidentNews/accident_list.jsp" />
+		</action>
+		<!-- 事件信息报告 -->
+		<action path="/hse/viewEvent" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="viewEvent" />
+			<forward name="success" path="/hse/event/editEvent.jsp" />
+		</action>
+		
+		<action path="/hse/accident/addEvent" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addEvent" />
+			<forward name="success" path="/hse/event/addEvent.jsp" />
+		</action>
+		<action path="/hse/accident/addEvent2" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addEvent" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/accident/editEvent" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addEvent" />
+			<forward name="success" path="/hse/event/editEvent.jsp" />
+		</action>
+		<action path="/hse/accident/updateEvent" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addEvent" />
+			<forward name="success" path="/hse/event/event_list.jsp" />
+		</action>
+		<!-- 事件记录 -->
+		<action path="/hse/viewRecord" type="com.cnpc.jcdp.mvc.action.WSAction">
+			<serviceCall serviceName="HseSrv" operationName="viewRecord" />
+			<forward name="success" path="/hse/record/editRecord.jsp" />
+		</action>
+		<action path="/hse/accident/addRecord2" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addRecord" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/accident/addRecord" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addRecord" />
+			<forward name="success" path="/hse/record/editRecord.jsp" />
+		</action>
+		<action path="/hse/accident/updateRecord" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addRecord" />
+			<forward name="success" path="/hse/record/record_list.jsp" />
+		</action>
+		<action path="/hse/accident/updateRecord" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addRecord" />
+			<forward name="success" path="/hse/record/record_list.jsp" />
+		</action>
+		<!-- 准驾证管理 -->
+		<action path="/hse/driving/addDriving" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addDriving" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/driving/saveDriving" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addDriving" />
+			<forward name="success" path="/hse/yxControl/safeManage/jiazheng/driving_list.jsp" />
+		</action>
+		<action path="/hse/driving/queryDriving" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryDriving" />
+			<forward name="success" path="/hse/yxControl/safeManage/jiazheng/editDriving.jsp" />
+		</action>
+		
+		<!-- HSE理念、方针的宣贯 -->
+		<action path="/hse/advertise/addAdvertise" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAdvertise" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/advertise/saveAdvertise" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAdvertise" />
+			<forward name="success" path="/hse/leaderAndPromise/advertise/advertise_list.jsp" />
+		</action>
+		<action path="/hse/advertise/queryAdvertise" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryAdvertise" />
+			<forward name="success" path="/hse/leaderAndPromise/advertise/editAdvertise.jsp" />
+		</action>
+		<!-- HSE方针 -->
+		<action path="/hse/hsePolicy/savePolicy" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAdvertise" />
+			<forward name="success" path="/hse/hsePolicy/policy_list.jsp" />
+		</action>
+		<action path="/hse/hsePolicy/queryPolicy" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryAdvertise" />
+			<forward name="success" path="/hse/hsePolicy/editPolicy.jsp" />
+		</action>
+		<!-- HSE安全经验分享 -->
+		<action path="/hse/safe/addSafeShare" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addSafeShare" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/safe/saveSafeShare" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addSafeShare" />
+			<forward name="success" path="/hse/leaderAndPromise/safeShare/safeShare_list.jsp" />
+		</action>
+		<action path="/hse/safe/querySafeShare" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="querySafeShare" />
+			<forward name="success" path="/hse/leaderAndPromise/safeShare/editSafeShare.jsp" />
+		</action>
+		<!-- 附件导入 -->
+		<action path="/hse/safe/importSafeShare" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="HseSrv" operationName="importSafeShare" />
+			<forward name="success" path="/hse/leaderAndPromise/safeShare/importFile.jsp" />
+		</action>
+		
+		<!-- HSE 个人安全行动计划 -->
+		<action path="/hse/plan/addSafePlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addSafePlan" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/plan/addAndCopySafePlan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAndCopySafePlan" />
+			<forward name="success" path="/hse/leaderAndPromise/selfSafePlan/plan_list.jsp"/>
+		</action>
+		
+		<!-- HSE 安全检查和沟通 -->
+		<action path="/hse/check/addSafeCheck" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addSafeCheck" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- HSE 安全检查和沟通  复制并添加-->
+		<action path="/hse/check/addAndCopySafeCheck" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAndCopySafeCheck" />
+			<forward name="success" path="/hse/leaderAndPromise/safeCheck/check_list.jsp" />
+		</action>
+		
+		<!-- 安全检查和沟通    柱状图 -->
+		<action path="/hse/chart/querySafeCheckColumn" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="querySafeCheckColumn" />
+		</action>
+		
+		<!-- HSE绩效考核模板 -->
+		<action path="/hse/assess/addModel" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addModel" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- HSE绩效考核 -->
+		<action path="/hse/assess/addAssess" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAssess" />
+			<forward name="success" path="/hse/objAndTarget/hseAssess/addAssess11.jsp"/>
+		</action>
+		<action path="/hse/assess/saveAssess" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAssess" />
+			<forward name="success" path="/hse/objAndTarget/hseAssess/assess11_list.jsp"/>
+		</action>
+		<action path="/hse/assess/addAssessContent" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAssessContent" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/assess/addAndCopyAssessContent" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAndCopyAssessContent" />
+			<forward name="success" path="/hse/objAndTarget/hseAssess/assess11_list.jsp" />
+		</action>
+				
+		<action path="/hse/assess/importExcelMessage" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HseSrv" operationName="importExcelMessage" />
+			<forward name="success" path="/hse/objAndTarget/hseAssess/assessImportFile.jsp" />
+		</action>
+		<!-- 员工提交 审核-->
+		<action path="/hse/assess/addAssessYuan" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAssessYuan" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 上级主管提交审核 -->
+		<action path="/hse/assess/addAssessSup" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addAssessSup" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 审核不通过 -->
+		<action path="/hse/assess/assessNoPass" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="assessNoPass" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 百万工时  设置 -->
+		<action path="/hse/workhour/hourSet" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="hourSet" />
+			<forward name="success" path="/hse/hseCommon/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 百万工时  设置集团指标 -->
+		<action path="/hse/workhour/hourSetTarget" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="hourSetTarget" />
+			<forward name="success" path="/hse/hseCommon/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 总共的工时 -->
+		<action path="/hse/workhour/allHour" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="allHourMe" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- 人力资源-HSE专业人员-添加修改 -->
+		<action path="/hse/resource/addProfessional" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addProfessional" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveProfessional" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addProfessional" />
+			<forward name="success" path="/hse/humanResource/hseProfessional/professional_list.jsp"/>
+		</action>
+		<action path="/hse/resource/saveCertificate" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="saveCertificate" />
+			<forward name="success" path="/hse/humanResource/hseProfessional/professional_list.jsp" />
+		</action>
+		
+		<!-- 人力资源-特殊作业人员-添加修改 -->
+		<action path="/hse/resource/addSpecialWork" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addSpecialWork" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveSpecialWork" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addSpecialWork" />
+			<forward name="success" path="/hse/humanResource/hseSpecialWork/specialWork_list.jsp" />
+		</action>
+		
+		<!-- 人力资源-司驾人员-添加修改 -->
+		<action path="/hse/resource/addDriverk" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addDriver" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveDriver" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addDriver" />
+			<forward name="success" path="/hse/humanResource/hseDriver/driver_list.jsp" />
+		</action>
+		<!-- 人力资源-应急人员-添加修改 -->
+		<action path="/hse/resource/addStrain" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addStrain" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveStrain" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addStrain" />
+			<forward name="success" path="/hse/humanResource/hseStrainPerson/strain_list.jsp" />
+		</action>
+		<!-- 人力资源-餐饮从业人员-添加修改 -->
+		<action path="/hse/resource/addCater" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addCater" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveCater" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addCater" />
+			<forward name="success" path="/hse/humanResource/hseCater/cater_list.jsp" />
+		</action>
+		<!-- 人力资源-餐饮从业人员-添加修改 -->
+		<action path="/hse/resource/addBlast" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addBlast" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveBlast" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addBlast" />
+			<forward name="success" path="/hse/humanResource/hseBlast/blast_list.jsp" />
+		</action>
+		<!-- 人力资源-职业健康人员-添加修改 -->
+		<action path="/hse/resource/addHealth" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addHealth" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveHealth" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addHealth" />
+			<forward name="success" path="/hse/humanResource/hseHealth/health_list.jsp" />
+		</action>
+		<!-- 人力资源-医护人员-添加修改 -->
+		<action path="/hse/resource/addMedical" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addMedical" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveMedical" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addMedical" />
+			<forward name="success" path="/hse/humanResource/hseMedical/medical_list.jsp" />
+		</action>
+		<!-- 人力资源-医护人员-添加修改 -->
+		<action path="/hse/resource/addWaterPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addWaterPerson" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveWaterPerson" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addWaterPerson" />
+			<forward name="success" path="/hse/humanResource/hseWaterPerson/water_list.jsp" />
+		</action>
+		<!-- 专业技能、技术资源   下4个子模块公用 -->
+		<action path="/hse/techResource/addTechResource" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addTechResource" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/techResource/saveTrainer" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addTechResource" />
+			<forward name="success" path="/hse/techAndResource/hseTrainer/trainer_list.jsp" />
+		</action>
+		<action path="/hse/techResource/saveAuditor" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addTechResource" />
+			<forward name="success" path="/hse/techAndResource/hseAuditor/auditor_list.jsp" />
+		</action>
+		<action path="/hse/techResource/saveChecker" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addTechResource" />
+			<forward name="success" path="/hse/techAndResource/hseChecker/checker_list.jsp" />
+		</action>
+		<action path="/hse/techResource/saveEngineer" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addTechResource" />
+			<forward name="success" path="/hse/techAndResource/hseEngineer/engineer_list.jsp" />
+		</action>
+		<!-- 财力资源 -->
+		<action path="/hse/resource/addFinancial" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addFinancial" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/resource/saveFinancial" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addFinancial" />
+			<forward name="success" path="/hse/financialResources/financial_list.jsp" />
+		</action>
+		<action path="/hse/resource/saveFinancialDetail" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addFinancialDetail" />
+			<forward name="success" path="/hse/financialResources/financial_list.jsp" />
+		</action>
+		<action path="/hse/resource/saveFinancialCheck" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addFinancialCheck" />
+			<forward name="success" path="/hse/financialResources/financial_list.jsp" />
+		</action>
+		<!-- 环境管理    每月1号创建空的  -->
+		<action path="/hse/yxControl/createEnvironmentManage" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="createEnvironmentManage" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 双击进入页面，进去修改页面  -->
+		<action path="/hse/yxControl/IntoAddJsp" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="IntoAddJsp" />
+			<forward name="success" path="/hse/environmentManage/addEnvironment.jsp"/>
+		</action>
+		<!-- 环境管理  用户开始填写数据 -->
+		<action path="/hse/yxControl/addEnvironmentManage" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addEnvironmentManage" />
+			<forward name="success" path="/hse/environmentManage/addEnvironment.jsp" />
+		</action>
+		<!-- 环境管理    审核通过  汇总审核通过的基层单位数据  -->
+		<action path="/hse/yxControl/passMethod" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="passMethod" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 环境管理    设置哪些单位需要填写环境管理  -->
+		<action path="/hse/yxControl/setEnvironmentOrg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="setEnvironmentOrg" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 环境信息    保存 -->
+		<action path="/hse/yxControl/saveEnvironmentInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addEnvironmentInfo" />
+			<forward name="success" path="/hse/environmentManage/environmentInfo/environmentInfoEdit.jsp" />
+		</action>
+		<!-- 环境信息 设置集团指标    保存 -->
+		<action path="/hse/yxControl/saveEnvironmentTarget" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="setTarget" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- 职业健康状况    保存 -->
+		<action path="/hse/yxControl/saveProfessionalHealth" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="saveProfessionalHealth" />
+			<forward name="success" path="/hse/professionalHealth/professionalHealthEdit.jsp" />
+		</action>
+		<!-- 职业健康状况设置集团指标    保存 -->
+		<action path="/hse/yxControl/saveHealthTarget" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="setHealthTarget" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<!-- 单项目文档保存-->
+		<action path="/hse/doc/saveSingleDoc" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HseSrv" operationName="saveSingleDoc" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+	   		<!-- 多项目文档保存--> 
+		<action path="/hse/doc/saveMultipleDoc" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HseSrv" operationName="saveMultipleDoc" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action> 
+		<!-- hse公共文档保存（某条记录的附件）-->
+		<action path="/hse/doc/saveHseCommonDoc" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="HseSrv" operationName="saveHseCommonDoc" />
+			<forward name="success" path="/hse/docCommon/close_page.jsp" redirect="false" />
+		</action>
+		
+		<!-- HSE培训(多项目) -->
+		<action path="/hse/hseTraining/addHseTraining" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addHseTraining" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/hseTraining/addHseTraining2" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addHseTraining" />
+			<forward name="success" path="/hse/orgAndResource/hseTrainingMultiple/training_list.jsp" />
+		</action>
+		<action path="/hse/hseTraining/addHseTrainingRecord" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addHseTrainingRecord" />
+			<forward name="success" path="/hse/orgAndResource/hseTrainingMultiple/training_list.jsp" />
+		</action>
+		
+		<!-- HSE法律法规(多项目) -->
+		<action path="/hse/hseLawAndRequest/addLawAndRequest" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addLawAndRequest" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		
+		<action path="/hse/hseLawAndRequest/addLawAndRequestOrg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addLawAndRequestOrg" />
+			<forward name="success" path="/common/close_page.jsp" redirect="false" />
+		</action>
+		<action path="/hse/hseLawAndRequest/addLawAndRequestOrgSelf" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="addLawAndRequestOrgSelf" />
+			<forward name="success" path="/hse/hseLawAndRequest/lawAndRequest_list.jsp" />
+		</action>
+		
+		<!-- HSE检查明细    附件导入 -->
+		<action path="/hse/check/importHseCheck" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction" scope="request" name="dynamicForm">
+			<serviceCall serviceName="HseSrv" operationName="importHseCheck" />
+			<forward name="success" path="/hse/hseOptionPage/hseCheck/importFile.jsp" />
+		</action>
+		
+		<!-- HSE考核配置 -->
+		<action path="/hse/examine/editHseExamine" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="editHseExamine" />
+			<forward name="success" path="/hse/hseExamine/setHseExamine.jsp"/>
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- fusionCharts -->
+		<!-- 隐患级别     饼状图 -->
+		<action path="/hse/chart/queryDanPie" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryDanPie" />
+		</action>
+		<!-- 隐患整改    饼状图 -->
+		<action path="/hse/chart/queryModPie" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryModPie" />
+		</action>
+		<!-- 隐患级别   柱状图 -->
+		<action path="/hse/chart/queryDanColumn" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryDanColumn" />
+		</action>
+		<!-- 隐患整改     柱状图 -->
+		<action path="/hse/chart/queryModColumn" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryModColumn" />
+		</action>
+		<!-- 事故类型      饼状图 -->
+		<action path="/hse/chart/queryAccTypePie" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryAccTypePie" />
+		</action>
+		<!-- 事故级别     饼状图 -->
+		<action path="/hse/chart/queryAccLevelPie" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryAccLevelPie" />
+		</action>
+		<!-- 事故类型    柱状图 -->
+		<action path="/hse/chart/queryAccTypeColumn" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryAccTypeColumn" />
+		</action>
+		<!-- 事故级别    柱状图 -->
+		<action path="/hse/chart/queryAccLevelColumn" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryAccLevelColumn" />
+		</action>
+		<!-- 事件类型      饼状图 -->
+		<action path="/hse/chart/queryEventTypePie" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryEventTypePie" />
+		</action>
+		<!-- 事件级别     饼状图 -->
+		<action path="/hse/chart/queryEventLevelPie" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryEventLevelPie" />
+		</action>
+		<!-- 事件类型    柱状图 -->
+		<action path="/hse/chart/queryEventTypeColumn" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryEventTypeColumn" />
+		</action>
+		<!-- 事件级别    柱状图 -->
+		<action path="/hse/chart/queryEventLevelColumn" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="HseSrv" operationName="queryEventLevelColumn" />
+		</action>
+		
+	</action-mappings>
+</struts-config>

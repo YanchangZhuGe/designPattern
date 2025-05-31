@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>JCDP_menu_dataAuth</PageTitle>
+  <QuerySQL>
+    <sql>select t.*,p.func_code,p.func_c_name from p_auth_func_filter_dms t join p_auth_function_dms p on t.func_id=p.func_id where t.entity_id='$PARAM.id'</sql>
+    <tableName>p_auth_func_filter_dms</tableName>
+    <fields>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="func_id" type="TEXT"></field>
+      <field name="filter_column_name" type="TEXT"></field>
+      <field name="filter_type" type="TEXT"></field>
+      <field name="filter_data_item" type="TEXT"></field>
+      <field name="remark" type="TEXT"></field>
+      <field name="r_tablename" type="TEXT"></field>
+      <field name="rt_r_col" type="TEXT"></field>
+      <field name="rt_f_col" type="TEXT"></field>
+      <field name="func_code" type="TEXT"></field>
+      <field name="func_c_name" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="filter_type">
+      <option value="0">JCDP_byOrg</option>
+  <!--<option value="1">JCDP_byRole</option>-->
+      <option value="2">JCDP_byCreator</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="entity_id" isShow="Hide"></field>
+    <field name="func_id" type="FK" isShow="ReadOnly" size=":510:750" defaultValue="$ENTITY.func_id:$ENTITY.func_code" selValue="/ibp/auth2/func/funcList2Link.lpmd" nonEmpty="true">JCDP_funcCode</field>
+    <field name="filter_type" type="SEL_OPs" size="155" selValue="filter_type" nonEmpty="true">JCDP_filterType</field>  
+    <field name="filter_column_name" maxLength="32">JCDP_filerCol</field>
+     <!--
+    <field name="r_tablename" maxLength="32">JCDP_rTableName</field>
+    <field name="rt_f_col" maxLength="32">JCDP_rTableFilterCol</field>
+    <field name="rt_r_col" maxLength="32">JCDP_rTableRCol</field>
+    -->
+    <field name="remark" type="MEMO" size="63:4">JCDP_remark</field>
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+  	function submitFunc(){
+		var value = getElementByTypeAndName('SELECT','filter_type').value;
+		if(value == "0"){
+			if(getObj('filter_column_name').value == ''){
+				alert("请填写过滤字段名称");
+				return ;
+			}
+		}else if(value == "1"){
+			if(getObj('r_tablename').value==''){
+  				alert('JCDP_alter_rTable!');
+  				return;
+  			}
+  			if( getObj('rt_f_col').value == '' || getObj('rt_r_col').value == '' ){
+  				alert('JCDP_alter_rTable!');
+  				return;
+  			}
+		}
+  		var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+		submitStr = getSubmitStr();
+		if(submitStr == null) return;
+		var retObject = syncRequest('Post',path,submitStr);
+		afterSubmit(retObject);
+	}
+var $parent = top.$;
+function setCruTitle(){
+	top.setDialogTitle(window,cruTitle);
+}
+
+
+function refreshData(){ 
+     parent.frames['indexFrame'].frames[3].refreshData();
+}
+   
+  	</CRU>
+  </JavaScripts>
+</SAIS_EAW_TL>

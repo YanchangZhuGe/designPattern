@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart bgAlpha='0' bgColor='FFFFFF' lowerLimit='0' upperLimit='100' numberSuffix='%25' showBorder='0'  chartTopMargin='25' chartBottomMargin='25' chartLeftMargin='25' chartRightMargin='25' toolTipBgColor='80A905' gaugeFillMix='{dark-10},FFFFFF,{dark-10}' gaugeFillRatio='3'>
+   <colorRange>
+      <color minValue='0' maxValue='80' code='FF654F'/>
+      <color minValue='80' maxValue='100' code='8BBA00'/>
+   </colorRange>
+
+   <dials>
+      <dial value='20' rearExtension='10'/>
+   </dials>
+   <styles>
+      <definition>
+         <style name='RectShadow' type='shadow' strength='3'/>
+      </definition>
+      <application>
+         <apply toObject='Grp1' styles='RectShadow' />
+      </application>
+   </styles>
+</chart>

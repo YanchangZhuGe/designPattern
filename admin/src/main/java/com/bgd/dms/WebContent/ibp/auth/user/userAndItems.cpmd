@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<SAIS_EAW_TL>
+  <PageTitle>角色列表</PageTitle>
+  <PagerAction>EntityAndItems</PagerAction>
+  <Buttons>
+    <Button Type="Add" funCode="">/ibp/auth/role/roleListSelect.lpmd?pageSelType=CheckBox&amp;rlTableName=p_auth_user_role&amp;rlColumnName=user_id&amp;rlColumnValue=$PARAM.parent_id</Button>
+    <Button Type="Delete" funCode="" ></Button>
+    <Button Type="Back" funCode=""></Button>
+  </Buttons>
+  <QuerySQL>
+    <sql>SELECT r.* FROM p_auth_user_role ur,p_auth_role_dms r WHERE ur.user_id='$PARAM.parent_id' AND ur.role_id=r.role_id and ur.role_origin='2'</sql>
+    <fields>
+      <field name="role_id" type="TEXT"></field>
+      <field name="role_e_name" type="TEXT"></field>
+      <field name="role_c_name" type="TEXT"></field>
+      <field name="data_org_id" type="TEXT"></field>
+      <field name="user_org_id" type="TEXT"></field>
+      <field name="remark" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Options>
+	<Select sais_select_name="role_origin" name="role_origin"/>
+  </Options>
+  <DataList>
+    <data exp="&lt;input type='checkbox' name='chx_entity_id' value='{role_id}' &gt;"/>
+    <data exp="{role_c_name}">角色中文名</data>
+    <data exp="{remark}">备注</data>
+  </DataList>
+  <MainEntity>
+    <PageTitle>用户信息</PageTitle>
+    <EditPMD>editUser.upmd</EditPMD>
+    <EditPMD_Height>120</EditPMD_Height>
+  </MainEntity>
+  <SavedParams>parent_id</SavedParams>
+<JavaScripts>
+    function toDelete(){
+	    
+	    var c= getSelIds("chx_entity_id");
+	    var id = getObj("");
+	    if(c==""){
+	         alert("请先选中一条记录!");
+	         return ;
+	    }
+	    
+	    if(!window.confirm("确认要删除吗?")){
+	        return;
+	    }
+	    
+	    var submitStr="roleIds="+c+"&amp;userId="+jcdpPageParams['parent_id'];
+	    var retObject=jcdpCallService("IBPLoginAndMenuTree","deleteUserRoles",submitStr);
+	   
+		 if (retObject.returnCode!=0){
+		     alert(retObject.returnMsg) ;
+		 }else{
+		     queryData(cruConfig.currentPage) ;
+		 }
+   }
+
+</JavaScripts>
+</SAIS_EAW_TL>

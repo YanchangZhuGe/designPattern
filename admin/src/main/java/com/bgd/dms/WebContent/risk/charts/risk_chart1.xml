@@ -1,0 +1,20 @@
+<chart palette="3" yAxisNameWidth="16" rotateYAxisName ='0' labelDisplay = 'NONE' xAxisName="风险概率" yAxisName="风险值" showvalues='0' xAxisMaxValue='1.00'  yAxisMaxValue='1.00' bgColor='F3F5F4,DEE6EB' anchorRadius = '0' baseFontSize ="12"> 
+<set label='0' value='0' /> 
+<set label='0.15' value='0.2' />
+<set label='0.25' value='0.35' />
+<set label='0.35' value='0.45' /> 
+<set label='0.45' value='0.55' /> 
+<set label='0.55' value='0.6' />
+<set label='0.65' value='0.65' />
+<set label='0.75' value='0.67' /> 
+<set label='0.85' value='0.7' /> 
+<set label='0.95' value='0.7' /> 
+<set label='1.00' value='0.7' /> 
+
+<trendlines> 
+<line startvalue='0.0' endValue='0.1' displayValue='风险良好' color='09F738' isTrendZone='1' showOnTop='0' alpha='50' valueOnRight='1'/>
+<line startvalue='0.1' endValue='0.6' displayValue='风险注意' color='EF9B46' isTrendZone='1' showOnTop='0' alpha='50' valueOnRight='1'/>
+<line startvalue='0.6' endValue='1.0' displayValue='紧急处理' color='FF0000' isTrendZone='1' showOnTop='0' alpha='50' valueOnRight='1'/> 
+</trendlines> 
+
+</chart>

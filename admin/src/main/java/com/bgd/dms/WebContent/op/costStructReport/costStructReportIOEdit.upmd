@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>专用工具修理费</PageTitle>
+  <QuerySQL>
+    <sql>select * from BGP_OP_REPORT_INOUT_INFO where bsflag='0' and INOUT_INFO_ID = '$PARAM.id'</sql>
+    <tableName>BGP_OP_REPORT_INOUT_INFO</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options>
+  	<Select name="mataxiType">
+      <option value="0">收入</option>
+      <option value="1">支出</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="inout_info_id" isShow="Hide">id</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="cost_name" maxLength="32">名称</field>
+    <field name="cost_money" maxLength="12">金额(元)</field>
+    <field name="cost_date" maxLength="12" type="D">时间</field>
+    <field name="cost_type" type="SEL_OPs" selValue="mataxiType">类型</field>
+    <field name="cost_desc" maxLength="2000" type="MEMO">备注</field>
+  </EntityFields>
+  <JavaScripts>
+  	<CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshData(1);
+			afterSubmit(retObject);
+		}
+		function afterSubmit(retObject,successHint,failHint){
+			if(successHint==undefined) successHint = '提交成功';
+			if(failHint==undefined) failHint = '提交失败';
+			if (retObject.returnCode != "0") alert(failHint);
+			else{
+				alert(successHint);
+				newClose();
+			}
+		}
+	</CRU>
+  </JavaScripts>
+
+</SAIS_EAW_TL>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql></sql>
+    <fields/>
+  </QuerySQL>
+  <Buttons/>
+  <QueryService name="WFCommonSrv">
+    <opName>getWFProcessList</opName>
+  </QueryService>
+  <Options/>
+  <Codes/>
+  <DataList>
+  	    <data exp="&lt;input type='radio' name='chx_entity_id' value='{config_id}'&gt;">选择</data>
+   	 	<data exp="{business_type_name}" >业务名称</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+    	 <field name="file_name">文件名</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

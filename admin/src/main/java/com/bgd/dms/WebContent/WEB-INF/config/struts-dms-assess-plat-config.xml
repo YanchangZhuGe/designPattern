@@ -1,0 +1,96 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!--考核主题列表 -->
+		<action path="/rm/dm/findAllRootAssess" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatServ" operationName="queryRootAssessList" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/assessRootList.jsp" redirect="false" />
+		</action>
+		<!--保存考核主题 -->
+		<action path="/rm/dm/saveRootAssess" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatServ" operationName="saveRootAssessInfo" />
+			<forward name="success"	path="/dmsManager/assessment/close_page.jsp" redirect="false" />
+		</action>
+		<!--查询考核节点 -->
+		<action path="/rm/dm/findAssessByID" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatServ" operationName="findBoardBySheetID" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/assessModify.jsp" redirect="false" />
+		</action>
+		<!--根据模板id查询考核模板 -->
+		<action path="/dms/assess/findModelByID" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatSrv" operationName="findModelByID" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/Model.jsp" redirect="false" />
+		</action>
+		<!--查询所有考核模板 -->
+		<action path="/assess/findAllModel" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatSrv" operationName="findAllModel" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/modelList.jsp" redirect="false" />
+		</action>
+		<!--查询考核模板下所有要素 -->
+		<action path="/assess/findElementList" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="queryElementList" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/elementList.jsp" redirect="false" />
+		</action>
+		<!--查询考核模板下所有要素 -->
+		<action path="/assess/findElementListTest" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="queryElementList" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/elementListBK2.jsp" redirect="false" />
+		</action>		
+		<!--生成考核结果报告 -->
+		<action path="/assess/createScoreReport" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="createScoreReport" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/assessScoreList.jsp" redirect="false" />
+		</action>
+		<!--查询考核结果报告 -->
+		<action path="/assess/findScoreReportByID" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="queryElementList" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/scoreReport.jsp" redirect="false" />
+		</action>
+		<!--查询考核结果报告 -->
+		<action path="/assess/updateScoreReportByID" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="updateScoreReportByID" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/assessScoreList.jsp" redirect="false" />
+		</action>
+		<!--查询考核问题清单报告 -->
+		<action path="/assess/createMarkScoreList" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="createMarkScoreList" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/scoreReport.jsp" redirect="false" />
+		</action>		
+		<!--查询考核问题清单报告 -->
+		<action path="/assess/toMarkScoreSuggestion" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="toMarkScoreSuggestion" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/markScoreSuggestion.jsp" redirect="false" />
+		</action>		
+		<!--添加整改意见 -->
+		<action path="/assess/addMarkScoreSuggestion" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="addMarkScoreSuggestion" />
+			<forward name="success"	path="/dmsManager/assessment/assessPlat/assessScoreList.jsp" redirect="false" />
+		</action>
+		<!-- 查询审核类型 -->
+		<action path="/rm/dm/toGetAssessModelType" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="getAssessModelType" />
+		</action>
+		<!-- 查询项目年度 -->
+		<action path="/assess/toGetProYearJson" type="com.bgp.gms.service.rm.dm.action.GetDeviceAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="AssessPlatInfoSrv" operationName="getProYearData" />
+		</action>
+	</action-mappings>
+</struts-config>

@@ -1,0 +1,505 @@
+version=1.0
+10,13
+<0-0>
+	3:3101="221.0";1206="19.0";1216=1;1205="19.0";1202="2";1201="4";1220="100";1208="25.0";1102="name=ds4,sql=\"select nvl(sum(nvl(decode(gp.EXPLORATION_METHOD,\\\'0300100012000000003\\\', gd.finish_3d_workload,\\\'0300100012000000002\\\', gd.finish_2d_workload),0)),0) A6,\\r\\nmax(pd.DESIGN_OBJECT_WORKLOAD) A5,ns.org_subjection_id A1,gd.exploration_method A2,\\\'千米或平方千米\\\' A0\\r\\nfrom bgp_comm_org_wtc ns\\r\\nleft outer join rpt_gp_daily gd on gd.org_subjection_id like ns.org_subjection_id || \\\'%\\\' and gd.bsflag = \\\'0\\\'\\r\\nleft outer join gp_task_project gp on gd.project_info_no = gp.project_info_no\\r\\nleft outer join gp_task_project_dynamic pd on gp.project_info_no = pd.project_info_no and pd.bsflag=\\\'0\\\'\\r\\ngroup by ns.org_subjection_id, gd.exploration_method\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds5,sql=\"select t.*,t.rowid from bgp_comm_org_wtc t order by t.order_num\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds3,sql=\"select max(pd.design_sp_num) A5,nvl(sum(nvl(DAILY_FINISHING_SP, 0)), 0) A6,ns.org_subjection_id A1,gd.exploration_method A2,\\\'炮数\\\' A0\\r\\nfrom bgp_comm_org_wtc ns\\r\\nleft outer join rpt_gp_daily gd on gd.org_subjection_id like ns.org_subjection_id || \\\'%\\\' and gd.bsflag = \\\'0\\\'\\r\\nleft outer join gp_task_project gp on gd.project_info_no = gp.project_info_no\\r\\nleft outer join gp_task_project_dynamic pd on gp.project_info_no = pd.project_info_no and pd.bsflag=\\\'0\\\'\\r\\ngroup by ns.org_subjection_id, gd.exploration_method\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds2,sql=\"with op_price as(select max((case NODE_CODE when \\\'S01021\\\' then  price_unit else 0 end)) - max((case NODE_CODE when \\\'S01022\\\' then price_unit else 0 end)) price_unit,project_info_no\\r\\nfrom bgp_op_price_project_info where bsflag = \\\'0\\\' group by project_info_no)\\r\\nselect nvl(sum(nvl(decode(gp.EXPLORATION_METHOD, \\\'0300100012000000003\\\', gd.finish_3d_workload, \\\'0300100012000000002\\\', gd.finish_2d_workload)* pi.price_unit,0)),0)/10000 A6,\\r\\nns.org_subjection_id A1, gd.exploration_method A2, \\\'采集项目价值工作量\\\' A0\\r\\nfrom bgp_comm_org_wtc ns\\r\\nleft outer join rpt_gp_daily gd on gd.org_subjection_id like ns.org_subjection_id || \\\'%\\\' and gd.bsflag = \\\'0\\\'\\r\\nleft outer join op_price pi on gd.project_info_no = pi.project_info_no\\r\\nleft outer join gp_task_project gp on gd.project_info_no = gp.project_info_no\\r\\ngroup by ns.org_subjection_id,gd.exploration_method\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds1,sql=\"select ns.org_subjection_id ,t1.exploration_method,pf.node_code,pf.cost_name ,sum(pf.cost_detail_money)/10000 target,sum(ps.cost_detail_money) /10000 actual,p.template_order,p.template_id\\r\\nfrom bgp_comm_org_wtc ns left outer join gp_task_project_dynamic t1\\r\\non t1.org_subjection_id like ns.org_subjection_id || \\\'%\\\'\\r\\nleft outer join view_op_target_plan_money_f pf on t1.project_info_no = pf.project_info_no \\r\\nleft outer join view_op_target_actual_money_s ps on pf.project_info_no=ps.project_info_no and pf.node_code=ps.node_code\\r\\nleft outer join (select t.*,sys_connect_by_path(substr(node_code, 0, length(node_code) - 3) || lpad(order_code + 1, 3, \\\'0\\\'),\\\'/\\\') path\\r\\nfrom bgp_op_cost_template t start with parent_id = \\\'01\\\'\\r\\nconnect by prior template_id = parent_id) p on p.template_id = pf.template_id\\r\\nwhere t1.bsflag =\\\'0\\\' and pf.bsflag =\\\'0\\\' and ps.bsflag =\\\'0\\\'\\r\\ngroup by ns.org_subjection_id,pf.node_code,pf.cost_name,t1.exploration_method,p.path,p.template_order,p.template_id\\r\\norder by ns.org_subjection_id,t1.exploration_method,p.path\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds0,sql=\"select \\\'Ⅲ\\\' order_num ,\\\'S01001\\\' node_code from dual union\\r\\nselect \\\'Ⅳ\\\' order_num ,\\\'S01002\\\' node_code from dual union\\r\\nselect \\\'Ⅴ\\\' order_num ,\\\'S01003\\\' node_code from dual union\\r\\nselect \\\'Ⅵ\\\' order_num ,\\\'S01004\\\' node_code from dual union\\r\\nselect \\\'Ⅶ\\\' order_num ,\\\'S01006\\\' node_code from dual union\\r\\nselect \\\'Ⅷ\\\' order_num ,\\\'S01005\\\' node_code from dual union\\r\\nselect \\\'Ⅸ\\\' order_num ,\\\'S01007\\\' node_code from dual union\\r\\nselect \\\'Ⅹ\\\' order_num ,\\\'S01008\\\' node_code from dual union\\r\\nselect \\\'Ⅺ\\\' order_num ,\\\'S01009\\\' node_code from dual union\\r\\nselect \\\'Ⅻ\\\' order_num ,\\\'S01010\\\' node_code from dual union\\r\\nselect \\\'ⅩⅢ\\\' order_num ,\\\'S01011\\\' node_code from dual union\\r\\nselect \\\'ⅩⅣ\\\' order_num ,\\\'S01014\\\' node_code from dual union\\r\\nselect \\\'ⅩⅤ\\\' order_num ,\\\'S01012\\\' node_code from dual union\\r\\nselect \\\'ⅩⅥ\\\' order_num ,\\\'S01013\\\' node_code from dual union\\r\\nselect \\\'一\\\' order_num ,\\\'F001\\\' node_code from dual union\\r\\nselect \\\'二\\\' order_num ,\\\'F002\\\' node_code from dual union\\r\\nselect \\\'三\\\' order_num ,\\\'F003\\\' node_code from dual union\\r\\nselect \\\'四\\\' order_num ,\\\'F004\\\' node_code from dual union\\r\\nselect \\\'五\\\' order_num ,\\\'F005\\\' node_code from dual union\\r\\nselect \\\'六\\\' order_num ,\\\'F006\\\' node_code from dual union\\r\\nselect \\\'七\\\' order_num ,\\\'F007\\\' node_code from dual union\\r\\nselect \\\'八\\\' order_num ,\\\'F008\\\' node_code from dual union\\r\\nselect \\\'九\\\' order_num ,\\\'F009\\\' node_code from dual union\\r\\nselect \\\'十\\\' order_num ,\\\'F010\\\' node_code from dual union\\r\\nselect \\\'(一)\\\' order_num ,\\\'S001\\\' node_code from dual union\\r\\nselect \\\'(二)\\\' order_num ,\\\'S002\\\' node_code from dual union\\r\\nselect \\\'(三)\\\' order_num ,\\\'S003\\\' node_code from dual union\\r\\nselect \\\'(四)\\\' order_num ,\\\'S004\\\' node_code from dual union\\r\\nselect \\\'(五)\\\' order_num ,\\\'S005\\\' node_code from dual union\\r\\nselect \\\'(六)\\\' order_num ,\\\'S006\\\' node_code from dual union\\r\\nselect \\\'(七)\\\' order_num ,\\\'S007\\\' node_code from dual union\\r\\nselect \\\'(八)\\\' order_num ,\\\'S008\\\' node_code from dual union\\r\\nselect \\\'(九)\\\' order_num ,\\\'S009\\\' node_code from dual union\\r\\nselect \\\'(十)\\\' order_num ,\\\'S010\\\' node_code from dual \\r\\norder by node_code\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;name=ds6,sql=\"select * from(select t.*,sys_connect_by_path(substr(node_code, 0, length(node_code) - 3) || lpad(order_code + 1, 3, \\\'0\\\'),\\\'/\\\') path\\r\\nfrom bgp_op_cost_template t where t.bsflag =\\\'0\\\' start with parent_id = \\\'01\\\' connect by prior template_id = parent_id) order by path\",type=normal,cached=0,,indexSorted=false,indexIsUnique=false;";1207="25.0";1101="2";1209="2"
+</>
+<0-1>
+	3:2101="46.0";2102="0"
+</>
+<0-2>
+	3:4106=1;2101="117.0";2102="0"
+</>
+<0-3>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-4>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-5>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-6>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-7>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-8>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-9>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-10>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-11>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<0-12>
+	3:4106=1;2101="70.86614";2102="10"
+</>
+<1-0>
+	3:3101="26.0";3103="1"
+</>
+<1-1>
+	3:4302="22";4301="宋体";4304=1;4303="-16777216";4409="-16777216";4306=0;4408="0.75";4201="2";4305=0;4202="2";4203="0";4405="0.75";4404="4";4407="4";4103="1,1-1,12";4406="-16777216";4401="4";4413="-1";4412="-16777216";4403="-16777216";4411="0.75";4402="0.75";4410="4";4102="公司地震采集项目运营状况分析表"
+</>
+<1-2>
+	1:1
+	2:4102
+</>
+<1-3>
+	1:1
+</>
+<1-4>
+	1:1
+</>
+<1-5>
+	1:1
+</>
+<1-6>
+	1:1
+</>
+<1-7>
+	1:1
+</>
+<1-8>
+	1:1
+	2:4301,4303,4306,4305,4202,4203,4413
+</>
+<1-9>
+	1:1
+</>
+<1-10>
+	1:1
+</>
+<1-11>
+	1:1
+	3:4301="宋体";4303="-16777216";4306=0;4305=0;4202="2";4203="0";4413="-1"
+</>
+<1-12>
+	1:1
+</>
+<2-0>
+	3:3101="22.677166";3103="10"
+</>
+<2-1>
+	1:0
+	3:4302="12";4103="2,1-4,1";4102="序号"
+</>
+<2-2>
+	1:1
+	3:4103="2,2-3,2";4102="项    目"
+</>
+<2-3>
+	1:1
+	3:4103="2,3-3,4";4102="合计"
+</>
+<2-4>
+	1:1
+	2:4102
+</>
+<2-5>
+	1:1
+	3:4103="2,5-3,6";4102="二维项目小计"
+</>
+<2-6>
+	1:1
+	2:4102
+</>
+<2-7>
+	1:1
+	3:4103="2,7-3,8";4102="三维项目小计"
+</>
+<2-8>
+	1:1
+	2:4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<2-9>
+	1:0
+	2:4302
+	3:4103="2,9-2,12";4501="2"
+	4:4102="ds5.select(org_subjection_id)";4105="ds5.org_abbreviation"
+</>
+<2-10>
+	1:1
+	4:4102="ds5.select(org_subjection_id)";4105="ds5.org_abbreviation"
+</>
+<2-11>
+	1:0
+	3:4302="12";4103="2,9-2,12";4501="2"
+	4:4102="ds5.select(org_subjection_id)";4105="ds5.org_abbreviation"
+</>
+<2-12>
+	1:1
+	4:4102="ds5.select(org_subjection_id)";4105="ds5.org_abbreviation"
+</>
+<3-0>
+	3:3103="10"
+</>
+<3-1>
+	1:0
+	2:4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<3-2>
+	1:0
+	2:4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<3-3>
+	1:0
+	2:4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<3-4>
+	1:0
+	2:4302,4301,4303,4306,4305,4202,4203,4413
+</>
+<3-5>
+	1:0
+	2:4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<3-6>
+	1:0
+	2:4302,4301,4303,4306,4305,4202,4203,4413
+</>
+<3-7>
+	1:0
+	2:4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<3-8>
+	1:0
+</>
+<3-9>
+	1:0
+	2:4501
+	3:4103="3,9-3,10";4302="12";4301="宋体";4303="-16777216";4306=0;4305=0;4202="2";4203="0";4413="-1";4102="二维项目"
+</>
+<3-10>
+	1:1
+	2:4102
+</>
+<3-11>
+	1:0
+	2:4501
+	3:4103="3,11-3,12";4102="三维项目"
+</>
+<3-12>
+	1:1
+	2:4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<4-0>
+	3:3101="22.677166";3103="10"
+</>
+<4-1>
+	1:0
+	3:4302="12";4301="宋体";4303="-16777216";4306=0;4305=0;4202="2";4203="0";4413="-1"
+</>
+<4-2>
+	1:1
+	2:4103
+	3:4102="费用名称"
+</>
+<4-3>
+	1:1
+	3:4102="预算"
+</>
+<4-4>
+	1:1
+	3:4107=1;4102="报告期实际完成"
+</>
+<4-5>
+	1:1
+	2:4107
+	3:4102="预算"
+</>
+<4-6>
+	1:1
+	3:4107=1;4102="报告期实际完成"
+</>
+<4-7>
+	1:1
+	2:4107
+	3:4102="预算"
+</>
+<4-8>
+	1:1
+	3:4107=1;4102="报告期实际完成"
+</>
+<4-9>
+	1:0
+	2:4103
+	3:4102="预算"
+</>
+<4-10>
+	1:0
+	2:4103
+	3:4107=1;4102="报告期实际完成"
+</>
+<4-11>
+	1:0
+	2:4103
+	3:4102="预算"
+</>
+<4-12>
+	1:1
+	3:4107=1;4102="报告期实际完成"
+</>
+<5-0>
+	3:3101="22.677166"
+</>
+<5-1>
+	1:0
+	2:4103
+	3:4304=0;4102="Ⅰ"
+</>
+<5-2>
+	1:1
+	3:4102="采集项目实物工作量"
+</>
+<5-3>
+	1:1
+	2:4102
+</>
+<5-4>
+	1:1
+</>
+<5-5>
+	1:1
+</>
+<5-6>
+	1:1
+</>
+<5-7>
+	1:1
+</>
+<5-8>
+	1:0
+	2:4304,4302,4301,4303,4306,4305,4202,4203,4413,4107,4102
+</>
+<5-9>
+	1:0
+	2:4304,4302,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<5-10>
+	1:0
+	2:4304,4302,4301,4303,4306,4305,4202,4203,4413,4107,4102
+</>
+<5-11>
+	1:0
+	2:4302,4304,4301,4303,4306,4305,4202,4203,4413,4102
+</>
+<5-12>
+	1:0
+	2:4302,4304,4301,4303,4306,4305,4202,4203,4413,4107,4102
+</>
+<6-0>
+	3:3101="22.677166"
+</>
+<6-1>
+	1:0
+	2:4102
+</>
+<6-2>
+	1:0
+	2:4102
+	4:4102="ds4.group(A0)"
+</>
+<6-3>
+	1:0
+	4:4102="ds4.sum(A5)"
+</>
+<6-4>
+	1:0
+	4:4102="ds4.sum(A6)"
+</>
+<6-5>
+	1:0
+	4:4102="ds4.sum(A5,A2=\'0300100012000000002\')"
+</>
+<6-6>
+	1:0
+	4:4102="ds4.sum(A6,A2=\'0300100012000000002\')"
+</>
+<6-7>
+	1:0
+	4:4102="ds4.sum(A5,A2=\'0300100012000000003\')"
+</>
+<6-8>
+	1:0
+	4:4102="ds4.sum(A6,A2=\'0300100012000000003\')"
+</>
+<6-9>
+	1:0
+	4:4102="ds4.sum(A5,A2=\'0300100012000000002\' and A1 = I2)"
+</>
+<6-10>
+	1:0
+	4:4102="ds4.sum(A6,A2=\'0300100012000000002\' and A1 = I2)"
+</>
+<6-11>
+	1:0
+	4:4102="ds4.sum(A5,A2=\'0300100012000000003\' and A1 = I2)"
+</>
+<6-12>
+	1:0
+	4:4102="ds4.sum(A6,A2=\'0300100012000000003\' and A1 = I2)"
+</>
+<7-0>
+	3:3101="22.677166"
+</>
+<7-1>
+	1:0
+</>
+<7-2>
+	1:0
+	4:4102="ds3.group(A0)"
+</>
+<7-3>
+	1:0
+	4:4102="ds3.sum(A5)";4104="if( int(@value) > 0 , int(@value) , 0)"
+</>
+<7-4>
+	1:0
+	4:4102="ds3.sum(A6)";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-5>
+	1:0
+	4:4102="ds3.sum(A5,A2=\'0300100012000000002\')";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-6>
+	1:0
+	4:4102="ds3.sum(A6,A2=\'0300100012000000002\')";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-7>
+	1:0
+	4:4102="ds3.sum(A5,A2=\'0300100012000000003\')";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-8>
+	1:0
+	4:4102="ds3.sum(A6,A2=\'0300100012000000003\')";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-9>
+	1:0
+	4:4102="ds3.sum(A5,A2=\'0300100012000000002\' and A1 = I2)";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-10>
+	1:0
+	4:4102="ds3.sum(A6,A2=\'0300100012000000002\' and A1 = I2)";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-11>
+	1:0
+	4:4102="ds3.sum(A5,A2=\'0300100012000000003\' and A1 = I2)";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<7-12>
+	1:0
+	4:4102="ds3.sum(A6,A2=\'0300100012000000003\' and A1 = I2)";4104="if( int(@value) > 0 , int(@value) , \"0\")"
+</>
+<8-0>
+	3:3101="22.677166"
+</>
+<8-1>
+	1:0
+	3:4102="Ⅱ"
+</>
+<8-2>
+	1:0
+	4:4102="ds2.group(A0)"
+</>
+<8-3>
+	1:0
+	4:4102="ds2.sum(A6)";4104="if(@value>0,#.00,0)"
+</>
+<8-4>
+	1:0
+	4:4102="ds2.sum(A6)";4104="if(@value>0,#.00,0)"
+</>
+<8-5>
+	1:0
+	4:4102="ds2.sum(A6,A2=\'0300100012000000002\')";4104="if(@value>0,#.00,0)"
+</>
+<8-6>
+	1:0
+	4:4102="ds2.sum(A6,A2=\'0300100012000000002\')";4104="if(@value>0,#.00,0)"
+</>
+<8-7>
+	1:0
+	4:4102="ds2.sum(A6,A2=\'0300100012000000003\')";4104="if(@value>0,#.00,0)"
+</>
+<8-8>
+	1:0
+	4:4102="ds2.sum(A6,A2=\'0300100012000000003\')";4104="if(@value>0,#.00,0)"
+</>
+<8-9>
+	1:0
+	4:4102="ds2.sum(A6,A2=\'0300100012000000002\' and A1 = I2)";4104="if(@value>0,#.00,0)"
+</>
+<8-10>
+	1:0
+	4:4102="ds2.sum(A6,A2=\'0300100012000000002\' and A1 = I2)";4104="if(@value>0,#.00,0)"
+</>
+<8-11>
+	1:0
+	3:4302="12";4301="宋体";4304=0;4303="-16777216";4306=0;4305=0;4202="2";4203="0";4413="-1"
+	4:4102="ds2.sum(A6,A2=\'0300100012000000003\' and A1 = I2)";4104="if(@value>0,#.00,0)"
+</>
+<8-12>
+	1:1
+	4:4102="ds2.sum(A6,A2=\'0300100012000000003\' and A1 = I2)";4104="if(@value>0,#.00,0)"
+</>
+<9-0>
+	3:3101="22.677166"
+</>
+<9-1>
+	1:0
+	2:4102
+	3:4502="b9"
+	4:4102="ds6.select(template_order)"
+</>
+<9-2>
+	1:0
+	3:4501="3";4109="1"
+	4:4102="ds6.group(template_id)";4105="ds6.select(cost_name)"
+</>
+<9-3>
+	1:0
+	3:4502="b9"
+	4:4102="ds1.sum(target,template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-4>
+	1:0
+	3:4502="B9"
+	4:4102="ds1.sum(actual,template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-5>
+	1:1
+	4:4102="ds1.sum(target,exploration_method=\'0300100012000000002\' and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-6>
+	1:1
+	4:4102="ds1.sum(actual,exploration_method=\'0300100012000000002\' and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-7>
+	1:1
+	4:4102="ds1.sum(target,exploration_method=\'0300100012000000003\' and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-8>
+	1:1
+	2:4304,4302,4301,4303,4306,4305,4202,4203,4413
+	4:4102="ds1.sum(actual,exploration_method=\'0300100012000000003\' and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-9>
+	1:1
+	4:4102="ds1.sum(target,exploration_method=\'0300100012000000002\' and org_subjection_id= I2 and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-10>
+	1:1
+	4:4102="ds1.sum(actual,exploration_method=\'0300100012000000002\' and org_subjection_id = I2 and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-11>
+	1:1
+	4:4102="ds1.sum(target,exploration_method=\'0300100012000000003\' and org_subjection_id = I2 and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>
+<9-12>
+	1:1
+	4:4102="ds1.sum(actual,exploration_method=\'0300100012000000003\' and org_subjection_i = I2 and template_id=b9)";4104="if(@value>=1,#.00,0.##)"
+</>

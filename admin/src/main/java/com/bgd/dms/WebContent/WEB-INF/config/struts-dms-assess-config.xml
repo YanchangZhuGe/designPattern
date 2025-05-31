@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!--保存考核指标 -->
+		<action path="/rm/dm/toSaveAssessInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DeviceAssessSrv" operationName="saveAssessInfo" />
+			<forward name="success"	path="/dmsManager/assessment/close_page.jsp" redirect="false" />
+		</action>
+		<!--保存单位考核指标权重 -->
+		<action path="/rm/dm/toSaveOrgAssessInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DeviceAssessSrv" operationName="saveOrgAssessInfo" />
+			<forward name="success"	path="/dmsManager/assessment/assessSetOrg/close_page.jsp" redirect="false" />
+		</action>
+		<!--修改单位考核指标权重 -->
+		<action path="/rm/dm/toUpOrgAssessInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DeviceAssessSrv" operationName="upOrgAssessInfo" />
+			<forward name="success"	path="/dmsManager/assessment/assessSetOrg/close_page.jsp" redirect="false" />
+		</action>
+		<!--设备考核结果 -->
+		<action path="/rm/dm/getAssessSqlInfoForProcwfpg" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DeviceAssessInfoSrv" operationName="getAssessSqlInfo" />
+			<forward name="success"	path="/dmsManager/assessment/assessResult/assessOrgRateReport.jsp" redirect="false" />
+		</action>
+		<!--新增或修改指标配置信息 -->
+		<action path="/dms/assess/indexAssess/saveOrUpdateIndexConfInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="IndexAssessSrv" operationName="saveOrUpdateIndexConfInfo" />
+			<forward name="success"	path="/dmsManager/assessment/indexAssess/indexConf_close.jsp" redirect="false" />
+		</action>
+		<!--新增或修改指标配置信息 -->
+		<action path="/dms/assess/indexAssess/saveOrUpdateIndexOrgInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="IndexAssessSrv" operationName="saveOrUpdateIndexOrgInfo" />
+			<forward name="success"	path="/dmsManager/assessment/indexAssess/indexOrg_close.jsp" redirect="false" />
+		</action>
+		<!--新增或修改设备物资降本增效五项指标配置信息 -->
+		<action path="/dms/assess/jbzx/saveOrUpdateJbzxConfInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="IndexAssessSrv" operationName="saveOrUpdateJbzxConfInfo" />
+			<forward name="success"	path="/dmsManager/assessment/jbzx/jbzxConf_edit.jsp" redirect="false" />
+		</action>
+		<!--新增或修改设备物资降本增效五项指标信息 -->
+		<action path="/dms/assess/jbzx/saveOrUpdateJbzxInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="IndexAssessSrv" operationName="saveOrUpdateJbzxInfo" />
+			<forward name="success"	path="/dmsManager/assessment/jbzx/jbzx_list.jsp" redirect="false" />
+		</action>
+		<!--获取设备物资降本增效五项指标图表数据 -->
+		<action path="/dms/assess/jbzx/getJbzxChartData" type="com.bgp.mcs.web.pm.gmsChart.action.querySeriesXMLDataAction"
+			scope="request">
+			<serviceCall serviceName="IndexAssessSrv" operationName="getJbzxChartData" />
+		</action>
+	</action-mappings>
+</struts-config>

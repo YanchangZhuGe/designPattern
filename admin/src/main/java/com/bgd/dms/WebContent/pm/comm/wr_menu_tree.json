@@ -1,0 +1,181 @@
+﻿[
+    {
+        "Name": "生产经营周报",
+        "Id": 1,
+        "leaf": false,
+        "expanded": true,
+        "children": [
+            {
+                "Name": "市场",
+                "parentId": 1,
+                "Id": 101,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "落实收入价值工作量",
+                        "parentId": 101,
+                        "Id": 10101,
+                        "leaf": true,
+                        "url":"workloadInfo/workloadInfo.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "非地震落实收入价值工作量",
+                        "parentId": 101,
+                        "Id": 10102,
+                        "leaf": true,
+                        "url":"workloadInfo/noWorkloadInfo.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "非采集落实收入价值工作量",
+                        "parentId": 101,
+                        "Id": 10103,
+                        "leaf": true,
+                        "url":"workloadInfo/noCqProjectInfo.jsp?pagerAction=edit2Add"
+                    }
+                ]
+            },
+            {
+                "Name": "生产",
+                "parentId": 1,
+                "Id": 102,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "项目情况",
+                        "parentId": 102,
+                        "Id": 10201,
+                        "leaf": true,
+                        "url":"acqProjectInfo/add_acqProjectInfoModify.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "VSP采集项目情况",
+                        "parentId": 102,
+                        "Id": 10202,
+                        "leaf": true,
+                        "url":"acqProjectInfo/unAcqProjectInfoModify.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "公司重点项目动态",
+                        "parentId": 102,
+                        "Id": 10203,
+                        "leaf": true,
+                        "url":"stressProject/add_stressProjectModify.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "公司勘探船只动态",
+                        "parentId": 102,
+                        "Id": 10204,
+                        "leaf": true,
+                        "url":"sailInfo/add_sailInfoModify.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "地震采集项目运行动态",
+                        "parentId": 102,
+                        "Id": 10205,
+                        "leaf": true,
+                        "url":"projectDynamic/edit.jsp?projectType=1"
+                    },
+                    {
+                        "Name": "VSP项目运行动态",
+                        "parentId": 102,
+                        "Id": 10206,
+                        "leaf": true,
+                        "url":"projectDynamic/edit.jsp?projectType=2"
+                    },
+                    {
+                        "Name": "非地震项目运行动态",
+                        "parentId": 102,
+                        "Id": 10207,
+                        "leaf": true,
+                        "url":"projectDynamic/edit.jsp?projectType=3"
+                    },
+                    {
+                        "Name": "处理解释项目运行动态",
+                        "parentId": 102,
+                        "Id": 10208,
+                        "leaf": true,
+                        "url":"projectDynamic/edit.jsp?projectType=4"
+                    }
+                ]
+            },
+            {
+                "Name": "技术",
+                "parentId": 1,
+                "Id": 103,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "技术支持情况",
+                        "parentId": 103,
+                        "Id": 10301,
+                        "leaf": true,
+                        "url":"holdInfo/edit_holdInfo.jsp?pagerAction=edit2Edit"
+                    }
+                ]
+            },
+            {
+                "Name": "设备",
+                "parentId": 1,
+                "Id": 104,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "主要地震仪器情况（海上和辽河）",
+                        "parentId": 104,
+                        "Id": 10401,
+                        "leaf": true,
+                        "url":"instrument/Edit_LiaoAndSea.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "主要地震仪器情况",
+                        "parentId": 104,
+                        "Id": 10402,
+                        "leaf": true,
+                        "url":"instrument/Edit_other.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "国际可控震源情况",
+                        "parentId": 104,
+                        "Id": 10403,
+                        "leaf": true,
+                        "url":"focus/Edit_abroad.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "国内测量仪器及可控震源情况",
+                        "parentId": 104,
+                        "Id": 10404,
+                        "leaf": true,
+                        "url":"focus/Edit.jsp?pagerAction=edit2Add"
+                    },
+                    {
+                        "Name": "检波器情况",
+                        "parentId": 104,
+                        "Id": 10405,
+                        "leaf": true,
+                        "url":"geophoneInfo/add_geophoneModify.jsp?pagerAction=edit2Add"
+                    }
+                ]
+            },
+            {
+                "Name": "物资",
+                "parentId": 1,
+                "Id": 105,
+                "expanded": true,
+                "leaf": false,
+                "children": [
+                    {
+                        "Name": "物资供应动态",
+                        "parentId": 105,
+                        "Id": 10501,
+                        "leaf": true,
+                        "url":"materialInfo/materialInfo.jsp?pagerAction=edit2Add"
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,16 @@
+<config>
+  <chart>
+    <VerticalAxis label="(单位:%)"  x="10" y="7"  fontFamily="宋体" fontSize="12"/>
+    <ColumnSeries fills="0xFF6633,0x8CDD1D,0x00BFE9,0xFC9A33,0xF13C6E,0x969696" displayName="≥3.0GHz,2.4~3.0GHz,≤2.4GHz">
+    	<ColumnSerie/>
+    </ColumnSeries>
+    <ColumnSeries fills="0xFF6633,0x8CDD1D,0x00BFE9,0xFC9A33,0xF13C6E,0x969696" displayName="≥500G,300G~500G,≤300G">
+    	<ColumnSerie/>
+    </ColumnSeries>
+    <ColumnSeries fills="0xFF6633,0x8CDD1D,0x00BFE9,0xFC9A33,0xF13C6E,0x969696" displayName="≥2G,512M~2G,≤512M">
+    	<ColumnSerie/>
+    </ColumnSeries>
+    <ButtonBar visible="true"/>
+  </chart>
+
+</config>

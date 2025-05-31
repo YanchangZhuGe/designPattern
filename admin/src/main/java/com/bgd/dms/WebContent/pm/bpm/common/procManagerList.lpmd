@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>流程模板列表</PageTitle>
+  <QuerySQL>
+    <sql>select distinct t1.entity_id as proc_id, t1.proc_e_name, t1.proc_name, t1.proc_version, t1.proc_type, t2.coding_name as proc_type_name, oi.org_name  from wf_d_procdefine t1 ,    comm_coding_sort_detail t2 ,comm_org_subjection os  , comm_org_information oi   where t1.state = '0' and (t1.delete_flag='0' or t1.delete_flag is null) and t1.create_user_name like '$USER.subOrgIDofAffordOrg%' and  t1.proc_type = t2.coding_code_id and t2.coding_sort_id='5110000181' and  t1.create_user_name = os.org_subjection_id and os.org_id = oi.org_id order by t1.proc_type, t1.proc_name</sql>
+    <fields/>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label=""></Button>
+    <Button Type="Edit" funCode="" Label=""></Button>
+    <Button Type="sql" funCode="" Label="删除"></Button>
+    <Button Type="sql" funCode="" Label="挂接文档"></Button>
+    
+  </Buttons>
+  <Options/>
+  <Codes>
+    <Code name="procType" sql="SELECT t.coding_code AS value,t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id='5110000181' and t.bsflag='0' order by t.coding_show_id">流程类型</Code>
+  </Codes>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{proc_id},{proc_e_name},{proc_version},{proc_name},{extension_id}'&gt;"/>
+    <data exp="{proc_id}"  isShow="Hide">流程ID</data>
+    <data exp="&lt;a href=javascript:viewLink1('{proc_id}','{proc_e_name}','{proc_version}') &gt; {proc_name} &lt;/a&gt;">模板名称</data>
+    <data exp="{proc_version}" fieldName="版本">版本号</data>
+    <data exp="{proc_type_name}" fieldName="流程类型">流程类型</data>
+    <data exp="{org_name}" fieldName="创建单位">创建单位</data>
+    <data exp="&lt;a href=javascript:viewLink2('{proc_e_name}') &gt; 抄送人 &lt;/a&gt;">抄送人</data>
+    <data exp="&lt;a href=javascript:viewLink3('{file_id}') &gt; 查看 &lt;/a&gt;">挂接文档</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="proc_name">模板名称</field>
+      <field name="proc_type" selType="SEL_Codes" selValue="procType">流程类型</field>
+      <field name="proc_version">版本号</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+	function viewLink1(procId,procEName,procVersion){
+		window.location=cruConfig.contextPath+"/ibp/bpm/viewProcDefine.jsp?procId="+procId+"&amp;procEName="+procEName+"&amp;procVersion="+procVersion;
+  	}
+  	function viewLink2(proc_e_name){
+		window.location = cruConfig.contextPath+"/workFlow/viewProcCC.srq?procEName="+proc_e_name;
+  	}
+  	function viewLink3(fileId){
+  		if(fileId==null||fileId==''||fileId=='null'){
+  			alert("该流程未上传文档");
+  		}else{
+  			window.open(cruConfig.contextPath+'/doc/downloadDocByUcmId.srq?docId='+fileId);
+  		}
+  	}
+  	function toAdd(){
+  		window.location=cruConfig.contextPath+"/ibp/bpm/addProcDefine.jsp";
+  	}
+  	function toEdit(){
+  		ids = getSelIds('chx_entity_id');
+		if(ids==''){
+			alert("请先选中一条记录!");
+			return;
+		}
+		selId = ids.split(',');
+  		window.location=cruConfig.contextPath+"/ibp/bpm/updateProcDefine.jsp?procId="+selId[0]+"&amp;procEName="+selId[1]+"&amp;procVersion="+selId[2];
+  	}
+  	
+  	
+  	function JcdpButton2OnClick(){
+  		ids = getSelIds('chx_entity_id');
+		if(ids==''){
+			alert("请先选中一条记录!");
+			return;
+		}
+		selId = ids.split(',');
+		var id=selId[0];
+		var path = cruConfig.contextPath+"/bpm/common/updateWfRProcinst.srq";
+		var params = "deleteSql=update wf_d_procdefine set delete_flag='1' where entity_id='"+id+"'";
+		
+		var retObject = syncRequest('Post',path,params);
+		alert("删除成功");
+		queryData(1);
+  	}
+  	function JcdpButton3OnClick(){
+  		ids = getSelIds('chx_entity_id');
+		if(ids==''){
+			alert("请先选中一条记录!");
+			return;
+		}
+		selId = ids.split(',');
+		var extensionId=selId[4];
+		if(extensionId==null||extensionId==''||extensionId=='null'){
+				popWindow(cruConfig.contextPath+"/pm/bpm/common/processDocInfoEdit.upmd?pagerAction=edit2Add&amp;procEName="+selId[1]+"&amp;procName="+selId[3]);
+		}else{
+				popWindow(cruConfig.contextPath+"/pm/bpm/common/processDocInfoEdit.upmd?pagerAction=edit2Edit&amp;procEName="+selId[1]+"&amp;procName="+selId[3]+"&amp;id="+selId[4]);
+		}
+  	}
+  </JavaScripts>
+</SAIS_EAW_TL>

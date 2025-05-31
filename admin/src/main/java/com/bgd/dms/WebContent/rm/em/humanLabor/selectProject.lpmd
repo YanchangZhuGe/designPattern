@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List2Link</PagerAction>
+  <PageTitle>选择项目</PageTitle>
+  <QuerySQL>
+    <sql>select distinct pd.org_id, t.project_info_no,t.project_name,t.project_year,c.coding_name as project_type from gp_task_project t,comm_coding_sort_detail c,gp_task_project_dynamic pd where t.bsflag='0' and pd.bsflag='0' and t.project_type=c.coding_code_id and pd.project_info_no=t.project_info_no order by t.project_year desc,project_type</sql>
+    <funcCode></funcCode>
+    <fields>
+      <field name="org_id" type="TEXT"></field>
+      <field name="project_info_no" type="TEXT"></field>
+      <field name="project_name" type="TEXT"></field>
+      <field name="project_type" type="TEXT"></field>
+      <field name="project_year" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{project_info_no}" isShow="TextHide">ID</data>
+    <data exp="{project_name}">项目名称</data>
+    <data exp="{project_year}">项目年度</data>
+    <data exp="{project_type}">项目类型</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="project_name">项目名称</field>
+      <field name="project_year">项目年度</field>
+      <field name="project_type">项目类型</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts/>
+</SAIS_EAW_TL>

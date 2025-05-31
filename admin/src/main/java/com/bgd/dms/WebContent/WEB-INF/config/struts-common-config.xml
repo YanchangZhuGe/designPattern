@@ -1,0 +1,91 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		
+		<action path="/hr_login" type="com.cnpc.jcdp.web.auth2.action.LoginAction"
+			scope="request">
+			<serviceCall serviceName="IBPLoginAndMenuTree"
+				operationName="updateUserLogin" />
+			<forward name="success" path="/index1.jsp" />
+			<forward name="businessEx" path="/login.jsp" />
+			<forward name="failed" path="/login.jsp" />
+		</action>
+	
+		<!-- 加载顶部页面 -->
+	    <action path="/common/index/header"
+	    		type="com.cnpc.jcdp.mvc.action.WSAction">
+	      <serviceCall serviceName="IBPLoginAndMenuTree" 
+	      		       operationName="query4ChildrenMenus"/>
+	      <forward name="success" path="/skin/cute/header_info.jsp" />
+	    </action>
+	       <action path="/common/index/dmsMenu"
+	    		type="com.cnpc.jcdp.mvc.action.WSAction">
+	      <serviceCall serviceName="IBPLoginAndMenuTree" 
+	      		       operationName="query4ChildrenMenus"/>
+	      <forward name="success" path="/dms_info/leftMenu.jsp" />
+	    </action>
+	    
+		<!-- <action path="/hr_login" type="com.cnpc.jcdp.web.auth2.action.LoginAction"
+			scope="request">
+			<serviceCall serviceName="IBPLoginAndMenuTree"
+				operationName="updateUserLogin" />
+			<forward name="success" path="/index.jsp" />
+			<forward name="businessEx" path="/login.jsp" />
+			<forward name="failed" path="/login.jsp" />
+		</action> -->
+	
+		<!-- 加载顶部页面 
+	    <action path="/common/index/header"
+	    		type="com.cnpc.jcdp.mvc.action.WSAction">
+	      <serviceCall serviceName="IBPLoginAndMenuTree" 
+	      		       operationName="query4ChildrenMenus"/>
+	      <forward name="success" path="/skin/cute/header.jsp" />
+	    </action>-->
+	 
+		<action path="/common/auth/user/addOrUpdateUser"
+			type="com.cnpc.jcdp.web.auth.action.AddOrUpdateUserAction" scope="request">
+			<serviceCall serviceName="RADCommCRUD" operationName="addOrUpdateEntity" />
+		</action>
+
+		<action path="/common/excel/listToExcel" type="com.bgp.mcs.web.common.action.ListToExcelAction"
+			scope="request">
+		</action>
+		<!-- 大量数据导出用 多sheet页-->
+		<action path="/common/excel/listToExcelNew" type="com.bgp.mcs.web.common.action.ListToExcelActionNew"
+			scope="request">
+		</action>
+
+		<!-- excel导入导出 -->
+		<action path="/common/excel/fileDownload" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request">
+			<serviceCall serviceName="TsExcelExportImportSrv"
+				operationName="exportExcelData" />
+		</action>
+		<action path="/common/excel/fileTemplateDownload" type="com.cnpc.jcdp.mvc.action.jcdp.WSDownloadAction"
+			scope="request">
+			<serviceCall serviceName="TsExcelExportImportSrv"
+				operationName="exportExcelTemplate" />
+		</action>
+		<action path="/common/excel/fileTemplateImport" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="TsExcelExportImportSrv"
+				operationName="importExcelTemplate" />
+			<forward name="success" path="/common/ExcelImportFile.jsp" />
+		</action>
+		<!--备注信息操作-->
+		<action path="/common/remark/relatedOperation" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request">
+			<serviceCall serviceName="CommonRemarkSrv" operationName="remarkOperation" />
+			<forward name="success" path="/common/common_remark.jsp" />
+		</action>
+		<!--通知公告-->
+		<action path="/common/notice/noticeEdit" type="com.cnpc.jcdp.mvc.action.jcdp.WSUploadAction"
+			scope="request"  name="dynamicForm">>
+			<serviceCall serviceName="DevInsSrv" operationName="noticeEdit" />
+			<forward name="success"	path="/common/close_page.jsp" redirect="false" />
+		</action>
+	</action-mappings>
+</struts-config>

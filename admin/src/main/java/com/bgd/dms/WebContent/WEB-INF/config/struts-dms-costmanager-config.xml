@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<struts-config>
+	<form-beans>
+		<form-bean name="dynamicForm" type="com.cnpc.jcdp.mvc.action.DynaActionForm" />
+	</form-beans>
+	<action-mappings>
+		<!--保存修改单机成本 -->
+		<action path="/dmsManager/costmanager/saveOrUpdateCheckConfInfo" type="com.cnpc.jcdp.mvc.action.WSAction"
+			scope="request" name="dynamicForm">
+			<serviceCall serviceName="DevCostManagerSrv" operationName="saveOrUpdateCostManager" />
+			<forward name="success"	path="/dmsManager/safekeeping/easyui_close_page.jsp" redirect="false" />
+		</action>
+	   
+		<!-- 获取保养列表数据-->
+		<action path="/dmsManager/costmanager/queryCostManagerList" type="com.bgp.gms.service.rm.dm.action.EasyUIDataGridAction" 
+			scope="request">
+		</action>
+
+	</action-mappings>
+</struts-config>

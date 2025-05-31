@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="css/JCDP_SAIS_CSS/style.css">
+
+<script type="text/javascript" src="js/json.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/dialog_open.js"></script>
+<script type="text/javascript" src="js/table.js"></script>
+
+<title></title>
+</head>
+
+<body style="overflow:auto">
+<div id='searchDiv' class="searchBar wrap">
+  <div class="tt" style="display:none">
+    <h2>JCDP_cz_cn</h2>
+  </div>
+  <div class="ctt">
+    <form>
+      <div class="searchList fl">
+        <table id="ComplexTable" class="table_search" cellpadding="0" cellspacing="0" onkeydown="if(event.keyCode==13){return false;}">
+          <tr>
+            <td><select onChange="updateCmpOption(this)" name='cmp_field'/>
+            </td>
+            <td><select name='cmp_cdt'/>
+            </td>
+            <td><input type="text" name='cmp_input'/><select name='cmp_sel'/></td>
+          </tr>
+        </table>
+      </div>
+      <div class="searchBtn fl">
+        <input type="button" value="" class="btn btn_search" />
+        <input type="button" value="" class="btn btn_addSR" onClick="addSearchRow()" />
+        <input type="button" value="" class="btn btn_delSR" onClick="deleteSearchRow()" />
+      </div>
+      <div class="clear"></div>
+    </form>
+  </div>
+</div>
+<div class="dataList wrap">
+  <div class="tt" style="display:none">
+    <h2 id="cruTitle">数据列表</h2>
+  </div>
+  <div class="ctt" style="overflow:auto;">
+    <div id='buttonDiv' class="ctrlBtn">
+      <input id="btn_add" type="button" class="btn btn_add" value=" " onClick="dialogOpen('添加',660,540,'dialog/sample_dialog_table_form.html')" />
+	  <input id="btn_edit" type="button" class="btn btn_edit" value=" " onClick="alert(1)" />
+	  <input id="btn_del" type="button" class="btn btn_del" value=" " onClick="alert(2)" />
+	  <input id="btn_submit" type="button" class="btn btn_submit" value=" " onClick="" />
+      <input id="btn_back" type="button" class="btn btn_back" value=" " onClick=""/>
+      <input id="btn_close" type="button" class="btn btn_close" value=" " onClick=""/>
+      <input id="btn_normal" type="button" class="btn btn_normal" value=" " onClick=""/>
+    </div>
+     
+    <!--Remark 查询结果显示区域
+    <div class="tableWrap">-->
+      <table id="queryRetTable" class="table_list" cellpadding="0" cellspacing="0">
+       
+      </table>
+      <div class="pageNumber" id='pageNumDiv'> <a href="#" class="first fl"></a> <a href="#" class="prev fl"></a>
+      <div class="pageNumber_cur fl"  id="dataRowHint"> 第
+        <input id='changePage' type="text" size="2" />
+        页 共 5 页 </div>
+      <a href="#" class="next fl"></a> <a href="#" class="last fl"></a>
+      <div class="clear" style="display:none"></div>
+    </div>
+    <!--end table_pageNumber-->
+    
+    <!--</div>
+    end table_body-->
+  </div>
+  <!--end ctt--> 
+</div>
+
+<!--end dataList-->
+<script type="text/javascript">
+function popWindow(url,size){
+		var path = cruConfig.currentPageUrl;
+		if(path.indexOf("/epcomp") == 0){   //如果是组件包里的pmd文件
+			path = path.substr("/epcomp".length);
+		}	
+		if(url.indexOf('/') == 0){
+			if(url.indexOf(cruConfig.contextPath) != 0){
+				url = cruConfig.contextPath + url; 
+			}
+		}
+		else {
+				path = path.substr(0,path.lastIndexOf("/")+1);
+				if(path.lastIndexOf("/") == (path.length - 1)){
+						url = cruConfig.contextPath + path + url;
+				}
+				else url = cruConfig.contextPath + path + '/' + url;
+		}
+		var height = 680;
+		var width = 740;
+		if(size != null){
+			if(typeof size=='number'){
+				height=size;
+				}
+			if(typeof size=='string'&&size.indexOf(':')>0){
+				height = eval(size.split(':')[1]);
+			  width = eval(size.split(':')[0]);
+		  }
+		}
+		dialogOpen("",width,height,url);
+	}
+</script>
+</body>
+</html>

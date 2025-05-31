@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <JavaScripts>
+    <CRU>
+	  	function submitFunc(){
+			var path = cruConfig.contextPath+'/mat/multiproject/matEdit.srq';
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			top.frames('list').refreshTree();
+			newClose();
+		}
+	</CRU>
+  </JavaScripts>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>物资分类管理</PageTitle>
+  <QuerySQL>
+    <sql>select * from gms_mat_coding_code where bsflag='0' and coding_code_id = '$PARAM.id'</sql>
+    <tableName>gms_mat_coding_code</tableName>
+    <fields/>
+  </QuerySQL>
+  <Options/>
+  <Codes/>
+  <EntityFields>
+  <field name="coding_code_id" isShow="Hide">id</field>
+    <field name="locked_if" isShow="Hide" defaultValue="0">locked</field>
+    <field name="parent_code" isShow="Hide" defaultValue="$PARAM.parentCode">id</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">baflag</field>
+    <field name="code_name" maxLength="32" nonEmpty="true">物资分类</field>
+    <field name="coding_code" maxLength="32" nonEmpty="true">物资编码</field>
+    <field name="description" maxLength="100">使用描述</field>
+    <field name="note" maxLength="100">备注</field>
+  </EntityFields>
+</SAIS_EAW_TL>

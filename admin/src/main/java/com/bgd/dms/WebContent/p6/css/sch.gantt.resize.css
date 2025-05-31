@@ -1,0 +1,67 @@
+/*
+
+Ext Gantt 2.1.0
+Copyright(c) 2009-2012 Bryntum AB
+http://bryntum.com/contact
+http://bryntum.com/license
+
+*/
+.sch-gantt-item .sch-resizable-handle
+{
+    position:absolute;
+    top:1px;
+    cursor: e-resize !important;
+    height:12px;
+    width:6px;
+    overflow:hidden;
+    background:none;
+    z-index:2;
+}
+
+/* IE won't respect z-index with transparent background, fake it */
+.x-ie .sch-gantt-item .sch-resizable-handle
+{
+    background:url(../images/transp-1px.png) no-repeat -100px left !important;
+}
+
+.x-quirks .x-ie .sch-ganttpanel-showbaseline .sch-resizable-handle
+{
+    height:6px;
+}
+
+/* Without this, task bar is 15px high in baseline mode, instead of expected 7px */
+.x-quirks .x-ie .sch-ganttpanel-showbaseline .sch-gantt-task-bar
+{
+    height:7px;
+    overflow:hidden;
+}
+
+
+.sch-gantt-item .x-resizable-handle-west,
+.sch-gantt-item .x-resizable-handle-east
+{
+    background:none !important;
+}
+
+.sch-gantt-item .sch-resizable-handle-east
+{
+	right:0;
+}
+
+.sch-gantt-item .sch-resizable-handle-west
+{
+	left:0;
+}
+
+.x-resizable-over .sch-dependency
+{
+	display:none;
+}
+
+.sch-event-endsoutside .x-resizable-handle-east,
+.sch-event-startsoutside .x-resizable-handle-west,
+.sch-ganttview-readonly .x-resizable-handle,
+.sch-ganttview-readonly .sch-resizable-handle
+{
+	display:none !important;
+}

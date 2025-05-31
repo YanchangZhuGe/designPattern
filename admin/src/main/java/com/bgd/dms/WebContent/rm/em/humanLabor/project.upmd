@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>项目</PageTitle>
+  <QuerySQL>
+    <sql>select p.*,d.coding_name from gp_task_project p left join comm_coding_sort_detail d on p.manage_org=d.coding_code_id where project_info_no='$PARAM.id'</sql>
+    <tableName>gp_task_project</tableName>
+    <fields>
+      <field name="manage_org" type="TEXT">MANAGE_ORG</field>
+      <field name="build_type" type="TEXT">BUILD_TYPE</field>
+      <field name="project_info_no" type="TEXT">PROJECT_INFO_NO</field>
+      <field name="project_id" type="TEXT">PROJECT_ID</field>
+      <field name="project_name" type="TEXT">PROJECT_NAME</field>
+      <field name="contract_info_id" type="TEXT">CONTRACT_INFO_ID</field>
+      <field name="market_classify" type="TEXT">MARKET_CLASSIFY</field>
+      <field name="project_year" type="TEXT">PROJECT_YEAR</field>
+      <field name="workarea_no" type="TEXT">WORKAREA_NO</field>
+      <field name="quality_index" type="TEXT">QUALITY_INDEX</field>
+      <field name="exploration_method" type="TEXT">EXPLORATION_METHOD</field>
+      <field name="project_start_time" type="D">PROJECT_START_TIME</field>
+      <field name="project_end_time" type="D">PROJECT_END_TIME</field>
+      <field name="project_status" type="TEXT">PROJECT_STATUS</field>
+      <field name="is_main_project" type="TEXT">IS_MAIN_PROJECT</field>
+      <field name="project_type" type="TEXT">PROJECT_TYPE</field>
+      <field name="explore_type" type="TEXT">EXPLORE_TYPE</field>
+      <field name="project_father_no" type="TEXT">PROJECT_FATHER_NO</field>
+      <field name="creator" type="TEXT">CREATOR</field>
+      <field name="create_date" type="D">CREATE_DATE</field>
+      <field name="updator" type="TEXT">UPDATOR</field>
+      <field name="modifi_date" type="D">MODIFI_DATE</field>
+      <field name="locked_if" type="TEXT">LOCKED_IF</field>
+      <field name="bsflag" type="TEXT">BSFLAG</field>
+      <field name="notes" type="TEXT">NOTES</field>
+      <field name="spare1" type="">SPARE1</field>
+      <field name="spare2" type="TEXT">SPARE2</field>
+      <field name="send_indicate" type="TEXT">SEND_INDICATE</field>
+      <field name="acquire_start_time" type="D">ACQUIRE_START_TIME</field>
+      <field name="acquire_end_time" type="D">ACQUIRE_END_TIME</field>
+      <field name="project_country" type="TEXT">PROJECT_COUNTRY</field>
+      <field name="build_method" type="TEXT">BUILD_METHOD</field>
+      <field name="vsp_block" type="TEXT">VSP_BLOCK</field>
+      <field name="vsp_team_no" type="TEXT">VSP_TEAM_NO</field>
+      <field name="vsp_team_leader" type="TEXT">VSP_TEAM_LEADER</field>
+      <field name="vsp_sign_sum" type="">VSP_SIGN_SUM</field>
+      <field name="vsp_intending_workload" type="">VSP_INTENDING_WORKLOAD</field>
+      <field name="vsp_finished_workload" type="">VSP_FINISHED_WORKLOAD</field>
+      <field name="ipce_area" type="TEXT">IPCE_AREA</field>
+      <field name="design_start_date" type="D">DESIGN_START_DATE</field>
+      <field name="design_end_date" type="D">DESIGN_END_DATE</field>
+      <field name="project_business_type" type="TEXT">PROJECT_BUSINESS_TYPE</field>
+      <field name="prctr" type="TEXT">PRCTR</field>
+    </fields>
+  </QuerySQL>
+  <Options>
+    <Select name="country">
+      <option value="1">国内</option>
+      <option value="2">国外</option>
+    </Select>
+  </Options>
+  <Codes/>
+  <EntityFields>
+    <field name="project_info_no" isShow="Hide">PROJECT_INFO_NO</field>
+    <field name="project_name">项目名称</field>
+    <field name="manage_org" type="FK"  isShow="ReadOnly" defaultValue="$ENTITY.manage_org:$ENTITY.coding_name" selValue="orgList2Link.lpmd">管理机构</field>
+    <field name="modifi_date" type="D" action="R,U">修改时间</field>
+    <field name="project_country" type="SEL_OPs" selValue="country">项目范围</field>
+    <field name="notes" type="MEMO">备注</field>
+  </EntityFields>
+</SAIS_EAW_TL>

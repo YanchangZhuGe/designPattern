@@ -1,0 +1,233 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@page import="com.cnpc.jcdp.common.UserToken"%>
+<%@page import="com.cnpc.jcdp.webapp.util.OMSMVCUtil"%>
+<%
+	String contextPath = request.getContextPath();
+	UserToken user = OMSMVCUtil.getUserToken(request);
+	
+	String projectInfoNo = request.getParameter("projectInfoNo");
+	if(projectInfoNo==null||projectInfoNo.equals("")){
+		projectInfoNo = user.getProjectInfoNo();
+	}
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="<%=contextPath%>/css/bgpmcs_table.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/css/common.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/css/calendar-blue.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/JavaScript" src="<%=contextPath%>/js/bgpmcs/DivHiddenOpen.js"></script>
+<link href="<%=contextPath%>/js/extjs/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=contextPath%>/js/extjs/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/extjs/ext-all.js"></script>
+<%@ include file="/common/pmd_list.jsp"%>
+<title>列表页面</title>
+</head>
+<script language="javaScript">
+<!--Remark JavaScript定义-->
+var pageTitle = "正式工页面";
+cruConfig.contextPath =  "<%=contextPath%>";
+var genderOps = new Array(
+['0','女'],['1','男']
+);
+
+var jcdp_codes_items = null;
+var jcdp_codes = new Array(
+);
+
+
+function page_init(){ 
+	cruConfig.cdtType = 'form'; 
+	cruConfig.queryStr = "select * from (select  l.labor_id as employee_id ,pr.project_info_no,tp.project_name, decode(l.if_engineer, '0110000059000000005', '临时季节性用工', '0110000059000000001', '再就业人员', '0110000059000000003', '劳务派遣人员', '', '其他用工', l.if_engineer) type_s,l.employee_name, l.employee_gender,decode(l.employee_gender, '1', '男', '0', '女')employee_gender_name, l.employee_id_code_no,  d3.coding_name posts,  d2.coding_name post_level_name   from view_human_project_relation pr join gp_task_project tp on pr.project_info_no=tp.project_info_no and tp.bsflag='0' join bgp_comm_human_labor l on pr.employee_id=l.labor_id and l.bsflag='0'  left join comm_coding_sort_detail d3 on l.post = d3.coding_code_id  left join comm_coding_sort_detail d2 on l.technical_title = d2.coding_code_id left join bgp_comm_human_labor_list lt on l.labor_id = lt.labor_id and lt.bsflag='0'  where lt.list_id is null "
+		+" union  "
+		+" select distinct e.employee_id,pr.project_info_no,tp.project_name,case  when hr.employee_cd is not null then  '正式工' else '' end  as type_s ,e.employee_name, e.employee_gender,decode(e.employee_gender, '1', '男', '0', '女','2','女')employee_gender_name,e.employee_id_code_no, hr.post as posts, d1.coding_name post_level_name   from view_human_project_relation pr join gp_task_project tp on pr.project_info_no=tp.project_info_no and tp.bsflag='0' join comm_human_employee e on pr.employee_id = e.employee_id and e.bsflag='0'  inner join comm_human_employee_hr hr on e.employee_id = hr.employee_id   and hr.bsflag='0'  left join comm_coding_sort_detail d1 on hr.post_level = d1.coding_code_id and d1.bsflag = '0' left join view_human_project_relation r on e.employee_id=r.EMPLOYEE_ID ) where project_info_no = '<%=projectInfoNo%>' ";
+	cruConfig.currentPageUrl = "/hse/hseOptionPage/illegalManagement/humanListLink.jsp";
+	queryData(1);
+}
+
+var fields = new Array();
+ 
+	
+function basicQuery(){
+	var qStr = generateBasicQueryStr();
+	cruConfig.cdtStr = qStr;
+	queryData(1);	
+}
+
+
+function cmpQuery(){
+	var qStr = generateCmpQueryStr();
+	cruConfig.cdtStr = qStr;
+	queryData(1);
+}
+
+function classicQuery(){
+
+	var employee_name = document.getElementById("employee_name").value; 
+	var employee_gender= document.getElementById("employee_gender").value; 
+	employee_name = employee_name ? employee_name : "";
+	employee_gender = employee_gender ? employee_gender : "";
+	cruConfig.cdtType = 'form';
+	cruConfig.queryStr = "select * from (select  l.labor_id as employee_id ,pr.project_info_no,tp.project_name, decode(l.if_engineer, '0110000059000000005', '临时季节性用工', '0110000059000000001', '再就业人员', '0110000059000000003', '劳务派遣人员', '', '其他用工', l.if_engineer) type_s,l.employee_name, l.employee_gender,decode(l.employee_gender, '1', '男', '0', '女')employee_gender_name, l.employee_id_code_no,  d3.coding_name posts,  d2.coding_name post_level_name   from view_human_project_relation pr join gp_task_project tp on pr.project_info_no=tp.project_info_no and tp.bsflag='0' join bgp_comm_human_labor l on pr.employee_id=l.labor_id and l.bsflag='0'  left join comm_coding_sort_detail d3 on l.post = d3.coding_code_id  left join comm_coding_sort_detail d2 on l.technical_title = d2.coding_code_id left join bgp_comm_human_labor_list lt on l.labor_id = lt.labor_id and lt.bsflag='0'  where lt.list_id is null "
+		+" union  "
+		+" select distinct e.employee_id,pr.project_info_no,tp.project_name,case  when hr.employee_cd is not null then  '正式工' else '' end  as type_s ,e.employee_name, e.employee_gender,decode(e.employee_gender, '1', '男', '0', '女','2','女')employee_gender_name,e.employee_id_code_no, hr.post as posts, d1.coding_name post_level_name   from view_human_project_relation pr join gp_task_project tp on pr.project_info_no=tp.project_info_no and tp.bsflag='0' join comm_human_employee e on pr.employee_id = e.employee_id and e.bsflag='0'  inner join comm_human_employee_hr hr on e.employee_id = hr.employee_id   and hr.bsflag='0'  left join comm_coding_sort_detail d1 on hr.post_level = d1.coding_code_id and d1.bsflag = '0' left join view_human_project_relation r on e.employee_id=r.EMPLOYEE_ID ) where project_info_no = '<%=projectInfoNo%>' ";
+	if(employee_name!=""){
+		cruConfig.queryStr = cruConfig.queryStr + " and employee_name like '%"+employee_name+"%'";
+	}
+	if(employee_gender!=""){
+		cruConfig.queryStr = cruConfig.queryStr + " and employee_gender_name = '"+employee_gender+"'" ;
+	}
+	cruConfig.currentPageUrl = "/hse/hseOptionPage/illegalManagement/humanListLink.jsp";
+	queryData(1);
+}
+
+function onlineEdit(rowParams){
+	var path = cruConfig.contextPath+cruConfig.editAction;
+	var params = cruConfig.editTableParams+"&rowParams="+rowParams.toJSONString();
+	var retObject = syncRequest('Post',path,params);
+	if(retObject.returnCode!=0){
+		alert(retObject.returnMsg);
+		return false;
+	}else return true;
+}
+//保存的checkbox拼接的值
+var checked="";
+
+function doCheck(id){
+
+	//序号
+	var num = -1;
+	//新的check值
+	var newcheck = "";
+	//拼接的值不为空
+
+	if(checked != ""){
+		var checkStr = checked.split(",");
+		for(var i=0;i<checkStr.length-1; i++){
+			//如果check中存在  选择的id值
+			if(checkStr[i] == id.value){
+				//记录位置
+
+				num = i;		
+				break;	
+			}
+		}
+        //判断num是否有值
+		if(num != -1 ){
+			if(id.checked==false){
+				
+				for(var j=0;j<checkStr.length-1; j++){
+					if( j != num ){
+						newcheck += checkStr[j] + ',';
+					}
+				}
+				checked = newcheck;
+			}
+		}else{
+			//直接拼
+			if(id.checked==true){
+				checked= checked + id.value + ',';	
+			}		
+		}
+	}else{
+		checked = id.value + ',';
+		
+	}
+	
+
+}
+function JcdpButton0OnClick(){
+	if(checked == ""){
+		alert("请选择一条记录!");
+		return;
+	}
+	window.returnValue = checked;
+	window.close();  
+}
+
+function JcdpButton1OnClick(){
+	window.returnValue = "";
+	window.close(); 
+}
+</script>
+
+<script type="text/javascript" src="<%=contextPath%>/js/calendar.js"></script>
+<script type="text/JavaScript" src="<%=contextPath%>/js/calendar-zh.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/calendar-setup.js"></script>
+</head>
+<body onload="page_init()">
+<div id="queryDiv" style="display:">
+<table  border="0" cellpadding="0" cellspacing="0" class="form_info" id="queryCdtTable" enctype="multipart/form-data">
+<tr >
+<td class="ali_cdn_name">姓名：</td>
+ <td  ><input id="employee_name"    name="employee_name" type="text"   />	 
+ </td>
+<td class="ali_cdn_name">性别：</td>
+<td  >
+<select id="employee_gender" name="employee_gender"  >
+<option value="" >请选择</option>
+<option value="男" >男</option>
+<option value="女" >女</option> 
+</select>  
+</td>
+ </tr>
+ 
+  <tr class="ali4">
+    <td colspan="4"><input type="submit" onclick="classicQuery()" name="search" value="查询"  class="iButton2"/>  <input type="reset" name="reset" value="清除" onclick="clearQueryCdt()" class="iButton2"/></td>
+  </tr>  
+</table>
+</div>
+</div>
+<div id="lidiv" >
+<table  border="0" cellpadding="0" cellspacing="0" class="Tab_new_mod_del">
+  <tr class="ali7">
+    <td>
+		<input class="iButton2" type="button" value="保存" onClick="JcdpButton0OnClick()">
+		<input class="iButton2" type="button" value="返回" onClick="JcdpButton1OnClick()">
+    </td>
+  </tr>
+</table>
+</div>
+<!--Remark 查询指示区域-->
+<div id="rtToolbarDiv">
+<table border="0"  cellpadding="0"  cellspacing="0"  class="rtToolbar"  width="100%" >
+	<tr>
+		<td align="right" >
+			<span id="dataRowHint">第0/0页,共0条记录 </span>
+			<table id="navTableId" border="0"  cellpadding="0"  cellspacing="0" style="display:inline">
+				<tr>
+					<td><img src="<%=contextPath%>/images/table/firstPageDisabled.gif"  style="border:0"  alt="First" /></td>
+					<td><img src="<%=contextPath%>/images/table/prevPageDisabled.gif"  style="border:0"  alt="Prev" /></td>
+					<td><img src="<%=contextPath%>/images/table/nextPageDisabled.gif"  style="border:0"  alt="Next" /></td>
+					<td><img src="<%=contextPath%>/images/table/lastPageDisabled.gif"  style="border:0"  alt="Last" /></td>				
+				</tr>
+			</table>
+			<span>到&nbsp;<input type="text"  id="changePage"  class="rtToolbar_chkboxme">&nbsp;页<a href='javascript:changePage()'><img src='<%=contextPath%>/images/table/bullet_go.gif' alt='Go' align="absmiddle" /></a></span>		
+		</td>
+	</tr>
+</table>
+</div>
+
+<div id="resultable"  style="width:100%; overflow-x:scroll ;" >
+<table border="0"  cellspacing="0"  cellpadding="0"  class="form_info"  width="100%" id="queryRetTable">
+	<thead>
+
+	<tr class="bt_info">
+   	    <td class="tableHeader" 	 exp="<input type='radio' name='chx_entity_id'  value='{employee_id}-{employee_name}-{employee_gender}-{employee_id_code_no}-{posts}-{post_level_name}-{type_s}' onclick=doCheck(this) />"></td>
+		<td class="tableHeader" 	 exp="{employee_id}" isShow="TextHide" style="display:none">employee_id</td>
+		<td class="tableHeader" 	 exp="{type_s}">用工类别</td>
+		<td class="tableHeader" 	 exp="{employee_name}">姓名</td>
+		<td class="tableHeader" 	 exp="{employee_gender_name}">性别</td>
+		<td class="tableHeader" 	 exp="{project_name}">项目名称</td>
+		<td class="tableHeader" 	 exp="{posts}">岗位</td>
+		<td class="tableHeader" 	 exp="{post_level_name}">职位级别</td>
+		
+	</tr>
+	</thead>
+	<tbody>
+	
+	</tbody>
+</table>
+</div>
+</body>
+</html>

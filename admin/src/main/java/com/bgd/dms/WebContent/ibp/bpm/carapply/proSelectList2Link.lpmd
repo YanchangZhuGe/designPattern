@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List2Link</PagerAction>
+  <PageTitle>选择页面</PageTitle>
+  <QuerySQL>
+    <sql>select wf.*,itemName.* from   wf_d_procdefine wf ,
+
+(select b_code_item.ITEM_C_NAME as item_name, b_code_item.ITEM_ID from b_code_item ,wf_d_procdefine where b_code_item.ITEM_ID =wf_d_procdefine.PROC_TYPE) itemName
+
+ where wf.STATE=0 and itemName.ITEM_ID =wf.PROC_TYPE </sql>
+    <fields>
+      <field name="create_user_name" type="TEXT"></field>
+      <field name="entity_id" type="TEXT"></field>
+      <field name="is_termination_implicit" type="TEXT"></field>
+      <field name="proc_e_name" type="TEXT"></field>
+      <field name="proc_name" type="TEXT"></field>
+      <field name="proc_type" type="TEXT"></field>
+      <field name="proc_version" type="TEXT"></field>
+      <field name="start_node" type="TEXT"></field>
+      <field name="state" type="TEXT"></field>
+    </fields>
+  </QuerySQL>
+   <SavedParams>create_user_name</SavedParams>
+  <Buttons/>
+  <Options/>
+  <Codes/>
+  <DataList>
+    <data exp="{entity_id}" isShow="TextHide" ></data>
+    <data exp="{proc_name}">proc_name</data>
+    <data exp="{item_name}">item_name</data>
+    <data exp="{create_user_name}">create_user_name</data>
+    <data exp="{proc_version}"  isShow="TextHide" ></data>
+    <data exp="{proc_e_name}"  isShow="TextHide" ></data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="proc_name"></field>
+    </cdt_fields>
+  </QueryCondition>
+ <JavaScripts>
+	  function myOnRowSelect(trObj){
+/*	      var obj = window.dialogArguments;
+		  var e1=obj.getElementByTypeAndName('INPUT','parent_id');
+		  var mt_type_element=obj.getElementByTypeAndName('INPUT','show_seq');
+	      e1.value=trObj.cells[0].innerText; 
+	      mt_type_element.value = trObj.cells[1].innerText  */
+    	  window.parent.dialogArguments.returnProcnfos(trObj.cells[1].innerText,trObj.cells[0].innerText,trObj.cells[5].innerText,trObj.cells[4].innerText);
+		  window.close();
+	  }
+  </JavaScripts>
+  <RowSelFuncName> myOnRowSelect </RowSelFuncName>
+</SAIS_EAW_TL>

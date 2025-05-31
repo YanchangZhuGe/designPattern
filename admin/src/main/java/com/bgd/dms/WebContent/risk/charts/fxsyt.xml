@@ -1,0 +1,93 @@
+<chart
+    animation="1"
+    clipBubbles="1"
+    is3D="1"
+    bgColor="F3F5F4,DEE6EB"
+    showPlotBorder="0"
+    xAxisMaxValue="100"
+    xAxisMaxValue="600"
+    yAxisNameWidth="16"
+    rotateYAxisName = '0'
+    xAxisName="发生概率"
+    yAxisName="收益值" 
+    baseFontSize ="12">
+
+    <categories>
+        <category
+            label=""            
+            x="0" />
+        <category
+            label="10%"
+            showVerticalLine="1"
+            x="10" />        
+        <category
+            label="20%"
+            showVerticalLine="1"
+            x="20" />
+        <category
+            label="30%"
+            showVerticalLine="1"
+            x="30" />
+        <category
+            label="40%"
+            showVerticalLine="1"
+            x="40" />
+        <category
+            label="50%"
+            showVerticalLine="1"
+            x="50" />
+        <category
+            label="60%"
+            showVerticalLine="1"
+            x="60" />
+        <category
+            label="70%"
+            showVerticalLine="1"
+            x="70" />
+        <category
+            label="80%"
+            showVerticalLine="1"
+            x="80" />
+        <category
+            label="90%"
+            showVerticalLine="1"
+            x="90" />
+        <category
+            label="100%"
+            x="100" />
+    </categories>
+
+    <dataSet showValues="0" >
+
+        <set
+            name="Traders"
+            x="30"
+            y="100"
+            z="100" />
+
+        <set
+            name="Farmers"
+            x="32"
+            y="350"
+            z="50" />
+
+        <set
+            name="Individuals"
+            x="8"
+            y="200"
+            z="33" />
+
+        <set
+            name="Medium Business Houses"
+            x="62"
+            y="300"
+            z="25" />
+
+        <set
+            name="Corporate Group A"
+            x="78"
+            y="400"
+            z="15" />
+    </dataSet>
+
+</chart>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle>年度预算收入信息</PageTitle>
+  <QuerySQL>
+    <sql>select distinct y.year, y.subflag
+  from BGP_WR_BUDGET_YEAR y
+ where y.bsflag = '0'
+ order by y.year desc
+    </sql>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label="">wrBudGetYearModify.jsp</Button>
+    <Button Type="Edit" funCode="" Label=""></Button>
+    <Button Type="Delete" funCode="" Label=""></Button>
+    <Button Type="sql" funCode="" Label="提交"></Button>    
+    <Button Type="sql" funCode="" Label="取消提交"></Button>
+  </Buttons>
+  <Options>
+    <Select name="subflag">
+      <option value="0">未提交</option>
+      <option value="1">已提交</option>
+    </Select>
+  </Options>
+  <Codes>
+  </Codes>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{year},{subflag}'&gt;">选择</data>
+    <data exp="{subflag}" func="getOpValue,subflag">状态</data>
+    <data exp="&lt;a href='wrBudGetYearModify.jsp?year={year}&amp;action=view'&gt;{year}&lt;/a&gt;">年度</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="subflag" selType="SEL_OPs" selValue="subflag">提交状态</field>
+    </cdt_fields>
+  </QueryCondition>
+<JavaScripts>
+   function toEdit(){
+  		
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+		
+	    var tempa = ids.split(',');
+
+	    var year = tempa[0];
+	    var subflag = tempa[1];
+	    
+	    if(subflag == '0'){
+	    	window.location = "wrBudGetYearModify.jsp?year="+year+"&amp;action=edit";
+	    }else{
+	    	alert("该记录已经提交，不能修改!"); 
+	    	return; 
+	    }
+	}
+	function toDelete(){
+  		
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+		
+	    var tempa = ids.split(',');
+	    
+	    var year = tempa[0];
+	    var subflag = tempa[1];
+	    
+	    if(subflag == '0'){
+	    	var sql = "update BGP_WR_BUDGET_YEAR set bsflag='1' where  year like '" + year + "'";
+			deleteEntities(sql);
+	    }else{
+	    	alert("该记录已经提交，不能删除!"); 
+	    	return; 
+	    }
+	}
+	
+	function JcdpButton3OnClick(){
+		
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+		
+	    var tempa = ids.split(',');
+
+	    var year = tempa[0];
+	    var subflag = tempa[1];
+	    
+	    if(subflag == '0'){
+	    	var sql = "update BGP_WR_BUDGET_YEAR set subflag='1' where year like '" + year + "'";
+			updateEntitiesBySql(sql,"提交");
+	    }else{
+	    	alert("该记录已经提交，不能再次提交!"); 
+	    	return; 
+	    }
+	}
+	
+	function JcdpButton4OnClick(){
+		
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+		
+	    var tempa = ids.split(',');
+
+	    var year = tempa[0];
+	    var subflag = tempa[1];
+	    
+	    if(subflag == '1'){
+	    	var sql = "update BGP_WR_BUDGET_YEAR set subflag='0' where year like '" + year + "'";
+			updateEntitiesBySql(sql,"取消提交");
+	    }else{
+	    	alert("该记录尚未提交，不能取消提交!"); 
+	    	return; 
+	    }
+	}	
+  </JavaScripts>
+</SAIS_EAW_TL>

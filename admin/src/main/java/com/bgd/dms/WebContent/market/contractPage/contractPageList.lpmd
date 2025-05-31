@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>List</PagerAction>
+  <PageTitle></PageTitle>
+  <QuerySQL>
+    <sql>select t.contract_id,
+       t.contract_name,
+       t.parta_org,
+       t.undertaking_org,
+       t.contract_money,
+       t.signed_people,
+       t.signed_date,
+       t.perform_time,
+       t.perform_place,
+       t.contract_no,
+       t.contract_type,
+       t.contract_start_date,
+       t.contract_end_date,
+       t.workload,
+       t.unit_price,
+       c.org_abbreviation,
+       decode(t.market_type, '1', '区内', '2', '区外') as market_type
+  from bgp_market_contract_account t, comm_org_information c
+ where t.undertaking_org = c.org_id
+   and t.bsflag = '0' order by t.signed_date desc,t.modifi_date desc
+</sql>
+    <fields>
+      <field name="contract_end_date" type="D"></field>
+      <field name="contract_id" type="TEXT"></field>
+      <field name="contract_money" type=""></field>
+      <field name="contract_name" type="TEXT"></field>
+      <field name="contract_no" type="TEXT"></field>
+      <field name="contract_start_date" type="D"></field>
+      <field name="contract_type" type="TEXT"></field>
+      <field name="market_type" type="TEXT"></field>
+      <field name="org_abbreviation" type="TEXT"></field>
+      <field name="parta_org" type="TEXT"></field>
+      <field name="perform_place" type="TEXT"></field>
+      <field name="perform_time" type="D"></field>
+      <field name="signed_date" type="D"></field>
+      <field name="signed_people" type="TEXT"></field>
+      <field name="undertaking_org" type="TEXT"></field>
+      <field name="unit_price" type=""></field>
+      <field name="workload" type=""></field>
+    </fields>
+  </QuerySQL>
+  <Buttons>
+    <Button Type="Add" funCode="" Label=""></Button>
+    <Button Type="Edit" funCode="" Label=""></Button>
+    <Button Type="Delete" funCode="" Label=""></Button>
+  </Buttons>
+  <Options>
+    <Select sais_select_name="contractType" name="contractType"/>
+  </Options>
+  <Codes/>
+  <DataList>
+    <data exp="&lt;input type='radio' name='chx_entity_id' value='{contract_id},{contract_name}'&gt;">选择</data>
+    <data exp="{contract_no}">合同编号/自编号</data>
+    <data exp="&lt;a href=javascript:viewLink('{contract_id}') &gt;{contract_name}&lt;/a&gt;">项目名称</data>
+    <data exp="{parta_org}">甲方单位</data>
+    <data exp="{org_abbreviation}">合同执行单位</data>
+    <data exp="{contract_type}">合同类型</data>
+    <data exp="{contract_money}">合同额(万元)</data>
+    <data exp="{workload}">工作量(2D/3D)</data>
+    <data exp="{unit_price}">单价(万元)</data>
+    <data exp="{signed_date}">合同签订日期</data>
+    <data exp="{contract_start_date}">项目启动日期</data>
+    <data exp="{contract_end_date}">项目结束日期</data>
+    <data exp="{market_type}">(区内/区外)市场</data>
+  </DataList>
+  <QueryCondition>
+    <cdt_fields>
+      <field name="contract_name">合同名称</field>
+      <field name="market_type" selType="SEL_OPs" selValue="contractType">(区内/区外)市场</field>
+    </cdt_fields>
+  </QueryCondition>
+  <JavaScripts>
+	  function toAdd(){
+	  		editUrl = "/market/contractPage/addContract.jsp?action=0";
+			window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+		}
+  	function toEdit(){
+		ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+	    var tempa = ids.split(',');
+    	var contract_id = tempa[0];
+   		var contract_name = tempa[1];
+	    	editUrl = "/market/editContract.srq?contractId="+contract_id; 
+	    	window.location=cruConfig.contextPath+editUrl; 
+	}
+	
+	function toDelete(){
+	 ids = getSelIds('chx_entity_id');
+	    if(ids==''){ alert("请先选中一条记录!");
+	     return;
+	    } 
+	    var tempa = ids.split(',');
+    	var contract_id = tempa[0];
+   		var contract_name = tempa[1];
+	deleteEntities("update bgp_market_contract_account set bsflag='1' where contract_id='{id}'");
+	var title = "在合同台账维护中删除了一条项目名称为：“"+contract_name+"”的信息";
+	var operationPlace = "合同台账维护";
+	var submitStr = "title="+encodeURI(encodeURI(title))+"&amp;operationPlace="+encodeURI(encodeURI(operationPlace));
+	var retObject=jcdpCallService("MarketInfoInputSrv","logDelete",submitStr);
+	queryData(1);
+}
+	
+	function viewLink(contract_id){
+	    	editUrl = "/market/contractPage/viewContract.upmd?id="+contract_id;
+	    	window.location=cruConfig.contextPath+editUrl+"&amp;backUrl="+cruConfig.currentPageUrl;
+		}
+  </JavaScripts>
+</SAIS_EAW_TL>

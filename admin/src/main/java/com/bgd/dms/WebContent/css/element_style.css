@@ -1,0 +1,413 @@
+
+body{
+	margin : 0px;
+	padding : 0;
+}
+
+/* ====== Navigation Main ====== */
+.navigation ul {
+	list-style: none;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+.navigation li {
+	float: left;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+div.navigation {
+	font-family: Open Sans;
+	padding-top: 1px;
+	background-color: white;
+}
+
+/* ====== Navigation Menu ====== */
+div.navigation>ul{
+	margin : 0px;
+	margin-top : 2px;
+}
+.menu{
+    background-color: 0033FF;
+}
+div.navigation>ul>li {
+	list-style: none;
+	display: inline-block;
+	height: 26px;
+	width: 120px;
+	text-align: center;
+	line-height: 26px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+div.navigation ul li a{
+	cursor : pointer;
+}
+
+div.navigation>ul>li>a{
+	position : relative;
+	display : block;
+	color : white;
+	font-size : 14px;
+	text-decoration : none;
+}
+
+/* ====== Back Button ====== */
+div#back{
+	position : relative;
+    float : right;
+	display : none;
+	height : 20px;
+	width : 25px;
+	background-image : url(./img/back.png);
+	margin-right : 40px;
+	top : -15px;
+}
+div#back img{
+     width:25px;//图片的宽度
+    height:20px;//图片的高度
+ 　vertical-align:text-top;//图片对齐文字的顶部
+}
+
+/* ====== Sub menu====== */
+
+div.navigation>ul>li>ul{
+	position : absolute;
+	padding : 0;
+	margin-top : 0px;
+	display : none;
+}
+
+div.navigation>ul>li>ul>li{
+	position : relative;
+	float : left;
+	display : block;
+	background-color : #604C9F;
+	height : 20px;
+	line-height : 30px;
+	list-style : none;
+	margin-right : 3px;
+}
+
+div.navigation>ul>li>ul>li>a{
+	position : relative;
+	display : block;
+	font-size : 14px;
+	height : 100%;
+	width : 100%;
+	color : white;
+	text-decoration : none;
+}
+
+/* ====== Color class ======*/
+div.navigation .color1{
+	background-color : #0097aa;
+}
+
+div.navigation .color2{
+	background-color : #9f00a7;
+}
+
+div.navigation .color3{
+	background-color : #0a55be;
+}
+
+div.navigation .color4{
+	background-color : #bb1d48;
+}
+div.navigation .color5{
+	background-color : #8B4513;
+}
+div.navigation .color6{
+	background-color : #B8860B;
+}
+div.navigation .color7{
+	background-color : #2F4F4F;
+}
+div.navigation .color8{
+	background-color : #bb1d48;
+}
+div.navigation .color9{
+	background-color : #006400;
+}
+div.navigation .color10{
+	background-color : #66CDAA;
+}
+div.navigation .color11{
+	background-color : #7CFC00;
+}
+div.navigation .color12{
+	background-color : #483D8B;
+}
+
+/* ====== title span ====== */
+
+div.navigation span {
+	position: relative;
+	font-family: 'Open Sans';
+	font-weight: 300;
+	font-size: 18px;
+	margin-left: 40px;
+	color: black;
+	font-weight: bold;
+}
+
+/* ======== Fliping ======== */
+
+.animated{
+	-webkit-animation-duration:0.4s;
+	-moz-animation-duration:0.4s;
+	-o-animation-duration:0.4s;
+	animation-duration:0.4s;
+
+	-webkit-animation-fill-mode:both;
+	-moz-animation-fill-mode:both;
+	-o-animation-fill-mode:both;
+	animation-fill-mode:both
+}
+
+.flipIn_right{
+	-webkit-animation-name: flipIn_right;
+	-moz-animation-name: flipIn_right;
+	-o-animation-name: flipIn_right;
+	animation-name: flipIn_right;
+}
+
+.flipIn_left{
+	-webkit-animation-name:flipIn_left;
+	-moz-animation-name:flipIn_left;
+	-o-animation-name:flipIn_left;
+	animation-name:flipIn_left;
+}
+
+.flipIn_top{
+	-webkit-animation-name:flipIn_top;
+	-moz-animation-name:flipIn_top;
+	-o-animation-name:flipIn_top;
+	animation-name:flipIn_top;
+}
+
+.flipIn_bottom{
+	-webkit-animation-name:flipIn_bottom;
+	-moz-animation-name:flipIn_bottom;
+	-o-animation-name:flipIn_bottom;
+	animation-name:flipIn_bottom;
+}
+
+.flipIn_right_back{
+	-webkit-animation-name:flipIn_right_back;
+	-moz-animation-name:flipIn_right_back;
+	-o-animation-name:flipIn_right_back;
+	animation-name:flipIn_right_back;
+}
+
+@-webkit-keyframes flipIn_left {
+    0% {
+        -webkit-transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        -webkit-transform: perspective(400px) rotateY(-25deg);
+    }
+}
+@-moz-keyframes flipIn_left {
+    0% {
+        -moz-transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        -moz-transform: perspective(400px) rotateY(-25deg);
+    }
+}
+@-o-keyframes flipIn_left {
+    0% {
+        -o-transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        -o-transform: perspective(400px) rotateY(-25deg);
+    }
+}
+@keyframes flipIn_left {
+    0% {
+        transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        transform: perspective(400px) rotateY(-25deg);
+    }
+}/* /flip right*/
+
+@-webkit-keyframes flipIn_right {
+    0% {
+        -webkit-transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        -webkit-transform: perspective(400px) rotateY(25deg);
+    }
+}
+@-moz-keyframes flipIn_right {
+    0% {
+        -moz-transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        -moz-transform: perspective(400px) rotateY(25deg);
+    }
+}
+@-o-keyframes flipIn_right {
+    0% {
+        -o-transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        -o-transform: perspective(400px) rotateY(25deg);
+    }
+}
+@keyframes flipIn_right {
+    0% {
+        transform: perspective(400px) rotateY(0deg);
+    }
+    
+    100% {
+        transform: perspective(400px) rotateY(25deg);
+    }
+} /* /flip left*/
+
+@-webkit-keyframes flipIn_top {
+    0% {
+        -webkit-transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        -webkit-transform: perspective(400px) rotateX(20deg);
+    }
+}
+@-moz-keyframes flipIn_top {
+    0% {
+        -moz-transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        -moz-transform: perspective(400px) rotateX(20deg);
+    }
+}
+@-o-keyframes flipIn_top {
+    0% {
+        -o-transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        -o-transform: perspective(400px) rotateX(20deg);
+    }
+}
+@keyframes flipIn_top {
+    0% {
+        transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        transform: perspective(400px) rotateX(20deg);
+    }
+} /* /flip top*/
+
+@-webkit-keyframes flipIn_bottom {
+    0% {
+        -webkit-transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        -webkit-transform: perspective(400px) rotateX(-20deg);
+    }
+}
+@-moz-keyframes flipIn_bottom {
+    0% {
+        -moz-transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        -moz-transform: perspective(400px) rotateX(-20deg);
+    }
+}
+@-o-keyframes flipIn_bottom {
+    0% {
+        -o-transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        -o-transform: perspective(400px) rotateX(-20deg);
+    }
+}
+@keyframes flipIn_bottom {
+    0% {
+        transform: perspective(400px) rotateX(0deg);
+    }
+    
+    100% {
+        transform: perspective(400px) rotateX(-20deg);
+    }
+} /* /flip bottom*/
+
+@-webkit-keyframes flipIn_right_back {
+    0% {
+        -webkit-transform: perspective(400px) rotateY(-40deg);
+    }
+    
+    100% {
+        -webkit-transform: perspective(400px) rotateY(0deg);
+    }
+}
+@-moz-keyframes flipIn_right_back {
+    0% {
+        -moz-transform: perspective(400px) rotateY(-40deg);
+    }
+    
+    100% {
+        -moz-transform: perspective(400px) rotateY(0deg);
+    }
+}
+@-o-keyframes flipIn_right_back {
+    0% {
+        -o-transform: perspective(400px) rotateY(-40deg);
+    }
+    
+    100% {
+        -o-transform: perspective(400px) rotateY(0deg);
+    }
+}
+@keyframes flipIn_right_back {
+    0% {
+        transform: perspective(400px) rotateY(-40deg);
+    }
+    
+    100% {
+        transform: perspective(400px) rotateY(0deg);
+    }
+} /* /flip left back*/
+
+
+
+.do{
+	transform: scale(0.98, 0.98);
+	-webkit-transform: scale(0.98, 0.98); /* Safari and Chrome */
+}
+
+
+.slide {
+	margin: 0;
+	padding: 0;
+	background: url(./img/btn-slide.gif) no-repeat center top;
+	border-top-width: 3px;
+	border-top-style: solid;
+	border-top-color: #bcdaf9;
+}
+.btn-slide {
+	text-align: center;
+	padding: 5px 3px 0 0;
+	margin: 0 auto;
+	display: block;
+	font: bold 120%/100% Arial, Helvetica, sans-serif;
+	color: #bcdaf9;
+	text-decoration: none;
+}

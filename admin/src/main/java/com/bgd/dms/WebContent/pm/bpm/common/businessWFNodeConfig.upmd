@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="GBK"?>
+<SAIS_EAW_TL>
+  <PagerAction>Edit</PagerAction>
+  <PageTitle>配置业务子类型匹配的链接信息</PageTitle>
+  <QuerySQL>
+    <sql>select * from common_busi_node_config_dms WHERE node_config_id='$PARAM.id'</sql>
+    <tableName>common_busi_node_config_dms</tableName>
+    <fields>
+      <field name="node_config_id" type="TEXT"></field>
+      <field name="config_id" type="TEXT"></field>
+      <field name="business_node_type" type="TEXT"></field>
+      <field name="node_link" type="TEXT"></field>
+      <field name="node_link_type" type="TEXT"></field>
+      <field name="node_link_param" type="TEXT"></field>
+      <field name="creator" type="TEXT"></field>
+      <field name="create_date" type="D"></field>
+      <field name="updator" type="TEXT"></field>
+      <field name="modifi_date" type="D"></field>
+      <field name="bsflag" type="TEXT"></field>
+      <field name="locked_if" type="TEXT"></field>
+      <field name="spare1" type="TEXT"></field>
+      <field name="spare2" type="TEXT"></field>
+      <field name="spare3" type="TEXT"></field>
+      <field name="spare4" type="D"></field>
+      <field name="spare5" type=""></field>
+    </fields>
+  </QuerySQL>
+   <Options>
+    <Select name="link_type">
+      <option value="0">公共审批页面</option>
+      <option value="1">自定义审批页面</option>
+    </Select>
+  </Options>
+  <Codes>
+    <Code name="procType" sql="SELECT t.coding_code AS value,t.coding_name AS label FROM comm_coding_sort_detail t where t.coding_sort_id='5110000004' and t.bsflag='0' order by t.coding_show_id">流程类型</Code>
+  </Codes>
+  <EntityFields>
+    <field name="node_config_id" isShow="Hide">主键</field>
+    <field name="config_id" isShow="Hide" maxLength="32" defaultValue="$PARAM.config_id" action="C">外键</field>
+    <field name="bsflag" isShow="Hide" defaultValue="0">bsflag</field>
+    <field name="business_node_type" maxLength="500">小类名称</field>
+    <field name="node_link_type" type="SEL_OPs" selValue="link_type" nonEmpty="true">挂靠类型</field>
+    <field name="node_link" maxLength="500">挂靠链接</field>
+    <field name="node_link_param" maxLength="500">挂靠链接参数</field>
+  </EntityFields>
+  <JavaScripts>
+    <CRU>    
+		var $parent = parent.$; 
+		function setCruTitle(){
+			top.setDialogTitle(window,cruTitle);
+		}
+		function refreshData(){
+				var ctt = parent.frames['list'];
+				if(ctt.frames.length == 0){
+						ctt.refreshData();
+				}
+				else{
+						ctt.frames[1].refreshData();
+				}
+		}    
+  		function submitFunc(){
+	  		var path = cruConfig.contextPath+cruConfig.addOrUpdateAction;
+			submitStr = getSubmitStr();
+			if(submitStr == null) return;
+			var retObject = syncRequest('Post',path,submitStr);
+			afterSubmit(retObject);
+		}
+  	</CRU>
+  </JavaScripts>
+</SAIS_EAW_TL>
