@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 
+	单表导入导出的配置信息,通过model块的信息可实现系统导出单表数据、生成导入模板、以及通过excel导入数据的三个功能
+	1：导出单表数据直接调用链接/common/excel/fileDownload.srq?modelName=expertModel,其中"expertModel"为model块的name,modelName参数必填
+	2：生成导入模板直接调用链接/common/excel/fileTemplateDownload.srq?modelName=expertModel 说明同上
+	3：通过excel导入数据调用链接/common/excel/excelImportFile.jsp?modelName=expertModel&&redirectUrl=/rm/dm/deviceAccount/list.jsp
+		其中modelName为model块的name,redirectUrl为数据导入成功后，所要跳转的链接地址
+ -->
+<Excel>
+	<!-- mode为一个导入导出模块。
+		1：name为模块名，建议英文 ；
+		2：fileName为下载excel文件名；
+		3：fileTitle为下载文件内容的总标题，位于excel里的第一行
+	-->
+	<model name="expertModel" fileName="专家信息.xls" fileTitle="专家信息">
+		<Export>
+			<!-- sqlInfo为导出数据的语句,语句所查询的结果即为excel中的内容 -->
+			<sqlInfo>
+				SELECT HE.EMPLOYEE_NAME,
+				SD1.CODING_NAME EXPERT_LEVEL,
+				SD2.CODING_NAME EXPERT_FIELDS,
+				T.CREATE_DATE,
+				T.FREQUENCY,
+				T.EXPERT_RESUME,
+				DECODE(T.EXPERT_TYPE, '1', '科技带头人', '2', '技术骨干', '')
+				EXPERT_TYPE
+				FROM BGP_TS_EXPERT_INFO T
+				LEFT OUTER JOIN COMM_HUMAN_EMPLOYEE HE
+				ON T.EMPLOYEE_ID =
+				HE.EMPLOYEE_ID
+				LEFT OUTER JOIN COMM_CODING_SORT_DETAIL SD1
+				ON T.EXPERT_LEVEL = SD1.CODING_CODE_ID
+				LEFT OUTER JOIN COMM_CODING_SORT_DETAIL SD2
+				ON T.EXPERT_FIELDS = SD2.CODING_CODE_ID
+			</sqlInfo>
+			<!-- excel每列对应的列名，一般均为string 若为date类型需特别说明,便于excel格式处理 -->
+			<column name="专家名称" dataType="string" columnName="employeeName"></column>
+			<column name="专家级别" dataType="string" columnName="expertLevel"></column>
+			<column name="专业领域" dataType="string" columnName="expertFields"></column>
+			<column name="创建时间" dataType="date" columnName="createDate"></column>
+			<column name="点击率" dataType="string" columnName="frequency"></column>
+			<!-- <column name="专家情况" dataType="string" columnName="expertResume"></column> -->
+			<column name="专家类别" dataType="string" columnName="expertType"></column>
+		</Export>
+		<Import>
+			<sqlImport>
+				<!-- sqlInfo为导入数据的insert语句 
+					1：其中若有默认数据则直接入下所示在insert语句中天上即可（如bsflag,modifi_date）
+					2：对于orgId,orgSubjectionId的设置，会在稍后的修改版中添加
+				 -->
+				<sqlInfo>
+				insert into BGP_TS_EXPERT_INFO t(T.EXPERT_ID,T.EMPLOYEE_ID,T.EXPERT_LEVEL,T.EXPERT_FIELDS,T.CREATOR,
+				T.EXPERT_TYPE,T.FREQUENCY,T.bsflag,T.Modifi_Date) values
+				(?,?,?,?,?,?,'1','0',sysdate)
+				</sqlInfo>
+				<!-- 下面列描述用于构建excel导入模板 以及导入数据时每个数据的格式控制
+					1：   pkValue 为主键,由系统自动生成,
+					2：   fkValue 为外键,如果该数据位其他表的主键或其他信息，则可参考如下方式配置fkSql 系统自动转换内容。此时fkSql必填
+					3：   coding为编码类型,如果是编码类型则直接指定其codeType(位于selectLib.xml或codeList.xml中的codeName),系统自动根据其转码以及生成模板中的下拉列表
+					4：   date为日期类型 系统可处理2011/1/1格式以及2011-01-01格式
+					5：   float为浮点型,对应到系统中的Number类型,若为float 则必须指明其length以及小数点的位数decimal,若不设置系统默认数据长度为12 精度为2
+					6：   string为字符串类型,其中若未指明length属性则默认为32
+					7:  orgId表示默认取当前用户的所属单位
+					8：   orgSubjectionId表示默认取当前用户的所属单位的隶属ID
+					9：   codeAffordOrgID表示取当前用户上级管理单位的orgId
+					10：subOrgIDofAffordOrg表示取当前用户上级管理单位的隶属ID
+					11：userId表示取当前用户的userId
+					12：userName表示取当前用户的userName
+					重点说明：假如需要用到默认值的话 请把默认值放到主键的后面例如：
+						<column name="主键" dataType="pkValue" columnName="expertId" notNull="true"></column>
+						<column name="创建人ID" dataType="userId" columnName="creatorId"></column>
+						...
+						<column name="专家名称" dataType="fkValue" columnName="employeeName" notNull="true"
+							fkSql="select t.employee_id as  data from comm_human_employee t  where t.employee_name = '?'"></column>
+						...
+				 -->
+				<column name="主键" dataType="pkValue" columnName="expertId" notNull="true"></column>
+				<column name="专家名称" dataType="fkValue" columnName="employeeName" notNull="true"
+					fkSql="select t.employee_id as  data from comm_human_employee t  where t.employee_name = '?'"></column>
+				<column name="专家级别" dataType="coding" codeAffordType="expertLevel" columnName="expertLevel"  notNull="true"></column>
+				<column name="专业领域" dataType="coding" codeAffordType="expertFields" columnName="expertFields" notNull="true"></column>
+				<column name="创建人" dataType="fkValue" columnName="creator" notNull="true"
+					fkSql="select t.employee_id as  data from comm_human_employee t  where t.employee_name = '?'"></column>
+				<!-- <column name="专家情况" dataType="string" columnName="expertResume" length="2000"></column> -->
+				<column name="专家类别" dataType="coding" codeAffordType="expertType" columnName="expertType" notNull="true"></column>
+			</sqlImport>
+		</Import>
+	</model>
+
+	<model name="ImpleLaborMessage" fileName="临时工信息导入模板.xls" fileTitle="临时工人员基本信息">
+		<Import>
+			<sqlImport>
+				<!-- sqlInfo为导入数据的insert语句 
+					1：其中若有默认数据则直接入下所示在insert语句中天上即可（如bsflag,modifi_date）
+					2：对于orgId,orgSubjectionId的设置，会在稍后的修改版中添加
+				 -->
+				<sqlInfo>
+				
+				insert into bgp_comm_human_labor l
+        			      (
+        			      l.labor_id,
+        			       l.employee_name,
+        			       l.employee_gender,
+        			       l.employee_birth_date,
+        			       l.employee_nation,
+        			       l.employee_id_code_no,
+        			       l.employee_education_level,
+        			       l.employee_address,
+        			       l.phone_num,
+        			       l.employee_health_info,
+        			       l.specialty,
+        			       l.elite_if,
+        			       l.workerfrom,
+        			       l.create_date,
+        			       l.modifi_date,
+        			       l.bsflag)
+        			    values
+        			      (?,?,?,?,?, ?, ?, ?, ?, ?, ?,?,?, sysdate, sysdate, '0')
+				</sqlInfo>
+				<!-- 下面列描述用于构建excel导入模板 以及导入数据时每个数据的格式控制
+					1：pkValue 为主键,由系统自动生成,
+					2：fkValue 为外键,如果该数据位其他表的主键或其他信息，则可参考如下方式配置fkSql 系统自动转换内容。此时fkSql必填
+					3：coding为编码类型,如果是编码类型则直接指定其codeType(位于selectLib.xml或codeList.xml中的codeName),系统自动根据其转码以及生成模板中的下拉列表
+					4：date为日期类型 系统可处理2011/1/1格式以及2011-01-01格式
+					5：float为浮点型,对应到系统中的Number类型,若为float 则必须指明其length以及小数点的位数decimal,若不设置系统默认数据长度为12 精度为2
+					6：string为字符串类型,其中若未指明length属性则默认为32
+				 -->
+			    <column name="主键" dataType="pkValue" columnName="laborId" notNull="true"></column>
+				<column name="姓名" dataType="string" columnName="employeeName" notNull="true"></column>
+				<column name="性别" dataType="coding" codeAffordType="genderOps" columnName="employeeGender"></column>
+				<column name="出生年月" dataType="date" columnName="employeeBirthDate"  ></column>
+				<column name="民族" dataType="coding"  codeAffordType="humanNation" columnName="employeeNation"  ></column>
+				<column name="身份证号" dataType="string" columnName="employeeIdCodeNo"  ></column>
+				<column name="文化程度" dataType="coding" codeAffordType="employeeEducationLevel" columnName="employeeEducationLevel"></column>
+				<column name="家庭住址" dataType="string" columnName="employeeAddress"></column>
+				<column name="联系电话" dataType="string" columnName="phoneNum"  ></column>
+				<column name="健康信息" dataType="string" columnName="employeeHealthInfo" ></column>
+				<column name="技能" dataType="string" columnName="specialty" ></column>
+				<column name="是否骨干" dataType="coding" codeAffordType="booleanOps" columnName="eliteIf" ></column>
+				<column name="技术职称" dataType="string" columnName="workerfrom" ></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	
+	
+	<model name="OpTargetDeviceOil" fileName="设备油料信息.xls" fileTitle="设备油料信息">
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				
+				insert into BGP_OP_TARTET_DEVICE_OIL
+					  (cost_device_id,
+					   project_info_no,
+					   dev_name,
+					   dev_model,
+					   plan_start_date,
+					   plan_end_date,
+					   daily_oil_type,
+					   daily_oil,
+					   daily_small_oil,
+					   single_well_oil,
+					   oil_unit_price,
+					   create_date,
+					   update_date,
+					   if_change,
+					   bsflag)
+					   values
+					   (?,?,?,?,?,?,?,?,?,?,?,sysdate,sysdate,'0','0')
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="costDdeviceId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="设备名称" dataType="string"  columnName="devName"></column>
+				<column name="规格型号" dataType="string" columnName="devModel"  ></column>
+				<column name="计划开始时间" dataType="date" columnName="planStartDate"  ></column>
+				<column name="计划结束时间" dataType="date"   columnName="planEndDate"  ></column>
+				<column name="油品类型" dataType="coding" codeAffordType="opOilType" columnName="dailyOilType"></column>
+				<column name="日消耗油料" dataType="string" columnName="dailyOil"></column>
+				<column name="日消耗小油品" dataType="string" columnName="dailySmallOil"  ></column>
+				<column name="单井消耗油料" dataType="string" columnName="singleWellOil" ></column>
+				<column name="油料单价" dataType="string" columnName="oilUnitPrice" ></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	<model name="OpTargetDeviceDerent" fileName="设备折旧信息.xls" fileTitle="设备折旧信息">
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				
+				insert into BGP_OP_TARTET_DEVICE_DEPRE
+				  ( TARGET_DEPRE_ID,
+				   PROJECT_INFO_NO,
+				   DEV_NAME,
+				   DEVICE_COUNT,
+				   DEV_MODEL,
+				   PLAN_START_DATE,
+				   PLAN_END_DATE,
+				   ASSET_VALUE,
+				   DEPRECIATION_VALUE,
+				   CREATE_DATE,
+				   UPDATE_DATE,
+				   IF_CHANGE,
+				   bsflag,
+				   RECORD_TYPE)
+				   values
+				   (?,?,?,?,?,?,?,?,?,sysdate,sysdate,'0','0','0')
+   
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="costDeviceId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="设备名称" dataType="string"  columnName="devName"></column>
+				<column name="数量" dataType="string"  columnName="deviceCount"></column>
+				<column name="规格型号" dataType="string" columnName="devModel"  ></column>
+				<column name="计划开始时间" dataType="date" columnName="planStartDate"  ></column>
+				<column name="计划结束时间" dataType="date"   columnName="planEndDate"  ></column>
+				<column name="原值" dataType="string" columnName="assetValue"></column>
+				<column name="净值" dataType="string" columnName="depreciationValue"  ></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	<model name="OpTargetDeviceMaterial" fileName="设备材料信息.xls" fileTitle="设备材料信息">
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				
+				insert into bgp_op_tartet_device_material
+				  ( TARGET_MATERIAL_ID,
+				   PROJECT_INFO_NO,
+				   DEV_NAME,
+				   DEVICE_COUNT,
+				   DEV_MODEL,
+				   PLAN_START_DATE,
+				   PLAN_END_DATE,
+				   VEHICLE_DAILY_MATERIAL,
+				   DRILLING_DAILY_MATERIAL,
+				   RESTORE_REPAILS,
+				   CREATE_DATE,
+				   UPDATE_DATE,
+				   IF_CHANGE,
+				   bsflag)
+				   values
+				   (?,?,?,?,?,?,?,?,?,?,sysdate,sysdate,'0','0')
+   
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="targetMaterialId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="设备名称" dataType="string"  columnName="devName"></column>
+				<column name="数量" dataType="string"  columnName="deviceCount"></column>
+				<column name="规格型号" dataType="string" columnName="devModel"  ></column>
+				<column name="计划开始时间" dataType="date" columnName="planStartDate"  ></column>
+				<column name="计划结束时间" dataType="date"   columnName="planEndDate"  ></column>
+				<column name="车聊消耗材料" dataType="string" columnName="vehicleDailyMaterial"></column>
+				<column name="钻井消耗材料" dataType="string" columnName="drillingDailyMaterial"  ></column>
+				<column name="恢复性修理费" dataType="string" columnName="restoreRepails"  ></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	<model name="OpTargetDeviceMataxi" fileName="设备仪器信息.xls" fileTitle="设备仪器信息">
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				
+				insert into BGP_OP_TARGET_DEVICE_MATAXI
+				  ( TARGET_MATAXI_ID,
+				   PROJECT_INFO_NO,
+				   DEV_NAME,
+				   DEV_MODEL,
+				   DEV_COUNT,
+				   MATAXI_TYPE,
+				   PLAN_START_DATE,
+				   PLAN_END_DATE,
+				   TAXI_UNIT,
+				   TAXI_RATIO,
+				   CREATE_DATE,
+				   UPDATE_DATE,
+				   IF_CHANGE,
+				   bsflag)
+				   values
+				   (?,?,?,?,?,?,?,?,?,sysdate,sysdate,'0','0')
+   
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="targetMaterialId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="设备名称" dataType="string"  columnName="devName"></column>
+				<column name="规格型号" dataType="string" columnName="devModel"  ></column>
+				<column name="数量" dataType="string"  columnName="devCount"></column>
+				<column name="类型"  dataType="coding" codeAffordType="opOilType" columnName="dailyOilType"></column>
+				<column name="计划开始时间" dataType="date" columnName="planStartDate"  ></column>
+				<column name="计划结束时间" dataType="date"   columnName="planEndDate"  ></column>
+				<column name="租赁单价" dataType="string" columnName="taxiUnit"></column>
+				<column name="管理费利率" dataType="string" columnName="taxiRatio"  ></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	<model name="OpTargetDeviceHSE" fileName="安全设施费用.xls" fileTitle="安全设施费用">
+		<Export>
+			<!-- sqlInfo为导出数据的语句,语句所查询的结果即为excel中的内容 -->
+			<sqlInfo>
+				SELECT * FROM BGP_OP_COST_TARTET_HSE
+			</sqlInfo>
+			<!-- excel每列对应的列名，一般均为string 若为date类型需特别说明,便于excel格式处理 -->
+			<column name="名称" dataType="string"  columnName="hseName"></column>
+			<column name="数量" dataType="string" columnName="hseCountT"  ></column>
+			<column name="单价" dataType="string"  columnName="hseUnit"></column>
+		</Export>
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				insert into BGP_OP_COST_TARTET_HSE
+				  ( COST_HSE_ID,
+				   PROJECT_INFO_NO,
+				   HSE_NAME,
+				   HSE_COUNT_T,
+				   HSE_UNIT,
+				   CREATE_DATE,
+				   UPDATE_DATE,
+				   IF_CHANGE,
+				   bsflag)
+				   values
+				   (?,?,?,?,?,sysdate,sysdate,'0','0')
+   
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="targetMaterialId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="名称" dataType="string"  columnName="hseName"></column>
+				<column name="数量" dataType="string" columnName="hseCountT"  ></column>
+				<column name="单价" dataType="string"  columnName="hseUnit"></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	<model name="OpTargetDeviceLabormon" fileName="劳保费用信息.xls" fileTitle="劳保费用信息">
+		<Export>
+			<!-- sqlInfo为导出数据的语句,语句所查询的结果即为excel中的内容 -->
+			<sqlInfo>
+				SELECT * FROM BGP_OP_COST_TARTET_LABORMON
+			</sqlInfo>
+			<!-- excel每列对应的列名，一般均为string 若为date类型需特别说明,便于excel格式处理 -->
+			<column name="工序及班组" dataType="string"  columnName="hseName"></column>
+				<column name="岗位" dataType="string" columnName="hseCountT"  ></column>
+				<column name="定员" dataType="string"  columnName="hseUnit"></column>
+				<column name="劳保配备标准" dataType="string"  columnName="hseUnit"></column>
+		</Export>
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				insert into BGP_OP_COST_TARTET_LABORMON
+				  ( COST_LABORMON_ID,
+				   PROJECT_INFO_NO,
+				   APPLY_TEAM,
+				   POST,
+				   PERSON_NUM,
+				   PERSON_MONEY,
+				   CREATE_DATE,
+				   UPDATE_DATE,
+				   IF_CHANGE,
+				   bsflag)
+				   values
+				   (?,?,?,?,?,?,sysdate,sysdate,'0','0')
+   
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="targetMaterialId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="工序及班组" dataType="string"  columnName="hseName"></column>
+				<column name="岗位" dataType="string" columnName="hseCountT"  ></column>
+				<column name="定员" dataType="string"  columnName="hseUnit"></column>
+				<column name="劳保配备标准" dataType="string"  columnName="hseUnit"></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	<model name="OpTargetDeviceTransport" fileName="运输费信息.xls" fileTitle="设备仪器信息">
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				
+				insert into BGP_OP_COST_TARTET_TRANSPORT
+		          ( COST_TRANSPORT_ID,
+		           PROJECT_INFO_NO,
+		           TRANSPORT_NAME,
+		           START_LOC,
+		           END_LOC,
+		           TONNAGE,
+		           TRANSPORT_COUNT,
+		           START_METER,
+		           BACK_LOC,
+		           BACK_METER,
+		           TRANSPORT_UNIT,
+		           CREATE_DATE,
+		           UPDATE_DATE,
+		           IF_CHANGE,
+		           bsflag)
+		           values	
+		           (?,?,?,?,?,?,?,?,?,?,?,sysdate,sysdate,'0','0')
+   
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="targetMaterialId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="名称" dataType="string"  columnName="transportName"></column>
+				<column name="起运地点" dataType="string" columnName="startLoc"  ></column>
+				<column name="到达地点" dataType="string"  columnName="endLoc"></column>
+				<column name="吨位" dataType="string"  columnName="tonnage"></column>
+				<column name="数量" dataType="string"  columnName="transportCount"></column>
+				<column name="运输里程" dataType="string"  columnName="startMeter"></column>
+				<column name="返回地点" dataType="string"  columnName="backLoc"></column>
+				<column name="返回里程" dataType="string"  columnName="backMeter"></column>
+				<column name="单价" dataType="string"  columnName="transportUnit"></column>
+			</sqlImport>
+		</Import>
+	</model>
+	
+	<model name="OpTargetDeviceRe" fileName="设备仪器信息.xls" fileTitle="设备仪器信息">
+		<Import>
+			<sqlImport>
+				<sqlInfo>
+				
+				insert into BGP_OP_COST_TARTET_DERENT
+		          ( COST_DERENT_ID,
+		           PROJECT_INFO_NO,
+		           DERENT_NAME,
+		           DERENT_SPECI,
+		           DERENT_COUNT,
+		           PLAN_START_DATE,
+		           PLAN_END_DATE,
+		           DERENT_MONEY,
+		           CREATE_DATE,
+		           UPDATE_DATE,
+		           IF_CHANGE,
+		           bsflag)
+		           values	
+		           (?,?,?,?,?,?,?,?,sysdate,sysdate,'0','0')
+   
+				</sqlInfo>
+			    <column name="主键" dataType="pkValue" columnName="targetMaterialId" notNull="true"></column>
+				<column name="项目名称" dataType="projectInfoNo" columnName="projectInfoNo"></column>
+				<column name="名称" dataType="string"  columnName="DERENT_NAME"></column>
+				<column name="规格型号" dataType="string" columnName="DERENT_SPECI"  ></column>
+				<column name="数量" dataType="string"  columnName="DERENT_COUNT"></column>
+				<column name="预计进队时间" dataType="date"  columnName="PLAN_START_DATE"></column>
+				<column name="预计离队时间" dataType="date"  columnName="PLAN_END_DATE"></column>
+				<column name="租赁费用" dataType="string"  columnName="DERENT_MONEY"></column>
+			</sqlImport>
+		</Import>
+	</model>
+</Excel>

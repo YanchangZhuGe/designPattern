@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	   default-autowire="byName" default-lazy-init="true">	
+	
+	<!--HSE服务-->
+	<bean id="HseSrv" 
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.mcs.service.hse.service.HseSrv"/>
+		</property>
+	</bean>
+	<bean id="HseOperationSrv" 
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.mcs.service.hse.service.HseOperationSrv"/>
+		</property>
+	</bean>
+	<bean id="HseWorkHour" 
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.mcs.service.hse.service.HseWorkHour"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	<!-- 
+	
+	重点在于"cronExpression"属性的指定，指定的格式是至少六个时间元素，最多七个时间元素，"cronExpression"属性指定的格式如下：
+	
+	秒（0-59）
+	分（0-59）
+	小时（0-23）
+	每月第几天（1-31）
+	月（1-12或JAN-DEC）
+	每星期第几天（1-7或SUN-SAT）
+	年（1970-2099）
+	
+	其中“每月第几天”与“每星期第几天是互斥”的，两个只能设定一个，不设定的以 ? 符号撰写，如果有好几个时间点，可以使用 , 符号，
+	例如：“0 0 10,12,14 * * ?”表示每天的10时、12时、14时要执行Job；
+	对于连续的时间可以使用 - 符号，例如“0 0 10,12,14 1-15 * ?”表示每月的1到15日每10时、12时、15时要执行Job，
+	时间格式中的年指定可有可无，例如：“0 0 10,12,14 ? * MON 2006”表示2006年每星期一的10时、12时、14时要执行Job。
+	0 0/15 * * * ? 表示每15分钟执行一次
+ 	-->
+	
+
+</beans>

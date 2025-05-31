@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	   default-autowire="byName" default-lazy-init="true">
+	   
+	   
+	<!-- 年度投资建议计划Srv -->
+	<bean id="YearPlanSrv"
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.dms.plan.YearPlanSrv"/>
+		</property>
+	</bean>
+	<!-- 执行计划Srv -->
+	<bean id="ExePlanSrv"
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.dms.plan.ExePlanSrv"/>
+		</property>
+	</bean>
+	<!-- 设备存量统计分析服务 -->
+	<bean id="DeviceStockSrv"
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.dms.plan.DeviceStockSrv"/>
+		</property>
+	</bean>
+	<!-- 设备分布统计分析服务 -->
+	<bean id="DeviceDistributeSrv"
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.dms.plan.DeviceDistributeSrv"/>
+		</property>
+	</bean>
+	<!-- 设备结构分析服务 -->
+	<bean id="DeviceStruAnalSrv"
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.dms.plan.DeviceStruAnalSrv"/>
+		</property>
+	</bean>
+	<!-- 需求计划采购计划统计分析服务 -->
+	<bean id="DemaAndPurcAnalSrv"
+		parent="hibernateTransactionProxy">
+		<property name="target">
+			<bean class="com.bgp.dms.plan.DemaAndPurcAnalSrv"/>
+		</property>
+	</bean>
+</beans>

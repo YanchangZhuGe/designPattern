@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-autowire="byName" default-lazy-init="true">
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>dbConfig.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 数据源定义,使用Apache DBCP 连接池 ,需要配置为使用JNDI数据源-->
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver">
+			<value>${db.driver}</value>
+		</property>
+		<property name="driverUrl">
+			<value>${db.driverUrl}</value>
+		</property>
+		<property name="user">
+		    <value>${db.user}</value>
+		</property>
+		<property name="password">
+			<value>${db.password}</value>
+		</property>
+		<property name="alias">
+			<value>${db.alias}</value>
+		</property>
+		<property name="trace">
+			<value>${db.trace}</value>
+		</property>
+
+	    <!--最少保持的空闲连接数-->
+	    <property name="prototypeCount">
+	      <value>${db.prototypeCount}</value>
+	    </property>
+	    <!--允许最大连接数,超过了这个连接，再有请求时，就排在队列中-->
+	    <property name="maximumConnectionCount">
+	      <value>${db.maximumConnectionCount}</value>
+	    </property>
+	    <!--最小连接数-->
+	    <property name="minimumConnectionCount">
+	      <value>${db.minimumConnectionCount}</value>
+	    </property>
+	    <!-- 最大活动时间,默认5分钟 -->
+        <property name="maximumActiveTime">
+          <value>${db.maximumActiveTime}</value>
+        </property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="com.cnpc.jcdp.cfg.DynamicLocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+			</props>
+		</property>
+		<property name="mappingLocations">
+			<value>classpath:/**/*.hbm.xml</value>
+		</property>
+	</bean>
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="jdbcTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- JDBC,HIBERNATE事务代理 -->
+	<bean id="jdbcTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager">
+			<ref local="jdbcTransactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="hibernateTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager" ref="hibernateTransactionManager" />
+		<property name="proxyTargetClass" value="true" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly,-Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 为处理BLOB进行JDBC抽取-->
+	<bean id="nativeJdbcExtractor"
+		class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor"
+		lazy-init="true" />
+
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler"
+		lazy-init="true">
+		<property name="nativeJdbcExtractor">
+			<ref local="nativeJdbcExtractor" />
+		</property>
+	</bean>
+
+</beans>

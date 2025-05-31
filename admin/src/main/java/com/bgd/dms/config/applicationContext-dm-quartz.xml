@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "spring-beans.dtd" >
+<beans>
+	<bean id="DMAutoUtil" class="com.bgp.gms.service.rm.dm.DMAutoUtil"/>
+	<bean lazy-init="false" name="dmQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- ref bean="scheduleDMWHLYAutoTrigger" /-->
+				<!-- 采集站定时任务，勿删除 -->
+				<ref bean="collDevTrigger"/>
+				<!-- 操作证定时提醒 -->
+				<!-- <ref bean="byAutoCalJobTrigger"/> -->
+			</list>
+		</property>
+	</bean>
+	<!-- 设备完好率、利用率的信息统计，每天固定的时间执行 -->
+	<bean id="scheduleDMWHLYAutoTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" >
+			<ref bean="DMWHLYAutoJob" />
+		</property>
+		<property name="cronExpression">
+			<value>0 30 2 ? * MON</value>
+		</property>
+	</bean>
+	<bean id="DMWHLYAutoJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="DMAutoUtil"/>
+		</property>
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>	
+	<bean lazy-init="false" name="dmKQQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- ref bean="scheduleDMKQAutoTrigger" /-->
+			</list>
+		</property>
+	</bean>
+	<!-- 设备现场管理考勤数据，每天固定的时间执行 每个月1号的2.45执行  -->
+	<bean id="scheduleDMKQAutoTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" >
+			<ref bean="DMKQAutoJob" />
+		</property>
+		<property name="cronExpression">
+			<value>0 45 2 1 * ?</value>
+		</property>
+	</bean>
+	<bean id="DMKQAutoJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="DMAutoUtil"/>
+		</property>
+		<property name="targetMethod">
+			<value>autoMixKQInfo</value>
+		</property>
+	</bean>
+	<!-- 采集站设备统计配置开始，勿删除 -->
+	<bean id="devCalTask" class="com.bgp.gms.service.rm.dm.util.DevAutoCalJob" />
+	<bean id="collDevJobBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="devCalTask"/>
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>makeDevAcc</value>
+		</property>
+	</bean>
+	<bean id="collDevTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="collDevJobBean" />
+		</property>
+		<!-- 每天凌晨2点执行 -->
+		<property name="cronExpression">
+			<value>0 53 23 * * ?</value> 
+		</property>
+	</bean>
+	<!-- 采集站设备统计配置结束，勿删除 -->
+	
+	<!-- 操作证周期提示，勿删除 -->
+	<bean id="byAutoCalJob" class="com.bgp.gms.service.rm.dm.util.ByAutoCalJob" />
+	<bean id="byAutoCalJobBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="byAutoCalJob"/>
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>makeByCal</value>
+		</property>
+	</bean>
+	<bean id="byAutoCalJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="byAutoCalJobBean" />
+		</property>
+		<!--  -->
+		<property name="cronExpression">
+			<value>0 0 2 * * ?</value> 
+		</property>
+	</bean>
+	<!-- 采集站设备统计配置结束，勿删除 -->
+</beans>

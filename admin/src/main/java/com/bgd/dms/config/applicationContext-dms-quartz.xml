@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "spring-beans.dtd" >
+<beans>
+	<bean id="dmsTimerSrv" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass">
+            <value>com.bgp.gms.service.rm.dm.util.dmsAutoCalJob</value>
+        </property>
+    </bean>
+	
+	<!-- 测试定时器 -->
+	<bean id="dmsTest" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">           
+        	<ref bean="dmsTimerSrv" />       
+        </property>
+        <!-- 延迟60秒开始 -->
+       <property name="startDelay" value="300000"></property>
+       <property name="cronExpression">           
+       		  <value>30 05 * * * ?</value> 
+       	</property>
+    </bean>	
+  
+    <bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="quartzProperties">
+            <map>
+                <entry key="org.quartz.scheduler.skipUpdateCheck" value="true" />
+            </map>
+        </property>
+        <property name="startupDelay" value="40"/>
+		<property name="autoStartup" value="true" />
+        <property name="triggers">
+            <list>
+                <ref local="dmsTest" />
+            </list>
+        </property>
+    </bean>
+    
+</beans>
