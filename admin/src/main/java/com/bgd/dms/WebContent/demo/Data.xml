@@ -1,7 +1,0 @@
-﻿<chart caption='测试' 
-   xAxisName='Week' yAxisName='Sales' numberPrefix='$'> 
-      <set label='周 1' value='14400' /> 
-      <set label='Week 2' value='19600' /> 
-      <set label='Week 3' value='24000' /> 
-      <set label='Week 4' value='15700' /> 
-</chart>
